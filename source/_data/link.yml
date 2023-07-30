@@ -1,0 +1,13 @@
+class:
+  class_name: 友情链接
+  link_list:
+    1:
+      name: B站
+      link: https://space.bilibili.com/49809519
+      avatar: /img/id-s.jpg
+      descr: Luotianouo
+    2:
+      name: GitHub
+      link: https://github.com/zhen490
+      avatar: /img/sakana.ico
+      descr: zhen490
