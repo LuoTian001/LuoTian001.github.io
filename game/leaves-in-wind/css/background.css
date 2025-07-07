@@ -7,10 +7,20 @@ html {
     background-size: 400%;
     animation: bganimation 15s infinite;
 }
+
 body {
   overflow-x:hidden;
   overflow-y:hidden;
 }
+
+*, *::before, *::after {
+  cursor: inherit;
+}
+
+body {
+  cursor: url('./arrow.cur'), auto;
+}
+
 :-webkit-full-screen {
   margin: 0 auto;
   padding: 0;
