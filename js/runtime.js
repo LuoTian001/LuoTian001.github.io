@@ -27,10 +27,14 @@ setInterval(() => {
     time[4] = nol(second);
   }
   if ((Number(time[2])<22) && (Number(time[2])>7)){
-    currentTimeHtml ="<div class='boardsign-text'>🌞 小破站营业中（距离百年老站也就差不到一百年~）</div><div id='runtime'>" + '已经平稳度过' + time[0] + ' 年 ' + time[1] + ' 天 ' + time[2] + ' : ' + time[3] + ' : ' + time[4] + '</div>';
+    currentTimeHtml = "<div id='runtime'><span class='boardsign-text'>🌞 小破站营业中 — </span> " +
+                    "已经平稳度过 " + time[0] + " 年 " + time[1] + " 天 " + time[2] + " : " + time[3] + " : " + time[4] +
+                    "</div>";
   }
   else{
-    currentTimeHtml ="<div class='boardsign-text'>🌙 小破站打烊了（这个点了该睡觉啦，熬夜对身体不好哦）</div><div id='runtime'>" + '已经平稳度过' + time[0] + ' 年 ' + time[1] + ' 天 ' + time[2] + ' : ' + time[3] + ' : ' + time[4] + '</div>';
+    currentTimeHtml = "<div id='runtime'><span class='boardsign-text'>🌙 小破站打烊了 — </span> " +
+                    "已经平稳度过 " + time[0] + " 年 " + time[1] + " 天 " + time[2] + " : " + time[3] + " : " + time[4] +
+                    "</div>";
   }
   document.getElementById("workboard").innerHTML = currentTimeHtml;
 }, 1000);
