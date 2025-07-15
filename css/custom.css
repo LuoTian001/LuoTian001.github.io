@@ -2,4 +2,10 @@
 .mermaid {
   background: transparent!important;
   opacity: 0.9;
- }
+}
+
+#footer {
+  background-color: rgb(1, 72, 100); /* 修改透明色 */
+  color: #fff;
+  padding: 0;
+}
