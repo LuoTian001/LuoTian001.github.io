@@ -4,7 +4,7 @@
   <url>
     <loc>https://luotian.cyou/tools/ocrlatex/index.html</loc>
     
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -193,7 +193,7 @@
 
   <url>
     <loc>https://luotian.cyou/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -201,42 +201,42 @@
   
   <url>
     <loc>https://luotian.cyou/tags/MMLab/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/tags/OpenCV/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/tags/Java/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/tags/hexo/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -244,43 +244,43 @@
 
   
   <url>
-    <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/</loc>
-    <lastmod>2025-07-14</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/</loc>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/categories/Java%E7%BC%96%E7%A8%8B/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2025-07-14</lastmod>
+    <lastmod>2025-07-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
