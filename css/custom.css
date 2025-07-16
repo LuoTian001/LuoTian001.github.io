@@ -5,7 +5,19 @@
 }
 
 #footer {
-  background-color: rgb(1, 72, 100); /* 修改透明色 */
+  background-color: rgb(1, 72, 100);
+  /*background: url('/img/core/footer-light.jpg') no-repeat center center;
+  background-size: cover;*/
   color: #fff;
   padding: 0;
 }
+
+/*
+#body.dark #footer {
+  background-color: rgba(1, 72, 100, 0.8);
+  background: url('/img/core/footer-dark.jpg') no-repeat center center;
+  background-size: cover;
+  color: #fff;
+  padding: 0;
+}
+*/
