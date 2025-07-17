@@ -2,7 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://luotian.cyou/post/leetcode4Cpp.html</loc>
+    <loc>https://luotian.cyou/post/leetcode-HashTable.html</loc>
+    
+    <lastmod>2025-07-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://luotian.cyou/post/leetcode-Array.html</loc>
     
     <lastmod>2025-07-17</lastmod>
     
@@ -238,6 +247,13 @@
   
   <url>
     <loc>https://luotian.cyou/tags/Java/</loc>
+    <lastmod>2025-07-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/</loc>
     <lastmod>2025-07-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
