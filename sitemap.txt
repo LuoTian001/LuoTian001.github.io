@@ -1,11 +1,11 @@
-https://luotian.cyou/post/live-in-xdu.html
+https://luotian.cyou/tools/ocrlatex/index.html
 https://luotian.cyou/post/leetcode-Linklist.html
+https://luotian.cyou/post/live-in-xdu.html
 https://luotian.cyou/post/leetcode-Array.html
 https://luotian.cyou/post/leetcode-HashTable.html
 https://luotian.cyou/post/MMLab-1.html
 https://luotian.cyou/post/cvthretshold.html
 https://luotian.cyou/post/MMLab-2.html
-https://luotian.cyou/tools/ocrlatex/index.html
 https://luotian.cyou/post/Sci-ethics-ethos.html
 https://luotian.cyou/post/Aca-Stan-Dis-Wri.html
 https://luotian.cyou/post/MMLab-4.html
@@ -31,8 +31,8 @@ https://luotian.cyou/tags/Java/
 https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/
 https://luotian.cyou/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/
 https://luotian.cyou/tags/hexo/
-https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/
 https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/
+https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/
 https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/
 https://luotian.cyou/categories/%E8%AE%A1%E7%AE%97%E6%9C%BA%E8%A7%86%E8%A7%89/
 https://luotian.cyou/categories/Java%E7%BC%96%E7%A8%8B/
