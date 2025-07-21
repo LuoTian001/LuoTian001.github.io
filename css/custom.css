@@ -12,6 +12,10 @@
   padding: 0;
 }
 
+#article-container{
+      text-align: justify;
+}
+
 /*
 #body.dark #footer {
   background-color: rgba(1, 72, 100, 0.8);
