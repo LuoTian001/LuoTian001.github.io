@@ -36,8 +36,8 @@ https://luotian.cyou/tags/Java/
 https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/
 https://luotian.cyou/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/
 https://luotian.cyou/tags/%E9%93%BE%E8%A1%A8/
-https://luotian.cyou/categories/%E7%AE%97%E6%B3%95/
 https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/
+https://luotian.cyou/categories/%E7%AE%97%E6%B3%95/
 https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/
 https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/
 https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/
