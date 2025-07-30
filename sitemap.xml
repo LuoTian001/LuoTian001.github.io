@@ -2,18 +2,18 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://luotian.cyou/timeline/index.html</loc>
+    <loc>https://luotian.cyou/post/live-in-xdu.html</loc>
     
-    <lastmod>2025-07-29</lastmod>
+    <lastmod>2025-07-30</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
-    <loc>https://luotian.cyou/post/live-in-xdu.html</loc>
+    <loc>https://luotian.cyou/timeline/index.html</loc>
     
-    <lastmod>2025-07-27</lastmod>
+    <lastmod>2025-07-29</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
@@ -303,14 +303,14 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/</loc>
+    <loc>https://luotian.cyou/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/</loc>
     <lastmod>2025-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/</loc>
+    <loc>https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/</loc>
     <lastmod>2025-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -326,14 +326,14 @@
 
   
   <url>
-    <loc>https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
+    <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/</loc>
     <lastmod>2025-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/</loc>
+    <loc>https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2025-07-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>

@@ -16,12 +16,6 @@
       text-align: justify;
 }
 
-/*
-#body.dark #footer {
-  background-color: rgba(1, 72, 100, 0.8);
-  background: url('/img/core/footer-dark.jpg') no-repeat center center;
-  background-size: cover;
-  color: #fff;
-  padding: 0;
+h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+    color: #1cffd9a6; /* 修改为你想要的颜色，例如红色 */
 }
-*/
