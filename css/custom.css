@@ -19,3 +19,30 @@
 h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
     color: #2A9689; /* 修改为你想要的颜色，例如红色 */
 }
+h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
+    animation: breath 10s infinite alternate; /* 设置呼吸效果的动画 */
+    color: #2A9689; /* 标题的初始颜色 */
+    text-decoration: none; /* 保持标题没有下划线 */
+}
+
+/* 设置呼吸动画 */
+@keyframes breath {
+    0% {
+        color: #2A9689; /* 起始颜色 */
+    }
+    20% {
+        color: #2971c4; /* 起始颜色 */
+    }
+    40% {
+        color: #a635aa; /* 起始颜色 */
+    }
+    60% {
+        color: #c42929; /* 中间颜色 */
+    }
+    80% {
+        color: #eb692d; /* 结束颜色 */
+    }
+    100% {
+        color: #2a964e; /* 结束颜色 */
+    }
+}
