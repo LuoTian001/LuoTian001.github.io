@@ -27,13 +27,13 @@ setInterval(() => {
     time[4] = nol(second);
   }
   if ((Number(time[2])<22) && (Number(time[2])>7)){
-    currentTimeHtml = "<div id='runtime'><span class='boardsign-text'>🌞 小破站营业中 — </span> " +
-                    "已经平稳度过 " + time[0] + " 年 " + time[1] + " 天 " + time[2] + " : " + time[3] + " : " + time[4] +
+    currentTimeHtml = "<div id='runtime'><span class='boardsign-text'>🌞 小窝营业中 — </span> " +
+                    "已度过 " + time[0] + " 年 " + time[1] + " 天 " + time[2] + " : " + time[3] + " : " + time[4] +
                     "</div>";
   }
   else{
-    currentTimeHtml = "<div id='runtime'><span class='boardsign-text'>🌙 小破站打烊了 — </span> " +
-                    "已经平稳度过 " + time[0] + " 年 " + time[1] + " 天 " + time[2] + " : " + time[3] + " : " + time[4] +
+    currentTimeHtml = "<div id='runtime'><span class='boardsign-text'>🌙 小窝打烊了 — </span> " +
+                    "已度过 " + time[0] + " 年 " + time[1] + " 天 " + time[2] + " : " + time[3] + " : " + time[4] +
                     "</div>";
   }
   document.getElementById("workboard").innerHTML = currentTimeHtml;

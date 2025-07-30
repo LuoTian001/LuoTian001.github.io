@@ -17,12 +17,9 @@
 }
 
 h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
-    color: #2A9689; /* 修改为你想要的颜色，例如红色 */
-}
-h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
-    animation: breath 10s infinite alternate; /* 设置呼吸效果的动画 */
-    color: #2A9689; /* 标题的初始颜色 */
-    text-decoration: none; /* 保持标题没有下划线 */
+    animation: breath 10s infinite alternate;
+    color: #2A9689;
+    text-decoration: none;
 }
 
 /* 设置呼吸动画 */
@@ -43,6 +40,6 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
         color: #eb692d; /* 结束颜色 */
     }
     100% {
-        color: #2a964e; /* 结束颜色 */
+        color: #55962a; /* 结束颜色 */
     }
 }
