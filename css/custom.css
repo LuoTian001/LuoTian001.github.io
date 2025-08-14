@@ -43,3 +43,8 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
         color: #55962a; /* 结束颜色 */
     }
 }
+
+/* 只修改行内代码颜色 */
+:not(pre) > code {
+  color: #FF5733;
+}
