@@ -4,25 +4,35 @@
   opacity: 0.9;
 }
 
+/*
 #footer {
   background-color: rgb(1, 72, 100);
-  /*background: url('/img/core/footer-light.jpg') no-repeat center center;
-  background-size: cover;*/
   color: #fff;
   padding: 0;
 }
-
+*/
+/* 页脚相关 */
+[data-theme="light"] #footer .copyright {
+    color: #ffffff !important;
+}
+html[data-theme="light"] a[href*="beian.miit.gov.cn"],
+body.light a[href*="beian.miit.gov.cn"] {
+    color: #ffffff !important;
+}
+[data-theme="dark"] #footer .custom_text a {
+    color: #ffffffd0 !important;
+}
+/* 文字排版 */
 #article-container{
       text-align: justify;
 }
-
+/* 设置呼吸动画 */
 h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
     animation: breath 10s infinite alternate;
     color: #2A9689;
     text-decoration: none;
 }
 
-/* 设置呼吸动画 */
 @keyframes breath {
     0% {
         color: #2A9689; /* 起始颜色 */
@@ -44,7 +54,19 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
     }
 }
 
-/* 只修改行内代码颜色 */
+/* 修改行内代码颜色 */
 :not(pre) > code {
   color: #FF5733;
 }
+/* 个人卡片背景图 */
+/*
+#aside-content>.card-widget.card-info {
+    background-image: url('./bg.jpg');
+    background-repeat: no-repeat;
+    background-attachment: inherit;
+    background-size: 100%
+}
+[data-theme=dark] #aside-content>.card-widget.card-info {
+    background-image: url('./bbg.png') !important
+}
+*/
