@@ -27,6 +27,7 @@ body.light a[href*="beian.miit.gov.cn"] {
       text-align: justify;
 }
 /* 设置呼吸动画 */
+/*
 h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
     animation: breath 10s infinite alternate;
     color: #2A9689;
@@ -35,25 +36,25 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
 
 @keyframes breath {
     0% {
-        color: #2A9689; /* 起始颜色 */
+        color: #2A9689;
     }
     20% {
-        color: #2971c4; /* 起始颜色 */
+        color: #2971c4;
     }
     40% {
-        color: #a635aa; /* 起始颜色 */
+        color: #a635aa;
     }
     60% {
-        color: #c42929; /* 中间颜色 */
+        color: #c42929;
     }
     80% {
-        color: #eb692d; /* 结束颜色 */
+        color: #eb692d;
     }
     100% {
-        color: #55962a; /* 结束颜色 */
+        color: #55962a;
     }
 }
-
+*/
 /* 修改行内代码颜色 */
 :not(pre) > code {
   color: #FF5733;
@@ -70,3 +71,25 @@ h1:hover, h2:hover, h3:hover, h4:hover, h5:hover, h6:hover {
     background-image: url('./bbg.png') !important
 }
 */
+
+/* 通用响应式视频样式 */
+iframe[src*="youtube.com"],
+iframe[src*="youtu.be"],
+iframe[src*="vimeo.com"] {
+  display: block;
+  max-width: 100%;
+  width: 100%;
+  aspect-ratio: 16 / 9;  /* 自动保持 16:9 */
+  height: auto;
+}
+
+/* 图片圆角 + 适配亮暗主题 */
+.post-content img {
+    border-radius: 12px;
+    object-fit: cover;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(0,0,0,0.1); /* 明亮主题边框 */
+}
+html.dark .post-content img {
+    border: 1px solid rgba(255,255,255,0.1); /* 暗黑主题边框 */
+}
