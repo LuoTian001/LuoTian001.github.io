@@ -135,8 +135,15 @@ function startSakura() {
 window.onresize = function () {
     var canvasSnow = document.getElementById('canvas_snow');
 }
+
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 img.onload = function () {
-    startSakura();
+        if (!isMobile()) {
+        startSakura();
+    }
 }
 
 function stopp() {
