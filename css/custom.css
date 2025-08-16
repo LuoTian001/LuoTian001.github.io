@@ -13,14 +13,14 @@
 */
 /* 页脚相关 */
 [data-theme="light"] #footer .copyright {
-    color: #ffffff !important;
+    color: #333333 !important;
 }
 html[data-theme="light"] a[href*="beian.miit.gov.cn"],
 body.light a[href*="beian.miit.gov.cn"] {
-    color: #ffffff !important;
+    color: #333333 !important;
 }
 [data-theme="dark"] #footer .custom_text a {
-    color: #ffffffd0 !important;
+    color: #333333 !important;
 }
 /* 文字排版 */
 #article-container{

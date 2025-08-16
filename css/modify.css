@@ -1,6 +1,10 @@
 #page-header,
 #page-header:before {
-  background: transparent !important;
+  background: -webkit-linear-gradient(top, rgba(255,113,168,0.9), rgba(0,0,255,0)) !important;
+  background: -moz-linear-gradient(top, rgba(255,113,168,0.9), rgba(0,0,255,0)) !important;
+  background: -o-linear-gradient(top, rgba(255,113,168,0.9), rgba(0,0,255,0)) !important;
+  background: -ms-linear-gradient(top, rgba(255,113,168,0.9), rgba(0,0,255,0)) !important;
+  background: linear-gradient(to bottom, rgba(255,113,168,0.9), rgba(0,0,255,0)) !important;
 }
 #page-header.post-bg,
 #page-header.not-home-page {
