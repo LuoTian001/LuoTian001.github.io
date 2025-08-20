@@ -1,5 +1,5 @@
 :root {
-  --post-heading-icon: url('data:image/svg+xml;charset=utf-8;base64,PCEtLSBpY29uNjY2LmNvbSAtIE1JTExJT05TIE9GIEZSRUUgVkVDVE9SIElDT05TIC0tPjxzdmcgaWQ9IkNhcGFfMSIgZW5hYmxlLWJhY2tncm91bmQ9Im5ldyAwIDAgNTEyLjUxOSA1MTIuNTE5IiB2aWV3Qm94PSIwIDAgNTEyLjUxOSA1MTIuNTE5IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnPjxnPjxnPjxwYXRoIGQ9Im0zNjQuMTMzIDk0LjA2NyAyMi4xMzYtNjYuMjU5YzguMTQ2LTI0LjM4MyAzNi45MzUtMzUuNDc1IDU4Ljg0LTIyLjAxOCAxLjg2OCAxLjE0OCAzLjY2OSAyLjQ1IDUuMzgzIDMuOTA4IDExLjM2MSA5LjY1OCAxNi40NzMgMjMuNTc1IDE1LjM2MyAzNy4wNzcgMTIuNzYzLTEuMDQ5IDI1Ljg5NyAzLjQ2MSAzNS40NTUgMTMuNTU1LjMyOS4zNDcuNjUxLjY5OC45NjYgMS4wNTQgMTkuMDA0IDIxLjQzNiA5LjM4NiA1NS40NTItMTcuNzU5IDY0LjYwN2wtNjYuMjE3IDIyLjMzMi4wMTUtLjA0NiA2Ni4xMzcgMjIuMDk1YzI0LjM4MyA4LjE0NiAzNS40NzUgMzYuOTM1IDIyLjAxOCA1OC44NC0xLjE0OCAxLjg2OC0yLjQ1IDMuNjY5LTMuOTA4IDUuMzgzLTkuNjU4IDExLjM2MS0yMy41NzUgMTYuNDczLTM3LjA3NyAxNS4zNjMgMS4wNDkgMTIuNzYzLTMuNDYxIDI1Ljg5Ny0xMy41NTUgMzUuNDU1LS4zNDcuMzI5LS42OTguNjUxLTEuMDU0Ljk2Ni0yMS40MzYgMTkuMDA0LTU1LjQ1MiA5LjM4Ni02NC42MDctMTcuNzU5bC0yMi4xNzItNjUuNzM3LS4yNDQtLjA4Mi0yMS45NjcgNjUuNzUzYy04LjE0NiAyNC4zODQtMzYuOTM1IDM1LjQ3NS01OC44NCAyMi4wMTgtMS44NjgtMS4xNDgtMy42NjktMi40NS01LjM4My0zLjkwOC0xMS4zNjEtOS42NTgtMTYuNDczLTIzLjU3NS0xNS4zNjMtMzcuMDc3LTEyLjc2MyAxLjA0OS0yNS44OTctMy40NjEtMzUuNDU1LTEzLjU1NS0uMzI5LS4zNDctLjY1LS42OTgtLjk2Ni0xLjA1NC0xOS4wMDQtMjEuNDM2LTkuMzg2LTU1LjQ1MiAxNy43NTktNjQuNjA3bDY2LjYyMS0yMi40Ny4xMjIuMzYzLTY2LjY3OC0yMi4yNzZjLTI0LjM4My04LjE0Ni0zNS40NzUtMzYuOTM1LTIyLjAxOC01OC44NCAxLjE0OC0xLjg2OCAyLjQ1LTMuNjY5IDMuOTA4LTUuMzgzIDkuNjU4LTExLjM2MSAyMy41NzUtMTYuNDczIDM3LjA3Ny0xNS4zNjMtMS4wNDktMTIuNzYzIDMuNDYxLTI1Ljg5NyAxMy41NTUtMzUuNDU1LjM0Ny0uMzI5LjY5OC0uNjUxIDEuMDU0LS45NjYgMjEuNDM2LTE5LjAwNCA1NS40NTItOS4zODYgNjQuNjA3IDE3Ljc1OWwyMi4zODUgNjYuMzcxIiBmaWxsPSIjZjFiN2U3IiBzdHlsZT0iZmlsbDogcmdiKDI0MSwgMTgyLCAxODIpOyI+PC9wYXRoPjxwYXRoIGQ9Im00ODQuNDUyIDE3MC4zNzMtNjYuMDc2LTIyLjA3NSA2Ni4xNDEtMjIuMzA4YzI3LjE0NS05LjE1NSAzNi43NjMtNDMuMTcyIDE3Ljc1OS02NC42MDctLjMxNS0uMzU2LS42MzctLjcwNy0uOTY2LTEuMDU0LTkuNTU3LTEwLjA5NC0yMi42OTItMTQuNjA0LTM1LjQ1NS0xMy41NTUgMS4xMS0xMy41MDEtNC4wMDItMjcuNDE4LTE1LjM2My0zNy4wNzYtMS43MTUtMS40NTgtMy41MTUtMi43Ni01LjM4My0zLjkwOC0yMS45MDUtMTMuNDU3LTUwLjY5NC0yLjM2NS01OC44NCAyMi4wMThsLTIyLjA3NSA2Ni4wNzYtLjExNy0uMzQ1djEwOS4zMzlsLjAyLjAwNyAyMi4xNzIgNjUuNzM2YzkuMTU1IDI3LjE0NSA0My4xNzIgMzYuNzYzIDY0LjYwNyAxNy43NTkuMzU1LS4zMTUuNzA3LS42MzcgMS4wNTQtLjk2NiAxMC4wOTQtOS41NTcgMTQuNjA0LTIyLjY5MiAxMy41NTUtMzUuNDU1IDEzLjUwMSAxLjExIDI3LjQxOC00LjAwMiAzNy4wNzctMTUuMzYzIDEuNDU4LTEuNzE1IDIuNzYtMy41MTUgMy45MDgtNS4zODMgMTMuNDU3LTIxLjkwNSAyLjM2NS01MC42OTQtMjIuMDE4LTU4Ljg0eiIgZmlsbD0iI2U3ODlkYSIgc3R5bGU9ImZpbGw6IHJnYigyNTUsIDEyMiwgMTc1KTsiPjwvcGF0aD48L2c+PGc+PHBhdGggZD0ibTM2NC4wNTkgMTY5LjQwOGMtNi4yNDYgMC0xMi4wMzEtNC4wNTUtMTQuMTEtOS45NTEtMi4wNzgtNS44OTEtLjI3OC0xMi42ODUgNC42LTE2LjY0OSA0Ljg1Ny0zLjk0NiAxMS44NC00LjUwOCAxNy4yMTctMS4yNjUgNS4zNTUgMy4yMjkgOC4yNTQgOS42NDMgNy4wMDIgMTUuNzk1LTEuNDA2IDYuOTItNy42MjcgMTIuMDctMTQuNzA5IDEyLjA3eiIgZmlsbD0iI2U3ODlkYSIgc3R5bGU9ImZpbGw6IHJnYigyNTUsIDEyMiwgMTc1KTsiPjwvcGF0aD48cGF0aCBkPSJtMzcxLjc2NyAxNDEuNTQ0Yy0yLjM1OS0xLjQyMi01LjAyNy0yLjExMi03LjY4OS0yLjEwNnYyOS45N2M3LjA3NC0uMDA5IDEzLjI4NS01LjE1NiAxNC42OTEtMTIuMDY4IDEuMjUxLTYuMTUzLTEuNjQ3LTEyLjU2Ny03LjAwMi0xNS43OTZ6IiBmaWxsPSIjZWY1Y2EyIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgNzEsIDE0NSk7Ij48L3BhdGg+PC9nPjwvZz48Zz48Zz48cGF0aCBkPSJtMTc3LjkwNyAyNzAuMDg3IDI2LjUyOC03OS40MDZjOS43NjItMjkuMjIxIDQ0LjI2NC00Mi41MTMgNzAuNTE0LTI2LjM4NyAyLjIzOSAxLjM3NSA0LjM5NiAyLjkzNiA2LjQ1MiA0LjY4MyAxMy42MTUgMTEuNTc0IDE5Ljc0MSAyOC4yNTMgMTguNDExIDQ0LjQzMyAxNS4yOTUtMS4yNTggMzEuMDM1IDQuMTQ4IDQyLjQ4OSAxNi4yNDQuMzk0LjQxNi43OC44MzcgMS4xNTcgMS4yNjMgMjIuNzc1IDI1LjY4OSAxMS4yNDggNjYuNDU0LTIxLjI4MiA3Ny40MjZsLTc5LjM1NSAyNi43NjUuMDE4LS4wNTUgNzkuMjU4IDI2LjQ3OWMyOS4yMjEgOS43NjIgNDIuNTEzIDQ0LjI2MyAyNi4zODcgNzAuNTE0LTEuMzc1IDIuMjM5LTIuOTM2IDQuMzk2LTQuNjgzIDYuNDUyLTExLjU3NSAxMy42MTUtMjguMjUzIDE5Ljc0MS00NC40MzMgMTguNDExIDEuMjU4IDE1LjI5NS00LjE0OCAzMS4wMzUtMTYuMjQ0IDQyLjQ4OS0uNDE2LjM5NC0uODM3Ljc4LTEuMjYzIDEuMTU3LTI1LjY4OSAyMi43NzUtNjYuNDU0IDExLjI0OC03Ny40MjYtMjEuMjgybC0yNi41Ny03OC43NzktLjI5My0uMDk4LTI2LjMyNSA3OC43OTljLTkuNzYyIDI5LjIyMS00NC4yNjMgNDIuNTEzLTcwLjUxNCAyNi4zODctMi4yMzktMS4zNzUtNC4zOTYtMi45MzYtNi40NTEtNC42ODMtMTMuNjE1LTExLjU3NC0xOS43NDItMjguMjUzLTE4LjQxMS00NC40MzMtMTUuMjk1IDEuMjU4LTMxLjAzNi00LjE0OC00Mi40ODktMTYuMjQ0LS4zOTQtLjQxNi0uNzgtLjgzNy0xLjE1Ny0xLjI2My0yMi43NzUtMjUuNjg5LTExLjI0OC02Ni40NTQgMjEuMjgyLTc3LjQyNmw3OS44MzktMjYuOTI4LjE0Ny40MzUtNzkuOTA3LTI2LjY5NWMtMjkuMjIzLTkuNzY0LTQyLjUxNS00NC4yNjUtMjYuMzg5LTcwLjUxNiAxLjM3NS0yLjIzOSAyLjkzNi00LjM5NiA0LjY4My02LjQ1MiAxMS41NzQtMTMuNjE1IDI4LjI1My0xOS43NDEgNDQuNDMzLTE4LjQxMS0xLjI1OC0xNS4yOTUgNC4xNDgtMzEuMDM1IDE2LjI0NS00Mi40ODkuNDE2LS4zOTQuODM3LS43NzkgMS4yNjMtMS4xNTcgMjUuNjg5LTIyLjc3NSA2Ni40NTQtMTEuMjQ4IDc3LjQyNiAyMS4yODJsMjYuODI3IDc5LjUzOSIgZmlsbD0iI2YxYjdlNyIgc3R5bGU9ImZpbGw6IHJnYigyNDEsIDE4MiwgMTgyKTsiPjwvcGF0aD48cGF0aCBkPSJtMzIyLjA5NyAzNjEuNTMyLTc5LjE4Ni0yNi40NTUgNzkuMjY0LTI2LjczNGMzMi41My0xMC45NzIgNDQuMDU3LTUxLjczNyAyMS4yODItNzcuNDI2LS4zNzctLjQyNi0uNzYzLS44NDctMS4xNTctMS4yNjMtMTEuNDUzLTEyLjA5Ni0yNy4xOTQtMTcuNTAyLTQyLjQ4OS0xNi4yNDQgMS4zMzEtMTYuMTgtNC43OTYtMzIuODU4LTE4LjQxMS00NC40MzMtMi4wNTUtMS43NDctNC4yMTMtMy4zMDgtNi40NTItNC42ODMtMjYuMjUxLTE2LjEyNy02MC43NTItMi44MzUtNzAuNTE0IDI2LjM4NmwtMjYuNDU0IDc5LjE4Ni0uMTQtLjQxM3YxMzEuMDMybC4wMjQuMDA4IDI2LjU3IDc4Ljc3OWMxMC45NzIgMzIuNTMgNTEuNzM3IDQ0LjA1NyA3Ny40MjYgMjEuMjgyLjQyNi0uMzc4Ljg0Ny0uNzYzIDEuMjYzLTEuMTU3IDEyLjA5Ni0xMS40NTQgMTcuNTAyLTI3LjE5NCAxNi4yNDQtNDIuNDg5IDE2LjE4IDEuMzMxIDMyLjg1OC00Ljc5NiA0NC40MzMtMTguNDExIDEuNzQ3LTIuMDU1IDMuMzA4LTQuMjEzIDQuNjgzLTYuNDUxIDE2LjEyOC0yNi4yNTEgMi44MzYtNjAuNzUyLTI2LjM4Ni03MC41MTR6IiBmaWxsPSIjZTc4OWRhIiBzdHlsZT0iZmlsbDogcmdiKDI1NSwgMTIyLCAxNzUpOyI+PC9wYXRoPjwvZz48Zz48cGF0aCBkPSJtMTc3Ljg0MyAzNDUuMDM5Yy02LjI4NyAwLTExLjk4NC00LjA1MS0xNC4xMTktOS45NDctMi4xMjktNS44OC0uMjMtMTIuNjgyIDQuNTk5LTE2LjY0NCA0Ljg1Ni0zLjk4NCAxMS44MzQtNC40NzUgMTcuMjIxLTEuMjcgNS4zODggMy4yMDYgOC4yMTUgOS42NTUgNi45OTkgMTUuNzktMS4zNzIgNi45MjctNy42MzkgMTIuMDcxLTE0LjcgMTIuMDcxeiIgZmlsbD0iI2U3ODlkYSIgc3R5bGU9ImZpbGw6IHJnYigyNTUsIDEyMiwgMTc1KTsiPjwvcGF0aD48cGF0aCBkPSJtMTg1LjU0NCAzMTcuMTc5Yy0yLjM2Ni0xLjQwOC01LjAzOC0yLjEwMi03LjcwNC0yLjEwMXYyOS45NjFoLjAwMmM3LjA2MSAwIDEzLjMyOC01LjE0NSAxNC43LTEyLjA3IDEuMjE3LTYuMTM1LTEuNjEtMTIuNTg0LTYuOTk4LTE1Ljc5eiIgZmlsbD0iI2VmNWNhMiIgc3R5bGU9ImZpbGw6IHJnYigyNTUsIDcxLCAxNDUpOyI+PC9wYXRoPjwvZz48L2c+PC9nPjwvc3ZnPg==');
+  --post-heading-icon: "🌸"; /* 使用 emoji 图标 */
 }
 
 /* A. 主题生成了 .headerlink 时（优先使用锚点） */
@@ -9,16 +9,17 @@
 #post h4 > .headerlink::before,
 #post h5 > .headerlink::before,
 #post h6 > .headerlink::before {
-  content: "";
+  content: var(--post-heading-icon); /* 使用 emoji 图标 */
   display: inline-block;
-  width: 1em;
-  height: 1em;
-  margin-right: .4em;
-  vertical-align: middle;
-  background: var(--post-heading-icon) no-repeat center;
-  background-size: 1em 1em;
-  color: #FF5733;  /* currentColor 可用于SVG填充，需SVG使用fill="currentColor" */
-  filter: invert(24%) sepia(89%) saturate(6963%) hue-rotate(339deg) brightness(100%) contrast(102%);
+  width: auto;
+  height: 1.5em;
+  margin-right: 1em; /* 增加图标与标题的间距 */
+  vertical-align: middle; /* 默认对齐方式 */
+  background: none; /* 去掉颜色配置 */
+  background-size: contain;
+  filter: none; /* 去掉颜色配置 */
+  transform: translateY(-0.2em); /* 稍微调整图标位置，使其向上 */
+  animation: rotate-icon 10s linear infinite; /* 缓慢旋转动画 */
 }
 
 /* B. 没有 .headerlink 时，给标题本身加（仅限带 id 的标题，避免影响侧栏/目录） */
@@ -28,14 +29,25 @@
 #post h4[id]:not(:has(> .headerlink))::before,
 #post h5[id]:not(:has(> .headerlink))::before,
 #post h6[id]:not(:has(> .headerlink))::before {
-  content: "";
+  content: var(--post-heading-icon); /* 使用 emoji 图标 */
   display: inline-block;
-  width: 1em;
-  height: 1em;
-  margin-right: .4em;
-  vertical-align: middle;
-  background: var(--post-heading-icon) no-repeat center;
-  background-size: 1em 1em;
-  color: #FF5733;  /* currentColor 可用于SVG填充，需SVG使用fill="currentColor" */
-  filter: invert(24%) sepia(89%) saturate(6963%) hue-rotate(339deg) brightness(100%) contrast(102%);
+  width: auto;
+  height: 1.5em;
+  margin-right: 1em; /* 增加图标与标题的间距 */
+  vertical-align: middle; /* 默认对齐方式 */
+  background: none; /* 去掉颜色配置 */
+  background-size: contain;
+  filter: none; /* 去掉颜色配置 */
+  transform: translateY(-0.2em); /* 稍微调整图标位置，使其向上 */
+  animation: rotate-icon 10s linear infinite; /* 缓慢旋转动画 */
+}
+
+/* 定义旋转动画 */
+@keyframes rotate-icon {
+  0% {
+    transform: translateY(-0.2em) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-0.2em) rotate(360deg);
+  }
 }
