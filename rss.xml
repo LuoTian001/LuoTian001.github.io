@@ -6,7 +6,7 @@
   <link href="https://luotian.cyou/rss.xml" rel="self"/>
   
   <link href="https://luotian.cyou/"/>
-  <updated>2025-10-31T18:47:19.915Z</updated>
+  <updated>2025-11-09T17:35:13.853Z</updated>
   <id>https://luotian.cyou/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>西电雨课堂 - 工程伦理答案</title>
+    <link href="https://luotian.cyou/post/Engineer-Ethics.html"/>
+    <id>https://luotian.cyou/post/Engineer-Ethics.html</id>
+    <published>2025-11-09T07:17:35.000Z</published>
+    <updated>2025-11-09T17:35:13.853Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;font size=&quot;4&quot; color=&quot;00b9ff&quot;&gt;前言：章节答案由我自己整理，期末考试暂未更新&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+&lt;h2 id=&quot;center-第一章-center&quot;&gt;&lt;center&gt;第一章&lt;/center&gt;&lt;/h2&gt;
+&lt;ol</summary>
+      
+    
+    
+    
+    <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>西电雨课堂 - 学术交流英语答案</title>
@@ -454,34 +476,6 @@
     <category term="MMLab" scheme="https://luotian.cyou/tags/MMLab/"/>
     
     <category term="深度学习" scheme="https://luotian.cyou/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>MMclassification 与深度学习环境配置</title>
-    <link href="https://luotian.cyou/post/MM-cls.html"/>
-    <id>https://luotian.cyou/post/MM-cls.html</id>
-    <published>2023-02-07T13:08:00.000Z</published>
-    <updated>2025-07-09T18:12:17.290Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;  由于本人之前没有接触过 python 和机器学习的相关知识，这次图像分类的配置过程可谓一路艰辛，本文当是一次避坑总结。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;配置环境概览:&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;平台: Windows 11&lt;br&gt;
-Pyth</summary>
-      
-    
-    
-    
-    <category term="深度学习" scheme="https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="MMLab" scheme="https://luotian.cyou/tags/MMLab/"/>
-    
-    <category term="环境配置" scheme="https://luotian.cyou/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
     
   </entry>
   
