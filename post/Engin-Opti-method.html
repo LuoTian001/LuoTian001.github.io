@@ -1,0 +1,611 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>西电 - 工程优化方法 | 洛天的小窝</title><meta name="author" content="Luo Tian"><meta name="copyright" content="Luo Tian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="第 1、2 章测试  如果 $f (x) = 3x_1^2 + x_2^2 + ax_1x_2$ 为严格凸函数，则 $a$ 的取值范围为 $-\sqrt{12} < a < \sqrt{12}$ 凸规划的可行域是凸集。 √ 凸规划的最优集是凸集。 √ 两个互相不交的凸集之间一定存在分离超平面。 √ 设 $f_1, f_2$ 是凸集 $D$ 上的凸函数，则 $f_1 + f_2$ 一定是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="西电 - 工程优化方法">
+<meta property="og:url" content="https://luotian.cyou/post/Engin-Opti-method.html">
+<meta property="og:site_name" content="洛天的小窝">
+<meta property="og:description" content="第 1、2 章测试  如果 $f (x) = 3x_1^2 + x_2^2 + ax_1x_2$ 为严格凸函数，则 $a$ 的取值范围为 $-\sqrt{12} < a < \sqrt{12}$ 凸规划的可行域是凸集。 √ 凸规划的最优集是凸集。 √ 两个互相不交的凸集之间一定存在分离超平面。 √ 设 $f_1, f_2$ 是凸集 $D$ 上的凸函数，则 $f_1 + f_2$ 一定是">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luotian.cyou/img/study/study-note-cover.jpg">
+<meta property="article:published_time" content="2026-01-14T06:43:58.000Z">
+<meta property="article:modified_time" content="2026-01-14T08:13:40.861Z">
+<meta property="article:author" content="Luo Tian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luotian.cyou/img/study/study-note-cover.jpg"><link rel="shortcut icon" href="/img/core/webid.ico"><link rel="canonical" href="https://luotian.cyou/post/Engin-Opti-method.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><meta><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/css/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"距文章发布已超过","messageNext":"天，可能存在过时的内容，请谨慎参考。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '西电 - 工程优化方法',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-01-14 16:13:40'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/font.css"><meta name="baidu-site-verification" content="codeva-gbh5PKKoNR"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/mouse/mouse.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="/css/title.css"><!-- hexo injector head_end start --><script> let HEXO_MMEDIA_DATA = { js: [], css: [], aplayerData: [], metingData: [], artPlayerData: [], dplayerData: []}; </script><link rel="stylesheet" href="/css/runtime.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/rss.xml" title="洛天的小窝" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/core/id.png" onerror="onerror=null;src='/img/core/friend_404.gif'" alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><hr class="custom-hr"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/game/alise/alise.html"><i class="fa-fw fa fa-gift"></i><span> 邦邦卡邦</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/study/study-note.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="洛天的小窝"><span class="site-name">洛天的小窝</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/game/alise/alise.html"><i class="fa-fw fa fa-gift"></i><span> 邦邦卡邦</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">西电 - 工程优化方法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-01-14T06:43:58.000Z" title="发表于 2026-01-14 14:43:58">2026-01-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-01-14T08:13:40.861Z" title="更新于 2026-01-14 16:13:40">2026-01-14</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/">课程答案</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>7分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><div class="top-img" style="background-image: url('/img/study/study-note.jpg');"></div><article class="post-content" id="article-container"><h2 id="center-第1、2章测试-center"><center>第 1、2 章测试</center></h2>
+<ol>
+<li>如果 $f (x) = 3x_1^2 + x_2^2 + ax_1x_2$ 为严格凸函数，则 $a$ 的取值范围为<br>
+$-\sqrt{12} &lt; a &lt; \sqrt{12}$</li>
+<li>凸规划的可行域是凸集。<br>
+√</li>
+<li>凸规划的最优集是凸集。<br>
+√</li>
+<li>两个互相不交的凸集之间一定存在分离超平面。<br>
+√</li>
+<li>设 $f_1, f_2$ 是凸集 $D$ 上的凸函数，则 $f_1 + f_2$ 一定是凸函数。<br>
+√</li>
+<li>设 $f_1, f_2$ 是凸集 $D$ 上的凸函数，$g (x) = \max {f_1 (x), f_2 (x)}$ 一定是凸函数。<br>
+√</li>
+<li>二阶可微函数在凸集 $D$ 上是凸函数的充要条件是其二阶海塞矩阵是半正定的。<br>
+√</li>
+<li>二阶可微函数在凸集 $D$ 上是严格凸函数的充要条件是其二阶海塞矩阵是正定的。<br>
+×</li>
+<li>设 $f_1, f_2$ 是凸集 $D$ 上的凸函数，则 $f_1 - f_2$ 一定是凸函数。<br>
+×</li>
+<li>设 $f_1, f_2$ 是凸集 $D$ 上的凸函数，$g (x) = \min {f_1 (x), f_2 (x)}$ 一定是凸函数。<br>
+×</li>
+<li>对凸规划而言，局部最优解即为全局最优解。<br>
+√</li>
+<li>若 $f (x)$ 是 $D$ 上的凸函数，$g (y)$ 是 $\mathbb {R}$ 上的单调递增凸函数，则 $g (f (x))$ 是 $D$ 上的凸函数。<br>
+√</li>
+<li>集合 $S$ 是紧集的充要条件是存在收敛的子列。<br>
+×</li>
+<li>优化问题的全局最优解一定小于或等于局部最优解。<br>
+√</li>
+<li>凸集与其边界的交集一定是该凸集的极端点集合。<br>
+×</li>
+<li>函数在与其梯度成锐角的方向上是上升的。<br>
+√</li>
+<li>函数在与其梯度成钝角的方向上是下降的。<br>
+×</li>
+<li>凸集的凸组合一定是凸集内的点。<br>
+√</li>
+<li>凸集的任意子集一定是凸集。<br>
+×</li>
+<li>线性函数的 Hessian 矩阵全为 0 矩阵。<br>
+√</li>
+<li>非零梯度方向与函数等值面的切平面垂直。<br>
+√</li>
+<li>梯度的反方向是函数局部下降最快的方向。<br>
+√</li>
+<li>光滑的约束优化问题的最优集一定是闭集。<br>
+√</li>
+<li>凸规划的对偶问题不一定是凸规划问题。<br>
+√</li>
+<li>梯度方向是函数全局变化最快的方向。<br>
+×</li>
+</ol>
+<h2 id="center-第3、4章测试-center"><center>第 3、4 章测试</center></h2>
+<ol>
+<li>如果 $f (x) = 3x_1^2 + x_2^2 + 8x_1x_2$，用 Newton 法求该函数的极小点，取 $x^0 = (2,3)^T$，迭代一步得到的点为<br>
+$(0,0)^T$</li>
+<li>用黄金分割法求函数 $x^2 - x + 1$ 在 $[0,1]$ 区间上的极小值点，第一步取的两个点为<br>
+0.382, 0.618</li>
+<li>对二次函数 $f (x) = 0.5x_1^2 + x_2^2$，取初始点 $x^{(0)} = (2,1)^T$，用精确一维搜索的最速下降法一步得到的下一迭代点为<br>
+$x^{(1)} = (0, -1)^T$</li>
+<li>变尺度法也是一种共轭梯度算法。<br>
+√</li>
+<li>变尺度法具有二次终止性。<br>
+√</li>
+<li>变尺度法具有超线性收敛性。<br>
+√</li>
+<li>DFP 方法的任意点的搜索方向和梯度方向是正交的。<br>
+√</li>
+<li>DFP 方法和 BFGS 方法都是秩 2 修正算法。<br>
+√</li>
+<li>共轭梯度法求解无约束优化问题的重置技巧主要由于直接延续技巧。<br>
+√</li>
+<li>共轭梯度法的前后两个迭代点的梯度方向是正交的。<br>
+√</li>
+<li>牛顿法不会产生锯齿现象。<br>
+√</li>
+<li>对于二元凸二次函数，从任意点出发，共轭方向至多迭代两步就可以找到原问题的极小值点。<br>
+√</li>
+<li>共轭梯度法具有二次终止性。<br>
+√</li>
+<li>N 个共轭方向可以构成 N 维欧里得空间的一组基。<br>
+√</li>
+<li>共轭梯度法从任意初始点出发，最多 n 步迭代到达 n 元正定二次函数的极小点。<br>
+√</li>
+<li>对非二次函数，由于目标函数的 Hesse 矩阵不再是常数矩阵，因而产生的方向不再是共轭方向。<br>
+√</li>
+<li>如果初始方向不用负梯度方向，共轭梯度算法的收敛速率可能像线性收敛速率那样慢。<br>
+√</li>
+<li>极小化非正定二次函数，PRP 共轭梯度算法的计算效果要好于 FR 共轭梯度法。<br>
+√</li>
+<li>最速下降法求解无约束凸二次优化问题，如果二阶海塞矩阵是单位矩阵，则从任意点出发迭代一步可以得到原问题的最优解。<br>
+√</li>
+<li>函数的负梯度方向是下降方向。<br>
+√</li>
+<li>牛顿法求解凸二次函数，迭代一步可以得到问题的全局极小点。<br>
+√</li>
+<li>牛顿法具有二次终止性。<br>
+√</li>
+<li>牛顿法具有局部二阶收敛性，对初始点要求高。<br>
+√</li>
+<li>牛顿法具有全局二阶收敛性。<br>
+×</li>
+<li>经典的牛顿法一定是收敛的。<br>
+×</li>
+<li>平行切线法可以加快最速下降方法的收敛速度。<br>
+√</li>
+<li>最速下降法不适合求解病态的无约束优化问题。<br>
+×</li>
+<li>最速下降法具有全局收敛性。<br>
+√</li>
+<li>二分法适合求解一维非光滑函数的最小值。<br>
+×</li>
+<li>黄金分割算法的三大原则是对称原则、等比收缩与区间分割。<br>
+√</li>
+<li>水平集有界是最速下降方法收敛的一个需要假设的条件。<br>
+√</li>
+<li>对二元正定二次函数，用最速下降法产生的点列：偶数点列均在一条直线上，奇数点列也均在一条直线上，且都过最优点。<br>
+√</li>
+<li>最速下降法在两个相邻点之间的搜索方向是正交的。<br>
+√</li>
+<li>最速下降法仅仅是指某点的一个局部性质。<br>
+√</li>
+<li>最速下降法具有二次终止性。<br>
+×</li>
+<li>黄金分割算法适合求解一维非光滑函数的最小值。<br>
+√</li>
+<li>无约束优化问题的驻点一定是局部最优解。<br>
+×</li>
+<li>无约束优化问题的局部最优点一定是全局最优解。<br>
+×</li>
+</ol>
+<h2 id="center-第5、6章测试-center"><center>第 5、6 章测试</center></h2>
+<ol>
+<li>在三维空间中，集合 ${(x,y) \mid x^2 + y^2 \le 1}$ 的极点构成的集合为<br>
+${(x,y) \mid x^2 + y^2 = 1}$</li>
+<li>如下线性规划的对偶规划为<br>
+$\max \ 4y_1 - y_2$<br>
+$s.t. \ y_1 - 3y_2 \le 2$<br>
+$y_1 + 5y_2 = -3$<br>
+$y_1 \le 0, y_2 \ge 0$</li>
+<li>如果原规划的基本解还是对偶规划的可行解，则也是原规划的最优解。<br>
+√</li>
+<li>松弛变量和剩余变量不是合法变量。<br>
+×</li>
+<li>两阶段法的第一阶段不需要原问题的目标函数。<br>
+√</li>
+<li>大 M 法通过添加罚项可以迫使人工变量离基。<br>
+√</li>
+<li>对偶规划中的变量就是影子价格。<br>
+√</li>
+<li>极小化问题给出极大化问题的目标函数值的上界。<br>
+√</li>
+<li>极大化问题给出极小化问题的目标函数值的下界。<br>
+√</li>
+<li>如果对偶可行的基本解还是原规划的可行解，则也是对偶规划的最优解。<br>
+√</li>
+<li>线性规划的基本解和顶点是一一对应的。<br>
+×</li>
+<li>线性规划的最优解一定在其可行域的顶点上取到。<br>
+×</li>
+<li>如果可行域有界，则线性规划的最优解一定在其可行域的顶点上取到。<br>
+√</li>
+<li>若线性规划问题存在可行解，则一定存在基本可行解。<br>
+√</li>
+<li>若线性规划问题存在有限的最优解，则一定存在最优的基本可行解。<br>
+√</li>
+<li>如果一个线性规划存在两个最优解，那么一定存在多个最优解。<br>
+√</li>
+<li>单纯形法求解线性规划不会发生循环现象。<br>
+×</li>
+<li>人工变量是合法变量。<br>
+×</li>
+<li>线性规划的基本解的个数是有限的。<br>
+√</li>
+<li>线性规划的可行解的个数是有限的。<br>
+×</li>
+<li>线性规划的基本可行解和顶点一一对应。<br>
+√</li>
+<li>线性规划的可行域的顶点个数是有限的。<br>
+√</li>
+<li>凸多胞形的顶点个数是有限的。<br>
+√</li>
+<li>所有凸集的极点个数一定是有有限的。<br>
+×</li>
+<li>凸多面体的极方向的个数是有限的。<br>
+√</li>
+<li>线性规划的基本可行解的个数是有限的。<br>
+√</li>
+</ol>
+<h2 id="center-第7、8、9章测试-center"><center>第 7、8、9 章测试</center></h2>
+<ol>
+<li>如下二次规划在 $(0,0)^T$ 点处的可行下降方向为<br>
+$d = (1,1)^T$</li>
+<li>考虑如下带约束优化问题，点 $(0,1)^T$ 处的积极约束为<br>
+$5 - x_1 - 5x_2 \ge 0, \quad x_1 \ge 0$</li>
+<li>用乘子法求解如下问题，其增广拉格朗日函数为<br>
+$\min f(x)+\lambda (x_1-x_2)+\frac{1}{\mu}(x_1-x_2)^2,\quad \mu &gt;0$</li>
+<li>外点罚函数法除了最优点外其他的迭代点不是可行点。<br>
+√</li>
+<li>内点罚函数法的迭代点一定是可行点。<br>
+√</li>
+<li>Zoutendijk 可行方向算法一定是收敛的。<br>
+×</li>
+<li>Zoutendijk 可行方向算法的方向映射和步长映射的复合映射是闭的。<br>
+√</li>
+<li>Zoutendijk 可行方向法如果经过有限步迭代终止，则可得到规划的一个 K - T 点。<br>
+√</li>
+<li>内点罚函数法不适合求解带等式约束的非线性规划。<br>
+√</li>
+<li>凸规划的 K - T 点是全局最优解。<br>
+√</li>
+<li>凸规划的 K - T 点是局部最优解。<br>
+√</li>
+<li>非线性规划问题的 F - J 点是 K - T 点。<br>
+×</li>
+<li>非线性规划的 K - T 点一定是 F - J 点。<br>
+√</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://luotian.cyou">Luo Tian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://luotian.cyou/post/Engin-Opti-method.html">https://luotian.cyou/post/Engin-Opti-method.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://luotian.cyou" target="_blank">洛天的小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/study/study-note-cover.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer=""></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i> 打赏</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/QRs/wx.png" target="_blank"><img class="post-qr-code-img" src="/img/QRs/wx.png" alt="wechat"></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/QRs/zfb.jpg" target="_blank"><img class="post-qr-code-img" src="/img/QRs/zfb.jpg" alt="alipay"></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/post/Engineer-Ethics.html" title="西电雨课堂 - 工程伦理答案"><img class="cover" src="/img/study/study-note-cover.jpg" onerror="onerror=null;src='/img/core/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">西电雨课堂 - 工程伦理答案</div></div></a></div></nav><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/core/id.png" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"></div><div class="author-info__name">Luo Tian</div><div class="author-info__description">寒尽觉春生</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">11</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">8</div></a></div><a id="card-info-btn" href="https://github.com/LuoTian001"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><p>🌸欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！如果你有任何建议或想法，欢迎通过评论与我联系(o゜▽゜)o☆<br>主站：luotian.cyou<br>副站：www.luotian.cyou<br>备用：LuoTian001.github.io</p></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#center-%E7%AC%AC1%E3%80%812%E7%AB%A0%E6%B5%8B%E8%AF%95-center"><span class="toc-text">第 1、2 章测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#center-%E7%AC%AC3%E3%80%814%E7%AB%A0%E6%B5%8B%E8%AF%95-center"><span class="toc-text">第 3、4 章测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#center-%E7%AC%AC5%E3%80%816%E7%AB%A0%E6%B5%8B%E8%AF%95-center"><span class="toc-text">第 5、6 章测试</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#center-%E7%AC%AC7%E3%80%818%E3%80%819%E7%AB%A0%E6%B5%8B%E8%AF%95-center"><span class="toc-text">第 7、8、9 章测试</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/Engin-Opti-method.html" title="西电 - 工程优化方法"><img src="/img/study/study-note-cover.jpg" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 工程优化方法"></a><div class="content"><a class="title" href="/post/Engin-Opti-method.html" title="西电 - 工程优化方法">西电 - 工程优化方法</a><time datetime="2026-01-14T06:43:58.000Z" title="发表于 2026-01-14 14:43:58">2026-01-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Engineer-Ethics.html" title="西电雨课堂 - 工程伦理答案"><img src="/img/study/study-note-cover.jpg" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电雨课堂 - 工程伦理答案"></a><div class="content"><a class="title" href="/post/Engineer-Ethics.html" title="西电雨课堂 - 工程伦理答案">西电雨课堂 - 工程伦理答案</a><time datetime="2025-11-09T07:17:35.000Z" title="发表于 2025-11-09 15:17:35">2025-11-09</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Aca-Commu-Eng.html" title="西电雨课堂 - 学术交流英语答案"><img src="/img/study/study-note-cover.jpg" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电雨课堂 - 学术交流英语答案"></a><div class="content"><a class="title" href="/post/Aca-Commu-Eng.html" title="西电雨课堂 - 学术交流英语答案">西电雨课堂 - 学术交流英语答案</a><time datetime="2025-10-31T17:54:29.000Z" title="发表于 2025-11-01 01:54:29">2025-11-01</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/custom-css4hexo.html" title="hexo 自定义主题配置"><img src="/img/study/hexoconfig.jpg" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="hexo 自定义主题配置"></a><div class="content"><a class="title" href="/post/custom-css4hexo.html" title="hexo 自定义主题配置">hexo 自定义主题配置</a><time datetime="2025-08-16T05:33:54.000Z" title="发表于 2025-08-16 13:33:54">2025-08-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/exlinks4hexo.html" title="hexo 外链设置"><img src="/img/study/hexoconfig.jpg" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="hexo 外链设置"></a><div class="content"><a class="title" href="/post/exlinks4hexo.html" title="hexo 外链设置">hexo 外链设置</a><time datetime="2025-08-14T05:03:08.000Z" title="发表于 2025-08-14 13:03:08">2025-08-14</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">©2023 - 2026 By Luo Tian</div><div class="footer_custom_text"><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">陕ICP备2025072980号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">簡</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="/js/fancybox.umd.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('/js/pangu.umd.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addModeChange('mermaid', runMermaid)
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.textContent = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/twikoo/1.4.18/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8137572853" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-autoplay="true" data-loop:"all"="" data-order:"list"=""> </div><script src="/js/sakura.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="/js/fireworks.min.js"></script><link rel="stylesheet" href="/css/APlayer.min.css" media="print" onload="this.media='all'"><script src="/js/APlayer.min.js"></script><script src="/js/meting.min.js"></script><script src="/js/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script></div><!-- hexo injector body_end start --><script src="/assets/mmedia/mmedia-loader.js"></script><script data-pjax="">
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async="" src="/js/runtime.js"></script><!-- hexo injector body_end end --></body></html>

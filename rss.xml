@@ -6,7 +6,7 @@
   <link href="https://luotian.cyou/rss.xml" rel="self"/>
   
   <link href="https://luotian.cyou/"/>
-  <updated>2025-12-02T03:11:01.312Z</updated>
+  <updated>2026-01-14T08:13:40.861Z</updated>
   <id>https://luotian.cyou/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>西电 - 工程优化方法</title>
+    <link href="https://luotian.cyou/post/Engin-Opti-method.html"/>
+    <id>https://luotian.cyou/post/Engin-Opti-method.html</id>
+    <published>2026-01-14T06:43:58.000Z</published>
+    <updated>2026-01-14T08:13:40.861Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;h2 id=&quot;center-第1、2章测试-center&quot;&gt;&lt;center&gt;第 1、2 章测试&lt;/center&gt;&lt;/h2&gt;
+&lt;ol&gt;
+&lt;li&gt;如果 $f (x) = 3x_1^2 + x_2^2 + ax_1x_2$ 为严格凸函数，则 $a$ 的取值范围为&lt;br&gt;
+$-&#92;sqr</summary>
+      
+    
+    
+    
+    <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
+    
+    
+  </entry>
   
   <entry>
     <title>西电雨课堂 - 工程伦理答案</title>
@@ -43,14 +66,15 @@
     <link href="https://luotian.cyou/post/Aca-Commu-Eng.html"/>
     <id>https://luotian.cyou/post/Aca-Commu-Eng.html</id>
     <published>2025-10-31T17:54:29.000Z</published>
-    <updated>2025-12-16T19:43:30.450Z</updated>
+    <updated>2026-01-14T06:54:50.373Z</updated>
     
     
       
       
-    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;font size=&quot;4&quot; color=&quot;00b9ff&quot;&gt;前言：章节答案由我自己整理，期末考试已更新&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
+    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;font size=&quot;4&quot; color=&quot;00b9ff&quot;&gt;前言：章节答案自行整理，含期末考试&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
 &lt;h2 id=&quot;center-第一章-center&quot;&gt;&lt;center&gt;第一章&lt;/center&gt;&lt;/h2&gt;
-&lt;ol&gt;</summary>
+&lt;ol&gt;
+&lt;li</summary>
       
     
     
@@ -305,7 +329,7 @@
     <link href="https://luotian.cyou/post/live-in-xdu.html"/>
     <id>https://luotian.cyou/post/live-in-xdu.html</id>
     <published>2025-07-07T14:25:35.000Z</published>
-    <updated>2025-10-31T18:51:28.606Z</updated>
+    <updated>2026-01-14T08:09:35.070Z</updated>
     
     
       
@@ -445,37 +469,6 @@
     
     <category term="课程作业" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/"/>
     
-    
-  </entry>
-  
-  <entry>
-    <title>OpenMMLab-4</title>
-    <link href="https://luotian.cyou/post/MMLab-4.html"/>
-    <id>https://luotian.cyou/post/MMLab-4.html</id>
-    <published>2023-02-10T08:58:22.000Z</published>
-    <updated>2025-07-09T18:12:55.546Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;strong&gt;目标检测基础与 MMDet&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&quot;目标检测简介&quot;&gt;目标检测简介&lt;/h2&gt;
-&lt;h3 id=&quot;实例应用&quot;&gt;实例应用&lt;/h3&gt;
-&lt;ul&gt;
-&lt;li&gt;人脸识别&lt;br&gt;
-身份识别、属性分析&lt;br&gt;
-…&lt;/li&gt;
-&lt;li&gt;智慧城市&lt;br</summary>
-      
-    
-    
-    
-    <category term="深度学习" scheme="https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    
-    
-    <category term="MMLab" scheme="https://luotian.cyou/tags/MMLab/"/>
-    
-    <category term="深度学习" scheme="https://luotian.cyou/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     
   </entry>
   
