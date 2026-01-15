@@ -6,7 +6,7 @@
   <link href="https://luotian.cyou/rss.xml" rel="self"/>
   
   <link href="https://luotian.cyou/"/>
-  <updated>2026-01-15T05:40:28.477Z</updated>
+  <updated>2026-01-15T12:28:02.460Z</updated>
   <id>https://luotian.cyou/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>CUDA 编程笔记</title>
+    <link href="https://luotian.cyou/post/CUDA-Learning.html"/>
+    <id>https://luotian.cyou/post/CUDA-Learning.html</id>
+    <published>2026-01-15T12:18:24.000Z</published>
+    <updated>2026-01-15T12:28:02.460Z</updated>
+    
+    
+      
+      
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;开个帖子，记录 CUDA 从入门到入土的全过程。&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</summary>
+      
+    
+    
+    
+    <category term="CUDA编程" scheme="https://luotian.cyou/categories/CUDA%E7%BC%96%E7%A8%8B/"/>
+    
+    
+    <category term="CUDA" scheme="https://luotian.cyou/tags/CUDA/"/>
+    
+  </entry>
   
   <entry>
     <title>西电 - 北航 - 人工智能安全与伦理答案</title>
@@ -450,27 +475,6 @@
     
     
     <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>西电通院信号与系统大作业 — 无线传输</title>
-    <link href="https://luotian.cyou/post/Signals-Syss.html"/>
-    <id>https://luotian.cyou/post/Signals-Syss.html</id>
-    <published>2025-06-04T10:06:52.000Z</published>
-    <updated>2025-07-09T18:11:08.215Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;h2 id=&quot;一、题目描述&quot;&gt;一、题目描述&lt;/h2&gt;
-&lt;p&gt;  考虑一个余弦信号 $&#92;small {x&#92;left (t &#92;right) =&#92;cos &#92;left (2&#92;pi f_0t &#92;right)}$ 沿着一条受到多径效应和多普勒效应影响的信道传输的情形。设有两条路径，并且假定</summary>
-      
-    
-    
-    
-    <category term="课程作业" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/"/>
     
     
   </entry>
