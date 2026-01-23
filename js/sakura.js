@@ -96,6 +96,10 @@ function getRandom(option) {
     return ret;
 }
 
+function isMobile() {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
 function startSakura() {
     requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame;
     var canvas = document.createElement('canvas'),
@@ -103,7 +107,7 @@ function startSakura() {
     staticx = true;
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
-    canvas.setAttribute('style', 'position: fixed;left: 0;top: 0;pointer-events: none;');
+    canvas.setAttribute('style', 'position: fixed;left: 0;top: 0;pointer-events: none;z-index: 0;');
     canvas.setAttribute('id', 'canvas_sakura');
     document.getElementsByTagName('body')[0].appendChild(canvas);
     cxt = canvas.getContext('2d');
@@ -132,27 +136,118 @@ function startSakura() {
         stop = requestAnimationFrame(arguments.callee);
     })
 }
+
 window.onresize = function () {
-    var canvasSnow = document.getElementById('canvas_snow');
-}
-
-function isMobile() {
-    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-}
-
-img.onload = function () {
-        if (!isMobile()) {
-        startSakura();
+    var canvasSnow = document.getElementById('canvas_sakura');
+    if (canvasSnow) {
+        canvasSnow.width = window.innerWidth;
+        canvasSnow.height = window.innerHeight;
     }
 }
 
-function stopp() {
+// 核心控制函数
+function toggleSakura() {
     if (staticx) {
         var child = document.getElementById("canvas_sakura");
-        child.parentNode.removeChild(child);
+        if (child) child.parentNode.removeChild(child);
         window.cancelAnimationFrame(stop);
         staticx = false;
+        localStorage.setItem('sakura_state', 'false');
     } else {
         startSakura();
+        localStorage.setItem('sakura_state', 'true');
+    }
+    // 更新按钮状态
+    updateSakuraButtonState();
+}
+
+// 更新右下角按钮的样式（旋转与颜色）
+function updateSakuraButtonState() {
+    var icon = document.querySelector('#sakura-trigger i'); // 获取 Pug 中定义的按钮图标
+    if (!icon) return;
+
+    if (staticx) {
+        icon.classList.add('fa-spin'); // FontAwesome 旋转动画
+        icon.style.color = '#ffb7c5';  // 激活时的颜色
+    } else {
+        icon.classList.remove('fa-spin');
+        icon.style.color = '';         // 恢复默认颜色
     }
 }
+
+// 初始化
+img.onload = function () {
+    var savedState = localStorage.getItem('sakura_state');
+    if (savedState === 'true') {
+        startSakura();
+    } else if (savedState === 'false') {
+        staticx = false;
+    } else {
+        if (!isMobile()) startSakura();
+        else staticx = false;
+    }
+    // 页面加载完成后，稍等片刻同步按钮状态
+    setTimeout(updateSakuraButtonState, 100);
+}
+
+
+// function startSakura() {
+//     requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame || window.oRequestAnimationFrame;
+//     var canvas = document.createElement('canvas'),
+//         cxt;
+//     staticx = true;
+//     canvas.height = window.innerHeight;
+//     canvas.width = window.innerWidth;
+//     canvas.setAttribute('style', 'position: fixed;left: 0;top: 0;pointer-events: none;');
+//     canvas.setAttribute('id', 'canvas_sakura');
+//     document.getElementsByTagName('body')[0].appendChild(canvas);
+//     cxt = canvas.getContext('2d');
+//     var sakuraList = new SakuraList();
+//     for (var i = 0; i < 50; i++) {
+//         var sakura, randomX, randomY, randomS, randomR, randomFnx, randomFny;
+//         randomX = getRandom('x');
+//         randomY = getRandom('y');
+//         randomR = getRandom('r');
+//         randomS = getRandom('s');
+//         randomFnx = getRandom('fnx');
+//         randomFny = getRandom('fny');
+//         randomFnR = getRandom('fnr');
+//         sakura = new Sakura(randomX, randomY, randomS, randomR, {
+//             x: randomFnx,
+//             y: randomFny,
+//             r: randomFnR
+//         });
+//         sakura.draw(cxt);
+//         sakuraList.push(sakura);
+//     }
+//     stop = requestAnimationFrame(function () {
+//         cxt.clearRect(0, 0, canvas.width, canvas.height);
+//         sakuraList.update();
+//         sakuraList.draw(cxt);
+//         stop = requestAnimationFrame(arguments.callee);
+//     })
+// }
+// window.onresize = function () {
+//     var canvasSnow = document.getElementById('canvas_snow');
+// }
+
+// function isMobile() {
+//     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+// }
+
+// img.onload = function () {
+//         if (!isMobile()) {
+//         startSakura();
+//     }
+// }
+
+// function stopp() {
+//     if (staticx) {
+//         var child = document.getElementById("canvas_sakura");
+//         child.parentNode.removeChild(child);
+//         window.cancelAnimationFrame(stop);
+//         staticx = false;
+//     } else {
+//         startSakura();
+//     }
+// }
