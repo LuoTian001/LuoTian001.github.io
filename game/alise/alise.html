@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/ionicons/4.6.1/css/ionicons.min.css">
     <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.2/css/mdui.min.css" />
-    <link href="img/favicon.ico" rel="shortcut icon">
+    <link href="img/Webfavicon.ico" rel="shortcut icon">
 </head>
 
 <body class="mdui-theme-primary-purple mdui-theme-accent-blue">
@@ -47,21 +47,42 @@
         </main>
         <div id="footer">
             <img id="herta-card" loading="lazy" src="img/card_cn.jpg" class="img-autocdn" alt="" />
-            <div id="footer-text">
-                <div class="mdui-list"><a href="https://github.com/Alan-ShangMike/Sping_Aris_github.io" target="_blank" class="mdui-list-item mdui-ripple">
-                        <i class="mdui-icon mdui-list-item-icon ion-logo-github mdui-text-color-black-icon"></i>
-                        <div class="mdui-list-item-content footer-icon-text about-link"><span
-                                id="repository-desc">来自GitHub 仓库</span> - Aris
-                        </div>
-                    </a>
-                </div>
-                <div class="mdui-typo">
-                    <div id="access-via-tip-parent"></div>
+
+                <div id="footer-text">
+                    <div class="mdui-list">
+                        
+                        <a href="javascript:;" onclick="smartReturn()" class="mdui-list-item mdui-ripple">
+                            <img src="img/Webfavicon.ico" class="mdui-list-item-icon" style="width: 24px; height: 24px; object-fit: contain;">
+                            <div class="mdui-list-item-content footer-icon-text about-link">
+                                点击返回洛天的小窝
+                            </div>
+                        </a>
+                        <a href="https://github.com/Alan-ShangMike/Sping_Aris_github.io" target="_blank" class="mdui-list-item mdui-ripple">
+                            <i class="mdui-icon mdui-list-item-icon ion-logo-github mdui-text-color-black-icon"></i>
+                            <div class="mdui-list-item-content footer-icon-text about-link"><span
+                                    id="repository-desc">来自 GitHub 仓库</span> - Aris
+                            </div>
+                        </a>
+                    </div>
+                    <div class="mdui-typo">
+                        <div id="access-via-tip-parent"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="https://cdn.bootcdn.net/ajax/libs/mdui/1.0.2/js/mdui.min.js"></script>
+    <script>
+        function smartReturn() {
+            var referrer = document.referrer;
+            var blogDomain = "luotian.cyou"; 
+            if (referrer && referrer.indexOf(blogDomain) > -1) {
+                history.back(); // 执行浏览器后退
+            } else {
+                window.location.href = "https://www.luotian.cyou";
+            }
+        }
+    </script>
     <script src="js/script.js" async></script>
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-T303QPC9L9"></script>
