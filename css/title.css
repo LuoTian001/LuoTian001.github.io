@@ -2,69 +2,52 @@
   --post-heading-icon: "🌸"; /* 使用 emoji 图标 */
 }
 
-/* A. 主题生成了 .headerlink 时 */
+/* A. 主题生成了 .headerlink 时（优先使用锚点） */
 #post h1 > .headerlink::before,
 #post h2 > .headerlink::before,
 #post h3 > .headerlink::before,
 #post h4 > .headerlink::before,
 #post h5 > .headerlink::before,
 #post h6 > .headerlink::before {
-  content: var(--post-heading-icon);
+  content: var(--post-heading-icon); /* 使用 emoji 图标 */
   display: inline-block;
-  
-  /* 关键修复 1：强制重置字体，覆盖 FontAwesome */
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif !important;
-  font-weight: normal !important; /* 防止 FontAwesome 的粗体设置影响 emoji */
-  
   width: auto;
-  height: auto; /* 建议设为 auto 防止被截断 */
-  margin-right: 0.5em; /* 调整间距 */
-  vertical-align: baseline; /* 稍微调整对齐 */
-  
-  background: none;
-  filter: none;
-  
-  /* 关键修复 2：设置旋转中心点为正中心，防止“甩动” */
-  transform-origin: center center;
-  
-  /* 动画 */
-  animation: rotate-icon 10s linear infinite;
+  height: 1.5em;
+  margin-right: 1em; /* 增加图标与标题的间距 */
+  vertical-align: middle; /* 默认对齐方式 */
+  background: none; /* 去掉颜色配置 */
+  background-size: contain;
+  filter: none; /* 去掉颜色配置 */
+  transform: translateY(-0.2em); /* 稍微调整图标位置，使其向上 */
+  animation: rotate-icon 10s linear infinite; /* 缓慢旋转动画 */
 }
 
-/* B. 没有 .headerlink 时 (逻辑同上) */
+/* B. 没有 .headerlink 时，给标题本身加（仅限带 id 的标题，避免影响侧栏/目录） */
 #post h1[id]:not(:has(> .headerlink))::before,
 #post h2[id]:not(:has(> .headerlink))::before,
 #post h3[id]:not(:has(> .headerlink))::before,
 #post h4[id]:not(:has(> .headerlink))::before,
 #post h5[id]:not(:has(> .headerlink))::before,
 #post h6[id]:not(:has(> .headerlink))::before {
-  content: var(--post-heading-icon);
+  content: var(--post-heading-icon); /* 使用 emoji 图标 */
   display: inline-block;
-  
-  /* 关键修复 1 */
-  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif !important;
-  font-weight: normal !important;
-  
   width: auto;
-  height: auto;
-  margin-right: 0.5em;
-  vertical-align: baseline;
-  
-  background: none;
-  filter: none;
-  
-  /* 关键修复 2 */
-  transform-origin: center center;
-  
-  animation: rotate-icon 10s linear infinite;
+  height: 1.5em;
+  margin-right: 1em; /* 增加图标与标题的间距 */
+  vertical-align: middle; /* 默认对齐方式 */
+  background: none; /* 去掉颜色配置 */
+  background-size: contain;
+  filter: none; /* 去掉颜色配置 */
+  transform: translateY(-0.2em); /* 稍微调整图标位置，使其向上 */
+  animation: rotate-icon 10s linear infinite; /* 缓慢旋转动画 */
 }
 
-/* 定义旋转动画 (稍微简化，去掉 translateY，让 flex 或 vertical-align 控制位置更稳) */
+/* 定义旋转动画 */
 @keyframes rotate-icon {
   0% {
-    transform: rotate(0deg);
+    transform: translateY(-0.2em) rotate(0deg);
   }
   100% {
-    transform: rotate(360deg);
+    transform: translateY(-0.2em) rotate(360deg);
   }
 }
