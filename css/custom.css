@@ -93,3 +93,46 @@ iframe[src*="vimeo.com"] {
 html.dark .post-content img {
     border: 1px solid rgba(255,255,255,0.1); /* 暗黑主题边框 */
 }
+
+/* 分割线相关 */
+/* 容器：弹性布局，垂直居中 */
+.sep-dashed {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 40px 0; /* 上下边距 */
+    border: none; /* 移除可能的默认边框 */
+    
+    /* --- 用户自定义区 --- */
+    --sep-color: #a4d8fa;   /* 分割线颜色 */
+    --sep-text-color: #555; /* 文字颜色 */
+    --sep-gap: 15px;        /* 文字与线的间距 */
+    /* ------------------- */
+}
+
+/* 左边的线 (::before) 和 右边的线 (::after) */
+.sep-dashed::before,
+.sep-dashed::after {
+    content: '';
+    flex: 1; /* 自动撑满剩余空间 */
+    border-bottom: 2px dashed var(--sep-color); /* 虚线样式 */
+    height: 1px; /* 这一行确保线条在视觉上的定位准确 */
+}
+
+/* 调整间距 */
+.sep-dashed::before {
+    margin-right: var(--sep-gap);
+}
+
+.sep-dashed::after {
+    margin-left: var(--sep-gap);
+}
+
+/* 中间的文字 */
+.sep-dashed-text {
+    color: var(--sep-text-color);
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 0; /* 不需要背景色，也不需要padding撑开遮挡 */
+    background: transparent; /* 关键：背景透明 */
+}

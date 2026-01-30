@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://luotian.cyou/post/live-in-xdu.html</loc>
+    <lastmod>2026-01-30</lastmod>
+  </url>
+  <url>
     <loc>https://luotian.cyou/post/leetcode-String.html</loc>
     <lastmod>2026-01-28</lastmod>
   </url>
@@ -15,10 +19,6 @@
   <url>
     <loc>https://luotian.cyou/post/leetcode-Array.html</loc>
     <lastmod>2026-01-28</lastmod>
-  </url>
-  <url>
-    <loc>https://luotian.cyou/post/live-in-xdu.html</loc>
-    <lastmod>2026-01-23</lastmod>
   </url>
   <url>
     <loc>https://luotian.cyou/post/javaroad.html</loc>
