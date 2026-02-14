@@ -2,20 +2,20 @@
 	--trans-light: rgba(255, 255, 255, 0.9);
 	--trans-dark: rgba(25, 25, 25, 0.7);
 	--backdrop-filter: blur(5px) saturate(150%);
-  --border-style: 1px solid rgb(125, 143, 129);
+  --border-style: 1px solid rgb(175, 175, 175);
   }
   
   /* 首页文章卡片 */
   #recent-posts > .recent-post-item {
 	background: var(--trans-light);
-	border-radius: 25px;
+	border-radius: 20px;
 	border: var(--border-style);
   }
   
   /* 首页侧栏卡片 */
   #aside-content .card-widget {
 	background: var(--trans-light);
-	border-radius: 18px;
+	border-radius: 15px;
 	border: var(--border-style);
   }
   
@@ -25,7 +25,7 @@
   div#archive {
 	background: var(--trans-light);
 	border: var(--border-style);
-	border-radius: 20px;
+	border-radius: 15px;
   }
 
   
