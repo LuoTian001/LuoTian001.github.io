@@ -1,8 +1,8 @@
 var LANGUAGES = {
     "cn": {
         audioList: [
-            "audio/cn/gululu.mp3",
-            "audio/cn/gururu.mp3"
+            "audio/gululu.mp3",
+            "audio/gururu.mp3"
         ],
         texts: {
             "page-title": "Welcome to Aris",
