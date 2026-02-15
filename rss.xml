@@ -6,7 +6,7 @@
   <link href="https://luotian.cyou/rss.xml" rel="self"/>
   
   <link href="https://luotian.cyou/"/>
-  <updated>2026-01-15T12:28:19.836Z</updated>
+  <updated>2026-02-15T08:59:27.223Z</updated>
   <id>https://luotian.cyou/</id>
   
   <author>
@@ -15,6 +15,25 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo 服务器部署 MTranServer 离线翻译引擎</title>
+    <link href="https://luotian.cyou/post/MTranServer.html"/>
+    <id>https://luotian.cyou/post/MTranServer.html</id>
+    <published>2026-02-15T06:58:53.000Z</published>
+    <updated>2026-02-15T08:59:27.223Z</updated>
+    
+    
+    <summary type="html">超低资源消耗、响应速度极快且完全离线的翻译服务部署实录。无需显卡，单核 CPU 即可跑满的无限免费翻译方案。</summary>
+    
+    
+    
+    <category term="后端部署" scheme="https://luotian.cyou/categories/%E5%90%8E%E7%AB%AF%E9%83%A8%E7%BD%B2/"/>
+    
+    
+    <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
+    
+  </entry>
   
   <entry>
     <title>CUDA 编程笔记</title>
@@ -284,7 +303,7 @@
     <link href="https://luotian.cyou/post/hexo-text-align.html"/>
     <id>https://luotian.cyou/post/hexo-text-align.html</id>
     <published>2025-07-21T14:18:23.000Z</published>
-    <updated>2025-08-14T06:08:13.018Z</updated>
+    <updated>2026-02-15T07:01:33.874Z</updated>
     
     
       
@@ -454,29 +473,6 @@
       
     <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;font size=&quot;4&quot; color=&quot;00b9ff&quot;&gt;前言：答案自行整理，含期末考试&lt;/font&gt;&lt;/strong&gt;&lt;br&gt;
 &lt;strong&gt;&lt;font size=&quot;3&quot; color=&quot;#28b463&quot;&gt;期末考试中 4 道题目答案有误。因试卷不能查看难</summary>
-      
-    
-    
-    
-    <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>西电雨课堂 - 科学道德与学风答案</title>
-    <link href="https://luotian.cyou/post/Sci-ethics-ethos.html"/>
-    <id>https://luotian.cyou/post/Sci-ethics-ethos.html</id>
-    <published>2025-06-26T17:47:46.000Z</published>
-    <updated>2026-01-15T05:41:30.438Z</updated>
-    
-    
-      
-      
-    <summary type="html">&lt;p&gt;&lt;strong&gt;&lt;font size=&quot;4&quot; color=&quot;00b9ff&quot;&gt;前言：期末考试从章节练习题中选取，不单独列出。题目为自行整理。&lt;/font&gt;&lt;/strong&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;em&gt;仅限学习交流&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquot</summary>
       
     
     

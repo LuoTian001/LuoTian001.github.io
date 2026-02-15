@@ -2,6 +2,24 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://luotian.cyou/post/MTranServer.html</loc>
+    
+    <lastmod>2026-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://luotian.cyou/post/hexo-text-align.html</loc>
+    
+    <lastmod>2026-02-15</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://luotian.cyou/tools/translate/index.html</loc>
     
     <lastmod>2026-02-14</lastmod>
@@ -227,15 +245,6 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/post/hexo-text-align.html</loc>
-    
-    <lastmod>2025-08-14</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
     <loc>https://luotian.cyou/post/mermaid4hexo.html</loc>
     
     <lastmod>2025-08-14</lastmod>
@@ -392,13 +401,6 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
-    <lastmod>2026-02-15</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://luotian.cyou/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
@@ -406,7 +408,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/conda/</loc>
+    <loc>https://luotian.cyou/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -414,6 +416,13 @@
   
   <url>
     <loc>https://luotian.cyou/tags/hexo/</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://luotian.cyou/tags/conda/</loc>
     <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -485,7 +494,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/</loc>
+    <loc>https://luotian.cyou/categories/%E5%90%8E%E7%AB%AF%E9%83%A8%E7%BD%B2/</loc>
     <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -493,6 +502,13 @@
   
   <url>
     <loc>https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/</loc>
     <lastmod>2026-02-15</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
