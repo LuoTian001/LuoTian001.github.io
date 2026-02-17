@@ -15,6 +15,7 @@ function optimizeSidebar() {
     '/messageboard/',
     '/tools/ocrlatex/',
     '/tools/translate/',
+    '/tools/',
     '/flink/'
   ];
 

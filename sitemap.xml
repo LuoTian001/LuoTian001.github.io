@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://luotian.cyou/tools/index.html</loc>
+    
+    <lastmod>2026-02-17</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://luotian.cyou/tools/translate/index.html</loc>
     
     <lastmod>2026-02-17</lastmod>
@@ -396,13 +405,6 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://luotian.cyou/tags/MMLab/</loc>
     <lastmod>2026-02-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -418,6 +420,13 @@
   
   <url>
     <loc>https://luotian.cyou/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://luotian.cyou/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
     <lastmod>2026-02-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -489,13 +498,6 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/categories/%E7%AE%97%E6%B3%95/</loc>
-    <lastmod>2026-02-17</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2026-02-17</lastmod>
     <changefreq>weekly</changefreq>
@@ -503,7 +505,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/</loc>
+    <loc>https://luotian.cyou/categories/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-02-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -511,6 +513,13 @@
   
   <url>
     <loc>https://luotian.cyou/categories/%E5%90%8E%E7%AB%AF%E9%83%A8%E7%BD%B2/</loc>
+    <lastmod>2026-02-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E4%BD%9C%E4%B8%9A/</loc>
     <lastmod>2026-02-17</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
