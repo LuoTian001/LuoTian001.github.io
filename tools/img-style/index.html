@@ -1,0 +1,813 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>洛天的小窝 | 洛天的小窝</title><meta name="author" content="Luo Tian"><meta name="copyright" content="Luo Tian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="图片风格化工具  本工具使用 OpenCV 算法在服务器端实时渲染，不保存您的原图。支持马赛克、水墨画、素描线稿等多种风格。        /* === 基础变量 (保持统一) === */     :root {         --primary-color: #2196F3;         --success-color: #4CAF50;         --bg-color: #fff">
+<meta property="og:type" content="website">
+<meta property="og:title" content="洛天的小窝">
+<meta property="og:url" content="https://luotian.cyou/tools/img-style/index.html">
+<meta property="og:site_name" content="洛天的小窝">
+<meta property="og:description" content="图片风格化工具  本工具使用 OpenCV 算法在服务器端实时渲染，不保存您的原图。支持马赛克、水墨画、素描线稿等多种风格。        /* === 基础变量 (保持统一) === */     :root {         --primary-color: #2196F3;         --success-color: #4CAF50;         --bg-color: #fff">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luotian.cyou/img/core/default_blog_cover.jpg">
+<meta property="article:published_time" content="2026-02-17T05:01:53.000Z">
+<meta property="article:modified_time" content="2026-02-17T05:04:00.076Z">
+<meta property="article:author" content="Luo Tian">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luotian.cyou/img/core/default_blog_cover.jpg"><link rel="shortcut icon" href="/img/core/favicon.ico"><link rel="canonical" href="https://luotian.cyou/tools/img-style/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><meta><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/css/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"簡"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"距文章发布已超过","messageNext":"天，可能存在过时的内容，请谨慎参考。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '洛天的小窝',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2026-02-17 13:04:00'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/font.css"><meta name="baidu-site-verification" content="codeva-gbh5PKKoNR"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/mouse/mouse.css"><link rel="stylesheet" href="/css/modify.css"><link rel="stylesheet" href="/css/background.css"><link rel="stylesheet" href="/css/title.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="/css/runtime.css" media="print" onload="this.media='all'"><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"><link rel="alternate" href="/rss.xml" title="洛天的小窝" type="application/atom+xml">
+</head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/core/id.jpg" onerror="onerror=null;src='/img/core/friend_404.gif'" alt="avatar"></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">10</div></a></div><hr class="custom-hr"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/game/arisu/index.html"><i class="fa-fw fa fa-gift"></i><span> 邦邦卡邦</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-top-img" id="page-header"><nav id="nav"><span id="blog-info"><a href="/" title="洛天的小窝"><span class="site-name">洛天的小窝</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li><li><a class="site-page child" href="/photos/"><i class="fa-fw fa fa-camera-retro"></i><span> 相册</span></a></li><li><a class="site-page child" href="/music/"><i class="fa-fw fa fa-music"></i><span> 音乐</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/game/arisu/index.html"><i class="fa-fw fa fa-gift"></i><span> 邦邦卡邦</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav></header><main class="layout hide-aside" id="content-inner"><div id="page"><h1 class="page-title"></h1><div id="article-container"><h1><center>图片风格化工具</center></h1>
+<blockquote>
+<p>本工具使用 OpenCV 算法在服务器端实时渲染，不保存您的原图。支持马赛克、水墨画、素描线稿等多种风格。</p>
+</blockquote>
+
+<style>
+    /* === 基础变量 (保持统一) === */
+    :root {
+        --primary-color: #2196F3;
+        --success-color: #4CAF50;
+        --bg-color: #fff;
+        --panel-bg: #f8f9fa;
+        --border-color: #e0e0e0;
+        --text-secondary: #666;
+    }
+
+    [data-theme="dark"] {
+        --bg-color: #1e1e1e;
+        --panel-bg: #2d2d2d;
+        --border-color: #444;
+        --text-secondary: #aaa;
+    }
+
+    .tool-container {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background: var(--bg-color);
+        border-radius: 12px;
+        box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    }
+
+    /* === 1. 上传栏 (复用) === */
+    .upload-bar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--panel-bg);
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: 1px dashed var(--border-color);
+        margin-bottom: 20px;
+        transition: 0.3s;
+        cursor: pointer;
+    }
+    .upload-bar:hover { border-color: var(--primary-color); }
+    
+    .upload-info {
+        display: flex; align-items: center; gap: 10px;
+        font-size: 0.9rem; color: var(--text-secondary); font-weight: 500;
+        overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    }
+
+    input[type="file"] { display: none; }
+
+    /* === 2. 预览区域 === */
+    .preview-section {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 25px;
+        flex-wrap: wrap;
+    }
+    .img-box {
+        flex: 1;
+        min-width: 280px;
+        background: var(--panel-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        min-height: 200px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--border-color);
+    }
+    .img-box img {
+        max-width: 100%;
+        max-height: 400px;
+        display: block;
+        object-fit: contain;
+    }
+    .img-label {
+        position: absolute;
+        top: 10px; left: 10px;
+        background: rgba(0,0,0,0.6);
+        color: white;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 12px;
+        pointer-events: none;
+    }
+
+    /* === 3. 风格选择器 === */
+    .style-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+        gap: 10px;
+        margin-bottom: 20px;
+    }
+    .style-card {
+        background: var(--panel-bg);
+        border: 2px solid transparent;
+        border-radius: 8px;
+        padding: 15px 5px;
+        text-align: center;
+        cursor: pointer;
+        transition: 0.2s;
+        font-size: 0.9rem;
+        font-weight: bold;
+        color: var(--text-secondary);
+    }
+    .style-card:hover { transform: translateY(-2px); background: rgba(33, 150, 243, 0.05); }
+    .style-card.active {
+        border-color: var(--primary-color);
+        color: var(--primary-color);
+        background: rgba(33, 150, 243, 0.1);
+    }
+
+    /* === 4. 参数调节面板 === */
+    .params-panel {
+        background: var(--panel-bg);
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        display: none; /* 默认隐藏，根据风格显示 */
+    }
+    .param-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 12px;
+        font-size: 0.85rem;
+        color: var(--text-secondary);
+    }
+    .param-row:last-child { margin-bottom: 0; }
+    .param-label { width: 100px; flex-shrink: 0; }
+    .param-slider { flex: 1; margin: 0 15px; cursor: pointer; }
+    .param-value { width: 40px; text-align: right; font-family: monospace; }
+
+    /* === 5. 按钮组 === */
+    .btn {
+        padding: 10px 24px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 1rem;
+        color: white;
+        transition: 0.2s;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        font-weight: 500;
+        width: 100%;
+    }
+    .btn-primary { background: var(--primary-color); }
+    .btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+    .btn-primary:disabled { background: #ccc; cursor: not-allowed; transform: none; }
+    
+    .btn-download { 
+        background: var(--success-color); 
+        margin-top: 15px; 
+        display: none; 
+    }
+
+    /* Loading 动画 */
+    .loading-spinner {
+        width: 20px; height: 20px;
+        border: 3px solid rgba(255,255,255,0.3);
+        border-radius: 50%;
+        border-top-color: #fff;
+        animation: spin 1s ease-in-out infinite;
+        display: none;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+</style>
+
+<div class="tool-container">
+    <div class="upload-bar" id="drop-area" onclick="document.getElementById('fileInput').click()">
+        <div class="upload-info">
+            <span style="font-size: 1.2rem;">🖼️</span>
+            <span id="file-name-display">点击或拖拽上传图片...</span>
+        </div>
+        <button class="btn" style="width: auto; padding: 4px 12px; font-size: 0.8rem; background: #eee; color: #333;">浏览</button>
+        <input type="file" id="fileInput" accept="image/*">
+    </div>
+
+    <div class="style-grid" id="style-selector">
+        <div class="style-card active" data-style="mosaic">马赛克</div>
+        <div class="style-card" data-style="ink">水墨画</div>
+        <div class="style-card" data-style="pencil">素描</div>
+        <div class="style-card" data-style="line">线稿</div>
+    </div>
+
+    <div id="params-container">
+        <div class="params-panel" data-for="mosaic" style="display: block;">
+            <div class="param-row">
+                <span class="param-label">马赛克大小</span>
+                <input type="range" class="param-slider" name="mosaic_size" min="5" max="50" value="15" oninput="updateVal(this)">
+                <span class="param-value">15</span>
+            </div>
+        </div>
+
+        <div class="params-panel" data-for="ink">
+            <div class="param-row">
+                <span class="param-label">墨晕程度</span>
+                <input type="range" class="param-slider" name="ink_blur" min="5" max="100" step="2" value="45" oninput="updateVal(this)">
+                <span class="param-value">45</span>
+            </div>
+            <div class="param-row">
+                <span class="param-label">墨色浓度</span>
+                <input type="range" class="param-slider" name="ink_gamma" min="0.1" max="2.0" step="0.1" value="0.5" oninput="updateVal(this)">
+                <span class="param-value">0.5</span>
+            </div>
+        </div>
+
+        <div class="params-panel" data-for="pencil">
+            <div class="param-row">
+                <span class="param-label">线条平滑度</span>
+                <input type="range" class="param-slider" name="pencil_s" min="0" max="200" value="60" oninput="updateVal(this)">
+                <span class="param-value">60</span>
+            </div>
+            <div class="param-row">
+                <span class="param-label">细节保留度</span>
+                <input type="range" class="param-slider" name="pencil_r" min="0.01" max="1.0" step="0.01" value="0.07" oninput="updateVal(this)">
+                <span class="param-value">0.07</span>
+            </div>
+            <div class="param-row">
+                <span class="param-label">阴影强度</span>
+                <input type="range" class="param-slider" name="pencil_shade" min="0.01" max="0.1" step="0.01" value="0.05" oninput="updateVal(this)">
+                <span class="param-value">0.05</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="preview-section">
+        <div class="img-box">
+            <span class="img-label">原图</span>
+            <img id="img-source" src="" style="display:none">
+            <span id="placeholder-text" style="color: #999;">等待上传</span>
+        </div>
+        <div class="img-box">
+            <span class="img-label" style="background: var(--primary-color);">效果图</span>
+            <img id="img-result" class="no-lightbox" src="" style="display:none">
+            <span id="result-placeholder" style="color: #999;">等待处理</span>
+        </div>
+    </div>
+
+    <button class="btn btn-primary" id="process-btn" onclick="startProcess()" disabled="">
+        <div class="loading-spinner" id="spinner"></div>
+        <span id="btn-text">开始生成</span>
+    </button>
+    
+    <a id="download-link" style="text-decoration: none;">
+        <button class="btn btn-download" id="download-btn">📥 下载高清大图</button>
+    </a>
+</div>
+
+<script>
+(function() {
+    // === 辅助函数：更新滑块数值显示 ===
+    window.updateVal = function(slider) {
+        slider.nextElementSibling.textContent = slider.value;
+    }
+
+    const initStyleTool = function() {
+        const fileInput = document.getElementById('fileInput');
+        if (!fileInput) return; // 防御性编程
+
+        const dropArea = document.getElementById('drop-area');
+        const imgSource = document.getElementById('img-source');
+        const imgResult = document.getElementById('img-result');
+        const processBtn = document.getElementById('process-btn');
+        const downloadBtn = document.getElementById('download-btn');
+        const downloadLink = document.getElementById('download-link');
+        const spinner = document.getElementById('spinner');
+        const btnText = document.getElementById('btn-text');
+        
+        let currentFile = null;
+        let currentStyle = 'mosaic';
+
+        // 1. 风格切换逻辑
+        const styleCards = document.querySelectorAll('.style-card');
+        const paramPanels = document.querySelectorAll('.params-panel');
+
+        styleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                // UI 激活状态切换
+                styleCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                
+                // 获取选中的风格
+                currentStyle = card.dataset.style;
+                
+                // 面板显隐逻辑
+                paramPanels.forEach(panel => panel.style.display = 'none');
+                
+                // 线稿和素描共用一套参数
+                const targetPanel = currentStyle === 'line' ? 'pencil' : currentStyle;
+                const activePanel = document.querySelector(`.params-panel[data-for="${targetPanel}"]`);
+                if(activePanel) activePanel.style.display = 'block';
+            });
+        });
+
+        // 2. 文件上传逻辑
+        const handleFile = (file) => {
+            if (!file || !file.type.startsWith('image/')) {
+                alert('请上传有效的图片文件');
+                return;
+            }
+            if (file.size > 10 * 1024 * 1024) { // 简单的前端拦截
+                alert('图片过大，请上传 10MB 以内的图片');
+                return;
+            }
+
+            currentFile = file;
+            document.getElementById('file-name-display').textContent = file.name;
+            
+            // 预览原图
+            const url = URL.createObjectURL(file);
+            imgSource.src = url;
+            imgSource.style.display = 'block';
+            document.getElementById('placeholder-text').style.display = 'none';
+            
+            // 激活按钮
+            processBtn.disabled = false;
+            
+            // 重置结果区
+            imgResult.style.display = 'none';
+            downloadBtn.style.display = 'none';
+            document.getElementById('result-placeholder').style.display = 'block';
+        };
+
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+        
+        // 拖拽支持
+        dropArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropArea.style.borderColor = 'var(--primary-color)';
+            dropArea.style.background = 'rgba(33, 150, 243, 0.05)';
+        });
+        dropArea.addEventListener('dragleave', (e) => {
+            e.preventDefault();
+            dropArea.style.borderColor = 'var(--border-color)';
+            dropArea.style.background = 'var(--panel-bg)';
+        });
+        dropArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropArea.style.borderColor = 'var(--border-color)';
+            dropArea.style.background = 'var(--panel-bg)';
+            if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
+        });
+
+        // 3. 核心：提交处理逻辑
+        window.startProcess = function() {
+            if (!currentFile) return;
+
+            // UI 进入 Loading 状态
+            processBtn.disabled = true;
+            spinner.style.display = 'block';
+            btnText.textContent = '正在渲染中...';
+            imgResult.style.opacity = '0.5';
+
+            // 构建 FormData
+            const formData = new FormData();
+            formData.append('file', currentFile);
+            formData.append('style', currentStyle);
+
+            // 收集所有可见参数
+            const inputs = document.querySelectorAll('#params-container input');
+            inputs.forEach(input => {
+                // 只有当前显示的面板参数才需要传（虽然全传也没事，后端有默认值）
+                formData.append(input.name, input.value);
+            });
+
+            // 发起请求 (注意路径)
+            fetch('/api/style/imgprocess', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(err => { throw new Error(err.detail || '处理失败'); });
+                }
+                return response.blob();
+            })
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                
+                // 显示结果
+                imgResult.src = url;
+                imgResult.style.display = 'block';
+                imgResult.style.opacity = '1';
+                document.getElementById('result-placeholder').style.display = 'none';
+                
+                // 配置下载按钮
+                const fileNameNoExt = currentFile.name.replace(/\.[^/.]+$/, "");
+                downloadLink.href = url;
+                downloadLink.download = `${fileNameNoExt}_${currentStyle}.jpg`;
+                downloadBtn.style.display = 'inline-flex';
+            })
+            .catch(err => {
+                alert('生成失败: ' + err.message);
+            })
+            .finally(() => {
+                // 恢复按钮状态
+                processBtn.disabled = false;
+                spinner.style.display = 'none';
+                btnText.textContent = '再次生成';
+            });
+        };
+    };
+
+    // 适配 Pjax 和 DOM 加载
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initStyleTool);
+    } else {
+        initStyleTool();
+    }
+})();
+</script>
+</div><hr class="custom-hr"><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div></main><footer id="footer" style="background: transparent"><div id="footer-wrap"><div class="copyright">©2023 - 2026 By Luo Tian</div><div class="footer_custom_text"><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">陕ICP备2025072980号-1</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="translateLink" type="button" title="简繁转换">簡</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="sakura-trigger" type="button" title="开启/关闭樱花" onclick="toggleSakura()"><i class="fas fa-fan fa-spin"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="/js/fancybox.umd.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('/js/pangu.umd.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  btf.addModeChange('mermaid', runMermaid)
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(()=>{
+  const init = () => {
+    twikoo.init(Object.assign({
+      el: '#twikoo-wrap',
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      onCommentLoaded: function () {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      }
+    }, null))
+  }
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(function (res) {
+      countELement.textContent = res[0].count
+    }).catch(function (err) {
+      console.error(err);
+    });
+  }
+
+  const runFn = () => {
+    init()
+    GLOBAL_CONFIG_SITE.isPost && getCount()
+  }
+
+  const loadTwikoo = () => {
+    if (typeof twikoo === 'object') {
+      setTimeout(runFn,0)
+      return
+    } 
+    getScript('https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/twikoo/1.6.44/twikoo.all.min.js').then(runFn)
+  }
+
+  if ('Twikoo' === 'Twikoo' || !true) {
+    if (true) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = () => {
+      loadTwikoo()
+    }
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8137572853" data-server="netease" data-type="playlist" data-fixed="true" data-mini="true" data-autoplay="true" data-loop:"all"="" data-order:"list"=""> </div><script src="/js/sakura.js"></script><script src="/js/sidebar.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="/js/fireworks.min.js"></script><link rel="stylesheet" href="/css/APlayer.min.css" media="print" onload="this.media='all'"><script src="/js/APlayer.min.js"></script><script src="/js/meting.min.js"></script><script src="/js/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script></div><!-- hexo injector body_end start --><script data-pjax="">
+  function butterfly_footer_beautify_injector_config(){
+    var parent_div_git = document.getElementById('footer-wrap');
+    var item_html = '<div id="workboard"></div>';
+    console.log('已挂载butterfly_footer_beautify')
+    parent_div_git.insertAdjacentHTML("beforeend",item_html)
+    }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var flag = 0;
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_footer_beautify_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_footer_beautify_injector_config();
+  }
+  </script><script async="" src="/js/runtime.js"></script><!-- hexo injector body_end end --></body></html>
