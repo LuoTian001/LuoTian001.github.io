@@ -1,0 +1,215 @@
+/* === 基础变量 === */
+:root {
+    --ocr-primary: #2196F3;
+    --ocr-success: #4CAF50;
+    --ocr-error: #f44336;
+    --bg-color: #fff;
+    --panel-bg: #f8f9fa;
+    --border-color: #e0e0e0;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1e1e1e;
+    --panel-bg: #2d2d2d;
+    --border-color: #444;
+}
+
+/* === 主容器 (统一卡片风格) === */
+.ocr-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* === 拖拽上传区 === */
+.ocr-dropzone-box {
+    border: 2px dashed #ccc;
+    border-radius: 8px;
+    padding: 3rem 1rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: var(--panel-bg);
+    cursor: pointer;
+    position: relative;
+    min-height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    overflow: hidden; /* 确保遮罩不溢出 */
+}
+
+.ocr-dropzone-box:hover,
+.ocr-dropzone-box.dragover {
+    border-color: var(--ocr-primary);
+    background: rgba(33, 150, 243, 0.05);
+}
+
+/* 拖拽悬停时的遮罩提示 */
+.ocr-dropzone-box.dragover::before {
+    content: "释放以上传图片";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(33, 150, 243, 0.1);
+    color: var(--ocr-primary);
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    backdrop-filter: blur(2px);
+}
+
+/* === 结果展示区 === */
+.result-card {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    background: var(--panel-bg);
+    display: none;
+    color: #333;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .result-card {
+    color: #ddd;
+}
+
+.result-title {
+    margin: 0 0 1rem;
+    color: var(--ocr-primary);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.latex-output {
+    font-size: 1.4rem;
+    padding: 1rem;
+    background: var(--bg-color);
+    border-radius: 4px;
+    text-align: center;
+    overflow-x: auto;
+    color: #000;
+    border: 1px solid var(--border-color);
+}
+
+[data-theme="dark"] .latex-output {
+    background: #121212;
+    color: #fff;
+}
+
+.confidence, .called-today {
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+[data-theme="dark"] .confidence, 
+[data-theme="dark"] .called-today {
+    color: #aaa;
+}
+
+/* === Loading 动画 === */
+.ocr-loading {
+    display: none;
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #333;
+    z-index: 20;
+}
+
+[data-theme="dark"] .ocr-loading {
+    background: rgba(30, 30, 30, 0.9);
+    color: #eee;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid var(--ocr-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 15px;
+}
+[data-theme="dark"] .spinner {
+    border-color: #444;
+    border-top-color: var(--ocr-primary);
+}
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* === 错误提示 === */
+.error-message {
+    color: var(--ocr-error);
+    padding: 1rem;
+    margin-top: 1rem;
+    border-radius: 4px;
+    background: rgba(244, 67, 54, 0.1);
+    display: none;
+    border: 1px solid rgba(244, 67, 54, 0.2);
+}
+
+/* === 源码显示区 === */
+.latex-source-card {
+    margin-top: 1.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.source-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(0,0,0,0.05);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.latex-raw {
+    padding: 1rem;
+    margin: 0;
+    background: var(--bg-color);
+    font-family: 'Courier New', monospace;
+    white-space: pre-wrap;
+    word-break: break-all;
+    max-height: 200px;
+    overflow-y: auto;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+[data-theme="dark"] .latex-raw {
+    color: #eee;
+}
+
+/* === 复制按钮 === */
+.copy-button {
+    background: var(--ocr-primary);
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.85rem;
+}
+
+.copy-button:hover {
+    filter: brightness(1.1);
+}
+
+.copy-button.copied {
+    background: var(--ocr-success);
+}
