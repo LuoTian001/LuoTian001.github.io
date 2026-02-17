@@ -1,46 +1,52 @@
-/* === 基础变量 === */
-:root {
+/* === 1. 变量隔离：只作用于 ocr-container 内部，防止污染其他页面 === */
+.ocr-container {
     --ocr-primary: #2196F3;
     --ocr-success: #4CAF50;
     --ocr-error: #f44336;
-    --bg-color: #fff;
-    --panel-bg: #f8f9fa;
-    --border-color: #e0e0e0;
-}
-
-[data-theme="dark"] {
-    --bg-color: #1e1e1e;
-    --panel-bg: #2d2d2d;
-    --border-color: #444;
-}
-
-/* === 主容器 (统一卡片风格) === */
-.ocr-container {
+    --ocr-bg: #fff;
+    --ocr-panel: #f8f9fa;
+    --ocr-border: #e0e0e0;
+    --ocr-text: #333;
+    
+    /* 容器基础样式 */
     max-width: 900px;
     margin: 0 auto;
     padding: 20px;
-    background: var(--bg-color);
+    background: var(--ocr-bg);
     border-radius: 12px;
     box-shadow: 0 4px 24px rgba(0,0,0,0.05);
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--ocr-text);
 }
 
-/* === 拖拽上传区 === */
+/* 深色模式适配：通过父级类名或属性选择 */
+[data-theme="dark"] .ocr-container {
+    --ocr-bg: #1e1e1e;
+    --ocr-panel: #2d2d2d;
+    --ocr-border: #444;
+    --ocr-text: #e0e0e0;
+}
+
+/* === 2. 拖拽上传区 (修复居中问题 & 调整间距) === */
 .ocr-dropzone-box {
     border: 2px dashed #ccc;
     border-radius: 8px;
-    padding: 3rem 1rem;
+    padding: 0 1rem;       /* 减小内边距 */
+    min-height: 150px;   /* 减小高度 */
+    
+    /* 核心居中代码 */
+    display: flex;
+    flex-direction: column; /* 纵向排列 */
+    justify-content: center; /* 垂直居中 */
+    align-items: center;     /* 水平居中 */
+    
     text-align: center;
     transition: all 0.3s ease;
-    background: var(--panel-bg);
+    background: var(--ocr-panel);
     cursor: pointer;
     position: relative;
-    min-height: 200px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     color: #666;
-    overflow: hidden; /* 确保遮罩不溢出 */
+    overflow: hidden;
 }
 
 .ocr-dropzone-box:hover,
@@ -49,7 +55,6 @@
     background: rgba(33, 150, 243, 0.05);
 }
 
-/* 拖拽悬停时的遮罩提示 */
 .ocr-dropzone-box.dragover::before {
     content: "释放以上传图片";
     position: absolute;
@@ -64,57 +69,50 @@
     backdrop-filter: blur(2px);
 }
 
-/* === 结果展示区 === */
-.result-card {
+/* 文字间距微调 */
+.ocr-placeholder p {
+    margin: 4px 0; /* 紧凑间距 */
+    line-height: 1.4;
+}
+
+/* === 3. 结果展示区 (类名加前缀) === */
+.ocr-result-card {
     margin-top: 2rem;
     padding: 1.5rem;
     border-radius: 8px;
-    background: var(--panel-bg);
+    background: var(--ocr-panel);
     display: none;
-    color: #333;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--ocr-border);
 }
 
-[data-theme="dark"] .result-card {
-    color: #ddd;
-}
-
-.result-title {
+.ocr-result-title {
     margin: 0 0 1rem;
     color: var(--ocr-primary);
     font-size: 1.2rem;
     font-weight: bold;
 }
 
-.latex-output {
+.ocr-latex-output {
     font-size: 1.4rem;
     padding: 1rem;
-    background: var(--bg-color);
+    background: var(--ocr-bg);
     border-radius: 4px;
     text-align: center;
     overflow-x: auto;
-    color: #000;
-    border: 1px solid var(--border-color);
+    color: var(--ocr-text);
+    border: 1px solid var(--ocr-border);
 }
 
-[data-theme="dark"] .latex-output {
-    background: #121212;
-    color: #fff;
-}
-
-.confidence, .called-today {
-    margin-top: 1rem;
-    color: #666;
+.ocr-info-row {
+    margin-top: 5px; /* 紧凑间距 */
+    color: #888;
     font-size: 0.9rem;
+    display: flex;
+    gap: 15px; /* 让置信度和调用次数在一行或紧挨着 */
 }
 
-[data-theme="dark"] .confidence, 
-[data-theme="dark"] .called-today {
-    color: #aaa;
-}
-
-/* === Loading 动画 === */
-.ocr-loading {
+/* === 4. Loading 动画 (类名加前缀) === */
+.ocr-loading-mask {
     display: none;
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
@@ -125,91 +123,83 @@
     color: #333;
     z-index: 20;
 }
-
-[data-theme="dark"] .ocr-loading {
+[data-theme="dark"] .ocr-loading-mask {
     background: rgba(30, 30, 30, 0.9);
     color: #eee;
 }
 
-.spinner {
-    width: 40px;
-    height: 40px;
-    border: 4px solid #f3f3f3;
-    border-top: 4px solid var(--ocr-primary);
+.ocr-spinner {
+    width: 30px;
+    height: 30px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid var(--ocr-primary);
     border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 15px;
+    animation: ocr-spin 1s linear infinite;
+    margin-bottom: 10px;
 }
-[data-theme="dark"] .spinner {
+[data-theme="dark"] .ocr-spinner {
     border-color: #444;
     border-top-color: var(--ocr-primary);
 }
-@keyframes spin {
+
+@keyframes ocr-spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
 
-/* === 错误提示 === */
-.error-message {
+/* === 5. 错误提示 === */
+.ocr-error-msg {
     color: var(--ocr-error);
-    padding: 1rem;
-    margin-top: 1rem;
+    padding: 10px;
+    margin-top: 15px;
     border-radius: 4px;
     background: rgba(244, 67, 54, 0.1);
     display: none;
     border: 1px solid rgba(244, 67, 54, 0.2);
+    font-size: 0.9rem;
 }
 
-/* === 源码显示区 === */
-.latex-source-card {
-    margin-top: 1.5rem;
-    border: 1px solid var(--border-color);
+/* === 6. 源码区 === */
+.ocr-source-card {
+    margin-top: 15px;
+    border: 1px solid var(--ocr-border);
     border-radius: 8px;
     overflow: hidden;
 }
 
-.source-header {
+.ocr-source-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 10px 15px;
-    background: rgba(0,0,0,0.05);
-    border-bottom: 1px solid var(--border-color);
+    padding: 8px 15px;
+    background: rgba(0,0,0,0.03);
+    border-bottom: 1px solid var(--ocr-border);
 }
 
-.latex-raw {
-    padding: 1rem;
+.ocr-latex-raw {
+    padding: 10px;
     margin: 0;
-    background: var(--bg-color);
+    background: var(--ocr-bg);
     font-family: 'Courier New', monospace;
     white-space: pre-wrap;
     word-break: break-all;
-    max-height: 200px;
+    max-height: 150px;
     overflow-y: auto;
-    color: #333;
-    font-size: 0.9rem;
-}
-
-[data-theme="dark"] .latex-raw {
-    color: #eee;
-}
-
-/* === 复制按钮 === */
-.copy-button {
-    background: var(--ocr-primary);
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background 0.2s;
+    color: var(--ocr-text);
     font-size: 0.85rem;
 }
 
-.copy-button:hover {
-    filter: brightness(1.1);
+/* === 7. 复制按钮 (类名加前缀) === */
+.ocr-copy-btn {
+    background: var(--ocr-primary);
+    color: white;
+    border: none;
+    padding: 4px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-size: 0.8rem;
 }
 
-.copy-button.copied {
-    background: var(--ocr-success);
-}
+.ocr-copy-btn:hover { filter: brightness(1.1); }
+.ocr-copy-btn.copied { background: var(--ocr-success); }
