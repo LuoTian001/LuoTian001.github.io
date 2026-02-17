@@ -1,0 +1,162 @@
+/* === 基础变量 === */
+:root {
+    --primary-color: #2196F3;
+    --success-color: #4CAF50;
+    --bg-color: #fff;
+    --panel-bg: #f8f9fa;
+    --border-color: #e0e0e0;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1e1e1e;
+    --panel-bg: #2d2d2d;
+    --border-color: #444;
+}
+
+.tool-container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+}
+
+/* === 1. 上传栏 === */
+.upload-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--panel-bg);
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px dashed var(--border-color);
+    margin-bottom: 20px;
+    transition: 0.3s;
+}
+
+.upload-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+    color: #666;
+    font-weight: 500;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+input[type="file"] { display: none; }
+
+/* === 2. 裁剪视口 === */
+.workspace-wrapper {
+    position: relative;
+    width: 100%;
+    min-height: 100px;
+    background: transparent; 
+    margin-bottom: 20px;
+    display: none;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+/* 修复图片撑破容器 */
+#sp-image-target {
+    display: block;
+    max-width: 100%; 
+    max-height: 60vh; 
+    width: auto;
+    height: auto;
+}
+
+.cropper-bg { background: transparent !important; }
+.cropper-modal { background-color: var(--bg-color); opacity: 0.8; }
+.cropper-point { display: none; } 
+.cropper-line { background-color: rgba(255, 255, 255, 0.5); }
+.cropper-view-box { outline: 2px solid var(--primary-color); }
+
+/* === 3. 按钮组 === */
+.action-group {
+    display: none;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-bottom: 25px;
+}
+
+.btn {
+    padding: 8px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    color: white;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 500;
+    user-select: none;
+}
+.btn-primary { background: var(--primary-color); }
+.btn-primary:hover { filter: brightness(1.1); transform: translateY(-1px); }
+
+.btn-upload { 
+    background: white; 
+    border: 1px solid var(--border-color); 
+    color: #333;
+    padding: 6px 16px;
+    font-size: 0.85rem;
+    cursor: pointer;
+}
+[data-theme="dark"] .btn-upload { background: #333; color: #eee; border-color: #555; }
+.btn-upload:hover { border-color: var(--primary-color); color: var(--primary-color); }
+
+.btn-reset { background: #78909C; }
+.btn-reset:hover { background: #607D8B; }
+
+/* === 4. 预览网格 === */
+.result-section {
+    display: none;
+    border-top: 1px solid var(--border-color);
+    padding-top: 25px;
+    animation: slideDown 0.4s ease-out;
+}
+
+.grid-preview {
+    display: grid;
+    gap: 5px; 
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto 20px auto;
+    line-height: 0; 
+    font-size: 0;
+    background: transparent;
+    padding: 0 !important;
+    border: none !important;
+}
+
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+.grid-item {
+    width: 100%;
+    aspect-ratio: 1 / 1; 
+    object-fit: cover;
+    display: block; 
+    border-radius: 2px;
+    background-color: #eee;
+    
+    /* 强制覆盖主题样式 */
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
