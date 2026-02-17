@@ -1,8 +1,10 @@
 (function() {
     // 定义初始化函数
     function initImgStyleTool() {
+        const uniqueEl = document.getElementById('style-selector');
+        if (!uniqueEl) return;
+        
         const fileInput = document.getElementById('fileInput');
-        if (!fileInput) return;
         const dropArea = document.getElementById('drop-area');
         const imgSource = document.getElementById('img-source');
         const imgResult = document.getElementById('img-result');
