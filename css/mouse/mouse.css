@@ -15,7 +15,10 @@ img {
 	cursor: url('./arrow.cur'), auto !important;
 }
 /* 选择链接标签时的鼠标指针 */
-a:hover,#site-name:hover {
+a:hover,
+#site-name:hover,
+.upload-bar:hover,
+.style-card:hover {
     cursor: url('./link.cur'), auto !important;
 }
 /* 选择代码框展开和复制按钮时的鼠标指针 */
@@ -27,8 +30,10 @@ input:hover, textarea:hover {
     cursor: url('./beam.cur'), auto;
 }
 /* 悬停按钮时的鼠标指针 */
-button:hover,.scroll-down-effects:hover {
-    cursor: url('./arrow.cur'), auto;
+button:hover,
+.scroll-down-effects:hover,
+.btn:hover {
+    cursor: url('./arrow.cur'), auto !important;
 }
 /* 悬停页脚链接标签（例如页脚徽标）时的鼠标指针 */
 #footer-wrap a:hover {

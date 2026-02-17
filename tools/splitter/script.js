@@ -140,6 +140,7 @@
         }
         // 绑定按钮点击事件
         btnSelect.onclick = () => fileInput.click();
+        dropArea.addEventListener('click', () => fileInput.click());
         fileInput.onchange = (e) => handleFile(e.target.files[0]);
         
         btnReset.onclick = () => {
