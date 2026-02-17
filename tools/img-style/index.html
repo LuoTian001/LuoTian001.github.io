@@ -7,7 +7,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://luotian.cyou/img/core/default_blog_cover.jpg">
 <meta property="article:published_time" content="2026-02-17T05:01:53.000Z">
-<meta property="article:modified_time" content="2026-02-17T09:04:22.452Z">
+<meta property="article:modified_time" content="2026-02-17T09:11:18.224Z">
 <meta property="article:author" content="Luo Tian">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://luotian.cyou/img/core/default_blog_cover.jpg"><link rel="shortcut icon" href="/img/core/favicon.ico"><link rel="canonical" href="https://luotian.cyou/tools/img-style/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><meta><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/css/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
@@ -57,7 +57,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2026-02-17 17:04:22'
+  postUpdate: '2026-02-17 17:11:18'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -438,7 +438,7 @@
             <a id="link-result" data-caption="效果图">
                 <img id="img-result" class="no-lightbox" src="" style="display:none">
             </a>
-            <div id="result-placeholder" class="placeholder-text">等待处理</div>
+            <div id="result-placeholder" class="placeholder-text">等待生成</div>
         </div>
     </div>
 
@@ -465,7 +465,7 @@
         'ink_gamma':   { min: 0.1, max: 2.0, inverse: true },
         'pencil_s':    { min: 0, max: 200, inverse: false },
         'pencil_r':    { min: 0.01, max: 1.0, inverse: true },
-        'pencil_shade':{ min: 0.01, max: 0.1, inverse: false } 
+        'pencil_shade':{ min: 0.01, max: 0.1, inverse: true } 
     };
 
     function getRealValue(name, uiValue) {
@@ -586,7 +586,7 @@
 
             processBtn.disabled = true;
             spinner.style.display = 'block';
-            btnText.textContent = '正在处理中...';
+            btnText.textContent = '正在生成中...';
             imgResult.style.opacity = '0.5';
 
             const formData = new FormData();
@@ -642,12 +642,12 @@
                 downloadBtn.style.display = 'inline-flex';
 
             } catch (err) {
-                alert('处理失败: ' + err.message);
+                alert('生成失败: ' + err.message);
                 console.error(err);
             } finally {
                 processBtn.disabled = false;
                 spinner.style.display = 'none';
-                btnText.textContent = '再次处理';
+                btnText.textContent = '再次生成';
             }
         };
     };
