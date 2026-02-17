@@ -1,13 +1,13 @@
-<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>洛天的小窝 | 洛天的小窝</title><meta name="author" content="Luo Tian"><meta name="copyright" content="Luo Tian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="图片风格化工具  本工具使用 OpenCV 算法在服务器端实时渲染，不保存您的原图。支持马赛克、水墨画、素描线稿等多种风格。        /* === 0. 鼠标样式统一 (基于 mouse.css) === */     /* 强制本区域内的鼠标样式 */     .tool-container { cursor: url('./arrow.cur'), auto; }          /*">
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>洛天的小窝 | 洛天的小窝</title><meta name="author" content="Luo Tian"><meta name="copyright" content="Luo Tian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="图片风格化工具  本工具使用 OpenCV 算法在服务器端实时渲染，不保存您的原图。支持马赛克、水墨画、素描线稿等多种风格。        /* === 0. 鼠标样式统一 === */     .tool-container { cursor: url('./arrow.cur'), auto; }     .btn, .upload-bar, .style-card, .param-slide">
 <meta property="og:type" content="website">
 <meta property="og:title" content="洛天的小窝">
 <meta property="og:url" content="https://luotian.cyou/tools/img-style/index.html">
 <meta property="og:site_name" content="洛天的小窝">
-<meta property="og:description" content="图片风格化工具  本工具使用 OpenCV 算法在服务器端实时渲染，不保存您的原图。支持马赛克、水墨画、素描线稿等多种风格。        /* === 0. 鼠标样式统一 (基于 mouse.css) === */     /* 强制本区域内的鼠标样式 */     .tool-container { cursor: url('./arrow.cur'), auto; }          /*">
+<meta property="og:description" content="图片风格化工具  本工具使用 OpenCV 算法在服务器端实时渲染，不保存您的原图。支持马赛克、水墨画、素描线稿等多种风格。        /* === 0. 鼠标样式统一 === */     .tool-container { cursor: url('./arrow.cur'), auto; }     .btn, .upload-bar, .style-card, .param-slide">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://luotian.cyou/img/core/default_blog_cover.jpg">
 <meta property="article:published_time" content="2026-02-17T05:01:53.000Z">
-<meta property="article:modified_time" content="2026-02-17T08:21:10.288Z">
+<meta property="article:modified_time" content="2026-02-17T08:32:46.079Z">
 <meta property="article:author" content="Luo Tian">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://luotian.cyou/img/core/default_blog_cover.jpg"><link rel="shortcut icon" href="/img/core/favicon.ico"><link rel="canonical" href="https://luotian.cyou/tools/img-style/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"><meta><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="/css/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
@@ -57,7 +57,7 @@
   isHome: false,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2026-02-17 16:21:10'
+  postUpdate: '2026-02-17 16:32:46'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -168,23 +168,12 @@
 </blockquote>
 
 <style>
-    /* === 0. 鼠标样式统一 (基于 mouse.css) === */
-    /* 强制本区域内的鼠标样式 */
+    /* === 0. 鼠标样式统一 === */
     .tool-container { cursor: url('./arrow.cur'), auto; }
-    
-    /* 可交互元素使用手型指针 */
-    .btn, 
-    .upload-bar, 
-    .style-card, 
-    .param-slider,
-    .img-box a { 
+    .btn, .upload-bar, .style-card, .param-slider, .img-box a { 
         cursor: url('./link.cur'), pointer !important; 
     }
-    
-    /* 文本区域使用文本指针 */
-    .param-label, 
-    .param-value, 
-    .img-label { 
+    .param-label, .param-value, .img-label { 
         cursor: url('./beam.cur'), text; 
     }
 
@@ -214,7 +203,7 @@
         box-shadow: 0 4px 24px rgba(0,0,0,0.05);
     }
 
-    /* === 1. 上传栏 === */
+    /* === 上传栏 === */
     .upload-bar {
         display: flex;
         align-items: center;
@@ -236,14 +225,16 @@
 
     input[type="file"] { display: none; }
 
-    /* === 2. 预览区域 (修复布局空隙问题) === */
+    /* === 预览区域 (核心修复：高度对齐与限制) === */
     .preview-section {
         display: flex;
         gap: 20px;
         margin-bottom: 25px;
         flex-wrap: wrap;
-        align-items: flex-start; /* 顶部对齐，防止高度拉伸 */
+        /* 修复2：强制子元素高度一致 */
+        align-items: stretch; 
     }
+    
     .img-box {
         flex: 1;
         min-width: 280px;
@@ -251,40 +242,42 @@
         border-radius: 8px;
         overflow: hidden;
         position: relative;
-        /* 修复下方空旷区域：去除固定高度，改为自适应 */
-        min-height: 200px; 
-        height: auto;
         border: 1px solid var(--border-color);
-        /* 修复图片底部微小缝隙 */
-        font-size: 0; 
-        line-height: 0;
+        /* 布局居中 */
         display: flex;
         flex-direction: column;
         justify-content: center;
+        align-items: center;
+        /* 修复3：限制最大高度，防止竖图撑爆屏幕 */
+        max-height: 60vh; 
+        min-height: 250px; /* 保证有一个基础高度 */
+        padding: 0;
     }
     
-    /* Butterfly Lightbox 触发容器 */
     .img-box a {
-        display: block;
+        display: flex; /* 修复 flex 布局下的对齐 */
         width: 100%;
         height: 100%;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden; /* 防止图片溢出圆角 */
     }
 
     .img-box img {
-        width: 100%;
+        /* 修复3：限制图片尺寸，保持比例 */
+        max-width: 100%;
+        max-height: 100%; 
+        width: auto;
         height: auto;
-        display: block; /* 关键：块级显示消除 inline 间隙 */
-        object-fit: contain;
+        display: block;
+        object-fit: contain; /* 关键：确保图片完整显示在盒子内 */
     }
     
-    /* 占位符文本样式独立 */
     .placeholder-text {
+        position: absolute;
         font-size: 16px;
-        line-height: 1.5;
         color: #999;
-        text-align: center;
-        width: 100%;
-        padding: 40px 0;
+        pointer-events: none;
     }
 
     .img-label {
@@ -300,7 +293,7 @@
         z-index: 2;
     }
 
-    /* === 3. 风格选择器 === */
+    /* === 风格选择器 === */
     .style-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
@@ -325,7 +318,7 @@
         background: rgba(33, 150, 243, 0.1);
     }
 
-    /* === 4. 参数调节面板 === */
+    /* === 参数面板 === */
     .params-panel {
         background: var(--panel-bg);
         padding: 15px;
@@ -339,14 +332,13 @@
         margin-bottom: 12px;
         font-size: 0.85rem;
         color: var(--text-secondary);
-        line-height: 1.5;
     }
     .param-row:last-child { margin-bottom: 0; }
     .param-label { width: 100px; flex-shrink: 0; }
     .param-slider { flex: 1; margin: 0 15px; }
     .param-value { width: 40px; text-align: right; font-family: monospace; }
 
-    /* === 5. 按钮组 === */
+    /* === 按钮组 === */
     .btn {
         padding: 10px 24px;
         border: none;
@@ -409,7 +401,6 @@
                 <span class="param-value">30</span>
             </div>
         </div>
-
         <div class="params-panel" data-for="ink">
             <div class="param-row">
                 <span class="param-label">墨晕程度</span>
@@ -422,7 +413,6 @@
                 <span class="param-value">80</span>
             </div>
         </div>
-
         <div class="params-panel" data-for="pencil">
             <div class="param-row">
                 <span class="param-label">线条平滑度</span>
@@ -453,7 +443,7 @@
         
         <div class="img-box">
             <span class="img-label" style="background: var(--primary-color);">效果图</span>
-            <a id="link-result" href="javascript:;" data-fancybox="gallery" data-caption="效果图" target="_blank" rel="noopener noreferrer">
+            <a id="link-result" href="javascript:;" data-caption="效果图" target="_blank" rel="noopener noreferrer">
                 <img id="img-result" class="no-lightbox" src="" style="display:none">
             </a>
             <div id="result-placeholder" class="placeholder-text">等待处理</div>
@@ -472,49 +462,26 @@
 
 <script>
 (function() {
-    // === 辅助函数：更新滑块数值显示 ===
     window.updateVal = function(slider) {
         slider.nextElementSibling.textContent = slider.value;
     }
 
-    // === 核心逻辑：数值映射 ===
-    // 将前端 1-100 的滑块值映射到后端需要的物理参数范围
     const PARAMS_MAP = {
-        // [后端参数名]: { min: 物理最小值, max: 物理最大值, inverse: 是否反转 }
-        
-        // 马赛克：1-100 -> 5-50
         'mosaic_size': { min: 5, max: 50, inverse: false },
-        
-        // 墨晕：1-100 -> 5-100
         'ink_blur':    { min: 5, max: 100, inverse: false },
-        
-        // 墨色：前端越大越浓(0.1)，越小越淡(2.0)。范围 0.1 - 2.0
         'ink_gamma':   { min: 0.1, max: 2.0, inverse: true },
-        
-        // 平滑度：1-100 -> 0-200
         'pencil_s':    { min: 0, max: 200, inverse: false },
-        
-        // 细节：前端越大细节越多(0.01)，越小越模糊(1.0)。范围 0.01 - 1.0
         'pencil_r':    { min: 0.01, max: 1.0, inverse: true },
-        
-        // 阴影：前端越大阴影越重(0.1)，越小越轻(0.01)。范围 0.01 - 0.1
         'pencil_shade':{ min: 0.01, max: 0.1, inverse: false } 
-        // 修正：通常 shade_factor 越大阴影越重，如果之前的体验是反的，
-        // 请在此处改为 inverse: true。暂时按正向逻辑（越大越重）处理。
-        // 如果后端代码是 "shade" 越大越淡，请改为 true。
     };
 
     function getRealValue(name, uiValue) {
         const config = PARAMS_MAP[name];
-        if (!config) return uiValue; // 没有配置的直接返回
-
-        const percent = (uiValue - 1) / 99; // 归一化到 0.0 - 1.0
-
+        if (!config) return uiValue;
+        const percent = (uiValue - 1) / 99;
         if (config.inverse) {
-            // 反向映射：100 -> min, 1 -> max
             return config.max - (percent * (config.max - config.min));
         } else {
-            // 正向映射：1 -> min, 100 -> max
             return config.min + (percent * (config.max - config.min));
         }
     }
@@ -526,8 +493,8 @@
         const dropArea = document.getElementById('drop-area');
         const imgSource = document.getElementById('img-source');
         const imgResult = document.getElementById('img-result');
-        const linkSource = document.getElementById('link-source'); // 获取超链接标签
-        const linkResult = document.getElementById('link-result'); // 获取超链接标签
+        const linkSource = document.getElementById('link-source'); 
+        const linkResult = document.getElementById('link-result');
         
         const processBtn = document.getElementById('process-btn');
         const downloadBtn = document.getElementById('download-btn');
@@ -538,7 +505,7 @@
         let currentFile = null;
         let currentStyle = 'mosaic';
 
-        // 1. 风格切换逻辑
+        // 风格切换
         const styleCards = document.querySelectorAll('.style-card');
         const paramPanels = document.querySelectorAll('.params-panel');
 
@@ -554,7 +521,7 @@
             });
         });
 
-        // 2. 文件上传逻辑
+        // 文件上传
         const handleFile = (file) => {
             if (!file || !file.type.startsWith('image/')) {
                 alert('请上传有效的图片文件');
@@ -568,11 +535,10 @@
             currentFile = file;
             document.getElementById('file-name-display').textContent = file.name;
             
-            // 预览原图 & 更新 Fancybox 链接
             const url = URL.createObjectURL(file);
             imgSource.src = url;
             imgSource.style.display = 'block';
-            linkSource.href = url; // 关键：更新超链接地址，解决预览错误
+            linkSource.href = url;
             
             document.getElementById('placeholder-text').style.display = 'none';
             processBtn.disabled = false;
@@ -580,14 +546,17 @@
             // 重置结果区
             imgResult.style.display = 'none';
             imgResult.src = '';
-            linkResult.href = 'javascript:;'; // 重置结果链接
+            
+            // 修复4：重置时移除 Fancybox 属性，防止点击空图报错
+            linkResult.removeAttribute('data-fancybox'); 
+            linkResult.href = 'javascript:;';
+            
             downloadBtn.style.display = 'none';
             document.getElementById('result-placeholder').style.display = 'block';
         };
 
         fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
         
-        // 拖拽支持
         dropArea.addEventListener('dragover', (e) => {
             e.preventDefault();
             dropArea.style.borderColor = 'var(--primary-color)';
@@ -605,8 +574,8 @@
             if (e.dataTransfer.files[0]) handleFile(e.dataTransfer.files[0]);
         });
 
-        // 3. 提交处理逻辑
-        window.startProcess = function() {
+        // 提交处理
+        window.startProcess = async function() {
             if (!currentFile) return;
 
             processBtn.disabled = true;
@@ -618,50 +587,52 @@
             formData.append('file', currentFile);
             formData.append('style', currentStyle);
 
-            // 收集参数并转换数值
             const inputs = document.querySelectorAll('#params-container input');
             inputs.forEach(input => {
                 const uiValue = parseInt(input.value);
-                const realValue = getRealValue(input.name, uiValue); // 转换！
+                const realValue = getRealValue(input.name, uiValue);
                 formData.append(input.name, realValue);
             });
 
-            // 发起请求
-            fetch('/api/style/imgprocess', {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
+            try {
+                const response = await fetch('/api/style/imgprocess', {
+                    method: 'POST',
+                    body: formData
+                });
+
                 if (!response.ok) {
-                    return response.json().then(err => { throw new Error(err.detail || '处理失败'); });
+                    // 修复1：解析 JSON 错误信息，避免 [object Object]
+                    const errorData = await response.json().catch(() => ({}));
+                    throw new Error(errorData.detail || '服务器内部错误');
                 }
-                return response.blob();
-            })
-            .then(blob => {
+
+                const blob = await response.blob();
                 const url = URL.createObjectURL(blob);
                 
-                // 显示结果 & 更新 Fancybox 链接
                 imgResult.src = url;
                 imgResult.style.display = 'block';
                 imgResult.style.opacity = '1';
-                linkResult.href = url; // 关键：更新超链接地址
                 
+                // 修复4：成功后再添加 Fancybox 属性
+                linkResult.href = url;
+                linkResult.setAttribute('data-fancybox', 'gallery');
+
                 document.getElementById('result-placeholder').style.display = 'none';
                 
-                // 配置下载
                 const fileNameNoExt = currentFile.name.replace(/\.[^/.]+$/, "");
                 downloadLink.href = url;
                 downloadLink.download = `${fileNameNoExt}_${currentStyle}.jpg`;
                 downloadBtn.style.display = 'inline-flex';
-            })
-            .catch(err => {
+
+            } catch (err) {
+                // 修复1：友好显示错误文本
                 alert('生成失败: ' + err.message);
-            })
-            .finally(() => {
+                console.error(err);
+            } finally {
                 processBtn.disabled = false;
                 spinner.style.display = 'none';
                 btnText.textContent = '再次生成';
-            });
+            }
         };
     };
 
