@@ -9,6 +9,11 @@
         const processBtn = document.getElementById('process-btn');
         const spinner = document.getElementById('spinner');
         const btnText = document.getElementById('btn-text');
+        const logoInput = document.getElementById('logoInput');
+        const genLogoArea = document.getElementById('gen-logo-area');
+        const genLogoPreview = document.getElementById('gen-logo-preview');
+        const genLogoPlaceholder = document.getElementById('gen-logo-placeholder');
+
         
         // Generate Elements
         const qrContent = document.getElementById('qr-content');
@@ -38,6 +43,7 @@
         let currentMode = 'generate'; // 'generate' | 'parse'
         let currentStyle = 'standard';
         let parseFile = null;
+        let logoFile = null;
 
         // === Helper Functions ===
         const toggleUI = (mode) => {
@@ -58,13 +64,22 @@
             resultPlaceholder.style.display = 'block';
 
             // Left Box Logic
+            const leftBox = document.getElementById('left-box');
             if (mode === 'generate') {
                 parseSourceImg.style.display = 'none';
-                genTextIcon.style.display = 'block';
+                genLogoArea.style.display = 'flex'; // 显示 Logo 上传区
             } else {
-                genTextIcon.style.display = 'none';
+                genLogoArea.style.display = 'none';
                 parseSourceImg.style.display = parseFile ? 'block' : 'none';
             }
+        };
+        const handleLogoSelect = (file) => {
+            if (!file || !file.type.startsWith('image/')) return;
+            logoFile = file;
+            const url = URL.createObjectURL(file);
+            genLogoPreview.src = url;
+            genLogoPreview.style.display = 'block';
+            genLogoPlaceholder.style.display = 'none';
         };
 
         const handleFileSelect = (file) => {
@@ -86,6 +101,8 @@
         };
 
         // === Event Listeners ===
+        genLogoArea.onclick = () => logoInput.click();
+        logoInput.onchange = (e) => handleLogoSelect(e.target.files[0]);
 
         // 1. Tab Switching
         tabs.forEach(tab => {
@@ -146,13 +163,30 @@
         };
 
         // 5. Copy Text (Parse)
-        copyBtn.onclick = () => {
-            parseResultText.select();
-            document.execCommand('copy');
-            const originalText = copyBtn.textContent;
-            copyBtn.textContent = '已复制！';
-            setTimeout(() => copyBtn.textContent = originalText, 2000);
-        };
+        if (copyBtn) {
+            copyBtn.onclick = async () => {
+                const text = document.getElementById('parse-result-text').value;
+                if (!text) return;
+
+                try {
+                    // 使用现代 API 进行静默复制
+                    await navigator.clipboard.writeText(text);
+                    
+                    // 视觉反馈：按钮变绿
+                    const originalText = copyBtn.textContent;
+                    copyBtn.textContent = '✅ 已复制';
+                    copyBtn.classList.add('btn-success'); // 添加绿色样式类
+                    
+                    setTimeout(() => {
+                        copyBtn.textContent = originalText;
+                        copyBtn.classList.remove('btn-success');
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                    alert('复制失败，请手动复制');
+                }
+            };
+        }
 
         // 6. Main Process Logic
         processBtn.onclick = async () => {
@@ -167,19 +201,21 @@
                     const content = qrContent.value.trim();
                     if (!content) throw new Error("请输入二维码内容");
 
-                    const payload = {
-                        content: content,
-                        box_size: parseInt(boxSize.value),
-                        border: parseInt(borderSize.value),
-                        fill_color: fillColor.value,
-                        back_color: backColor.value,
-                        style: currentStyle
-                    };
+                    const formData = new FormData();
+                    formData.append('content', content);
+                    formData.append('box_size', document.getElementById('box-size').value);
+                    formData.append('border', document.getElementById('border-size').value);
+                    formData.append('fill_color', document.getElementById('fill-color').value);
+                    formData.append('back_color', document.getElementById('back-color').value);
+                    formData.append('style', currentStyle);
+                    
+                    if (logoFile) {
+                        formData.append('logo_file', logoFile);
+                    }
 
                     const res = await fetch('/api/qrcode/generate', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
+                            method: 'POST',
+                            body: formData 
                     });
 
                     if (!res.ok) throw new Error("生成失败，请检查参数");
@@ -187,6 +223,7 @@
                     const blob = await res.blob();
                     const url = URL.createObjectURL(blob);
                     
+                    const genResultImg = document.getElementById('gen-result-img');
                     genResultImg.src = url;
                     genResultImg.style.display = 'block';
                     parseResultText.style.display = 'none';
