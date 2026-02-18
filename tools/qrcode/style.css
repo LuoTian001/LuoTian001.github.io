@@ -206,65 +206,108 @@
 
 /* === 预览区域 (包含问题1的修复) === */
 #qrcode-tool-root .preview-section { 
-    display: flex; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; 
+    display: flex; 
+    gap: 20px; 
+    margin-bottom: 25px; 
+    flex-wrap: wrap; 
 }
+
 #qrcode-tool-root .img-box {
-    flex: 1; min-width: 250px; height: 250px;
+    flex: 1; 
+    min-width: 250px; 
+    height: 300px; /* [调整] 稍微增加高度，确保正方形图片能完整放下 */
     background: var(--qr-panel-bg); 
     border-radius: 8px;
     border: 1px solid var(--qr-border);
-    position: relative; 
-    display: flex; 
-    justify-content: center; 
-    align-items: center;
-    overflow: hidden;
-    padding: 20px;
-    box-sizing: border-box;
-}
-#qrcode-tool-root .img-label {
-    position: absolute; top: 10px; left: 10px;
-    background: rgba(0,0,0,0.6); color: white;
-    padding: 4px 8px; border-radius: 4px; font-size: 12px; z-index: 2;
-}
-
-/* [修复 1-a] Logo 预览图完整显示 */
-#qrcode-tool-root #gen-logo-area { 
-    width: 100%; height: 100%; 
-    display: flex; justify-content: center; align-items: center; 
-}
-#qrcode-tool-root #gen-logo-preview { 
-    max-width: 100%; /* 关键修复 */
-    max-height: 100%;
-    width: auto; height: auto;
-    object-fit: contain;
-    border-radius: 4px; 
-} 
-
-/* [修复 1-b] 结果图完整显示 (处理外层 a 标签) */
-#qrcode-tool-root #link-result {
+    position: relative; /* 关键：为绝对定位的标签提供锚点 */
+    padding: 0;         /* [调整] 清除 padding，改用 Flex 居中 */
     display: flex;
-    width: 100%; height: 100%;
-    justify-content: center; align-items: center;
+    align-items: center;
+    justify-content: center;
     overflow: hidden;
 }
-#qrcode-tool-root #gen-result-img { 
-    max-width: 100%; max-height: 100%; 
-    object-fit: contain; 
-    display: block; 
+
+/* 统一左上角标签样式 */
+#qrcode-tool-root .img-label {
+    position: absolute; 
+    top: 10px; 
+    left: 10px;
+    padding: 4px 10px; 
+    border-radius: 4px; 
+    font-size: 12px; 
+    font-weight: bold;
+    color: white;
+    z-index: 10; /* 确保在图片之上 */
+    background: rgba(0,0,0,0.6); /* 默认灰色半透明 */
+    pointer-events: none;
 }
 
-/* [修复 2] 解析结果文本美化 */
+/* [修复2] 结果窗口标签统一为蓝色 */
+#qrcode-tool-root .img-label.label-blue {
+    background: var(--qr-primary);
+}
+
+/* 统一图片容器：确保 Logo、上传图、结果图 大小行为一致 */
+#qrcode-tool-root .img-content-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 30px; /* 留出边距，避免贴边，同时也给 Label 留空间 */
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* 统一图片样式：自适应且保持比例 */
+#qrcode-tool-root .preview-img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    border-radius: 4px;
+}
+
+/* [修复3] 结果图片的链接容器也要撑满 */
+#qrcode-tool-root #link-result {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* [修复5] 解析结果文本框 - 绝对定位铺满，避免被挤压 */
 #qrcode-tool-root #parse-result-text {
-    width: 100%; height: 100%;
-    padding: 10px;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; 
+    height: 100%;
+    padding: 40px 20px 20px 20px; /* Top padding 避开 Label */
     border: none;
-    background: transparent;
+    background: var(--qr-panel-bg);
     color: var(--qr-text-main);
     resize: none;
     outline: none;
     font-family: Consolas, monospace;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     overflow-y: auto;
+    z-index: 5;
+    box-sizing: border-box;
+    line-height: 1.5;
+}
+
+/* [修复2] 占位文字统一风格 */
+#qrcode-tool-root .placeholder-text {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    color: #999;
+    font-size: 1rem;
+    pointer-events: none;
+    white-space: nowrap;
 }
 
 /* === 按钮通用 === */

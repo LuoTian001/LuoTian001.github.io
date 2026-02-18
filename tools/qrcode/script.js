@@ -85,14 +85,12 @@
                 const file = e.target.files[0];
                 if (!file || !file.type.startsWith('image/')) return;
                 
-                logoInput.value = ''; // 清空 input 防止重复选择不触发
+                logoInput.value = '';
 
                 const url = URL.createObjectURL(file);
                 
-                // 1. 先显示模态框
                 cropModal.style.display = 'flex';
 
-                // 2. 销毁旧实例
                 if (cropper) {
                     cropper.destroy();
                     cropper = null;
@@ -100,11 +98,10 @@
 
                 const img = document.getElementById('crop-target-img');
                 
-                // 3. 强制重置样式，避免 Fancybox 残留样式干扰
+                // 重置状态
                 img.style.opacity = '0'; 
                 img.src = url;
 
-                // 4. 图片加载完成后再初始化 Cropper
                 img.onload = () => {
                     img.style.opacity = '1';
                     cropper = new Cropper(img, {
@@ -126,8 +123,7 @@
                 };
 
                 img.onerror = () => {
-                    alert("图片加载失败，请重试");
-                    cropModal.style.display = 'none';
+                    console.log("Image load warning (suppressed)");
                 };
             };
         }
