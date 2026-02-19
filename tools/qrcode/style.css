@@ -1,10 +1,5 @@
-/* ============================================================
-   作用域隔离：所有样式限定在 #qrcode-tool-root 下
-   防止污染 Butterfly 主题的全局样式
-============================================================ */
-
-/* 定义局部变量，不使用 :root */
-#qrcode-tool-root {
+/* 1. 局部变量定义 (仅在工具容器内生效) */
+#qrcode-tool-root, #crop-modal {
     --qr-primary: #2196F3;
     --qr-success: #4CAF50;
     --qr-bg: #fff;
@@ -12,21 +7,10 @@
     --qr-border: #e0e0e0;
     --qr-text-main: #333;
     --qr-text-sub: #666;
-    
-    /* 基础容器设置 */
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    background: var(--qr-bg);
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
-    color: var(--qr-text-main); /* 强制重置字体颜色 */
-    font-size: 16px; /* 重置基础字号 */
-    line-height: 1.6;
 }
 
-/* 适配 Butterfly 的夜间模式 */
-[data-theme="dark"] #qrcode-tool-root {
+[data-theme="dark"] #qrcode-tool-root, 
+[data-theme="dark"] #crop-modal {
     --qr-bg: #1e1e1e;
     --qr-panel-bg: #2d2d2d;
     --qr-border: #444;
@@ -34,411 +18,101 @@
     --qr-text-sub: #aaa;
 }
 
+/* 2. 基础容器重置 */
+#qrcode-tool-root {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--qr-bg);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    color: var(--qr-text-main);
+    font-size: 16px;
+    line-height: 1.6;
+}
+
 /* === Tabs === */
-#qrcode-tool-root .tab-group { 
-    display: flex; 
-    margin-bottom: 20px; 
-    background: var(--qr-panel-bg); 
-    padding: 4px; 
-    border-radius: 8px; 
-}
-#qrcode-tool-root .tab-item { 
-    flex: 1; 
-    text-align: center; 
-    padding: 10px; 
-    cursor: pointer; 
-    color: var(--qr-text-sub); 
-    border-radius: 6px; 
-    transition: 0.3s; 
-    user-select: none;
-}
-#qrcode-tool-root .tab-item.active { 
-    background: var(--qr-bg); 
-    color: var(--qr-primary); 
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05); 
-    font-weight: bold; 
-}
+#qrcode-tool-root .tab-group { display: flex; margin-bottom: 20px; background: var(--qr-panel-bg); padding: 4px; border-radius: 8px; }
+#qrcode-tool-root .tab-item { flex: 1; text-align: center; padding: 10px; cursor: pointer; color: var(--qr-text-sub); border-radius: 6px; transition: 0.3s; user-select: none; }
+#qrcode-tool-root .tab-item.active { background: var(--qr-bg); color: var(--qr-primary); box-shadow: 0 2px 8px rgba(0,0,0,0.05); font-weight: bold; }
 #qrcode-tool-root .mode-panel { display: none; }
 #qrcode-tool-root .mode-panel.active { display: block; animation: qrFadeIn 0.3s ease; }
 @keyframes qrFadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
 /* === 文本输入 === */
-#qrcode-tool-root .input-group textarea {
-    width: 100%; 
-    min-height: 48px; 
-    max-height: 150px; 
-    padding: 12px;
-    border: 1px solid var(--qr-border); 
-    border-radius: 8px;
-    background: var(--qr-panel-bg); 
-    color: var(--qr-text-main);
-    resize: none; 
-    outline: none; 
-    transition: 0.3s;
-    box-sizing: border-box; /* 防止 padding 撑大宽度 */
-}
+#qrcode-tool-root .input-group textarea { width: 100%; min-height: 48px; max-height: 150px; padding: 12px; border: 1px solid var(--qr-border); border-radius: 8px; background: var(--qr-panel-bg); color: var(--qr-text-main); resize: none; outline: none; transition: 0.3s; box-sizing: border-box; }
 #qrcode-tool-root .input-group textarea:focus { border-color: var(--qr-primary); }
 
 /* === 风格选择 === */
 #qrcode-tool-root .style-section { margin: 20px 0; }
-#qrcode-tool-root .style-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
-}
-#qrcode-tool-root .style-card {
-    background: var(--qr-panel-bg);
-    border: 2px solid transparent; 
-    border-radius: 8px;
-    padding: 12px; 
-    text-align: center; 
-    cursor: pointer;
-    color: var(--qr-text-sub); 
-    transition: 0.2s;
-    font-size: 0.9rem;
-}
-#qrcode-tool-root .style-card.active {
-    border-color: var(--qr-primary); 
-    color: var(--qr-primary);
-    background: rgba(33, 150, 243, 0.1); 
-    font-weight: bold;
-}
+#qrcode-tool-root .style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+#qrcode-tool-root .style-card { background: var(--qr-panel-bg); border: 2px solid transparent; border-radius: 8px; padding: 12px; text-align: center; cursor: pointer; color: var(--qr-text-sub); transition: 0.2s; font-size: 0.9rem; }
+#qrcode-tool-root .style-card.active { border-color: var(--qr-primary); color: var(--qr-primary); background: rgba(33, 150, 243, 0.1); font-weight: bold; }
 
 /* === 参数面板 === */
-#qrcode-tool-root .params-container {
-    background: var(--qr-panel-bg);
-    padding: 15px; 
-    border-radius: 8px; 
-    margin-bottom: 20px;
-}
-#qrcode-tool-root .param-row {
-    display: flex; 
-    align-items: center;
-    justify-content: flex-start;
-    gap: 15px; 
-    margin-bottom: 12px; 
-    font-size: 0.9rem; 
-    color: var(--qr-text-sub);
-}
-#qrcode-tool-root .param-label { 
-    font-weight: 500; 
-    min-width: 40px; 
-    white-space: nowrap;
-}
-#qrcode-tool-root .param-slider { 
-    flex: 1; 
-    margin: 0; 
-    cursor: pointer;
-    /* 重置浏览器默认样式 */
-    -webkit-appearance: auto; 
-}
-#qrcode-tool-root .param-value { 
-    width: 30px; 
-    text-align: left; 
-    font-family: monospace; 
-}
+#qrcode-tool-root .params-container { background: var(--qr-panel-bg); padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+#qrcode-tool-root .param-row { display: flex; align-items: center; justify-content: flex-start; gap: 15px; margin-bottom: 12px; font-size: 0.9rem; color: var(--qr-text-sub); }
+#qrcode-tool-root .param-label { font-weight: 500; min-width: 40px; white-space: nowrap; }
+#qrcode-tool-root .param-slider { flex: 1; margin: 0; cursor: pointer; -webkit-appearance: auto; }
+#qrcode-tool-root .param-value { width: 30px; text-align: left; font-family: Consolas, monospace; }
 
-/* === 三列紧凑布局 === */
-#qrcode-tool-root .row-three-cols {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    gap: 10px;
-    margin-top: 15px;
-    border-top: 1px solid var(--qr-border);
-    padding-top: 15px;
-}
-#qrcode-tool-root .col-item {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    justify-content: center;
-    gap: 8px;
-}
+/* === 三列布局与控件 === */
+#qrcode-tool-root .row-three-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-top: 15px; border-top: 1px solid var(--qr-border); padding-top: 15px; }
+#qrcode-tool-root .col-item { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
 #qrcode-tool-root .col-label { font-size: 0.85rem; color: var(--qr-text-sub); margin-bottom: 4px; }
 
-#qrcode-tool-root .color-picker-wrapper {
-    position: relative; 
-    width: 100%; 
-    height: 36px;
-    border: 1px solid var(--qr-border); 
-    border-radius: 6px;
-    overflow: hidden; 
-    cursor: pointer; 
-    display: flex; 
-    align-items: center; 
-    justify-content: center;
-    background: #fff; /* 颜色选择器背景保持白色 */
-}
-#qrcode-tool-root .color-picker-wrapper input[type="color"] {
-    position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
-    padding: 0; margin: 0; cursor: pointer; opacity: 0;
-}
-#qrcode-tool-root .color-display-block {
-    width: 20px; height: 20px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1);
-    margin-right: 8px; pointer-events: none;
-}
-#qrcode-tool-root .color-text-val { 
-    font-family: monospace; font-size: 0.8rem; pointer-events: none; color: #333;
-}
+#qrcode-tool-root .color-picker-wrapper { position: relative; width: 100%; height: 36px; border: 1px solid var(--qr-border); border-radius: 6px; overflow: hidden; cursor: pointer; display: flex; align-items: center; justify-content: center; background: #fff; }
+#qrcode-tool-root .color-picker-wrapper input[type="color"] { position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; padding: 0; margin: 0; cursor: pointer; opacity: 0; }
+#qrcode-tool-root .color-display-block { width: 20px; height: 20px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.1); margin-right: 8px; pointer-events: none; }
+#qrcode-tool-root .color-text-val { font-family: Consolas, monospace; font-size: 0.8rem; pointer-events: none; color: #333; }
 
-#qrcode-tool-root .btn-mini-upload {
-    width: 100%; height: 36px;
-    padding: 0 10px; font-size: 0.85rem;
-    background: var(--qr-bg); 
-    border: 1px solid var(--qr-border);
-    border-radius: 6px; cursor: pointer; color: var(--qr-text-main);
-    transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-    display: flex; align-items: center; justify-content: center;
-}
+#qrcode-tool-root .btn-mini-upload { width: 100%; height: 36px; padding: 0 10px; font-size: 0.85rem; background: var(--qr-bg); border: 1px solid var(--qr-border); border-radius: 6px; cursor: pointer; color: var(--qr-text-main); transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: flex; align-items: center; justify-content: center; }
 #qrcode-tool-root .btn-mini-upload:hover { border-color: var(--qr-primary); color: var(--qr-primary); }
 
-/* === 上传条 === */
-#qrcode-tool-root .upload-bar {
-    display: flex; align-items: center; justify-content: center; gap: 15px;
-    padding: 15px; 
-    border: 2px dashed var(--qr-border);
-    border-radius: 8px; background: var(--qr-panel-bg);
-    cursor: pointer; transition: 0.3s; margin-bottom: 20px;
+#qrcode-tool-root .btn-mini-clear { width: 100%; height: 36px; padding: 0 10px; font-size: 0.85rem; background: transparent; border: 1px solid #ff4d4f; border-radius: 6px; cursor: pointer; color: #ff4d4f; transition: 0.2s; white-space: nowrap; display: none; align-items: center; justify-content: center; margin-top: 5px; }
+#qrcode-tool-root .btn-mini-clear:hover { background: #fff1f0; border-color: #ff7875; }
+
+/* === 移动端适配 (响应式) === */
+@media (max-width: 600px) {
+    #qrcode-tool-root .row-three-cols { grid-template-columns: 1fr 1fr; gap: 10px; }
+    #qrcode-tool-root .col-item:nth-child(3) { grid-column: span 2; margin-top: 5px; width: 100%; }
+    #qrcode-tool-root .btn-mini-upload, #qrcode-tool-root .btn-mini-clear { max-width: 200px; }
 }
+
+/* === 解析区上传条 === */
+#qrcode-tool-root .upload-bar { display: flex; align-items: center; justify-content: center; gap: 15px; padding: 15px; border: 2px dashed var(--qr-border); border-radius: 8px; background: var(--qr-panel-bg); cursor: pointer; transition: 0.3s; margin-bottom: 20px; }
 #qrcode-tool-root .upload-bar:hover { border-color: var(--qr-primary); background: rgba(33, 150, 243, 0.05); }
 #qrcode-tool-root .upload-info { display: flex; align-items: center; gap: 8px; color: var(--qr-text-sub); font-size: 0.95rem; }
-#fileInput, #logoInput { display: none !important; }
+#qrcode-tool-root #fileInput, #qrcode-tool-root #logoInput { display: none !important; }
 
-/* === 预览区域 (包含问题1的修复) === */
-#qrcode-tool-root .preview-section { 
-    display: flex; 
-    gap: 20px; 
-    margin-bottom: 25px; 
-    flex-wrap: wrap; 
-}
-
-#qrcode-tool-root .img-box {
-    flex: 1; 
-    min-width: 250px; 
-    height: 300px; /* [调整] 稍微增加高度，确保正方形图片能完整放下 */
-    background: var(--qr-panel-bg); 
-    border-radius: 8px;
-    border: 1px solid var(--qr-border);
-    position: relative; /* 关键：为绝对定位的标签提供锚点 */
-    padding: 0;         /* [调整] 清除 padding，改用 Flex 居中 */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-/* 统一左上角标签样式 */
-#qrcode-tool-root .img-label {
-    position: absolute; 
-    top: 10px; 
-    left: 10px;
-    padding: 4px 10px; 
-    border-radius: 4px; 
-    font-size: 12px; 
-    font-weight: bold;
-    color: white;
-    z-index: 10; /* 确保在图片之上 */
-    background: rgba(0,0,0,0.6); /* 默认灰色半透明 */
-    pointer-events: none;
-}
-
-/* [修复2] 结果窗口标签统一为蓝色 */
-#qrcode-tool-root .img-label.label-blue {
-    background: var(--qr-primary);
-}
-
-/* 统一图片容器：确保 Logo、上传图、结果图 大小行为一致 */
-#qrcode-tool-root .img-content-wrapper {
-    width: 100%;
-    height: 100%;
-    padding: 30px; /* 留出边距，避免贴边，同时也给 Label 留空间 */
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-/* 统一图片样式：自适应且保持比例 */
-#qrcode-tool-root .preview-img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    display: block;
-    border-radius: 4px;
-}
-
-/* [修复3] 结果图片的链接容器也要撑满 */
-#qrcode-tool-root #link-result {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* [修复5] 解析结果文本框 - 绝对定位铺满，避免被挤压 */
-#qrcode-tool-root #parse-result-text {
-    position: absolute;
-    top: 0; left: 0;
-    width: 100%; 
-    height: 100%;
-    padding: 40px 20px 20px 20px; /* Top padding 避开 Label */
-    border: none;
-    background: var(--qr-panel-bg);
-    color: var(--qr-text-main);
-    resize: none;
-    outline: none;
-    font-family: Consolas, monospace;
-    font-size: 0.95rem;
-    overflow-y: auto;
-    z-index: 5;
-    box-sizing: border-box;
-    line-height: 1.5;
-}
-
-/* [修复2] 占位文字统一风格 */
-#qrcode-tool-root .placeholder-text {
-    position: absolute;
-    top: 50%; left: 50%;
-    transform: translate(-50%, -50%);
-    color: #999;
-    font-size: 1rem;
-    pointer-events: none;
-    white-space: nowrap;
-}
+/* === 预览区域 (统一居中风格) === */
+#qrcode-tool-root .preview-section { display: flex; gap: 20px; margin-bottom: 25px; flex-wrap: wrap; }
+#qrcode-tool-root .img-box { flex: 1; min-width: 250px; height: 300px; background: var(--qr-panel-bg); border-radius: 8px; border: 1px solid var(--qr-border); position: relative; padding: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+#qrcode-tool-root .img-label { position: absolute; top: 10px; left: 10px; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; color: white; z-index: 10; background: rgba(0,0,0,0.6); pointer-events: none; }
+#qrcode-tool-root .img-label.label-blue { background: var(--qr-primary); }
+#qrcode-tool-root .img-content-wrapper { width: 100%; height: 100%; padding: 30px; box-sizing: border-box; display: flex; justify-content: center; align-items: center; position: relative; }
+#qrcode-tool-root .preview-img { max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; display: block; border-radius: 4px; }
+#qrcode-tool-root #link-result { width: 100%; height: 100%; display: flex; justify-content: center; align-items: center; }
+#qrcode-tool-root #parse-result-text { position: absolute; top: 0; left: 0; width: 100%; height: 100%; padding: 40px 20px 20px 20px; border: none; background: var(--qr-panel-bg); color: var(--qr-text-main); resize: none; outline: none; font-family: Consolas, monospace; font-size: 0.95rem; overflow-y: auto; z-index: 5; box-sizing: border-box; line-height: 1.5; }
+#qrcode-tool-root .placeholder-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #999; font-size: 1rem; pointer-events: none; white-space: nowrap; }
 
 /* === 按钮通用 === */
-#qrcode-tool-root .btn {
-    width: 100%; padding: 12px; border: none; border-radius: 6px;
-    font-size: 1rem; color: white; cursor: pointer;
-    display: inline-flex; justify-content: center; align-items: center; gap: 8px;
-    transition: 0.2s;
-    background: var(--qr-primary);
-}
+#qrcode-tool-root .btn { width: 100%; padding: 12px; border: none; border-radius: 6px; font-size: 1rem; color: white; cursor: pointer; display: inline-flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s; background: var(--qr-primary); }
 #qrcode-tool-root .btn:hover { filter: brightness(1.1); }
-#qrcode-tool-root .btn-download, 
-#qrcode-tool-root .btn-cancel { margin-top: 15px; display: none; }
+#qrcode-tool-root .btn-download, #qrcode-tool-root .btn-cancel { margin-top: 15px; display: none; }
 #qrcode-tool-root .btn-download { background: var(--qr-success); }
 #qrcode-tool-root .btn-success { background-color: var(--qr-success) !important; }
 
 /* === Loading Spinner === */
-#qrcode-tool-root .loading-spinner {
-    width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3);
-    border-radius: 50%; border-top-color: #fff; animation: qrSpin 1s infinite linear; display: none;
-}
-@keyframes qrSpin { to { transform: rotate(360deg); } }
+#qrcode-tool-root .loading-spinner { width: 20px; height: 20px; border: 3px solid rgba(255,255,255,0.3); border-radius: 50%; border-top-color: #fff; animation: qrSpin 1s infinite linear; display: none; }
 
-/* ============================================================
-   Modal 样式 (独立于 root 之外，但为了安全加特定的前缀 ID)
-============================================================ */
-#crop-modal.crop-modal-overlay {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); z-index: 9999;
-    display: flex; justify-content: center; align-items: center;
-    backdrop-filter: blur(5px);
-}
-#crop-modal .crop-modal-content {
-    background: #fff; /* Modal 强制白色背景，避免受夜间模式复杂影响 */
-    padding: 25px; border-radius: 12px;
-    width: 95%; max-width: 500px;
-    display: flex; flex-direction: column;
-    color: #333;
-}
-[data-theme="dark"] #crop-modal .crop-modal-content {
-    background: #2d2d2d;
-    color: #eee;
-}
-
-#crop-modal .crop-workspace { 
-    width: 100%; 
-    min-height: 200px;
-    max-height: 60vh;
-    background: #333; 
-    border-radius: 8px; 
-    overflow: hidden; 
-    margin-bottom: 20px; 
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-#crop-target-img {
-    display: block;
-    max-width: 100%;
-    max-height: 100%;
-}
-
-/* CropperJS 自定义样式覆盖 */
-.cropper-bg { background: transparent !important; }
-
-#crop-modal .crop-actions { 
-    display: grid; 
-    grid-template-columns: 1fr 1fr;
-    gap: 15px; 
-}
-#crop-modal .btn-cancel { 
-    display: flex; margin-top: 0; 
-    background: #f5f5f5; color: #666; border: 1px solid #ddd;
-    width: 100%; padding: 12px; border-radius: 6px; justify-content: center; cursor: pointer;
-}
+/* === 裁剪弹窗 Modal (独立域) === */
+#crop-modal.crop-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 9999; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px); }
+#crop-modal .crop-modal-content { background: var(--qr-bg); padding: 25px; border-radius: 12px; width: 95%; max-width: 500px; display: flex; flex-direction: column; color: var(--qr-text-main); }
+#crop-modal .crop-workspace { width: 100%; min-height: 200px; max-height: 60vh; background: #333; border-radius: 8px; overflow: hidden; margin-bottom: 20px; position: relative; display: flex; justify-content: center; align-items: center; }
+#crop-modal #crop-target-img { display: block; max-width: 100%; max-height: 100%; }
+#crop-modal .cropper-bg { background: transparent !important; }
+#crop-modal .crop-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+#crop-modal .btn-cancel { width: 100%; padding: 12px; border-radius: 6px; background: #f5f5f5; color: #666; border: 1px solid #ddd; display: flex; justify-content: center; cursor: pointer; }
 #crop-modal .btn-cancel:hover { background: #e0e0e0; }
-#crop-modal .btn-primary { 
-    width: 100%; padding: 12px; border: none; border-radius: 6px;
-    background: #2196F3; color: white; cursor: pointer;
-}
-
-/* ============================================================
-   [新增] 响应式布局优化 (针对手机端/窄屏)
-============================================================ */
-@media (max-width: 600px) {
-    #qrcode-tool-root .row-three-cols {
-        /* 改为两列布局 */
-        grid-template-columns: 1fr 1fr;
-        gap: 10px;
-    }
-
-    /* 前两个元素（前景色、背景色）保持各占 1 列，无需修改 */
-
-    /* 第三个元素（Logo上传）强制跨越两列，并居中 */
-    #qrcode-tool-root .col-item:nth-child(3) {
-        grid-column: span 2;
-        margin-top: 5px;
-        width: 100%; /* 确保容器占满 */
-    }
-    
-    /* 让上传按钮和清除按钮在手机上也保持合适宽度 */
-    #qrcode-tool-root .btn-mini-upload,
-    #qrcode-tool-root .btn-mini-clear {
-        max-width: 200px; /* 防止按钮过长 */
-    }
-}
-
-/* ============================================================
-   [新增] 清除 Logo 按钮样式
-============================================================ */
-#qrcode-tool-root .btn-mini-clear {
-    width: 100%; 
-    height: 36px;
-    padding: 0 10px; 
-    font-size: 0.85rem;
-    background: transparent; 
-    border: 1px solid #ff4d4f; /* 红色边框示警 */
-    border-radius: 6px; 
-    cursor: pointer; 
-    color: #ff4d4f;
-    transition: 0.2s; 
-    white-space: nowrap; 
-    display: none; /* 默认隐藏 */
-    align-items: center; 
-    justify-content: center;
-    margin-top: 5px; /* 与上传按钮保持间距 */
-}
-
-#qrcode-tool-root .btn-mini-clear:hover { 
-    background: #fff1f0; 
-    border-color: #ff7875; 
-}
+#crop-modal .btn-primary { width: 100%; padding: 12px; border: none; border-radius: 6px; background: var(--qr-primary); color: white; cursor: pointer; }
