@@ -1,52 +1,48 @@
 /* ==========================================
-   1. 全局默认与非点击容器 (arrow.cur)
+   1. 终极全局底图 (arrow.cur) - 解决间隙抽动
 ========================================== */
-body,
-html,
-img,
-.fancybox__slide,
-.carousel__slide,
-::-webkit-scrollbar:hover {
-	cursor: url('./arrow.cur'), auto !important;
+/* 使用通配符强行覆盖所有元素及伪元素，确保鼠标在任何缝隙都不会掉落到系统默认指针 */
+*, *::before, *::after {
+    cursor: url('./arrow.cur'), auto !important;
 }
 
-/* 滑动条、颜色选择器等非点击类特殊交互控件 */
-input[type="range"]:hover,
-input[type="color"]:hover,
-#qrcode-tool-root .param-slider:hover,
-#img-style-root .param-slider:hover,
-#qrcode-tool-root .color-picker-wrapper:hover {
+/* 恢复滑动条、颜色选择器等特殊控件为 arrow（这些控件不需要 link 或 beam） */
+input[type="range"],
+input[type="color"],
+#qrcode-tool-root .param-slider,
+#img-style-root .param-slider,
+#qrcode-tool-root .color-picker-wrapper {
     cursor: url('./arrow.cur'), auto !important;
 }
 
 /* ==========================================
    2. 文本与排版区域 (beam.cur)
 ========================================== */
-/* 使用 :not 严格排除滑动条和颜色选择器，防止 input 样式重叠导致抽动 */
-input:not([type="range"]):not([type="color"]):hover, 
-textarea:hover,
-#qrcode-tool-root textarea:hover,
-#qrcode-tool-root #parse-result-text:hover,
-#translate-tool-root .trans-textarea:hover,
+/* 严格排除滑动条和颜色选择器，直接对元素应用，去除 :hover 延迟 */
+input:not([type="range"]):not([type="color"]), 
+textarea,
+#qrcode-tool-root textarea,
+#qrcode-tool-root #parse-result-text,
+#translate-tool-root .trans-textarea,
 h1, h2, h3, h4, h5, h6, #subtitle, .content, .line, .post-content p, .post-content li {
-	cursor: url('./beam.cur'), auto !important;
+    cursor: url('./beam.cur'), auto !important;
 }
 
 /* ==========================================
    3. 可点击交互元素 (link.cur)
 ========================================== */
-/* 基础链接与主题自带功能按钮 */
-a:hover, 
-#site-name:hover, 
-.copy-button:hover, 
-.expand:hover,
-button:hover, 
-.scroll-down-effects:hover,
-#footer-wrap a:hover, 
-#pagination .page-number:hover, 
-#nav .site-page:hover,
-.post-meta-date:hover, 
-.post-meta-date-created:hover {
+/* 基础链接与主题自带功能按钮，全部去除 :hover */
+a, 
+#site-name, 
+.copy-button, 
+.expand,
+button, 
+.scroll-down-effects,
+#footer-wrap a, 
+#pagination .page-number, 
+#nav .site-page,
+.post-meta-date, 
+.post-meta-date-created {
     cursor: url('./link.cur'), auto !important;
 }
 
@@ -60,32 +56,32 @@ button:hover,
 .vbtn,
 svg,
 .at_button {
-	cursor: url('./link.cur'), auto !important;
+    cursor: url('./link.cur'), auto !important;
 }
 
 /* 自定义工具：二维码与裁剪模块可点击元素 */
-#qrcode-tool-root .tab-item:hover,
-#qrcode-tool-root .style-card:hover,
-#qrcode-tool-root .btn-mini-upload:hover,
-#qrcode-tool-root .btn-mini-clear:hover,
-#qrcode-tool-root .upload-bar:hover,
-#qrcode-tool-root .btn:hover,
-#crop-modal .btn-cancel:hover,
-#crop-modal .btn-primary:hover {
+#qrcode-tool-root .tab-item,
+#qrcode-tool-root .style-card,
+#qrcode-tool-root .btn-mini-upload,
+#qrcode-tool-root .btn-mini-clear,
+#qrcode-tool-root .upload-bar,
+#qrcode-tool-root .btn,
+#crop-modal .btn-cancel,
+#crop-modal .btn-primary {
     cursor: url('./link.cur'), auto !important;
 }
 
 /* 自定义工具：图片处理模块可点击元素 */
-#img-style-root .upload-bar:hover,
-#img-style-root .style-card:hover,
-#img-style-root .btn:hover {
+#img-style-root .upload-bar,
+#img-style-root .style-card,
+#img-style-root .btn {
     cursor: url('./link.cur'), auto !important;
 }
 
 /* 自定义工具：翻译模块可点击元素 */
-#translate-tool-root .trans-select:hover,
-#translate-tool-root .trans-swap-btn:hover,
-#translate-tool-root .trans-btn-main:hover,
-#translate-tool-root .trans-btn-icon:hover {
+#translate-tool-root .trans-select,
+#translate-tool-root .trans-swap-btn,
+#translate-tool-root .trans-btn-main,
+#translate-tool-root .trans-btn-icon {
     cursor: url('./link.cur'), auto !important;
 }
