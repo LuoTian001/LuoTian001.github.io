@@ -1,12 +1,9 @@
-/* ==========================================
-   1. 终极全局底图 (arrow.cur) - 解决间隙抽动
-========================================== */
-/* 使用通配符强行覆盖所有元素及伪元素，确保鼠标在任何缝隙都不会掉落到系统默认指针 */
 *, *::before, *::after {
     cursor: url('./arrow.cur'), auto !important;
 }
 
-/* 恢复滑动条、颜色选择器等特殊控件为 arrow（这些控件不需要 link 或 beam） */
+#page-header, #page-header *, #page-header a, #page-header button,
+#nav, #nav *, #nav a, #nav button,
 input[type="range"],
 input[type="color"],
 #qrcode-tool-root .param-slider,
@@ -15,38 +12,29 @@ input[type="color"],
     cursor: url('./arrow.cur'), auto !important;
 }
 
-/* ==========================================
-   2. 文本与排版区域 (beam.cur)
-========================================== */
-/* 严格排除滑动条和颜色选择器，直接对元素应用，去除 :hover 延迟 */
 input:not([type="range"]):not([type="color"]), 
 textarea,
+h1, h2, h3, h4, h5, h6, 
+#subtitle, 
+#article-container p, 
+#article-container li, 
+#article-container span,
+.content, .line, 
 #qrcode-tool-root textarea,
 #qrcode-tool-root #parse-result-text,
-#translate-tool-root .trans-textarea,
-h1, h2, h3, h4, h5, h6, #subtitle, .content, .line, .post-content p, .post-content li {
+#translate-tool-root .trans-textarea {
     cursor: url('./beam.cur'), auto !important;
 }
 
-/* ==========================================
-   3. 可点击交互元素 (link.cur)
-========================================== */
-/* 基础链接与主题自带功能按钮，全部去除 :hover */
 a, 
-#site-name, 
+button, 
 .copy-button, 
 .expand,
-button, 
 .scroll-down-effects,
 #footer-wrap a, 
 #pagination .page-number, 
-#nav .site-page,
 .post-meta-date, 
-.post-meta-date-created {
-    cursor: url('./link.cur'), auto !important;
-}
-
-/* 评论系统相关按钮 (Gitalk/Valine) */
+.post-meta-date-created,
 .switch-btn,
 .switch-btn:before,
 .gt-user-inner,
@@ -55,11 +43,7 @@ button,
 .gt-btn,
 .vbtn,
 svg,
-.at_button {
-    cursor: url('./link.cur'), auto !important;
-}
-
-/* 自定义工具：二维码与裁剪模块可点击元素 */
+.at_button,
 #qrcode-tool-root .tab-item,
 #qrcode-tool-root .style-card,
 #qrcode-tool-root .btn-mini-upload,
@@ -67,18 +51,10 @@ svg,
 #qrcode-tool-root .upload-bar,
 #qrcode-tool-root .btn,
 #crop-modal .btn-cancel,
-#crop-modal .btn-primary {
-    cursor: url('./link.cur'), auto !important;
-}
-
-/* 自定义工具：图片处理模块可点击元素 */
+#crop-modal .btn-primary,
 #img-style-root .upload-bar,
 #img-style-root .style-card,
-#img-style-root .btn {
-    cursor: url('./link.cur'), auto !important;
-}
-
-/* 自定义工具：翻译模块可点击元素 */
+#img-style-root .btn,
 #translate-tool-root .trans-select,
 #translate-tool-root .trans-swap-btn,
 #translate-tool-root .trans-btn-main,
