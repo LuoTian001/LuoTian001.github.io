@@ -70,10 +70,7 @@
 }
 
 /* 文字间距微调 */
-.ocr-placeholder p {
-    margin: 4px 0; /* 紧凑间距 */
-    line-height: 1.4;
-}
+
 
 /* === 3. 结果展示区 (类名加前缀) === */
 .ocr-result-card {
