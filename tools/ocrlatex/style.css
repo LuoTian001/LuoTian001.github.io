@@ -31,7 +31,7 @@
 .ocr-dropzone-box {
     border: 2px dashed var(--ocr-border); /* 默认灰色虚线 */
     border-radius: 8px;
-    min-height: 80px;      /* [核心修改] 显著缩小高度 */
+    min-height: 40px;      /* [核心修改] 显著缩小高度 */
     display: flex;
     justify-content: center; /* 水平居中 */
     align-items: center;     /* 垂直居中 */
