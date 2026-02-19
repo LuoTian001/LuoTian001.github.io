@@ -1,87 +1,56 @@
-/* 全局默认鼠标指针 */
+/* ==========================================
+   1. 全局默认与非点击容器 (arrow.cur)
+========================================== */
 body,
-html {
-	cursor: url('./arrow.cur'),auto !important;
-}
-
-/* 悬停图片时的鼠标指针 */
-img { 
-	cursor: url('./arrow.cur'), auto !important;
-}
-
-/* 悬停图片弹出窗口时的鼠标指针 */
+html,
+img,
 .fancybox__slide,
-.carousel__slide {
+.carousel__slide,
+::-webkit-scrollbar:hover {
 	cursor: url('./arrow.cur'), auto !important;
 }
 
-/* 选择链接标签时的鼠标指针 */
-a:hover,
-#site-name:hover {
-    cursor: url('./link.cur'), auto !important;
+/* 滑动条、颜色选择器等非点击类特殊交互控件 */
+input[type="range"]:hover,
+input[type="color"]:hover,
+#qrcode-tool-root .param-slider:hover,
+#img-style-root .param-slider:hover,
+#qrcode-tool-root .color-picker-wrapper:hover {
+    cursor: url('./arrow.cur'), auto !important;
 }
 
-/* 选择代码框展开、复制按钮，以及翻译工具功能图标时的鼠标指针 */
-.copy-button:hover,
-.expand:hover,
-#translate-tool-root .trans-btn-icon:hover {
-    cursor: url('./link.cur'), auto !important;
-}
-
-/* 选中输入框及各个工具文本域时的鼠标指针 */
-input:hover, 
+/* ==========================================
+   2. 文本与排版区域 (beam.cur)
+========================================== */
+/* 使用 :not 严格排除滑动条和颜色选择器，防止 input 样式重叠导致抽动 */
+input:not([type="range"]):not([type="color"]):hover, 
 textarea:hover,
 #qrcode-tool-root textarea:hover,
 #qrcode-tool-root #parse-result-text:hover,
-#translate-tool-root .trans-textarea:hover {
-    cursor: url('./beam.cur'), auto;
+#translate-tool-root .trans-textarea:hover,
+h1, h2, h3, h4, h5, h6, #subtitle, .content, .line, .post-content p, .post-content li {
+	cursor: url('./beam.cur'), auto !important;
 }
 
-/* 悬停按钮及各类工具面板交互元素（选项卡、卡片、滑块、上传框、下拉框等）时的鼠标指针 */
-button:hover,
+/* ==========================================
+   3. 可点击交互元素 (link.cur)
+========================================== */
+/* 基础链接与主题自带功能按钮 */
+a:hover, 
+#site-name:hover, 
+.copy-button:hover, 
+.expand:hover,
+button:hover, 
 .scroll-down-effects:hover,
-#qrcode-tool-root .tab-item:hover,
-#qrcode-tool-root .style-card:hover,
-#qrcode-tool-root .param-slider:hover,
-#qrcode-tool-root .color-picker-wrapper:hover,
-#qrcode-tool-root input[type="color"]:hover,
-#qrcode-tool-root .btn-mini-upload:hover,
-#qrcode-tool-root .btn-mini-clear:hover,
-#qrcode-tool-root .upload-bar:hover,
-#qrcode-tool-root .btn:hover,
-#crop-modal .btn-cancel:hover,
-#crop-modal .btn-primary:hover,
-#img-style-root .upload-bar:hover,
-#img-style-root .style-card:hover,
-#img-style-root .param-slider:hover,
-#img-style-root .btn:hover,
-#translate-tool-root .trans-select:hover,
-#translate-tool-root .trans-swap-btn:hover,
-#translate-tool-root .trans-btn-main:hover {
-    cursor: url('./arrow.cur'), auto !important;
+#footer-wrap a:hover, 
+#pagination .page-number:hover, 
+#nav .site-page:hover,
+.post-meta-date:hover, 
+.post-meta-date-created:hover {
+    cursor: url('./link.cur'), auto !important;
 }
 
-/* 悬停页脚链接标签（例如页脚徽标）时的鼠标指针 */
-#footer-wrap a:hover {
-    cursor: url('./arrow.cur'), auto;
-}
-
-/* 悬停页码时的鼠标指针 */
-#pagination .page-number:hover {
-    cursor: url('./arrow.cur'), auto;
-}
-
-/* 悬停菜单栏时的鼠标指针 */
-#nav .site-page:hover {
-    cursor: url('./arrow.cur'), auto !important;
-}
-
-/* 悬停滚动条的鼠标指针（只对Chrome有效） */
-::-webkit-scrollbar:hover {
-	cursor: url('./arrow.cur'), auto!important;
-}
-
-/* 悬停评论按钮的鼠标指针（Gitalk/Valine） */
+/* 评论系统相关按钮 (Gitalk/Valine) */
 .switch-btn,
 .switch-btn:before,
 .gt-user-inner,
@@ -91,21 +60,32 @@ button:hover,
 .vbtn,
 svg,
 .at_button {
-	cursor: url('./arrow.cur'), auto !important;
+	cursor: url('./link.cur'), auto !important;
 }
 
-/* 悬停非链接文本时的鼠标指针 */
-h1,h2,h3,h4,h5,h6,
-#subtitle,
-.content,
-.line,
-.post-content p,
-.post-content li {
-	cursor: url('./beam.cur'), auto;
+/* 自定义工具：二维码与裁剪模块可点击元素 */
+#qrcode-tool-root .tab-item:hover,
+#qrcode-tool-root .style-card:hover,
+#qrcode-tool-root .btn-mini-upload:hover,
+#qrcode-tool-root .btn-mini-clear:hover,
+#qrcode-tool-root .upload-bar:hover,
+#qrcode-tool-root .btn:hover,
+#crop-modal .btn-cancel:hover,
+#crop-modal .btn-primary:hover {
+    cursor: url('./link.cur'), auto !important;
 }
 
-/* 悬停文章日期 */
-.post-meta-date:hover,
-.post-meta-date-created:hover {
-	cursor: url('./arrow.cur'), auto!important;
+/* 自定义工具：图片处理模块可点击元素 */
+#img-style-root .upload-bar:hover,
+#img-style-root .style-card:hover,
+#img-style-root .btn:hover {
+    cursor: url('./link.cur'), auto !important;
+}
+
+/* 自定义工具：翻译模块可点击元素 */
+#translate-tool-root .trans-select:hover,
+#translate-tool-root .trans-swap-btn:hover,
+#translate-tool-root .trans-btn-main:hover,
+#translate-tool-root .trans-btn-icon:hover {
+    cursor: url('./link.cur'), auto !important;
 }
