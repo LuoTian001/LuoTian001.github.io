@@ -54,9 +54,9 @@
     outline: none;
     cursor: pointer;
     transition: all 0.3s;
-    width: 140px; /* 适当缩小选择框宽度 */
+    width: 140px; 
     text-align: center;
-    text-align-last: center; /* 确保下拉选项内的文字居中 */
+    text-align-last: center; 
 }
 
 [data-theme="dark"] #translate-tool-root .trans-select {
@@ -118,33 +118,40 @@
 }
 
 @media (max-width: 500px) {
-    /* 核心修改：将选择框变为上下两行，按钮居中悬浮 */
+    /* 使用 Grid 布局剥离 DOM 顺序，实现“左侧按钮、右侧上下框” */
     #translate-tool-root .trans-header {
-        flex-direction: column;
-        gap: 12px;
-        padding: 20px 15px;
-        position: relative; /* 为悬浮按钮提供锚点 */
+        display: grid;
+        grid-template-columns: auto 1fr; /* 左侧自适应按钮宽度，右侧占据剩余全部空间 */
+        grid-template-rows: auto auto;   /* 上下两行 */
+        gap: 12px 15px;                  /* 行间距 12px，列间距 15px */
+        padding: 15px;
     }
     
-    #translate-tool-root .trans-select {
-        width: 100%; /* 占满整行 */
-        padding: 10px;
+    /* 强制源语言框在：第2列，第1行 */
+    #translate-tool-root #tr-srcLang {
+        grid-column: 2;
+        grid-row: 1;
+        width: 100%; 
+    }
+    
+    /* 强制目标语言框在：第2列，第2行 */
+    #translate-tool-root #tr-tgtLang {
+        grid-column: 2;
+        grid-row: 2;
+        width: 100%;
     }
 
+    /* 强制按钮在：第1列，跨越第1和第2行，并居中对齐 */
     #translate-tool-root .trans-swap-btn {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        /* 居中并顺时针旋转90度，使箭头指向上下 */
-        transform: translate(-50%, -50%) rotate(90deg);
-        z-index: 2;
-        /* 在移动端给按钮加一点实色背景，防止后面的边框线穿透影响视觉 */
-        background: var(--bg-color); 
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        align-self: center;   /* 垂直居中 */
+        justify-self: center; /* 水平居中 */
+        transform: rotate(90deg); /* 顺时针旋转，箭头指向上和下 */
     }
     
-    /* 悬浮时继续旋转，保持交互动效 */
+    /* 悬浮动效 */
     #translate-tool-root .trans-swap-btn:hover {
-        transform: translate(-50%, -50%) rotate(270deg);
+        transform: rotate(270deg);
     }
 }
