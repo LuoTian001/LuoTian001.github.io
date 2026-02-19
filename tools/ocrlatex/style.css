@@ -29,23 +29,23 @@
 
 /* === 2. 拖拽上传区 (修复居中问题 & 调整间距) === */
 .ocr-dropzone-box {
-    border: 2px dashed var(--ocr-border); /* 默认灰色虚线 */
+    position: relative; /* 核心：这是加载遮罩层 absolute 坐标系的锚点 */
+    border: 2px dashed var(--ocr-border);
     border-radius: 8px;
-    min-height: 80px;      /* [核心修改] 显著缩小高度 */
+    min-height: 80px;   /* 缩小的高度 */
     display: flex;
-    justify-content: center; /* 水平居中 */
-    align-items: center;     /* 垂直居中 */
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    transition: all 0.3s ease;
     background: var(--ocr-panel);
     cursor: pointer;
-    position: relative;
     color: #666;
-    overflow: hidden;
-    padding: 10px;
+    transition: all 0.3s ease;
+    padding: 15px;
+    overflow: hidden;   /* 核心：防止内部元素溢出边界 */
 }
 
-/* 悬浮或拖拽进入时变为蓝色 */
 .ocr-dropzone-box:hover,
 .ocr-dropzone-box.dragover {
     border-color: var(--ocr-primary);
@@ -56,9 +56,8 @@
 .ocr-placeholder {
     font-size: 1rem;
     font-weight: 500;
-    pointer-events: none; /* 防止文字干扰拖拽事件 */
+    pointer-events: none; /* 防止文字阻挡鼠标事件 */
 }
-
 
 /* === 3. 结果展示区 (类名加前缀) === */
 .ocr-result-card {
@@ -98,54 +97,38 @@
 
 /* === 4. Loading 动画 (类名加前缀) === */
 .ocr-loading-mask {
-    display: none; /* 默认隐藏，JS 触发时请保持 display: flex */
-    position: absolute;
-    top: 0; 
-    left: 0; 
-    width: 100%;  /* 强制撑满父容器宽度 */
-    height: 100%; /* 强制撑满父容器高度 */
+    display: none;      /* 默认隐藏，JS触发时修改为 flex */
+    position: absolute; /* 绝对定位，覆盖在上传框上方 */
+    top: 0; left: 0; 
+    width: 100%; height: 100%; /* 撑满父容器 (ocr-dropzone-box) */
     background: rgba(255, 255, 255, 0.9);
-    
-    /* 核心居中逻辑 */
-    align-items: center;
-    justify-content: center;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     z-index: 20;
-}
-
-.ocr-loading-mask p {
-    margin: 10px 0 0 0; 
-    font-size: 0.9rem;
-    color: var(--ocr-text);
-    text-align: center;
 }
 
 [data-theme="dark"] .ocr-loading-mask {
     background: rgba(30, 30, 30, 0.9);
 }
 
-@keyframes ocr-spin {
-    to { transform: rotate(360deg); }
-}
-
 .ocr-spinner {
-    width: 28px;  /* 稍微放大一点让视觉更清晰 */
+    width: 28px; 
     height: 28px;
-    
-    /* [核心修复] 防止在 flex 布局中被挤压变形 */
-    flex-shrink: 0; 
-    box-sizing: border-box; 
-    
-    margin: 0; /* 清除可能继承的 margin */
+    flex-shrink: 0;         /* 防止被 Flex 挤压成椭圆 */
+    box-sizing: border-box; /* 严谨控制边框模型 */
+    margin: 0; 
     border: 3px solid rgba(33, 150, 243, 0.2);
     border-top: 3px solid var(--ocr-primary);
-    border-radius: 50%; /* 保证是完美圆形 */
+    border-radius: 50%;     /* 完美的圆形 */
     animation: ocr-spin 1s linear infinite;
 }
 
-[data-theme="dark"] .ocr-spinner {
-    border-color: #444;
-    border-top-color: var(--ocr-primary);
+.ocr-loading-mask p {
+    margin: 8px 0 0 0;
+    font-size: 0.9rem;
+    color: var(--ocr-text);
+    text-align: center;
 }
 
 @keyframes ocr-spin {
