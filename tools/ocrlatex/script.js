@@ -16,7 +16,7 @@
         const loadingEl = document.getElementById('ocr-loading');
         const errorEl = document.getElementById('ocr-error-message');
         const copyBtn = document.getElementById('ocr-btn-copy');
-
+        const uploadText = document.getElementById('ocr-upload-text');
         const BASE_URL = 'https://www.luotian.cyou';
 
         // 核心逻辑
@@ -93,7 +93,15 @@
         }
 
         function showLoading(show) {
-            if(loadingEl) loadingEl.style.display = show ? 'flex' : 'none';
+            if (loadingEl) {
+                loadingEl.style.display = show ? 'block' : 'none';
+            }
+            if (uploadText) {
+                uploadText.textContent = show ? '⏳ 正在识别中...' : '📁 点击选择图片、拖拽至此或直接粘贴';
+                // 识别时禁用点击交互的视觉反馈
+                dropzone.style.pointerEvents = show ? 'none' : 'auto'; 
+                dropzone.style.opacity = show ? '0.7' : '1';
+            }
         }
 
         function showError(message) {

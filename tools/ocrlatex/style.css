@@ -28,52 +28,39 @@
 }
 
 /* === 2. 拖拽上传区 (修复居中问题 & 调整间距) === */
-.ocr-dropzone-box {
-    border: 2px dashed #ccc;
-    border-radius: 8px;
-    padding: 0 1rem;       /* 减小内边距 */
-    min-height: 150px;   /* 减小高度 */
-    
-    /* 核心居中代码 */
-    display: flex;
-    flex-direction: column; /* 纵向排列 */
-    justify-content: center; /* 垂直居中 */
-    align-items: center;     /* 水平居中 */
-    
-    text-align: center;
-    transition: all 0.3s ease;
-    background: var(--ocr-panel);
-    cursor: pointer;
-    position: relative;
-    color: #666;
-    overflow: hidden;
-}
-
-.ocr-dropzone-box:hover,
-.ocr-dropzone-box.dragover {
-    border-color: var(--ocr-primary);
-    background: rgba(33, 150, 243, 0.05);
-}
-
-.ocr-dropzone-box.dragover::before {
-    content: "释放以上传图片";
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(33, 150, 243, 0.1);
-    color: var(--ocr-primary);
-    font-size: 1.5rem;
+.ocr-upload-bar {
     display: flex;
     align-items: center;
-    justify-content: center;
-    z-index: 10;
-    backdrop-filter: blur(2px);
+    justify-content: space-between;
+    background: var(--ocr-panel);
+    padding: 15px 20px;
+    border-radius: 8px;
+    border: 2px dashed var(--ocr-border);
+    margin-bottom: 20px;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    color: var(--ocr-text);
 }
 
-/* 文字间距微调 */
-.ocr-placeholder p {
-    margin: 4px 0; /* 紧凑间距 */
-    line-height: 1.4;
+.ocr-upload-bar:hover,
+.ocr-upload-bar.dragover {
+    border-color: var(--ocr-primary);
+    background: rgba(33, 150, 243, 0.05);
+    color: var(--ocr-primary);
 }
+
+.ocr-upload-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: 0.3s;
+}
+
 
 /* === 3. 结果展示区 (类名加前缀) === */
 .ocr-result-card {
@@ -112,20 +99,23 @@
 }
 
 /* === 4. Loading 动画 (类名加前缀) === */
-.ocr-loading-mask {
-    display: none;
-    position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(255, 255, 255, 0.9);
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    color: #333;
-    z-index: 20;
+.ocr-loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(33, 150, 243, 0.3);
+    border-top-color: var(--ocr-primary);
+    border-radius: 50%;
+    animation: ocr-spin 1s linear infinite;
+    flex-shrink: 0;
 }
-[data-theme="dark"] .ocr-loading-mask {
-    background: rgba(30, 30, 30, 0.9);
-    color: #eee;
+
+[data-theme="dark"] .ocr-loading-spinner {
+    border-color: rgba(255, 255, 255, 0.1);
+    border-top-color: var(--ocr-primary);
+}
+
+@keyframes ocr-spin {
+    to { transform: rotate(360deg); }
 }
 
 .ocr-spinner {

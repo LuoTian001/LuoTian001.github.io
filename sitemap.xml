@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://luotian.cyou/tools/ocrlatex/index.html</loc>
+    
+    <lastmod>2026-02-19</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://luotian.cyou/tools/translate/index.html</loc>
     
     <lastmod>2026-02-19</lastmod>
@@ -23,15 +32,6 @@
     <loc>https://luotian.cyou/tools/qrcode/index.html</loc>
     
     <lastmod>2026-02-19</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://luotian.cyou/tools/ocrlatex/index.html</loc>
-    
-    <lastmod>2026-02-18</lastmod>
     
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
