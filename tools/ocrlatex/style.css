@@ -125,6 +125,13 @@
     color: #eee;
 }
 
+.ocr-placeholder p,
+.ocr-loading-mask p {
+    margin: 0 !important;
+    padding: 0;
+    line-height: 1; /* 收紧行高，确保与内部 font 元素或文字的物理高度一致 */
+}
+
 .ocr-spinner {
     width: 30px;
     height: 30px;
@@ -132,7 +139,7 @@
     border-top: 3px solid var(--ocr-primary);
     border-radius: 50%;
     animation: ocr-spin 1s linear infinite;
-    margin-bottom: 10px;
+    margin-bottom: 12px !important;
 }
 [data-theme="dark"] .ocr-spinner {
     border-color: #444;
