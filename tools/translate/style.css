@@ -1,5 +1,5 @@
-/* === 基础变量 === */
-:root {
+/* === 基础变量 (局部化) === */
+#translate-tool-root {
     --trans-primary: #49b1f5;
     --trans-glass-bg: rgba(255, 255, 255, 0.7);
     --trans-glass-border: 1px solid rgba(255, 255, 255, 0.6);
@@ -8,9 +8,18 @@
     --trans-radius: 12px;
     --bg-color: #fff;
     --panel-bg: #f8f9fa;
+    
+    max-width: 1000px;
+    margin: 0 auto;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding: 20px;
+    background: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    box-sizing: border-box;
 }
 
-[data-theme="dark"] {
+[data-theme="dark"] #translate-tool-root {
     --trans-glass-bg: rgba(30, 30, 30, 0.6);
     --trans-glass-border: 1px solid rgba(255, 255, 255, 0.1);
     --trans-text: #e0e0e0;
@@ -19,17 +28,8 @@
     --panel-bg: #2d2d2d;
 }
 
-.trans-container {
-    max-width: 1000px;
-    margin: 0 auto;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    padding: 20px;
-    background: var(--bg-color);
-    border-radius: 12px;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
-}
-
-.trans-header {
+/* === 头部布局 === */
+#translate-tool-root .trans-header {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -44,8 +44,8 @@
     box-shadow: var(--trans-shadow);
 }
 
-.trans-select {
-    padding: 8px 16px;
+#translate-tool-root .trans-select {
+    padding: 8px 12px;
     border-radius: 8px;
     border: 1px solid rgba(128, 128, 128, 0.3);
     background: rgba(255, 255, 255, 0.5);
@@ -54,17 +54,20 @@
     outline: none;
     cursor: pointer;
     transition: all 0.3s;
+    width: 140px; /* 适当缩小选择框宽度 */
+    text-align: center;
+    text-align-last: center; /* 确保下拉选项内的文字居中 */
 }
 
-[data-theme="dark"] .trans-select {
+[data-theme="dark"] #translate-tool-root .trans-select {
     background: rgba(0, 0, 0, 0.3);
 }
 
-[data-theme="dark"] .trans-select option {
+[data-theme="dark"] #translate-tool-root .trans-select option {
     background: #333;
 }
 
-.trans-swap-btn {
+#translate-tool-root .trans-swap-btn {
     width: 36px;
     height: 36px;
     border-radius: 50%;
@@ -77,122 +80,71 @@
     justify-content: center;
     transition: all 0.3s;
     font-size: 18px;
+    flex-shrink: 0;
 }
 
-[data-theme="dark"] .trans-swap-btn {
+[data-theme="dark"] #translate-tool-root .trans-swap-btn {
     background: rgba(255, 255, 255, 0.1);
 }
 
-.trans-swap-btn:hover {
+#translate-tool-root .trans-swap-btn:hover {
     transform: rotate(180deg);
     background: var(--trans-primary);
     color: white;
 }
 
-.trans-body {
-    display: flex;
-    gap: 20px;
-    min-height: 350px;
-}
+/* === 主体与输入框 === */
+#translate-tool-root .trans-body { display: flex; gap: 20px; min-height: 350px; }
+#translate-tool-root .trans-box { flex: 1; display: flex; flex-direction: column; background: var(--trans-glass-bg); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-radius: var(--trans-radius); border: var(--trans-glass-border); box-shadow: var(--trans-shadow); position: relative; transition: transform 0.2s; }
+#translate-tool-root .trans-box:focus-within { border-color: var(--trans-primary); }
+#translate-tool-root .trans-textarea { flex: 1; width: 100%; padding: 20px; border: none; background: transparent; resize: none; outline: none; font-size: 16px; line-height: 1.6; color: var(--trans-text); box-sizing: border-box; }
+#translate-tool-root .trans-tools { padding: 10px 15px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid rgba(128, 128, 128, 0.1); }
+#translate-tool-root .trans-btn-icon { display: flex; align-items: center; gap: 5px; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; color: #888; transition: all 0.2s; background: transparent; border: none; }
+#translate-tool-root .trans-btn-icon:hover { background: rgba(128, 128, 128, 0.1); color: var(--trans-primary); }
+#translate-tool-root .trans-btn-icon.copied { background: #67c23a; color: white; }
 
-.trans-box {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    background: var(--trans-glass-bg);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border-radius: var(--trans-radius);
-    border: var(--trans-glass-border);
-    box-shadow: var(--trans-shadow);
-    position: relative;
-    transition: transform 0.2s;
-}
+/* === 底部按钮 === */
+#translate-tool-root .trans-action { margin-top: 25px; text-align: center; }
+#translate-tool-root .trans-btn-main { background: var(--trans-primary); color: white; border: none; padding: 12px 60px; border-radius: 30px; font-size: 18px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 15px rgba(73, 177, 245, 0.4); transition: all 0.3s; }
+#translate-tool-root .trans-btn-main:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(73, 177, 245, 0.6); }
+#translate-tool-root .trans-btn-main:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; }
 
-.trans-box:focus-within {
-    border-color: var(--trans-primary);
-}
-
-.trans-textarea {
-    flex: 1;
-    width: 100%;
-    padding: 20px;
-    border: none;
-    background: transparent;
-    resize: none;
-    outline: none;
-    font-size: 16px;
-    line-height: 1.6;
-    color: var(--trans-text);
-}
-
-.trans-tools {
-    padding: 10px 15px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-top: 1px solid rgba(128, 128, 128, 0.1);
-}
-
-.trans-btn-icon {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 13px;
-    color: #888;
-    transition: all 0.2s;
-    background: transparent;
-    border: none;
-}
-
-.trans-btn-icon:hover {
-    background: rgba(128, 128, 128, 0.1);
-    color: var(--trans-primary);
-}
-
-.trans-btn-icon.copied {
-    background: #67c23a;
-    color: white;
-}
-
-.trans-action {
-    margin-top: 25px;
-    text-align: center;
-}
-
-.trans-btn-main {
-    background: var(--trans-primary);
-    color: white;
-    border: none;
-    padding: 12px 60px;
-    border-radius: 30px;
-    font-size: 18px;
-    font-weight: 600;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(73, 177, 245, 0.4);
-    transition: all 0.3s;
-}
-
-.trans-btn-main:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(73, 177, 245, 0.6);
-}
-
-.trans-btn-main:disabled {
-    background: #ccc;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-
+/* ============================================================
+   移动端响应式布局适配
+============================================================ */
 @media (max-width: 768px) {
-    .trans-body {
+    #translate-tool-root .trans-body { flex-direction: column; }
+    #translate-tool-root .trans-box { min-height: 200px; }
+}
+
+@media (max-width: 500px) {
+    /* 核心修改：将选择框变为上下两行，按钮居中悬浮 */
+    #translate-tool-root .trans-header {
         flex-direction: column;
+        gap: 12px;
+        padding: 20px 15px;
+        position: relative; /* 为悬浮按钮提供锚点 */
     }
-    .trans-box {
-        min-height: 200px;
+    
+    #translate-tool-root .trans-select {
+        width: 100%; /* 占满整行 */
+        padding: 10px;
+    }
+
+    #translate-tool-root .trans-swap-btn {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        /* 居中并顺时针旋转90度，使箭头指向上下 */
+        transform: translate(-50%, -50%) rotate(90deg);
+        z-index: 2;
+        /* 在移动端给按钮加一点实色背景，防止后面的边框线穿透影响视觉 */
+        background: var(--bg-color); 
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    /* 悬浮时继续旋转，保持交互动效 */
+    #translate-tool-root .trans-swap-btn:hover {
+        transform: translate(-50%, -50%) rotate(270deg);
     }
 }
