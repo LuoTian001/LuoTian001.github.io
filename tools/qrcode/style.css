@@ -390,3 +390,55 @@
     width: 100%; padding: 12px; border: none; border-radius: 6px;
     background: #2196F3; color: white; cursor: pointer;
 }
+
+/* ============================================================
+   [新增] 响应式布局优化 (针对手机端/窄屏)
+============================================================ */
+@media (max-width: 600px) {
+    #qrcode-tool-root .row-three-cols {
+        /* 改为两列布局 */
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+    }
+
+    /* 前两个元素（前景色、背景色）保持各占 1 列，无需修改 */
+
+    /* 第三个元素（Logo上传）强制跨越两列，并居中 */
+    #qrcode-tool-root .col-item:nth-child(3) {
+        grid-column: span 2;
+        margin-top: 5px;
+        width: 100%; /* 确保容器占满 */
+    }
+    
+    /* 让上传按钮和清除按钮在手机上也保持合适宽度 */
+    #qrcode-tool-root .btn-mini-upload,
+    #qrcode-tool-root .btn-mini-clear {
+        max-width: 200px; /* 防止按钮过长 */
+    }
+}
+
+/* ============================================================
+   [新增] 清除 Logo 按钮样式
+============================================================ */
+#qrcode-tool-root .btn-mini-clear {
+    width: 100%; 
+    height: 36px;
+    padding: 0 10px; 
+    font-size: 0.85rem;
+    background: transparent; 
+    border: 1px solid #ff4d4f; /* 红色边框示警 */
+    border-radius: 6px; 
+    cursor: pointer; 
+    color: #ff4d4f;
+    transition: 0.2s; 
+    white-space: nowrap; 
+    display: none; /* 默认隐藏 */
+    align-items: center; 
+    justify-content: center;
+    margin-top: 5px; /* 与上传按钮保持间距 */
+}
+
+#qrcode-tool-root .btn-mini-clear:hover { 
+    background: #fff1f0; 
+    border-color: #ff7875; 
+}

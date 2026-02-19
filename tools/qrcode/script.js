@@ -28,6 +28,7 @@
         const genLogoPlaceholder = document.getElementById('gen-logo-placeholder');
         const btnTriggerLogo = document.getElementById('btn-trigger-logo');
         const logoInput = document.getElementById('logoInput');
+        const btnClearLogo = document.getElementById('btn-clear-logo');
 
         // Cropper Elements
         const cropModal = document.getElementById('crop-modal');
@@ -139,9 +140,35 @@
                     genLogoPreview.src = url;
                     genLogoPreview.style.display = 'block';
                     if(genLogoPlaceholder) genLogoPlaceholder.style.display = 'none';
-                    if(btnTriggerLogo) btnTriggerLogo.textContent = "✅ 已选择";
+                    
+                    // [修改] 交互状态更新
+                    if(btnTriggerLogo) {
+                        btnTriggerLogo.textContent = "🔄 更换图片"; // 改变文案
+                        btnTriggerLogo.classList.add('active'); // 可选：添加样式标记
+                    }
+                    if(btnClearLogo) btnClearLogo.style.display = 'flex'; // 显示清除按钮
+                    
                     closeModal();
                 }, 'image/png');
+            };
+        }
+        
+        if (btnClearLogo) {
+            btnClearLogo.onclick = () => {
+                // 重置文件
+                logoFile = null;
+                logoInput.value = ''; // 允许再次选择同一文件
+
+                genLogoPreview.src = '';
+                genLogoPreview.style.display = 'none';
+                if(genLogoPlaceholder) genLogoPlaceholder.style.display = 'block';
+
+                if(btnTriggerLogo) {
+                    btnTriggerLogo.textContent = "📂 上传图片";
+                    btnTriggerLogo.classList.remove('active');
+                }
+
+                btnClearLogo.style.display = 'none';
             };
         }
 
