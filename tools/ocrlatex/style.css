@@ -98,20 +98,30 @@
 
 /* === 4. Loading 动画 (类名加前缀) === */
 .ocr-loading-mask {
-    display: none; /* 默认隐藏，由 JS 控制显示 */
+    display: none; /* 默认隐藏，JS 触发时请保持 display: flex */
     position: absolute;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0; 
+    left: 0; 
+    width: 100%;  /* 强制撑满父容器宽度 */
+    height: 100%; /* 强制撑满父容器高度 */
     background: rgba(255, 255, 255, 0.9);
+    
+    /* 核心居中逻辑 */
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    color: #333;
     z-index: 20;
+}
+
+.ocr-loading-mask p {
+    margin: 10px 0 0 0; 
+    font-size: 0.9rem;
+    color: var(--ocr-text);
+    text-align: center;
 }
 
 [data-theme="dark"] .ocr-loading-mask {
     background: rgba(30, 30, 30, 0.9);
-    color: #eee;
 }
 
 @keyframes ocr-spin {
@@ -119,11 +129,17 @@
 }
 
 .ocr-spinner {
-    width: 24px;
-    height: 24px;
+    width: 28px;  /* 稍微放大一点让视觉更清晰 */
+    height: 28px;
+    
+    /* [核心修复] 防止在 flex 布局中被挤压变形 */
+    flex-shrink: 0; 
+    box-sizing: border-box; 
+    
+    margin: 0; /* 清除可能继承的 margin */
     border: 3px solid rgba(33, 150, 243, 0.2);
     border-top: 3px solid var(--ocr-primary);
-    border-radius: 50%;
+    border-radius: 50%; /* 保证是完美圆形 */
     animation: ocr-spin 1s linear infinite;
 }
 
