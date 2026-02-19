@@ -1,5 +1,5 @@
-https://luotian.cyou/tools/qrcode/index.html
 https://luotian.cyou/tools/img-style/index.html
+https://luotian.cyou/tools/qrcode/index.html
 https://luotian.cyou/tools/ocrlatex/index.html
 https://luotian.cyou/tools/splitter/index.html
 https://luotian.cyou/tools/translate/index.html
