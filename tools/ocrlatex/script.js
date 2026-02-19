@@ -16,7 +16,7 @@
         const loadingEl = document.getElementById('ocr-loading');
         const errorEl = document.getElementById('ocr-error-message');
         const copyBtn = document.getElementById('ocr-btn-copy');
-        const uploadText = document.getElementById('ocr-upload-text');
+
         const BASE_URL = 'https://www.luotian.cyou';
 
         // 核心逻辑
@@ -93,10 +93,7 @@
         }
 
         function showLoading(show) {
-            if(loadingEl) {
-                // 必须是 'flex' 才能保证加载圈和文字居中对齐
-                loadingEl.style.display = show ? 'flex' : 'none'; 
-            }
+            if(loadingEl) loadingEl.style.display = show ? 'flex' : 'none';
         }
 
         function showError(message) {
