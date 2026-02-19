@@ -93,14 +93,9 @@
         }
 
         function showLoading(show) {
-            if (loadingEl) {
-                loadingEl.style.display = show ? 'block' : 'none';
-            }
-            if (uploadText) {
-                uploadText.textContent = show ? '⏳ 正在识别中...' : '📁 点击选择图片、拖拽至此或直接粘贴';
-                // 识别时禁用点击交互的视觉反馈
-                dropzone.style.pointerEvents = show ? 'none' : 'auto'; 
-                dropzone.style.opacity = show ? '0.7' : '1';
+            if(loadingEl) {
+                // 必须是 'flex' 才能保证加载圈和文字居中对齐
+                loadingEl.style.display = show ? 'flex' : 'none'; 
             }
         }
 

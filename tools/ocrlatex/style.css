@@ -28,37 +28,35 @@
 }
 
 /* === 2. 拖拽上传区 (修复居中问题 & 调整间距) === */
-.ocr-upload-bar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: var(--ocr-panel);
-    padding: 15px 20px;
+.ocr-dropzone-box {
+    border: 2px dashed var(--ocr-border); /* 默认灰色虚线 */
     border-radius: 8px;
-    border: 2px dashed var(--ocr-border);
-    margin-bottom: 20px;
+    min-height: 80px;      /* [核心修改] 显著缩小高度 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;     /* 垂直居中 */
+    text-align: center;
     transition: all 0.3s ease;
+    background: var(--ocr-panel);
     cursor: pointer;
-    color: var(--ocr-text);
+    position: relative;
+    color: #666;
+    overflow: hidden;
+    padding: 10px;
 }
 
-.ocr-upload-bar:hover,
-.ocr-upload-bar.dragover {
+/* 悬浮或拖拽进入时变为蓝色 */
+.ocr-dropzone-box:hover,
+.ocr-dropzone-box.dragover {
     border-color: var(--ocr-primary);
     background: rgba(33, 150, 243, 0.05);
     color: var(--ocr-primary);
 }
 
-.ocr-upload-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 0.95rem;
+.ocr-placeholder {
+    font-size: 1rem;
     font-weight: 500;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    transition: 0.3s;
+    pointer-events: none; /* 防止文字干扰拖拽事件 */
 }
 
 
@@ -99,19 +97,21 @@
 }
 
 /* === 4. Loading 动画 (类名加前缀) === */
-.ocr-loading-spinner {
-    width: 20px;
-    height: 20px;
-    border: 2px solid rgba(33, 150, 243, 0.3);
-    border-top-color: var(--ocr-primary);
-    border-radius: 50%;
-    animation: ocr-spin 1s linear infinite;
-    flex-shrink: 0;
+.ocr-loading-mask {
+    display: none; /* 默认隐藏，由 JS 控制显示 */
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(255, 255, 255, 0.9);
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    color: #333;
+    z-index: 20;
 }
 
-[data-theme="dark"] .ocr-loading-spinner {
-    border-color: rgba(255, 255, 255, 0.1);
-    border-top-color: var(--ocr-primary);
+[data-theme="dark"] .ocr-loading-mask {
+    background: rgba(30, 30, 30, 0.9);
+    color: #eee;
 }
 
 @keyframes ocr-spin {
@@ -119,14 +119,14 @@
 }
 
 .ocr-spinner {
-    width: 30px;
-    height: 30px;
-    border: 3px solid #f3f3f3;
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(33, 150, 243, 0.2);
     border-top: 3px solid var(--ocr-primary);
     border-radius: 50%;
     animation: ocr-spin 1s linear infinite;
-    margin-bottom: 10px;
 }
+
 [data-theme="dark"] .ocr-spinner {
     border-color: #444;
     border-top-color: var(--ocr-primary);
