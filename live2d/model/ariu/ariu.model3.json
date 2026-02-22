@@ -3,10 +3,10 @@
 	"FileReferences": {
 		"Moc": "ariu.moc3",
 		"Textures": [
-			"Textures/texture_00.webp",
-			"Textures/texture_01.webp",
-			"Textures/texture_02.webp",
-			"Textures/texture_03.webp"
+			"textures/texture_00.webp",
+			"textures/texture_01.webp",
+			"textures/texture_02.webp",
+			"textures/texture_03.webp"
 		],
 		"Physics": "ariu.physics3.json",
 		"DisplayInfo": "ariu.cdi3.json",
