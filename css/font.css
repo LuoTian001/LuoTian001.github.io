@@ -1,0 +1,9 @@
+@font-face{
+    font-family: '兰亭粗黑简';
+    font-display: swap;
+    src: url('../font/兰亭粗黑简.TTF') format("truetype");
+}
+
+body {
+    font-family: "Microsoft YaHei", '兰亭粗黑简.TTF';
+}

@@ -1,0 +1,55 @@
+:root {
+  --post-heading-icon: "🌸";
+}
+
+/* 包含 .headerlink 的情况 */
+#post h1 > .headerlink::before,
+#post h2 > .headerlink::before,
+#post h3 > .headerlink::before,
+#post h4 > .headerlink::before,
+#post h5 > .headerlink::before,
+#post h6 > .headerlink::before {
+  content: var(--post-heading-icon);
+  /* 关键修正：重置字体族，优先使用 emoji 字体，回退到系统无衬线字体 */
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif; 
+  display: inline-block;
+  width: auto;
+  height: auto; /* 建议设为 auto 或 1em 以适应字体 */
+  margin-right: 0.5em; /* 调整间距 */
+  vertical-align: middle; 
+  background: none; 
+  filter: none; 
+  /* 修正位置：如果字体对了，translateY 可能需要微调，建议先归零测试 */
+  transform: translateY(-0.1em); 
+  animation: rotate-icon 10s linear infinite;
+  
+  /* 额外保险：移除可能继承的 FontAwesome 样式 */
+  font-weight: normal;
+  border: none;
+}
+
+/* 不包含 .headerlink 的情况 */
+#post h1[id]:not(:has(> .headerlink))::before,
+#post h2[id]:not(:has(> .headerlink))::before,
+#post h3[id]:not(:has(> .headerlink))::before,
+#post h4[id]:not(:has(> .headerlink))::before,
+#post h5[id]:not(:has(> .headerlink))::before,
+#post h6[id]:not(:has(> .headerlink))::before {
+  content: var(--post-heading-icon);
+  font-family: "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji", sans-serif;
+  display: inline-block;
+  margin-right: 0.5em;
+  vertical-align: middle;
+  transform: translateY(-0.1em);
+  animation: rotate-icon 10s linear infinite;
+}
+
+@keyframes rotate-icon {
+  0% {
+    /* 保持与非动画状态一致的初始位置 */
+    transform: translateY(-0.1em) rotate(0deg);
+  }
+  100% {
+    transform: translateY(-0.1em) rotate(360deg);
+  }
+}

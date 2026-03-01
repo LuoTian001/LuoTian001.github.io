@@ -1,0 +1,101 @@
+/* 局部变量定义 */
+#game-1024-root {
+    --g-primary: #2196F3;
+    --g-bg: #fff;
+    --g-panel-bg: #f8f9fa;
+    --g-border: #e0e0e0;
+    --g-text-main: #333;
+    --g-text-sub: #666;
+    --g-board-bg: #bbada0;
+    --g-cell-bg: rgba(238, 228, 218, 0.35);
+    --g-modal-bg: rgba(255, 255, 255, 0.85);
+}
+
+[data-theme="dark"] #game-1024-root {
+    --g-bg: #1e1e1e;
+    --g-panel-bg: #2d2d2d;
+    --g-border: #444;
+    --g-text-main: #eee;
+    --g-text-sub: #aaa;
+    --g-board-bg: #3a3a3a;
+    --g-cell-bg: rgba(255, 255, 255, 0.1);
+    --g-modal-bg: rgba(45, 45, 45, 0.85);
+}
+
+/* 基础容器 */
+#game-1024-root { width: 100%; max-width: 500px; margin: 0 auto; padding: 20px; background: var(--g-bg); border-radius: 12px; box-shadow: 0 4px 24px rgba(0,0,0,0.05); color: var(--g-text-main); font-family: clear sans, helvetica neue, Arial, sans-serif; box-sizing: border-box; }
+
+/* 头部排版 */
+#game-1024-root .g-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+#game-1024-root .g-title-area h1 { margin: 0; font-size: clamp(2rem, 8vw, 3rem); color: var(--g-primary); line-height: 1; border: none; padding: 0; }
+#game-1024-root .g-title-area .g-desc { margin: 5px 0 0; color: var(--g-text-sub); font-size: clamp(0.7rem, 3vw, 0.85rem); }
+#game-1024-root .g-control-area { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+#game-1024-root .g-score-container { display: flex; gap: 10px; }
+#game-1024-root .g-score-box { background: var(--g-panel-bg); padding: 5px 15px; border-radius: 6px; text-align: center; min-width: 100px; line-height: 1.2; white-space: nowrap; }
+#game-1024-root .g-score-label { display: block; font-size: 0.75rem; color: var(--g-text-sub); }
+#game-1024-root .g-score-val { display: block; font-size: 1.2rem; font-weight: bold; }
+#game-1024-root .g-action-row { display: flex; gap: 8px; }
+#game-1024-root .g-target-select { padding: 8px; border-radius: 6px; border: 1px solid var(--g-border); background: var(--g-panel-bg); color: var(--g-text-main); font-size: 0.9rem; outline: none; cursor: pointer; }
+#game-1024-root .g-btn { padding: 8px 16px; border: none; border-radius: 6px; font-size: 0.9rem; color: white; cursor: pointer; background: var(--g-primary); transition: 0.2s; white-space: nowrap; font-weight: bold; }
+#game-1024-root .g-btn-secondary { background: #8f7a66; }
+
+/* 棋盘体系 */
+#game-1024-root .g-board-wrapper { position: relative; width: 100%; touch-action: none; border-radius: 8px; overflow: hidden; }
+#game-1024-root .g-board { position: relative; width: 100%; padding-bottom: 100%; background: var(--g-board-bg); }
+
+/* 关键修复：补齐容器坐标系约束 */
+#game-1024-root #grid-background,
+#game-1024-root #tile-container { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; }
+#game-1024-root #tile-container { z-index: 2; }
+
+#game-1024-root .grid-cell, #game-1024-root .tile { position: absolute; width: 22.5%; height: 22.5%; border-radius: 6px; }
+#game-1024-root .grid-cell { background: var(--g-cell-bg); }
+#game-1024-root .tile { display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: clamp(1.5rem, 6vw, 2.5rem); color: #776e65; transition: left 0.15s ease-in-out, top 0.15s ease-in-out, transform 0.15s ease-in-out, background-color 0.15s; }
+
+/* 弹窗设计 */
+#game-1024-root .g-modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(238, 228, 218, 0.6); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 10; display: flex; justify-content: center; align-items: center; animation: gFadeIn 0.3s ease; }
+#game-1024-root .g-modal-content { background: var(--g-modal-bg); padding: 30px 20px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border: 1px solid var(--g-border); min-width: 60%; }
+#game-1024-root .g-modal-content h2 { margin: 0 0 10px 0; font-size: 2rem; color: var(--g-text-main); border: none; padding: 0; }
+#game-1024-root .g-modal-content p { margin: 0 0 20px 0; color: var(--g-text-sub); font-size: 1rem; }
+#game-1024-root .g-modal-actions { display: flex; justify-content: center; gap: 10px; }
+@keyframes gFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+/* 极简说明文本 */
+#game-1024-root .g-instructions { margin-top: 15px; font-size: 0.85rem; color: var(--g-text-sub); text-align: center; line-height: 1.5; }
+
+/* 色值映射 */
+#game-1024-root .val-2 { background: #eee4da; }
+#game-1024-root .val-4 { background: #ede0c8; }
+#game-1024-root .val-8 { background: #f2b179; color: #f9f6f2; }
+#game-1024-root .val-16 { background: #f59563; color: #f9f6f2; }
+#game-1024-root .val-32 { background: #f67c5f; color: #f9f6f2; }
+#game-1024-root .val-64 { background: #f65e3b; color: #f9f6f2; }
+#game-1024-root .val-128 { background: #edcf72; color: #f9f6f2; font-size: clamp(1.2rem, 5vw, 2rem); }
+#game-1024-root .val-256 { background: #edcc61; color: #f9f6f2; font-size: clamp(1.2rem, 5vw, 2rem); }
+#game-1024-root .val-512 { background: #edc850; color: #f9f6f2; font-size: clamp(1.2rem, 5vw, 2rem); }
+#game-1024-root .val-1024 { background: #edc53f; color: #f9f6f2; font-size: clamp(1rem, 4vw, 1.6rem); }
+#game-1024-root .val-2048 { background: #edc22e; color: #f9f6f2; font-size: clamp(1rem, 4vw, 1.6rem); box-shadow: 0 0 30px 10px rgba(243, 215, 116, 0.55) inset; }
+#game-1024-root .val-4096 { background: #3c3a32; color: #f9f6f2; font-size: clamp(1rem, 4vw, 1.6rem); }
+/* 追加移动端排版优化 */
+@media screen and (max-width: 600px) {
+    #game-1024-root .g-header {
+        flex-direction: column; /* 将标题区和控制区改为纵向排列 */
+        align-items: center;    /* 整体居中对齐 */
+        gap: 16px;              /* 增加上下间距，避免元素贴合 */
+    }
+    
+    #game-1024-root .g-title-area {
+        text-align: center;     /* 确保标题和说明文字在手机端居中 */
+    }
+    
+    #game-1024-root .g-control-area {
+        align-items: center;    /* 控制区内部（得分、下拉框、按钮）居中 */
+        width: 100%;
+    }
+    
+    #game-1024-root .g-action-row {
+        justify-content: center; /* 让目标选择框和重新开始按钮居中 */
+        width: 100%;
+        flex-wrap: wrap;         /* 防止极窄屏幕下按钮依旧被挤压 */
+    }
+}
