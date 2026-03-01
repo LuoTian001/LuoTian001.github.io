@@ -1,226 +1,186 @@
-/* 文字排版 */
-#article-container{
-    text-align: justify;
-}
-
-/* 通用响应式视频样式 */
-iframe[src*="youtube.com"],
-iframe[src*="youtu.be"],
-iframe[src*="vimeo.com"] {
-  display: block;
-  max-width: 100%;
-  width: 100%;
-  aspect-ratio: 16 / 9;  /* 自动保持 16:9 */
-  height: auto;
-}
- 
 /* =========================================================
-   Hexo Butterfly 主题全局美化 CSS 
-   作者: 洛天 (根据 XDU-STE 生存手册及博客工具需求定制)
-   更新时间: 2026-03-01
+   1：全局毛玻璃特效
    ========================================================= */
 
-/* =========================================================
-   模块 1：全局毛玻璃特效 (Glassmorphism)
-   作用范围：首页文章卡片、侧边栏、常规页面容器、下拉菜单、文章头图卡片
-   ========================================================= */
-
-/* 1.1 明亮模式 (Light Mode) 毛玻璃基准样式 */
-#recent-posts > .recent-post-item,
-.recent-post-item,
-#aside-content .card-widget,
-.layout > div:first-child:not(.recent-posts),
-#nav .menus_items .menus_item .menus_item_child,
-#post-info {
-    background: rgba(255, 255, 255, 0.70) !important; 
-    backdrop-filter: blur(5px) !important;
-    -webkit-backdrop-filter: blur(5px) !important;
-    transform: translateZ(0) !important; 
-    border: 1px solid rgba(255, 255, 255, 0.70) !important;
-    box-shadow: 0 8px 16px -4px rgba(138, 138, 138, 0.6) !important;
+/* 1.1 明亮模式毛玻璃基准样式 */
+#body-wrap #recent-posts > .recent-post-item,
+#body-wrap .recent-post-item,
+#body-wrap #aside-content .card-widget,
+#body-wrap .layout > div:first-child:not(.recent-posts),
+#body-wrap #nav .menus_items .menus_item .menus_item_child,
+#body-wrap #pagination .page-number:not(.current),
+#body-wrap #pagination .extend,
+#page-header #post-info {
+    background: rgba(255, 255, 255, 0.85); 
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    border: 1px solid rgba(255, 255, 255, 0.85);
+    box-shadow: 0 8px 16px -4px rgba(138, 138, 138, 0.6);
     transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
 
-/* 1.2 夜间模式 (Dark Mode) 适配 */
-html[data-theme="dark"] #recent-posts > .recent-post-item,
-html[data-theme="dark"] .recent-post-item,
-html[data-theme="dark"] #aside-content .card-widget,
-html[data-theme="dark"] .layout > div:first-child:not(.recent-posts),
-html[data-theme="dark"] #nav .menus_items .menus_item .menus_item_child,
-html[data-theme="dark"] #post-info {
-    background: rgba(30, 30, 30, 0.6) !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2) !important;
+#body-wrap #pagination .page-number:not(.current):hover,
+#body-wrap #pagination .extend:hover {
+    background: #ff7142d2;
+    border-color: #ff7142d2;
+    color: #fff;
 }
 
-/* 1.3 针对文章页面顶部 Meta 卡片 (Post Info) 的精细化排版对齐 */
-#post-info {
-    position: absolute !important;
-    bottom: 30px !important;       /* 距离头部底端的安全间距 */
-    
-    /* 强制绝对物理居中，清除新版主题的对齐干扰 */
-    left: 50% !important;
-    transform: translateX(-50%) !important; 
-    top: auto !important;
-    right: auto !important;
-    
-    /* 核心数学对齐逻辑：严格匹配 .layout 的真实视觉边界 */
-    width: calc(100% - 30px) !important;  /* 移动端与改变窗口时，动态减去两边各 15px 的留白 */
-    max-width: 1170px !important;         /* 桌面端严丝合缝对齐（1200布局宽 - 30边距） */
-    
-    margin: 0 !important;
-    padding: 20px 40px !important;
-    box-sizing: border-box !important;
-    
-    /* 内部文本重置为左对齐，并保持块级元素特性 */
-    display: block !important;     
-    text-align: left !important;
+/* 1.2 夜间模式适配 */
+html[data-theme="dark"] #body-wrap #recent-posts > .recent-post-item,
+html[data-theme="dark"] #body-wrap .recent-post-item,
+html[data-theme="dark"] #body-wrap #aside-content .card-widget,
+html[data-theme="dark"] #body-wrap .layout > div:first-child:not(.recent-posts),
+html[data-theme="dark"] #body-wrap #nav .menus_items .menus_item .menus_item_child,
+html[data-theme="dark"] #body-wrap #pagination .page-number:not(.current),
+html[data-theme="dark"] #body-wrap #pagination .extend,
+html[data-theme="dark"] #page-header #post-info {
+    background: rgba(30, 30, 30, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
+}
+
+/* 1.3 顶部 Meta 卡片排版 */
+#page-header #post-info {
+    position: absolute;
+    bottom: 30px;
+    left: 50%;
+    transform: translateX(-50%); 
+    width: calc(100% - 40px); 
+    max-width: 1200px; 
+    margin: 0;
+    padding: 20px 40px;
+    box-sizing: border-box;
+    display: block;     
+    text-align: left;
     border-radius: 12px;
 }
 
 /* =========================================================
-   模块 2：明亮模式字体颜色深度覆盖 (去除发白/看不清的问题)
-   仅在 html:not([data-theme="dark"]) 时生效，不干扰夜间模式
+   2：明亮模式下文本颜色调整
    ========================================================= */
 
-/* 2.1 主标题和副标题强制深色 */
+/* 2.1 主副标题 */
 html:not([data-theme="dark"]) #site-title,
 html:not([data-theme="dark"]) .site-title,
 html:not([data-theme="dark"]) #site-name,
 html:not([data-theme="dark"]) #site-info .site-subtitle,
-html:not([data-theme="dark"]) #subtitle {
+html:not([data-theme="dark"]) #subtitle,
+html:not([data-theme="dark"]) #nav #blog-info .site-name,
+html:not([data-theme="dark"]) #nav #blog-info a {
     color: #2c3e50 !important;
     text-shadow: none !important;
 }
 
-/* 2.2 导航栏所有可见元素（包含下拉框父级 span 和 搜索图标 i）强制深色 */
-html:not([data-theme="dark"]) #nav a,
-html:not([data-theme="dark"]) #nav span,
-html:not([data-theme="dark"]) #nav i,
-html:not([data-theme="dark"]) #search-button > a {
+/* 2.2 导航栏菜单、图标 */
+html:not([data-theme="dark"]) #nav .site-page,
+html:not([data-theme="dark"]) #nav .menus_items .menus_item > a > span,
+html:not([data-theme="dark"]) #nav .menus_items .menus_item > a > i,
+html:not([data-theme="dark"]) #search-button > a,
+html:not([data-theme="dark"]) #search-button > a > span,
+html:not([data-theme="dark"]) #search-button > a > i {
     color: #2c3e50 !important;
     text-shadow: none !important;
 }
 
-/* 2.3 菜单悬停 (Hover) 时，连同内部的 span 和 i 一起变蓝 */
-html:not([data-theme="dark"]) #nav a:hover,
-html:not([data-theme="dark"]) #nav a:hover span,
-html:not([data-theme="dark"]) #nav a:hover i,
-/* 解决下拉菜单展开时，父级菜单保持高亮蓝色 */
 html:not([data-theme="dark"]) #nav .menus_item:hover > a,
 html:not([data-theme="dark"]) #nav .menus_item:hover > a > span,
 html:not([data-theme="dark"]) #nav .menus_item:hover > a > i {
-    color: #2c3e50 !important;
+    color: #49b1f5 !important;
 }
 
-/* 2.4 其他页面底部和数据信息保持深色 */
+/* 2.3 底部与 Meta 数据 */
 html:not([data-theme="dark"]) #page-header .page-title,
 html:not([data-theme="dark"]) #footer,
 html:not([data-theme="dark"]) #footer a,
-html:not([data-theme="dark"]) #footer .copyright,
+html:not([data-theme="dark"]) #footer div,
+html:not([data-theme="dark"]) #footer p,
+html:not([data-theme="dark"]) #footer span,
 html:not([data-theme="dark"]) #footer .copyright *,
 html:not([data-theme="dark"]) #post-info .post-title,
 html:not([data-theme="dark"]) #post-info #post-meta,
 html:not([data-theme="dark"]) #post-info #post-meta a,
 html:not([data-theme="dark"]) #post-info #post-meta .post-meta-separator,
-html:not([data-theme="dark"]) #post-info #post-meta i,
-html:not([data-theme="dark"]) #page-header.page-bg .page-title,
-html:not([data-theme="dark"]) #workboard,
-html:not([data-theme="dark"]) #runtime,
-html:not([data-theme="dark"]) #runtime .boardsign-text {
+html:not([data-theme="dark"]) #post-info #post-meta i {
     color: #2c3e50 !important;
     text-shadow: none !important;
 }
 
-
 /* =========================================================
-   模块 3：菜单与交互状态 (Hover / Active) 修正
+   3：明亮模式下导航栏子菜单悬停与激活状态的颜色调整
+     目的：保持子菜单的纯净外观，同时在悬停和激活状态下提供清晰的视觉反馈
+     注意：这部分样式仅影响明亮模式，夜间模式保持默认设计以确保良好的可读性和视觉效果
    ========================================================= */
 
-/* 3.1 去除二级菜单悬停和选中状态下自带的蓝色背景块 */
 html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li:hover,
 html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li.active {
     background: transparent !important; 
 }
 
-/* 3.2 悬停及选中状态下，文字统一变为主题蓝色 (#49b1f5) */
-html:not([data-theme="dark"]) #nav a:hover,
-html:not([data-theme="dark"]) #footer a:hover,
-html:not([data-theme="dark"]) #nav .menus_items .menus_item > a:hover,
-html:not([data-theme="dark"]) #nav .menus_items .menus_item > a:hover > i,
-html:not([data-theme="dark"]) #nav .menus_items .menus_item > a:hover > span,
 html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li:hover a,
-html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li:hover a i,
 html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li:hover a span,
 html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li.active a,
-html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li.active a i,
-html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li.active a span,
 html:not([data-theme="dark"]) #post-info #post-meta a:hover {
     color: #49b1f5 !important;
 }
 
-
 /* =========================================================
-   模块 4：结构性背景清理与强制剥离
+   4：页头与页脚透明化
    ========================================================= */
 
-/* 4.1 确保底部 Footer 背景透明，不遮挡全局背景 */
-#footer {
+#footer, #page-header.post-bg, #page-header.page-bg {
     background: transparent !important;
 }
-
-/* 4.2 强制移除文章 (Post) 和独立页面 (Page) 的顶部背景图片及暗色蒙版 */
-#page-header.post-bg,
-#page-header.page-bg {
-    background-image: none !important;
+#page-header.post-bg::before, #page-header.page-bg::before {
     background-color: transparent !important;
 }
 
-#page-header.post-bg::before,
-#page-header.page-bg::before {
-    background-color: transparent !important;
-}
 /* =========================================================
-   补充 5：抽空首页文章卡片内部的纯色背景
+   5：文章卡片透明化。注意：这部分样式会覆盖毛玻璃特效，保持文章卡片的纯净外观
    ========================================================= */
 
-/* 强制使卡片的信息（文字）区域背景透明，透出父级的毛玻璃效果 */
-#recent-posts > .recent-post-item .recent-post-info,
-#recent-posts > .recent-post-item .recent-post-info::before,
-#recent-posts > .recent-post-item .recent-post-info::after,
-#recent-posts > .recent-post-item .recent-post-info > .article-title,
-#recent-posts > .recent-post-item .recent-post-info > .article-meta-wrap,
-#recent-posts > .recent-post-item .recent-post-info > .content {
-    background: none !important;
+#body-wrap #recent-posts > .recent-post-item .recent-post-info,
+#body-wrap #recent-posts > .recent-post-item .recent-post-info::before,
+#body-wrap #recent-posts > .recent-post-item .recent-post-info::after,
+#body-wrap #recent-posts > .recent-post-item .recent-post-info > .article-title,
+#body-wrap #recent-posts > .recent-post-item .recent-post-info > .article-meta-wrap,
+#body-wrap #recent-posts > .recent-post-item .recent-post-info > .content {
+    background: transparent !important;
     background-color: transparent !important;
-    box-shadow: none !important; /* 消除可能由于自带阴影造成的泛白错觉 */
+    box-shadow: none !important; 
 }
 
-/* 同步兼容夜间模式的透明化 */
-html[data-theme="dark"] #recent-posts > .recent-post-item .recent-post-info,
-html[data-theme="dark"] #recent-posts > .recent-post-item .recent-post-info::before,
-html[data-theme="dark"] #recent-posts > .recent-post-item .recent-post-info::after,
-html[data-theme="dark"] #recent-posts > .recent-post-item .recent-post-info > .article-title,
-html[data-theme="dark"] #recent-posts > .recent-post-item .recent-post-info > .article-meta-wrap,
-html[data-theme="dark"] #recent-posts > .recent-post-item .recent-post-info > .content {
-    background: none !important;
-    background-color: transparent !important;
-    box-shadow: none !important;
-}
 /* =========================================================
-   补充 6：强制 Mermaid 流程图透明化
+   6：Mermaid 流程图透明化
    ========================================================= */
 
-/* 1. 剥离 Mermaid 外层容器及 SVG 标签的背景 */
 #article-container .mermaid,
 #article-container .mermaid svg,
-.mermaid-wrap {
-    background: transparent !important;
-    background-color: transparent !important;
-}
-
-/* 2. 剥离 Mermaid 引擎在 SVG 内部可能自动生成的底层纯色矩形背景 */
+.mermaid-wrap,
 #article-container .mermaid svg rect.mermaid-bg,
 #article-container .mermaid svg rect:first-child {
+    background: transparent !important;
     fill: transparent !important;
+}
+
+/* =========================================================
+   7：排版美化
+   ========================================================= */
+
+/* 文章排版改为两端对齐 */
+
+#article-container {
+    text-align: justify;
+}
+
+/* 视频自适应页面尺寸 */
+
+iframe[src*="youtube.com"],
+iframe[src*="youtu.be"],
+iframe[src*="vimeo.com"] {
+    display: block;
+    max-width: 100%;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    height: auto;
 }
