@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-03-01T06:08:38.496Z</updated>
+  <updated>2026-03-01T18:12:09.214Z</updated>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -24,7 +24,7 @@
     <published>2026-02-27T10:30:44.000Z</published>
     <summary>本文是基于 Hexo Butterfly 主题的 Live2D AI 聊天功能配置教程。详细介绍了如何在博客中部署支持上下文对话、Markdown 渲染和全站 RAG 检索的 Live2D 看板娘。涵盖核心功能特性介绍以及后端部署步骤，帮助你打造一个生动的博客伴侣。</summary>
     <title>Live2D AI 聊天功能配置教程 — 基于 FastAPI + DeepSeek</title>
-    <updated>2026-03-01T06:08:38.496Z</updated>
+    <updated>2026-03-01T18:12:09.214Z</updated>
   </entry>
   <entry>
     <author>
@@ -38,7 +38,7 @@
     <published>2026-02-23T02:33:19.000Z</published>
     <summary>记录在 Hexo (Butterfly主题) 框架下优雅部署 Cubism 3.0+ 标准的 Live2D (.moc3)模型的全过程。从模型资源获取、优化、文件结构配置到网页部署的详细步骤，涵盖了模型画布调整、提示语定制等进阶配置，帮助你在博客中打造一个生动的看板娘。</summary>
     <title>Live2D moc3 模型部署教程—基于Hexo Butterfly主题</title>
-    <updated>2026-03-01T06:08:00.760Z</updated>
+    <updated>2026-03-01T18:09:28.633Z</updated>
   </entry>
   <entry>
     <author>
@@ -51,7 +51,7 @@
     <published>2026-02-15T06:58:53.000Z</published>
     <summary>超低资源消耗、响应速度极快且完全离线的翻译服务部署实录。无需显卡，单核 CPU 即可跑满的无限免费翻译方案。</summary>
     <title>hexo 服务器部署 MTranServer 离线翻译引擎</title>
-    <updated>2026-02-15T08:59:27.223Z</updated>
+    <updated>2026-03-01T18:13:44.850Z</updated>
   </entry>
   <entry>
     <author>

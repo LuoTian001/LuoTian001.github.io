@@ -312,3 +312,53 @@ html[data-theme="dark"] .highlight .code .variable,
 html[data-theme="dark"] .highlight .code .params {
     color: #a6bcdc !important;
 }
+
+/* =========================================================
+   10：表格样式
+   ========================================================= */
+
+/* 1. 表头居中 */
+#article-container table th,
+#article-container table thead th {
+    text-align: center !important;
+}
+
+/* ================== 明亮模式 (Light Mode) ================== */
+
+/* 3.1 明亮模式：表格主容器纯色半透明底 */
+html:not([data-theme="dark"]) #article-container table {
+    background-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* 3.2 明亮模式：边框线条颜色加深 */
+html:not([data-theme="dark"]) #article-container table,
+html:not([data-theme="dark"]) #article-container table th,
+html:not([data-theme="dark"]) #article-container table td {
+    border-color: #919191da !important;
+    border-width: 1px !important;
+}
+
+/* 3.3 明亮模式：覆盖 Butterfly 默认偶数行 */
+html:not([data-theme="dark"]) #article-container table tbody tr:nth-child(even) {
+    background-color: rgba(240, 244, 248, 0.5) !important;
+}
+
+/* ================== 夜间模式 (Dark Mode) ================== */
+
+/* 4.1 夜间模式：半透明纯色 */
+html[data-theme="dark"] #article-container table {
+    background-color: rgba(22, 27, 34, 0.5) !important; 
+}
+
+/* 4.2 夜间模式：边框线条颜色提亮 */
+html[data-theme="dark"] #article-container table,
+html[data-theme="dark"] #article-container table th,
+html[data-theme="dark"] #article-container table td {
+    border-color: #5c6c7f !important;
+    border-width: 1px !important;
+}
+
+/* 4.3 夜间模式：偶数行适配 */
+html[data-theme="dark"] #article-container table tbody tr:nth-child(even) {
+    background-color: rgba(30, 36, 44, 0.5) !important;
+}
