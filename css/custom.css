@@ -15,7 +15,7 @@
     backdrop-filter: blur(2px);
     -webkit-backdrop-filter: blur(2px);
     border: 1px solid rgba(255, 255, 255, 0.85);
-    box-shadow: 0 8px 16px -4px rgba(138, 138, 138, 0.6);
+    box-shadow: 0 8px 16px -4px rgba(138, 138, 138, 0.15);
     transition: background 0.3s ease, border 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -167,6 +167,12 @@ html:not([data-theme="dark"]) #post-info #post-meta a:hover {
    7：排版美化
    ========================================================= */
 
+/* 无顶图页面 (top_img: false) 正文标题居中 */
+
+#body-wrap #page .page-title {
+    text-align: center !important;
+}
+
 /* 文章排版改为两端对齐 */
 
 #article-container {
@@ -183,4 +189,126 @@ iframe[src*="vimeo.com"] {
     width: 100%;
     aspect-ratio: 16 / 9;
     height: auto;
+}
+
+/* =========================================================
+   8：明亮模式代码块配色 (Abyss 浅色高对比度)
+   ========================================================= */
+
+/* 覆盖 Butterfly 主题的代码块全局颜色变量 (仅限明亮模式) */
+html:not([data-theme="dark"]) {
+    --hl-bg: #f4f7fa !important;
+    --hltools-bg: #e9eef4 !important;
+    --hlnumber-bg: #f4f7fa !important;
+    --hlnumber-color: #8da4bb !important;
+    --hlscrollbar-bg: #dbe6f0 !important;
+    --hlexpand-bg: linear-gradient(180deg, rgba(244,247,250,0), rgba(244,247,250,0.9)) !important;
+}
+
+/* Hexo 原生 Highlight 语法着色 */
+html:not([data-theme="dark"]) .highlight .code {
+    color: #33485c !important;
+}
+
+/* 关键字着色 */
+html:not([data-theme="dark"]) .highlight .code .keyword,
+html:not([data-theme="dark"]) .highlight .code .built_in,
+html:not([data-theme="dark"]) .highlight .code .type {
+    color: #005cc5 !important;
+}
+
+/* 字符串着色 */
+html:not([data-theme="dark"]) .highlight .code .string {
+    color: #22863a !important;
+}
+
+/* 注释着色 */
+html:not([data-theme="dark"]) .highlight .code .comment {
+    color: #798d9f !important;
+    font-style: italic !important;
+}
+
+/* 数字常量着色 */
+html:not([data-theme="dark"]) .highlight .code .number {
+    color: #d130a5 !important;
+}
+
+/* 函数名与类标题着色 */
+html:not([data-theme="dark"]) .highlight .code .title,
+html:not([data-theme="dark"]) .highlight .code .function {
+    color: #0077aa !important;
+}
+
+/* 预处理指令与宏定义着色 */
+html:not([data-theme="dark"]) .highlight .code .meta,
+html:not([data-theme="dark"]) .highlight .code .meta-keyword {
+    color: #8b3c9b !important;
+}
+
+/* 局部变量与普通属性 */
+html:not([data-theme="dark"]) .highlight .code .attr,
+html:not([data-theme="dark"]) .highlight .code .variable,
+html:not([data-theme="dark"]) .highlight .code .params {
+    color: #33485c !important;
+}
+
+/* =========================================================
+   9：夜间模式代码块配色 (Abyss 深色版)
+   ========================================================= */
+
+/* 覆盖 Butterfly 主题的代码块全局颜色变量 (仅限夜间模式) */
+html[data-theme="dark"] {
+    --hl-bg: #0b0f19 !important;
+    --hltools-bg: #111726 !important;
+    --hlnumber-bg: #0b0f19 !important;
+    --hlnumber-color: #5c6c7f !important;
+    --hlscrollbar-bg: #1e293b !important;
+    --hlexpand-bg: linear-gradient(180deg, rgba(11,15,25,0), rgba(11,15,25,0.9)) !important;
+}
+
+/* Hexo 原生 Highlight 语法着色 */
+html[data-theme="dark"] .highlight .code {
+    color: #a6bcdc !important;
+}
+
+/* 关键字着色 */
+html[data-theme="dark"] .highlight .code .keyword,
+html[data-theme="dark"] .highlight .code .built_in,
+html[data-theme="dark"] .highlight .code .type {
+    color: #569cd6 !important;
+}
+
+/* 字符串着色 */
+html[data-theme="dark"] .highlight .code .string {
+    color: #8fca5c !important;
+}
+
+/* 注释着色 */
+html[data-theme="dark"] .highlight .code .comment {
+    color: #5c7080 !important;
+    font-style: italic !important;
+}
+
+/* 数字常量着色 */
+html[data-theme="dark"] .highlight .code .number {
+    color: #f07178 !important;
+}
+
+/* 函数名与类标题着色 */
+html[data-theme="dark"] .highlight .code .title,
+html[data-theme="dark"] .highlight .code .function {
+    color: #82aaff !important;
+}
+
+/* 预处理指令与宏定义着色 */
+html[data-theme="dark"] .highlight .code .meta,
+html[data-theme="dark"] .highlight .code .meta-keyword {
+    color: #c792ea !important;
+}
+
+/* 局部变量与普通属性 */
+html[data-theme="dark"] .highlight .code .attr,
+html[data-theme="dark"] .highlight .code .variable,
+html[data-theme="dark"] .highlight .code .params {
+    color: #a6bcdc !important;
 }
