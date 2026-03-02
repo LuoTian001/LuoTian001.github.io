@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-03-02T08:58:49.345Z</updated>
+  <updated>2026-03-02T09:01:09.645Z</updated>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -20,13 +20,9 @@
     <id>https://luotian.cyou/post/hexo-hiden-sidebar.html</id>
     <link href="https://luotian.cyou/post/hexo-hiden-sidebar.html"/>
     <published>2026-03-02T07:59:21.000Z</published>
-    <summary>
-      <![CDATA[<p>&#8195;&#8195;butterfly 主题的侧边栏 aside 默认由下面元素组成：</p>
-<ul>
-<li><strong>博主信息卡片：</strong> <code>#body-wrap #aside-content .card-author</code>]]>
-    </summary>
+    <summary>butterfly 主题的侧边栏默认由多个卡片组成，但在部分页面可能需要隐藏某些卡片以避免信息冗余。本文介绍一种通过 Hexo 脚本注入 CSS 样式实现自定义页面侧边栏卡片隐藏的方案，无需修改主题模板文件。</summary>
     <title>博客侧边栏卡片自定义隐藏 — butterfly 主题</title>
-    <updated>2026-03-02T08:58:49.345Z</updated>
+    <updated>2026-03-02T09:01:09.645Z</updated>
   </entry>
   <entry>
     <author>
