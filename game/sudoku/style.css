@@ -52,10 +52,10 @@
 #sudoku-root .s-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
 #sudoku-root .s-title-area h1 { margin: 0; font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--s-primary); line-height: 1; border: none; padding: 0; }
 #sudoku-root .s-title-area .s-desc { margin: 8px 0 0; color: var(--s-text-main); font-size: 0.85rem; opacity: 0.8; }
-#sudoku-root .s-control-area { display: flex; flex-direction: column; align-items: flex-end; }
-#sudoku-root .s-action-row { display: flex; gap: 8px; }
-#sudoku-root .s-select { padding: 8px; border-radius: 6px; border: 1px solid var(--s-border-light); background: var(--s-panel-bg); color: var(--s-text-main); font-size: 0.9rem; outline: none; cursor: pointer; }
-#sudoku-root .s-btn { padding: 8px 16px; border: none; border-radius: 6px; font-size: 0.9rem; color: white; cursor: pointer; background: var(--s-primary); transition: 0.2s; font-weight: bold; }
+#sudoku-root .s-control-area { display: flex; flex-direction: column; align-items: center; width: 100%; }
+#sudoku-root .s-action-row { display: flex; gap: 8px; align-items: center; }
+#sudoku-root .s-select { padding: 10px 20px; border-radius: 6px; border: 1px solid var(--s-border-light); background: var(--s-panel-bg); color: var(--s-text-main); font-size: 0.9rem; outline: none; cursor: pointer; }
+#sudoku-root .s-btn { padding: 10px 25px; border: none; border-radius: 6px; font-size: 1rem; color: white; cursor: pointer; background: var(--s-primary); transition: 0.2s; font-weight: bold; }
 
 #sudoku-root .s-main-content { display: flex; flex-direction: column; gap: 20px; }
 
@@ -105,8 +105,8 @@
 #sudoku-root .s-num-key { aspect-ratio: 1.5; background: var(--s-panel-bg); border: 1px solid var(--s-border-light); border-radius: 8px; font-size: 1.2rem; color: var(--s-text-main); font-weight: bold; cursor: pointer; transition: 0.1s; display: flex; justify-content: center; align-items: center; }
 #sudoku-root .s-num-key:active { background: var(--s-bg-selected); transform: scale(0.95); }
 #sudoku-root .s-key-action { aspect-ratio: auto; padding: 12px; font-size: 1rem; font-weight: bold; }
-#sudoku-root .s-btn-erase { grid-column: span 2; background: rgba(243, 156, 18, 0.1); color: #f39c12; border-color: rgba(243, 156, 18, 0.3); }
-#sudoku-root .s-btn-reset { grid-column: span 3; background: rgba(231, 76, 60, 0.1); color: #e74c3c; border-color: rgba(231, 76, 60, 0.3); }
+#sudoku-root .s-btn-erase { grid-column: span 3; background: rgba(243, 156, 18, 0.1); color: #f39c12; border-color: rgba(243, 156, 18, 0.3); }
+#sudoku-root .s-btn-reset { grid-column: span 2; background: rgba(231, 76, 60, 0.1); color: #e74c3c; border-color: rgba(231, 76, 60, 0.3); }
 
 [data-theme="dark"] #sudoku-root .s-btn-erase { color: #f5b041; background: rgba(243, 156, 18, 0.15); }
 [data-theme="dark"] #sudoku-root .s-btn-reset { color: #ff5252; background: rgba(231, 76, 60, 0.15); }

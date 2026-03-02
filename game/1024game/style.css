@@ -29,7 +29,7 @@
 #game-1024-root .g-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
 #game-1024-root .g-title-area h1 { margin: 0; font-size: clamp(2rem, 8vw, 3rem); color: var(--g-primary); line-height: 1; border: none; padding: 0; }
 #game-1024-root .g-title-area .g-desc { margin: 5px 0 0; color: var(--g-text-sub); font-size: clamp(0.7rem, 3vw, 0.85rem); }
-#game-1024-root .g-control-area { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+#game-1024-root .g-control-area { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
 #game-1024-root .g-score-container { display: flex; gap: 10px; }
 #game-1024-root .g-score-box { background: var(--g-panel-bg); padding: 5px 15px; border-radius: 6px; text-align: center; min-width: 100px; line-height: 1.2; white-space: nowrap; }
 #game-1024-root .g-score-label { display: block; font-size: 0.75rem; color: var(--g-text-sub); }
@@ -61,7 +61,7 @@
 @keyframes gFadeIn { from { opacity: 0; } to { opacity: 1; } }
 
 /* 极简说明文本 */
-#game-1024-root .g-instructions { margin-top: 15px; font-size: 0.85rem; color: var(--g-text-sub); text-align: center; line-height: 1.5; }
+#game-1024-root .g-instructions { margin-top: 15px; font-size: 0.85rem; color: var(--g-text-sub); text-align: justify; line-height: 1.5; }
 
 /* 色值映射 */
 #game-1024-root .val-2 { background: #eee4da; }

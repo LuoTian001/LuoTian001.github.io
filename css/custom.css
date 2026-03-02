@@ -1,8 +1,8 @@
 /* =========================================================
-   1：全局毛玻璃特效
+   1：全局毛玻璃样式
    ========================================================= */
 
-/* 1.1 明亮模式毛玻璃基准样式 */
+/* 明亮模式 */
 #body-wrap #recent-posts > .recent-post-item,
 #body-wrap .recent-post-item,
 #body-wrap #aside-content .card-widget,
@@ -26,7 +26,7 @@
     color: #fff;
 }
 
-/* 1.2 夜间模式适配 */
+/* 夜间模式 */
 html[data-theme="dark"] #body-wrap #recent-posts > .recent-post-item,
 html[data-theme="dark"] #body-wrap .recent-post-item,
 html[data-theme="dark"] #body-wrap #aside-content .card-widget,
@@ -40,27 +40,48 @@ html[data-theme="dark"] #page-header #post-info {
     box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.2);
 }
 
-/* 1.3 顶部 Meta 卡片排版 */
+/* 文章顶部卡片 */
 #page-header #post-info {
     position: absolute;
-    bottom: 30px;
+    bottom: 0px;
     left: 50%;
-    transform: translateX(-50%); 
-    width: calc(100% - 40px); 
-    max-width: 1200px; 
+    transform: translateX(-50%);
     margin: 0;
     padding: 20px 40px;
     box-sizing: border-box;
-    display: block;     
+    display: block;
     text-align: left;
-    border-radius: 12px;
+    border-radius: 10px;
+}
+@media screen and (max-width: 768px) {
+    #page-header #post-info {
+        padding: 15px 20px !important;
+        bottom: 20px !important;
+    }
+
+    #post-info #post-meta > .meta-firstline > span:not(.post-meta-wordcount),
+    #post-info #post-meta > .meta-secondline > span:not(.post-meta-wordcount) {
+        display: none !important;
+    }
+
+    #post-info #post-meta > .meta-firstline > .post-meta-separator,
+    #post-info #post-meta > .meta-secondline > .post-meta-separator {
+        display: none !important;
+    }
+
+    #post-info .post-title {
+        text-align: justify !important;
+        text-align-last: left !important;
+        display: block;
+        margin-bottom: 10px;
+    }
 }
 
 /* =========================================================
-   2：明亮模式下文本颜色调整
+   2：明亮主题文本颜色
    ========================================================= */
 
-/* 2.1 主副标题 */
+/* 主副标题 */
 html:not([data-theme="dark"]) #site-title,
 html:not([data-theme="dark"]) .site-title,
 html:not([data-theme="dark"]) #site-name,
@@ -72,7 +93,7 @@ html:not([data-theme="dark"]) #nav #blog-info a {
     text-shadow: none !important;
 }
 
-/* 2.2 导航栏菜单、图标 */
+/* 导航栏菜单、图标 */
 html:not([data-theme="dark"]) #nav .site-page,
 html:not([data-theme="dark"]) #nav .menus_items .menus_item > a > span,
 html:not([data-theme="dark"]) #nav .menus_items .menus_item > a > i,
@@ -89,7 +110,7 @@ html:not([data-theme="dark"]) #nav .menus_item:hover > a > i {
     color: #49b1f5 !important;
 }
 
-/* 2.3 底部与 Meta 数据 */
+/* 底部与 Meta 数据 */
 html:not([data-theme="dark"]) #page-header .page-title,
 html:not([data-theme="dark"]) #footer,
 html:not([data-theme="dark"]) #footer a,
@@ -107,9 +128,7 @@ html:not([data-theme="dark"]) #post-info #post-meta i {
 }
 
 /* =========================================================
-   3：明亮模式下导航栏子菜单悬停与激活状态的颜色调整
-     目的：保持子菜单的纯净外观，同时在悬停和激活状态下提供清晰的视觉反馈
-     注意：这部分样式仅影响明亮模式，夜间模式保持默认设计以确保良好的可读性和视觉效果
+   3：明亮主题导航栏子菜单颜色
    ========================================================= */
 
 html:not([data-theme="dark"]) #nav .menus_items .menus_item .menus_item_child li:hover,
@@ -125,7 +144,7 @@ html:not([data-theme="dark"]) #post-info #post-meta a:hover {
 }
 
 /* =========================================================
-   4：页头与页脚透明化
+   4：页头与页脚透明
    ========================================================= */
 
 #footer, #page-header.post-bg, #page-header.page-bg {
@@ -136,7 +155,7 @@ html:not([data-theme="dark"]) #post-info #post-meta a:hover {
 }
 
 /* =========================================================
-   5：文章卡片透明化。注意：这部分样式会覆盖毛玻璃特效，保持文章卡片的纯净外观
+   5：文章卡片透明
    ========================================================= */
 
 #body-wrap #recent-posts > .recent-post-item .recent-post-info,
@@ -151,7 +170,7 @@ html:not([data-theme="dark"]) #post-info #post-meta a:hover {
 }
 
 /* =========================================================
-   6：Mermaid 流程图透明化
+   6：Mermaid 流程图透明
    ========================================================= */
 
 #article-container .mermaid,
@@ -167,7 +186,7 @@ html:not([data-theme="dark"]) #post-info #post-meta a:hover {
    7：排版美化
    ========================================================= */
 
-/* 无顶图页面 (top_img: false) 正文标题居中 */
+/* 无顶图页面正文标题居中 */
 
 #body-wrap #page .page-title {
     text-align: center !important;
@@ -192,10 +211,10 @@ iframe[src*="vimeo.com"] {
 }
 
 /* =========================================================
-   8：明亮模式代码块配色 (Abyss 浅色高对比度)
+   8：明亮主题代码块配色
    ========================================================= */
 
-/* 覆盖 Butterfly 主题的代码块全局颜色变量 (仅限明亮模式) */
+/* 全局颜色变量 */
 html:not([data-theme="dark"]) {
     --hl-bg: #f4f7fa !important;
     --hltools-bg: #e9eef4 !important;
@@ -205,9 +224,9 @@ html:not([data-theme="dark"]) {
     --hlexpand-bg: linear-gradient(180deg, rgba(244,247,250,0), rgba(244,247,250,0.9)) !important;
 }
 
-/* Hexo 原生 Highlight 语法着色 */
-html:not([data-theme="dark"]) .highlight .code {
-    color: #33485c !important;
+/* 代码块背景色 */
+html:not([data-theme="dark"]) #article-container .highlight table {
+    background-color: #f4f7fa !important;
 }
 
 /* 关键字着色 */
@@ -224,7 +243,7 @@ html:not([data-theme="dark"]) .highlight .code .string {
 
 /* 注释着色 */
 html:not([data-theme="dark"]) .highlight .code .comment {
-    color: #798d9f !important;
+    color: #677886 !important;
     font-style: italic !important;
 }
 
@@ -249,14 +268,14 @@ html:not([data-theme="dark"]) .highlight .code .meta-keyword {
 html:not([data-theme="dark"]) .highlight .code .attr,
 html:not([data-theme="dark"]) .highlight .code .variable,
 html:not([data-theme="dark"]) .highlight .code .params {
-    color: #33485c !important;
+    color: #212f3b !important;
 }
 
 /* =========================================================
-   9：夜间模式代码块配色 (Abyss 深色版)
+   9：夜间主题代码块配色
    ========================================================= */
 
-/* 覆盖 Butterfly 主题的代码块全局颜色变量 (仅限夜间模式) */
+/* 全局颜色变量 */
 html[data-theme="dark"] {
     --hl-bg: #0b0f19 !important;
     --hltools-bg: #111726 !important;
@@ -266,9 +285,9 @@ html[data-theme="dark"] {
     --hlexpand-bg: linear-gradient(180deg, rgba(11,15,25,0), rgba(11,15,25,0.9)) !important;
 }
 
-/* Hexo 原生 Highlight 语法着色 */
-html[data-theme="dark"] .highlight .code {
-    color: #a6bcdc !important;
+/* 代码块背景色 */
+html[data-theme="dark"] #article-container .highlight table {
+    background-color: #0b0f19 !important;
 }
 
 /* 关键字着色 */
@@ -317,20 +336,20 @@ html[data-theme="dark"] .highlight .code .params {
    10：表格样式
    ========================================================= */
 
-/* 1. 表头居中 */
+/* 表头居中 */
 #article-container table th,
 #article-container table thead th {
     text-align: center !important;
 }
 
-/* ================== 明亮模式 (Light Mode) ================== */
+/* ================== 明亮模式 ================== */
 
-/* 3.1 明亮模式：表格主容器纯色半透明底 */
+/* 表格半透明 */
 html:not([data-theme="dark"]) #article-container table {
     background-color: rgba(255, 255, 255, 0.5) !important;
 }
 
-/* 3.2 明亮模式：边框线条颜色加深 */
+/* 边框线条颜色 */
 html:not([data-theme="dark"]) #article-container table,
 html:not([data-theme="dark"]) #article-container table th,
 html:not([data-theme="dark"]) #article-container table td {
@@ -338,19 +357,19 @@ html:not([data-theme="dark"]) #article-container table td {
     border-width: 1px !important;
 }
 
-/* 3.3 明亮模式：覆盖 Butterfly 默认偶数行 */
+/* 偶数行颜色 */
 html:not([data-theme="dark"]) #article-container table tbody tr:nth-child(even) {
     background-color: rgba(240, 244, 248, 0.5) !important;
 }
 
-/* ================== 夜间模式 (Dark Mode) ================== */
+/* ================== 夜间模式 ================== */
 
-/* 4.1 夜间模式：半透明纯色 */
+/* 表格半透明 */
 html[data-theme="dark"] #article-container table {
     background-color: rgba(22, 27, 34, 0.5) !important; 
 }
 
-/* 4.2 夜间模式：边框线条颜色提亮 */
+/* 边框线条颜色 */
 html[data-theme="dark"] #article-container table,
 html[data-theme="dark"] #article-container table th,
 html[data-theme="dark"] #article-container table td {
@@ -358,7 +377,7 @@ html[data-theme="dark"] #article-container table td {
     border-width: 1px !important;
 }
 
-/* 4.3 夜间模式：偶数行适配 */
+/* 偶数行颜色 */
 html[data-theme="dark"] #article-container table tbody tr:nth-child(even) {
     background-color: rgba(30, 36, 44, 0.5) !important;
 }
