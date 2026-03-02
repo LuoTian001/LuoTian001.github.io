@@ -10,7 +10,37 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-03-01T18:12:09.214Z</updated>
+  <updated>2026-03-02T08:58:49.345Z</updated>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
+    <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
+    <id>https://luotian.cyou/post/hexo-hiden-sidebar.html</id>
+    <link href="https://luotian.cyou/post/hexo-hiden-sidebar.html"/>
+    <published>2026-03-02T07:59:21.000Z</published>
+    <summary>
+      <![CDATA[<p>&#8195;&#8195;butterfly 主题的侧边栏 aside 默认由下面元素组成：</p>
+<ul>
+<li><strong>博主信息卡片：</strong> <code>#body-wrap #aside-content .card-author</code>]]>
+    </summary>
+    <title>博客侧边栏卡片自定义隐藏 — butterfly 主题</title>
+    <updated>2026-03-02T08:58:49.345Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
+    <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
+    <id>https://luotian.cyou/post/custom-beautify.html</id>
+    <link href="https://luotian.cyou/post/custom-beautify.html"/>
+    <published>2026-03-02T07:20:00.000Z</published>
+    <summary>hexo 博客自定义美化配置 butterfly 主题。包括全局毛玻璃样式、明亮主题文本颜色、明亮主题导航栏子菜单颜色、页头与页脚透明、文章卡片透明、Mermaid 流程图透明、排版美化、明亮主题代码块配色、夜间主题代码块配色以及表格样式等方面的调整。</summary>
+    <title>hexo 博客自定义美化配置 — butterfly 主题</title>
+    <updated>2026-03-02T08:58:56.756Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -24,7 +54,7 @@
     <published>2026-02-27T10:30:44.000Z</published>
     <summary>本文是基于 Hexo Butterfly 主题的 Live2D AI 聊天功能配置教程。详细介绍了如何在博客中部署支持上下文对话、Markdown 渲染和全站 RAG 检索的 Live2D 看板娘。涵盖核心功能特性介绍以及后端部署步骤，帮助你打造一个生动的博客伴侣。</summary>
     <title>Live2D AI 聊天功能配置教程 — 基于 FastAPI + DeepSeek</title>
-    <updated>2026-03-01T18:12:09.214Z</updated>
+    <updated>2026-03-02T07:26:22.769Z</updated>
   </entry>
   <entry>
     <author>
@@ -38,7 +68,7 @@
     <published>2026-02-23T02:33:19.000Z</published>
     <summary>记录在 Hexo (Butterfly主题) 框架下优雅部署 Cubism 3.0+ 标准的 Live2D (.moc3)模型的全过程。从模型资源获取、优化、文件结构配置到网页部署的详细步骤，涵盖了模型画布调整、提示语定制等进阶配置，帮助你在博客中打造一个生动的看板娘。</summary>
     <title>Live2D moc3 模型部署教程—基于Hexo Butterfly主题</title>
-    <updated>2026-03-01T18:09:28.633Z</updated>
+    <updated>2026-03-02T07:26:29.917Z</updated>
   </entry>
   <entry>
     <author>
@@ -49,9 +79,9 @@
     <id>https://luotian.cyou/post/MTranServer.html</id>
     <link href="https://luotian.cyou/post/MTranServer.html"/>
     <published>2026-02-15T06:58:53.000Z</published>
-    <summary>超低资源消耗、响应速度极快且完全离线的翻译服务部署实录。无需显卡，单核 CPU 即可跑满的无限免费翻译方案。</summary>
+    <summary>超低资源消耗、响应速度极快且完全离线的翻译服务部署教程。无需显卡，单核 CPU 即可跑满的无限免费翻译方案。</summary>
     <title>hexo 服务器部署 MTranServer 离线翻译引擎</title>
-    <updated>2026-03-01T18:13:44.850Z</updated>
+    <updated>2026-03-02T07:32:15.701Z</updated>
   </entry>
   <entry>
     <author>
@@ -107,21 +137,6 @@
     </author>
     <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/custom-css4hexo.html</id>
-    <link href="https://luotian.cyou/post/custom-css4hexo.html"/>
-    <published>2025-08-16T05:33:54.000Z</published>
-    <summary>
-      <![CDATA[<p>&#8195;&#8195;记录一下小窝在配置过程中一些自定义的主题内容。<br><figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br>]]>
-    </summary>
-    <title>hexo 自定义主题配置</title>
-    <updated>2026-02-26T13:39:52.689Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
-    <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
     <id>https://luotian.cyou/post/exlinks4hexo.html</id>
     <link href="https://luotian.cyou/post/exlinks4hexo.html"/>
     <published>2025-08-14T05:03:08.000Z</published>
@@ -129,7 +144,7 @@
       <![CDATA[<p>&#8195;&#8195;我在部分文章中引入了较多的外链，而这些外链统一使用md语法<code>[链接文字](外链地址)</code>，这使得渲染得到的网页直接在本标签页打开外链，不仅影响阅读体验，还不利于网站安全和SEO优化。因此查阅相关资料并进行下面的优化调整。</p]]>
     </summary>
     <title>hexo外链设置</title>
-    <updated>2026-02-26T13:40:36.737Z</updated>
+    <updated>2026-03-02T07:33:14.816Z</updated>
   </entry>
   <entry>
     <author>
@@ -146,7 +161,7 @@
 <li><p>查看已有虚拟]]>
     </summary>
     <title>常用conda指令</title>
-    <updated>2025-08-14T06:05:02.561Z</updated>
+    <updated>2026-03-02T07:33:41.384Z</updated>
   </entry>
   <entry>
     <author>
@@ -159,7 +174,7 @@
     <published>2025-07-30T11:01:14.000Z</published>
     <summary>hexo配置pangu—butterfly主题。</summary>
     <title>hexo配置pangu—butterfly主题</title>
-    <updated>2026-02-26T13:40:24.455Z</updated>
+    <updated>2026-03-02T07:42:29.613Z</updated>
   </entry>
   <entry>
     <author>
@@ -176,7 +191,7 @@
 <li>前缀：不包含尾字符的所有]]>
     </summary>
     <title>KMP算法</title>
-    <updated>2026-02-26T13:50:08.590Z</updated>
+    <updated>2026-03-02T07:43:22.483Z</updated>
   </entry>
   <entry>
     <author>
@@ -191,7 +206,7 @@
       <![CDATA[<h2 id="力扣-344"><a href="#力扣-344" class="headerlink" title="力扣 344"></a>力扣 344</h2><p>&#8195;&#8195;<a href="https://leetcode.cn/problems/re]]>
     </summary>
     <title>力扣刷题-字符串</title>
-    <updated>2026-02-26T13:38:39.044Z</updated>
+    <updated>2026-03-02T07:43:53.030Z</updated>
   </entry>
   <entry>
     <author>
@@ -223,7 +238,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span]]>
     </summary>
     <title>力扣刷题-链表</title>
-    <updated>2026-02-26T13:38:35.410Z</updated>
+    <updated>2026-03-02T07:52:48.575Z</updated>
   </entry>
   <entry>
     <author>
@@ -255,7 +270,7 @@
     flowchart L]]>
     </summary>
     <title>力扣刷题-哈希表</title>
-    <updated>2026-02-26T13:38:46.198Z</updated>
+    <updated>2026-03-02T07:44:36.233Z</updated>
   </entry>
   <entry>
     <author>
@@ -279,22 +294,6 @@
     <published>2025-07-06T13:14:06.000Z</published>
     <summary>hexo配置mermaid—butterfly主题</summary>
     <title>hexo配置mermaid—butterfly主题</title>
-    <updated>2026-03-01T06:04:16.896Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="Java编程" scheme="https://luotian.cyou/categories/Java%E7%BC%96%E7%A8%8B/"/>
-    <category term="Java" scheme="https://luotian.cyou/tags/Java/"/>
-    <id>https://luotian.cyou/post/javaroad.html</id>
-    <link href="https://luotian.cyou/post/javaroad.html"/>
-    <published>2025-07-06T09:20:23.000Z</published>
-    <summary>
-      <![CDATA[<h2 id="Java技术栈学习路径"><a href="#Java技术栈学习路径" class="headerlink" title="Java技术栈学习路径"></a><center>Java技术栈学习路径</center></h2><blockquote>
-<p>朋友分享]]>
-    </summary>
-    <title>Java技术栈学习路径</title>
-    <updated>2026-03-01T06:03:40.704Z</updated>
+    <updated>2026-03-02T07:45:10.477Z</updated>
   </entry>
 </feed>
