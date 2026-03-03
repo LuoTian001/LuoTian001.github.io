@@ -407,7 +407,7 @@ r(t) &= 1.9a x_1\left(\frac{39}{40}t\right) + 1.9b x_2\left(\frac{39}{40}t\right
         html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
         svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
       </style>
-      </head><body>${svgSource}</body></html>`
+      </head><body>${svgSource}<!-- hexo injector body_end start --><link rel="stylesheet" href="/aichat/aichat-plugin.css"><script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script><script src="/aichat/aichat-config.js"></script><script src="/aichat/aichat-plugin.js" defer></script><!-- hexo injector body_end end --></body></html>`
     const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
     const url = URL.createObjectURL(blob)
     window.open(url, '_blank', 'noopener')

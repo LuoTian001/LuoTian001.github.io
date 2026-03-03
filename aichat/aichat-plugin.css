@@ -1,0 +1,377 @@
+.AIChat-Plug-in {
+    position: fixed;
+    bottom: 30px;
+    right: 80px; 
+    z-index: 999999;
+    width: 56px;
+    height: 56px;
+    font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+.AIChat-Plug-in * {
+    box-sizing: border-box;
+}
+
+.AIChat-Plug-in-fab {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #e6e9ff, #9bafff);
+    box-shadow: 0 0 15px rgba(155, 175, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.8);
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    background-size: cover;
+    background-position: center;
+    animation: AIChat-siri-breathe 3s infinite ease-in-out;
+    z-index: 2;
+}
+
+.AIChat-Plug-in-fab:hover {
+    transform: scale(1.08);
+}
+
+/* 展开面板时，悬浮球缩小并隐藏 */
+.AIChat-fab-active {
+    transform: scale(0) !important; 
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes AIChat-siri-breathe {
+    0% { box-shadow: 0 0 15px rgba(155, 175, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.8); }
+    50% { box-shadow: 0 0 25px rgba(180, 200, 255, 0.9), inset 0 0 15px rgba(255, 255, 255, 0.9); }
+    100% { box-shadow: 0 0 15px rgba(155, 175, 255, 0.6), inset 0 0 10px rgba(255, 255, 255, 0.8); }
+}
+
+.AIChat-Plug-in-panel {
+    position: absolute;
+    width: 360px;
+    height: 550px;
+    max-height: calc(100vh - 40px);
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 0.25s ease-out, transform 0.25s ease-out; 
+}
+
+.AIChat-pos-bottom-right { bottom: 70px; right: 0; transform-origin: bottom right; transform: scale(0.8) translateY(20px); }
+.AIChat-pos-bottom-left { bottom: 70px; left: 0; transform-origin: bottom left; transform: scale(0.8) translateY(20px); }
+.AIChat-pos-top-right { top: 70px; right: 0; transform-origin: top right; transform: scale(0.8) translateY(-20px); }
+.AIChat-pos-top-left { top: 70px; left: 0; transform-origin: top left; transform: scale(0.8) translateY(-20px); }
+
+.AIChat-panel-show.AIChat-pos-bottom-right,
+.AIChat-panel-show.AIChat-pos-bottom-left,
+.AIChat-panel-show.AIChat-pos-top-right,
+.AIChat-panel-show.AIChat-pos-top-left {
+    opacity: 1 !important;
+    transform: scale(1) translateY(0) !important;
+}
+
+/* 面板弹出的过渡类 */
+.AIChat-panel-show {
+    opacity: 1 !important;
+    transform: scale(1) translateY(0) !important;
+}
+
+/* --- 顶部 Header --- */
+.AIChat-Plug-in-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 15px; 
+    background: rgba(255, 255, 255, 0.6);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.AIChat-title {
+    font-weight: 600;
+    color: #333;
+    font-size: 15px;
+}
+
+.AIChat-tools {
+    display: flex;
+    align-items: center;
+    gap: 15px; 
+}
+
+.AIChat-tools span {
+    cursor: pointer;
+    color: #888;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px; 
+}
+
+.AIChat-tools svg {
+    height: 16px; 
+    width: auto;
+    fill: currentColor;
+}
+
+.AIChat-tools span:hover { color: #333; }
+
+/* --- 消息流区域 --- */
+.AIChat-Plug-in-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    scroll-behavior: smooth;
+}
+
+/* 自定义滚动条 */
+.AIChat-Plug-in-messages::-webkit-scrollbar { width: 6px; }
+.AIChat-Plug-in-messages::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+
+/* --- 对话气泡 --- */
+.AIChat-Plug-in-msg { display: flex; width: 100%; }
+.AIChat-msg-user { justify-content: flex-end; }
+.AIChat-msg-ai { justify-content: flex-start; }
+
+.AIChat-Plug-in-bubble {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+.AIChat-msg-user .AIChat-Plug-in-bubble {
+    background: #007AFF; /* 苹果蓝 */
+    color: #fff;
+    border-bottom-right-radius: 4px;
+}
+
+.AIChat-msg-ai .AIChat-Plug-in-bubble {
+    background: rgba(255, 255, 255, 0.9);
+    color: #333;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    border-bottom-left-radius: 4px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+}
+
+/* --- Markdown 内容样式修正 --- */
+.AIChat-Plug-in-bubble p { margin: 0 0 8px 0; }
+.AIChat-Plug-in-bubble p:last-child { margin: 0; }
+.AIChat-Plug-in-bubble a { 
+    color: #007AFF; 
+    text-decoration: none; 
+    border-bottom: 1px solid rgba(0,122,255,0.3); 
+}
+.AIChat-msg-user .AIChat-Plug-in-bubble a { 
+    color: #fff; 
+    border-bottom-color: rgba(255,255,255,0.5); 
+}
+
+/* --- 快速选项 --- */
+.AIChat-options {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.AIChat-Plug-in-quick-action {
+    display: inline-block;
+    font-size: 13px;
+    color: #007AFF;
+    background: rgba(0, 122, 255, 0.08);
+    padding: 6px 12px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    user-select: none;
+    text-decoration: none;
+}
+
+.AIChat-Plug-in-quick-action:hover {
+    background: rgba(0, 122, 255, 0.15);
+}
+
+/* --- 底部输入区 --- */
+.AIChat-Plug-in-input-area {
+    display: flex;
+    padding: 15px;
+    background: rgba(255, 255, 255, 0.6);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+#AIChat-Input {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+    padding: 10px 15px;
+    font-size: 14px;
+    resize: none;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    overflow: hidden;
+    scrollbar-width: none; 
+    -ms-overflow-style: none;  
+}
+
+#AIChat-Input::-webkit-scrollbar {
+    display: none;
+}
+
+#AIChat-Input:focus { border-color: #007AFF; }
+
+/* --- 等待打字动画 --- */
+.AIChat-typing-dots { display: flex; align-items: center; height: 20px; gap: 4px; }
+.AIChat-typing-dots span {
+    width: 6px; height: 6px; background: #999; border-radius: 50%;
+    animation: AIChat-blink 1.4s infinite both;
+}
+.AIChat-typing-dots span:nth-child(1) { animation-delay: 0.2s; }
+.AIChat-typing-dots span:nth-child(2) { animation-delay: 0.4s; }
+.AIChat-typing-dots span:nth-child(3) { animation-delay: 0.6s; }
+@keyframes AIChat-blink { 
+    0%, 80%, 100% { opacity: 0.2; transform: scale(0.8); } 
+    40% { opacity: 1; transform: scale(1.2); } 
+}
+
+@media screen and (max-width: 768px) {
+    .AIChat-Plug-in {
+        bottom: 15px;
+        right: 15px;
+    }
+    .AIChat-Plug-in-panel {
+        /* 移动端横向占满减去边距，高度限制 */
+        width: calc(100vw - 30px);
+        height: calc(100vh - 100px);
+        max-height: 600px;
+        transform-origin: bottom right;
+    }
+}
+
+/* --- 黑暗主题适配 --- */
+.AIChat-Plug-in-header {
+    padding: 5px 15px; 
+    cursor: grab;
+}
+.AIChat-Plug-in-header:active { cursor: grabbing; }
+
+.AIChat-title { font-size: 14px; }
+.AIChat-tools svg { height: 14px; }
+
+.AIChat-Plug-in {
+    bottom: 30px;
+    right: 120px;
+}
+
+/* --- 拖拽与缩放控制柄样式 --- */
+.AIChat-resize-handle { 
+    position: absolute; 
+    z-index: 10; 
+    touch-action: none; 
+    transition: background 0.2s, opacity 0.2s;
+}
+
+.AIChat-resize-t { top: -8px; left: 0; right: 0; height: 16px; cursor: ns-resize; }
+.AIChat-resize-b { bottom: -8px; left: 0; right: 0; height: 16px; cursor: ns-resize; }
+.AIChat-resize-l { left: -8px; top: 0; bottom: 0; width: 16px; cursor: ew-resize; }
+.AIChat-resize-r { right: -8px; top: 0; bottom: 0; width: 16px; cursor: ew-resize; }
+
+.AIChat-resize-tl { top: -10px; left: -10px; width: 24px; height: 24px; cursor: nwse-resize; }
+.AIChat-resize-tr { top: -10px; right: -10px; width: 24px; height: 24px; cursor: nesw-resize; }
+.AIChat-resize-bl { bottom: -10px; left: -10px; width: 24px; height: 24px; cursor: nesw-resize; }
+.AIChat-resize-br { bottom: -10px; right: -10px; width: 24px; height: 24px; cursor: nwse-resize; }
+
+.AIChat-resize-t:hover, .AIChat-resize-b:hover { background: rgba(0, 122, 255, 0.15); }
+.AIChat-resize-l:hover, .AIChat-resize-r:hover { background: rgba(0, 122, 255, 0.15); }
+.AIChat-resize-tl:hover, .AIChat-resize-tr:hover, 
+.AIChat-resize-bl:hover, .AIChat-resize-br:hover { 
+    background: rgba(0, 122, 255, 0.25); 
+    border-radius: 50%; 
+}
+
+/* --- 通用黑暗模式适配 --- */
+@media (prefers-color-scheme: dark) {
+    .AIChat-Plug-in-panel,
+    html.dark .AIChat-Plug-in-panel,
+    html[data-theme="dark"] .AIChat-Plug-in-panel {
+        background: rgba(30, 30, 30, 0.85);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    }
+    
+    .AIChat-Plug-in-header,
+    html.dark .AIChat-Plug-in-header,
+    html[data-theme="dark"] .AIChat-Plug-in-header {
+        background: rgba(40, 40, 40, 0.6); 
+        border-bottom-color: rgba(255, 255, 255, 0.05); 
+    }
+    
+    .AIChat-title,
+    html.dark .AIChat-title,
+    html[data-theme="dark"] .AIChat-title { 
+        color: #eee; 
+    }
+
+    .AIChat-tools span,
+    html.dark .AIChat-tools span,
+    html[data-theme="dark"] .AIChat-tools span { 
+        color: #aaa; 
+    }
+
+    .AIChat-tools span:hover,
+    html.dark .AIChat-tools span:hover,
+    html[data-theme="dark"] .AIChat-tools span:hover { 
+        color: #fff; 
+    }
+
+    .AIChat-msg-ai .AIChat-Plug-in-bubble,
+    html.dark .AIChat-msg-ai .AIChat-Plug-in-bubble,
+    html[data-theme="dark"] .AIChat-msg-ai .AIChat-Plug-in-bubble { 
+        background: rgba(50, 50, 50, 0.9); 
+        color: #eee; 
+        border-color: rgba(255, 255, 255, 0.05); 
+    }
+
+    .AIChat-Plug-in-input-area,
+    html.dark .AIChat-Plug-in-input-area,
+    html[data-theme="dark"] .AIChat-Plug-in-input-area { 
+        background: rgba(40, 40, 40, 0.6); 
+        border-top-color: rgba(255, 255, 255, 0.05); 
+    }
+
+    #AIChat-Input,
+    html.dark #AIChat-Input,
+    html[data-theme="dark"] #AIChat-Input { 
+        background: rgba(60, 60, 60, 0.8); 
+        border-color: rgba(255, 255, 255, 0.1); 
+        color: #eee; 
+    }
+
+    .AIChat-Plug-in-quick-action,
+    html.dark .AIChat-Plug-in-quick-action,
+    html[data-theme="dark"] .AIChat-Plug-in-quick-action { 
+        color: #0a84ff; 
+        background: rgba(10, 132, 255, 0.15); 
+    }
+
+    .AIChat-Plug-in-quick-action:hover,
+    html.dark .AIChat-Plug-in-quick-action:hover,
+    html[data-theme="dark"] .AIChat-Plug-in-quick-action:hover { 
+        background: rgba(10, 132, 255, 0.25); 
+    }
+}
