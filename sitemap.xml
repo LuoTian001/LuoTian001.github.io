@@ -2,6 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://luotian.cyou/tools/index.html</loc>
+    
+    <lastmod>2026-03-04</lastmod>
+    
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
     <loc>https://luotian.cyou/tools/video-parser/index.html</loc>
     
     <lastmod>2026-03-04</lastmod>
@@ -246,15 +255,6 @@
   
   <url>
     <loc>https://luotian.cyou/tools/base64/index.html</loc>
-    
-    <lastmod>2026-03-01</lastmod>
-    
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  
-  <url>
-    <loc>https://luotian.cyou/tools/index.html</loc>
     
     <lastmod>2026-03-01</lastmod>
     
