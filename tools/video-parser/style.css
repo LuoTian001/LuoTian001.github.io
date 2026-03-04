@@ -1,0 +1,166 @@
+/* === 基础变量 (与原切图工具统一) === */
+:root {
+    --primary-color: #2196F3;
+    --success-color: #4CAF50;
+    --bg-color: #fff;
+    --panel-bg: #f8f9fa;
+    --border-color: #e0e0e0;
+    --text-color: #333;
+}
+
+[data-theme="dark"] {
+    --bg-color: #1e1e1e;
+    --panel-bg: #2d2d2d;
+    --border-color: #444;
+    --text-color: #eee;
+}
+
+.tool-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 25px;
+    background: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05);
+    color: var(--text-color);
+}
+
+/* === 输入区域 === */
+.input-section {
+    margin-bottom: 20px;
+}
+
+.input-section textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--panel-bg);
+    color: var(--text-color);
+    font-size: 0.95rem;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.input-section textarea:focus {
+    border-color: var(--primary-color);
+}
+
+/* === 按钮组 === */
+.action-group {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 25px;
+}
+
+.btn {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: white;
+    transition: 0.2s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-primary { background: var(--primary-color); }
+.btn-primary:hover:not(:disabled) { filter: brightness(1.1); transform: translateY(-1px); }
+
+.btn-reset { background: #78909C; }
+.btn-reset:hover { background: #607D8B; }
+
+.btn-success { background: var(--success-color); width: 100%; max-width: 300px; margin: 15px auto; }
+.btn-success:hover { filter: brightness(1.1); }
+
+/* === 加载状态 === */
+.loading-state {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin: 30px 0;
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(33, 150, 243, 0.2);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* === 结果展示区 === */
+.result-section {
+    display: none;
+    border-top: 1px solid var(--border-color);
+    padding-top: 25px;
+    animation: slideDown 0.4s ease-out;
+}
+
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.media-container {
+    text-align: center;
+}
+
+.media-container video {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 8px;
+    background: #000;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.download-actions {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.tips {
+    font-size: 0.85rem;
+    color: #888;
+    margin-top: 10px;
+}
+
+/* === 图集网格 === */
+.image-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.gallery-item {
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+}
