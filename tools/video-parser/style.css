@@ -167,13 +167,29 @@
     margin-top: 15px;
 }
 
-.gallery-item {
+.vp-fancybox-wrap {
+    display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
-    object-fit: cover;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
     border-radius: 6px;
+    overflow: hidden; /* 防止图片溢出包裹层圆角 */
+}
+
+.gallery-item {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     background: var(--panel-bg);
     border: 1px solid var(--border-color) !important;
     margin: 0 !important;
     padding: 0 !important;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.vp-fancybox-wrap:hover .gallery-item {
+    transform: scale(1.03);
 }

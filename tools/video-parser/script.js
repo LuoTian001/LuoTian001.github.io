@@ -121,11 +121,19 @@
                 currentImages = Array.isArray(data.media_url) ? data.media_url : [];
                 
                 currentImages.forEach((imgUrl, idx) => {
+                    const a = document.createElement('a');
+                    a.href = imgUrl;
+                    a.className = 'vp-fancybox-wrap';
+                    a.setAttribute('data-fancybox', 'vp-gallery');
+                    a.setAttribute('data-caption', data.title ? `${data.title} - ${idx + 1}` : `图集 - ${idx + 1}`);
+
                     const img = document.createElement('img');
                     img.src = imgUrl;
-                    img.className = 'gallery-item no-lightbox';
+                    img.className = 'gallery-item';
                     img.setAttribute('referrerpolicy', 'no-referrer');
-                    imageGrid.appendChild(img);
+
+                    a.appendChild(img);
+                    imageGrid.appendChild(a);
                 });
             }
             setTimeout(() => resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
