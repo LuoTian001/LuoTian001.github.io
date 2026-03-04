@@ -19,9 +19,6 @@
         const imageContainer = document.getElementById('vp-image-container');
         const imageGrid = document.getElementById('vp-image-grid');
 
-        // 后端 API 地址 (需根据你 Nginx 配置的实际域名或路径调整)
-        const API_ENDPOINT = 'www.luotian.cyou/api/videojiexi';
-
         // 状态重置
         function resetUI() {
             loadingState.style.display = 'none';
@@ -53,7 +50,7 @@
             btnParse.disabled = true;
 
             try {
-                const response = await fetch(API_ENDPOINT, {
+                const response = await fetch('/api/videojiexi', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
