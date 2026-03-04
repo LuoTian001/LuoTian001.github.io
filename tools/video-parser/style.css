@@ -193,3 +193,40 @@
 .vp-fancybox-wrap:hover .gallery-item {
     transform: scale(1.03);
 }
+
+.livephoto-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+    margin-top: 15px;
+}
+
+.livephoto-item {
+    display: flex;
+    flex-direction: column;
+    background: var(--panel-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.livephoto-item video {
+    width: 100%;
+    aspect-ratio: 9 / 16;
+    object-fit: cover;
+    background: #000;
+}
+
+.livephoto-actions {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.livephoto-actions .btn {
+    width: 100%;
+    min-width: unset;
+    padding: 6px 10px;
+    font-size: 0.85rem;
+}
