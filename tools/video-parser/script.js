@@ -84,7 +84,7 @@
             btnParse.disabled = true;
 
             try {
-                const response = await fetch('api/videojiexi', {
+                const response = await fetch('/api/videojiexi', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ share_text: shareText })
