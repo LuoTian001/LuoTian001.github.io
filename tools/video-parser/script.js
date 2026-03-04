@@ -35,10 +35,10 @@
         async function forceDownload(url, filename, buttonElement) {
             const originalText = buttonElement.textContent;
             buttonElement.disabled = true;
-            buttonElement.textContent = "⌛ 下载中...";
+            buttonElement.textContent = "⌛ 处理中...";
 
             try {
-                // 将远程文件拉取为 Blob 以规避 <a> 标签跨域下载失效问题
+                // 尝试拉取 Blob (大概率会被视频 CDN 的 CORS 策略拦截)
                 const response = await fetch(url);
                 if (!response.ok) throw new Error('网络响应异常');
                 const blob = await response.blob();
@@ -50,13 +50,18 @@
                 document.body.appendChild(a);
                 a.click();
                 
-                // 内存清理
                 a.remove();
                 URL.revokeObjectURL(blobUrl);
             } catch (error) {
-                console.error("Blob 下载失败, 触发降级策略:", error);
-                // 降级：若源站禁止 CORS，强制打开新标签页让用户手动保存
-                window.open(url, '_blank');
+                console.warn("Blob 下载受 CORS 限制拦截，执行无 Referer 降级跳转。");
+                // 【核心修复】降级：强制构造无 Referer 的新标签页打开，规避 403 Forbidden
+                const a = document.createElement('a');
+                a.href = url;
+                a.target = '_blank';
+                a.rel = 'noreferrer noopener'; // 彻底剥离当前站点的 Referer 头
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
             } finally {
                 buttonElement.disabled = false;
                 buttonElement.textContent = originalText;
@@ -118,11 +123,11 @@
         function renderResult(data) {
             resultTitle.textContent = data.title || '解析成功';
             resultArea.style.display = 'block';
-
             // 优先级 1：判断是否为动态图/多分段视频
             if (Array.isArray(data.livephotos) && data.livephotos.length > 0) {
                 livephotoContainer.style.display = 'block';
                 currentLivephotos = data.livephotos;
+                livephotoGrid.innerHTML = ''; // 清空可能残留的历史节点
                 
                 currentLivephotos.forEach((item, idx) => {
                     const wrap = document.createElement('div');
@@ -133,8 +138,10 @@
                     vid.src = item.video;
                     vid.poster = item.cover || '';
                     vid.controls = true;
-                    vid.preload = "none"; // 避免并发加载大量视频导致浏览器卡死
+                    vid.preload = "metadata"; // 仅预加载元数据，避免多视频并发卡死
                     vid.className = 'no-lightbox';
+                    // 【核心修复】强制不发送 Referer，使得前端视频标签可绕过防盗链直接预览
+                    vid.setAttribute('referrerpolicy', 'no-referrer');
                     
                     // 构造独立下载控制区
                     const actions = document.createElement('div');
@@ -167,7 +174,9 @@
                 currentVideoUrl = data.media_url;
                 videoPlayer.src = currentVideoUrl;
                 videoPlayer.poster = data.cover || '';
-            } 
+                // 【核心修复】单视频播放器同样需追加防盗链规避
+                videoPlayer.setAttribute('referrerpolicy', 'no-referrer');
+            }
             // 优先级 3：纯图集
             else if (data.type === 'image') {
                 imageContainer.style.display = 'block';
