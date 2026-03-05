@@ -49,6 +49,7 @@
         const fileInput = document.getElementById('fileInput');
         const dropArea = document.getElementById('drop-area');
         const fileNameDisplay = document.getElementById('file-name-display');
+        const BASE_URL = 'https://api.luotian.cyou/api/qrcode';
 
         // State
         let currentMode = 'generate'; 
@@ -295,7 +296,7 @@
                         formData.append('style', currentStyle);
                         if (logoFile) formData.append('logo_file', logoFile, "logo.png");
 
-                        const res = await fetch('/api/qrcode/generate', { method: 'POST', body: formData });
+                        const res = await fetch(`${BASE_URL}/generate`, { method: 'POST', body: formData });
                         if (!res.ok) throw new Error("生成失败");
                         
                         const blob = await res.blob();
@@ -312,7 +313,7 @@
                         const formData = new FormData();
                         formData.append('file', parseFile);
 
-                        const res = await fetch('/api/qrcode/parse', { method: 'POST', body: formData });
+                        const res = await fetch(`${BASE_URL}/parse`, { method: 'POST', body: formData });
                         const data = await res.json();
                         if (!data.success) throw new Error(data.error || "无法识别");
 

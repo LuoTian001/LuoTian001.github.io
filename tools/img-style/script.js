@@ -16,6 +16,7 @@
         const styleCards = document.querySelectorAll('.style-card');
         const paramPanels = document.querySelectorAll('.params-panel');
         const inputs = document.querySelectorAll('#params-container input');
+        const BASE_URL = 'https://api.luotian.cyou/api/style/imgprocess';
 
         let currentFile = null;
         let currentStyle = document.querySelector('.style-card.active')?.dataset.style || 'mosaic';
@@ -154,7 +155,7 @@
             });
 
             try {
-                const response = await fetch('/api/style/imgprocess', {
+                const response = await fetch(BASE_URL, {
                     method: 'POST',
                     body: formData
                 });

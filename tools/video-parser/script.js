@@ -25,6 +25,7 @@
         const livephotoContainer = document.getElementById('vp-livephoto-container');
         const livephotoGrid = document.getElementById('vp-livephoto-grid');
         const btnZipLivephoto = document.getElementById('vp-btn-zip-livephoto');
+        const BASE_URL = 'https://api.luotian.cyou/api/videojiexi';
 
         // 当前解析出的媒体数据缓存
         let currentVideoUrl = '';
@@ -98,7 +99,7 @@
             btnParse.disabled = true;
 
             try {
-                const response = await fetch('/api/videojiexi', {
+                const response = await fetch(BASE_URL, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ share_text: shareText })
@@ -291,10 +292,10 @@
                     
                 } catch (error) {
                     console.error("视频打包失败:", error);
-                    alert("视频打包失败，可能原因：文件过大致浏览器内存溢出，或源站防盗链拦截。请使用单视频下载按钮。");
+                    alert("视频打包失败，可能原因：文件过大致浏览器内存溢出，或源站防盗链拦截。请使用单视频分段下载按钮。");
                 } finally {
                     btnZipLivephoto.disabled = false;
-                    btnZipLivephoto.textContent = "📦 尝试一键打包全部分段视频";
+                    btnZipLivephoto.textContent = "📦 打包分段视频";
                 }
             };
         }

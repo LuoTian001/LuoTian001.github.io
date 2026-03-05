@@ -13,6 +13,7 @@
         const charCount = document.getElementById('tr-charCount');
         const clearBtn = document.getElementById('tr-clearBtn');
         const copyBtn = document.getElementById('tr-copyBtn');
+        const BASE_URL = 'https://api.luotian.cyou/api/translate';
 
         // 交换语言
         if(swapBtn) {
@@ -84,7 +85,7 @@
 
                 try {
                     // 调用后端 API (保持原有接口不变)
-                    const response = await fetch('/api/translate', {
+                    const response = await fetch(BASE_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({

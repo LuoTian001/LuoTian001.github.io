@@ -17,7 +17,7 @@
         const errorEl = document.getElementById('ocr-error-message');
         const copyBtn = document.getElementById('ocr-btn-copy');
 
-        const BASE_URL = 'https://www.luotian.cyou';
+        const BASE_URL = 'https://api.luotian.cyou/api/ocrlatex';
 
         // 核心逻辑
         async function handleImage(eventOrFile) {
@@ -45,7 +45,7 @@
                 const formData = new FormData();
                 formData.append('image', blob, 'pasted-image.png');
 
-                const response = await fetch(`${BASE_URL}/upload`, {
+                const response = await fetch(BASE_URL, {
                     method: 'POST',
                     body: formData,
                     mode: 'cors'
