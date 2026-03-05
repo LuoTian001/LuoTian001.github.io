@@ -236,7 +236,7 @@ class Live2DChat {
                     const tempDoc = parser.parseFromString(rawHtml, "text/html");
                     let noiseSelectors = 'script, style, noscript, link, iframe, svg';
                     if (!this.chatCfg.includeCodeBlocks) {
-                        noiseSelectors += ', pre, code, figure.highlight, div.highlight';
+                        noiseSelectors += ', pre, figure.highlight, div.highlight';
                     }
                     tempDoc.querySelectorAll(noiseSelectors).forEach(el => el.remove());
                     pureText = this.cleanTextContent(tempDoc.body.textContent);
@@ -570,7 +570,7 @@ class Live2DChat {
         const cloneDOM = articleDOM.cloneNode(true);
         let noiseSelectors = 'script, style, noscript, iframe, svg, .post-outdate-notice, .clipboard-btn';
         if (!this.chatCfg.includeCodeBlocks) {
-            noiseSelectors += ', pre, code, figure.highlight, div.highlight';
+            noiseSelectors += ', pre, figure.highlight, div.highlight';
         }
         const noiseElements = cloneDOM.querySelectorAll(noiseSelectors);
         noiseElements.forEach(el => el.remove());
