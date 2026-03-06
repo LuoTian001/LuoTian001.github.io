@@ -17,8 +17,8 @@
     </author>
     <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/hexo-hiden-sidebar</id>
-    <link href="https://luotian.cyou/post/hexo-hiden-sidebar"/>
+    <id>https://luotian.cyou/post/hexo-hiden-sidebar.html</id>
+    <link href="https://luotian.cyou/post/hexo-hiden-sidebar.html"/>
     <published>2026-03-02T07:59:21.000Z</published>
     <summary>butterfly 主题的侧边栏默认由多个卡片组成，但在部分页面可能需要隐藏某些卡片以避免信息冗余。本文介绍一种通过 Hexo 脚本注入 CSS 样式实现自定义页面侧边栏卡片隐藏的方案，无需修改主题模板文件。</summary>
     <title>博客侧边栏卡片自定义隐藏 — butterfly 主题</title>
@@ -30,8 +30,8 @@
     </author>
     <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/custom-beautify</id>
-    <link href="https://luotian.cyou/post/custom-beautify"/>
+    <id>https://luotian.cyou/post/custom-beautify.html</id>
+    <link href="https://luotian.cyou/post/custom-beautify.html"/>
     <published>2026-03-02T07:20:00.000Z</published>
     <summary>hexo 博客自定义美化配置 butterfly 主题。包括全局毛玻璃样式、明亮主题文本颜色、明亮主题导航栏子菜单颜色、页头与页脚透明、文章卡片透明、Mermaid 流程图透明、排版美化、明亮主题代码块配色、夜间主题代码块配色以及表格样式等方面的调整。</summary>
     <title>hexo 博客自定义美化配置 — butterfly 主题</title>
@@ -45,8 +45,8 @@
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
     <category term="Live2D" scheme="https://luotian.cyou/tags/Live2D/"/>
     <category term="AI 开发" scheme="https://luotian.cyou/tags/AI-%E5%BC%80%E5%8F%91/"/>
-    <id>https://luotian.cyou/post/live2d-ai-chat</id>
-    <link href="https://luotian.cyou/post/live2d-ai-chat"/>
+    <id>https://luotian.cyou/post/live2d-ai-chat.html</id>
+    <link href="https://luotian.cyou/post/live2d-ai-chat.html"/>
     <published>2026-02-27T10:30:44.000Z</published>
     <summary>本文是基于 Hexo Butterfly 主题的 Live2D AI 聊天功能配置教程。详细介绍了如何在博客中部署支持上下文对话、Markdown 渲染和全站 RAG 检索的 Live2D 看板娘。涵盖核心功能特性介绍以及后端部署步骤，帮助你打造一个生动的博客伴侣。</summary>
     <title>Live2D AI 聊天功能配置教程 — 基于 FastAPI + DeepSeek</title>
@@ -59,8 +59,8 @@
     <category term="Live2D" scheme="https://luotian.cyou/categories/Live2D/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
     <category term="Live2D" scheme="https://luotian.cyou/tags/Live2D/"/>
-    <id>https://luotian.cyou/post/moc3-for-butterfly</id>
-    <link href="https://luotian.cyou/post/moc3-for-butterfly"/>
+    <id>https://luotian.cyou/post/moc3-for-butterfly.html</id>
+    <link href="https://luotian.cyou/post/moc3-for-butterfly.html"/>
     <published>2026-02-23T02:33:19.000Z</published>
     <summary>记录在 Hexo (Butterfly主题) 框架下优雅部署 Cubism 3.0+ 标准的 Live2D (.moc3)模型的全过程。从模型资源获取、优化、文件结构配置到网页部署的详细步骤，涵盖了模型画布调整、提示语定制等进阶配置，帮助你在博客中打造一个生动的看板娘。</summary>
     <title>Live2D moc3 模型部署教程—基于Hexo Butterfly主题</title>
@@ -72,8 +72,8 @@
     </author>
     <category term="后端部署" scheme="https://luotian.cyou/categories/%E5%90%8E%E7%AB%AF%E9%83%A8%E7%BD%B2/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/MTranServer</id>
-    <link href="https://luotian.cyou/post/MTranServer"/>
+    <id>https://luotian.cyou/post/MTranServer.html</id>
+    <link href="https://luotian.cyou/post/MTranServer.html"/>
     <published>2026-02-15T06:58:53.000Z</published>
     <summary>超低资源消耗、响应速度极快且完全离线的翻译服务部署教程。无需显卡，单核 CPU 即可跑满的无限免费翻译方案。</summary>
     <title>hexo 服务器部署 MTranServer 离线翻译引擎</title>
@@ -84,8 +84,8 @@
       <name>Luo Tian</name>
     </author>
     <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
-    <id>https://luotian.cyou/post/AI-secu-and-ethi</id>
-    <link href="https://luotian.cyou/post/AI-secu-and-ethi"/>
+    <id>https://luotian.cyou/post/AI-secu-and-ethi.html</id>
+    <link href="https://luotian.cyou/post/AI-secu-and-ethi.html"/>
     <published>2026-01-14T11:54:10.000Z</published>
     <summary>西电雨课堂人工智能安全与伦理答案，包含章节练习题和期末考试题，供学习交流使用。</summary>
     <title>西电-北航-人工智能安全与伦理答案</title>
@@ -96,8 +96,8 @@
       <name>Luo Tian</name>
     </author>
     <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
-    <id>https://luotian.cyou/post/Engin-Opti-method</id>
-    <link href="https://luotian.cyou/post/Engin-Opti-method"/>
+    <id>https://luotian.cyou/post/Engin-Opti-method.html</id>
+    <link href="https://luotian.cyou/post/Engin-Opti-method.html"/>
     <published>2026-01-14T06:43:58.000Z</published>
     <summary>西电雨课堂工程优化方法答案，包含章节练习题和期末考试题，供学习交流使用。</summary>
     <title>西电-工程优化方法</title>
@@ -108,8 +108,8 @@
       <name>Luo Tian</name>
     </author>
     <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
-    <id>https://luotian.cyou/post/Engineer-Ethics</id>
-    <link href="https://luotian.cyou/post/Engineer-Ethics"/>
+    <id>https://luotian.cyou/post/Engineer-Ethics.html</id>
+    <link href="https://luotian.cyou/post/Engineer-Ethics.html"/>
     <published>2025-11-09T07:17:35.000Z</published>
     <summary>西电雨课堂工程伦理答案，包含章节练习题和期末考试题，供学习交流使用。</summary>
     <title>西电雨课堂-工程伦理答案</title>
@@ -120,8 +120,8 @@
       <name>Luo Tian</name>
     </author>
     <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
-    <id>https://luotian.cyou/post/Aca-Commu-Eng</id>
-    <link href="https://luotian.cyou/post/Aca-Commu-Eng"/>
+    <id>https://luotian.cyou/post/Aca-Commu-Eng.html</id>
+    <link href="https://luotian.cyou/post/Aca-Commu-Eng.html"/>
     <published>2025-10-31T17:54:29.000Z</published>
     <summary>西电雨课堂学术交流英语答案，包含章节练习题和期末考试题，供学习交流使用。</summary>
     <title>西电雨课堂-学术交流英语答案</title>
@@ -133,8 +133,8 @@
     </author>
     <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/exlinks4hexo</id>
-    <link href="https://luotian.cyou/post/exlinks4hexo"/>
+    <id>https://luotian.cyou/post/exlinks4hexo.html</id>
+    <link href="https://luotian.cyou/post/exlinks4hexo.html"/>
     <published>2025-08-14T05:03:08.000Z</published>
     <summary>
       <![CDATA[<p>&#8195;&#8195;我在部分文章中引入了较多的外链，而这些外链统一使用md语法<code>[链接文字](外链地址)</code>，这使得渲染得到的网页直接在本标签页打开外链，不仅影响阅读体验，还不利于网站安全和SEO优化。因此查阅相关资料并进行下面的优化调整。</p]]>
@@ -148,8 +148,8 @@
     </author>
     <category term="深度学习" scheme="https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
     <category term="conda" scheme="https://luotian.cyou/tags/conda/"/>
-    <id>https://luotian.cyou/post/conda-commands</id>
-    <link href="https://luotian.cyou/post/conda-commands"/>
+    <id>https://luotian.cyou/post/conda-commands.html</id>
+    <link href="https://luotian.cyou/post/conda-commands.html"/>
     <published>2025-08-08T09:03:44.000Z</published>
     <summary>
       <![CDATA[<p>&#8195;&#8195;记录一些常用的conda指令。</p>
@@ -165,8 +165,8 @@
     </author>
     <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/pangu4hexo</id>
-    <link href="https://luotian.cyou/post/pangu4hexo"/>
+    <id>https://luotian.cyou/post/pangu4hexo.html</id>
+    <link href="https://luotian.cyou/post/pangu4hexo.html"/>
     <published>2025-07-30T11:01:14.000Z</published>
     <summary>hexo配置pangu—butterfly主题。</summary>
     <title>hexo配置pangu—butterfly主题</title>
@@ -178,8 +178,8 @@
     </author>
     <category term="算法" scheme="https://luotian.cyou/categories/%E7%AE%97%E6%B3%95/"/>
     <category term="字符串" scheme="https://luotian.cyou/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>https://luotian.cyou/post/KMP-Algorithm</id>
-    <link href="https://luotian.cyou/post/KMP-Algorithm"/>
+    <id>https://luotian.cyou/post/KMP-Algorithm.html</id>
+    <link href="https://luotian.cyou/post/KMP-Algorithm.html"/>
     <published>2025-07-23T12:55:58.000Z</published>
     <summary>
       <![CDATA[<p>&#8195;&#8195;KMP算法——用于字符串匹配。优点是在匹配的过程中不用回退主指针，子指针会根据子串中最长相等前后缀来进行回退，能够大大降低时间复杂度。<br>&#8195;&#8195;这里有几个定义需要说明：</p>
@@ -195,8 +195,8 @@
     </author>
     <category term="力扣刷题" scheme="https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/"/>
     <category term="字符串" scheme="https://luotian.cyou/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>https://luotian.cyou/post/leetcode-String</id>
-    <link href="https://luotian.cyou/post/leetcode-String"/>
+    <id>https://luotian.cyou/post/leetcode-String.html</id>
+    <link href="https://luotian.cyou/post/leetcode-String.html"/>
     <published>2025-07-23T09:49:01.000Z</published>
     <summary>
       <![CDATA[<h2 id="力扣-344"><a href="#力扣-344" class="headerlink" title="力扣 344"></a>力扣 344</h2><p>&#8195;&#8195;<a href="https://leetcode.cn/problems/re]]>
@@ -210,8 +210,8 @@
     </author>
     <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/hexo-text-align</id>
-    <link href="https://luotian.cyou/post/hexo-text-align"/>
+    <id>https://luotian.cyou/post/hexo-text-align.html</id>
+    <link href="https://luotian.cyou/post/hexo-text-align.html"/>
     <published>2025-07-21T14:18:23.000Z</published>
     <summary>
       <![CDATA[<p>&#8195;&#8195;编写文章的时候发现正文内容没有两端对齐，每段文字末尾没对齐看着不是很美观。这里总结一下配置教程。</p>
@@ -226,8 +226,8 @@
     </author>
     <category term="力扣刷题" scheme="https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/"/>
     <category term="链表" scheme="https://luotian.cyou/tags/%E9%93%BE%E8%A1%A8/"/>
-    <id>https://luotian.cyou/post/leetcode-Linklist</id>
-    <link href="https://luotian.cyou/post/leetcode-Linklist"/>
+    <id>https://luotian.cyou/post/leetcode-Linklist.html</id>
+    <link href="https://luotian.cyou/post/leetcode-Linklist.html"/>
     <published>2025-07-18T11:22:47.000Z</published>
     <summary>
       <![CDATA[<p>&#8195;&#8195;对于一个链表，C++的定义如下：</p>
@@ -242,8 +242,8 @@
     </author>
     <category term="力扣刷题" scheme="https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/"/>
     <category term="数组" scheme="https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/"/>
-    <id>https://luotian.cyou/post/leetcode-Array</id>
-    <link href="https://luotian.cyou/post/leetcode-Array"/>
+    <id>https://luotian.cyou/post/leetcode-Array.html</id>
+    <link href="https://luotian.cyou/post/leetcode-Array.html"/>
     <published>2025-07-17T11:58:35.000Z</published>
     <summary>
       <![CDATA[<h2 id="力扣-704"><a href="#力扣-704" class="headerlink" title="力扣 704"></a>力扣 704</h2><p>&#8195;&#8195;<a href="https://leetcode.cn/problems/bi]]>
@@ -257,8 +257,8 @@
     </author>
     <category term="力扣刷题" scheme="https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/"/>
     <category term="哈希表" scheme="https://luotian.cyou/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/"/>
-    <id>https://luotian.cyou/post/leetcode-HashTable</id>
-    <link href="https://luotian.cyou/post/leetcode-HashTable"/>
+    <id>https://luotian.cyou/post/leetcode-HashTable.html</id>
+    <link href="https://luotian.cyou/post/leetcode-HashTable.html"/>
     <published>2025-07-17T08:14:22.000Z</published>
     <summary>
       <![CDATA[<p>&#8195;&#8195;哈希表就是在关键字和存储位置之间建立对应关系。也就是：</p>
@@ -272,8 +272,8 @@
     <author>
       <name>Luo Tian</name>
     </author>
-    <id>https://luotian.cyou/post/live-in-xdu</id>
-    <link href="https://luotian.cyou/post/live-in-xdu"/>
+    <id>https://luotian.cyou/post/live-in-xdu.html</id>
+    <link href="https://luotian.cyou/post/live-in-xdu.html"/>
     <published>2025-07-07T14:25:35.000Z</published>
     <summary>西电通院研究生生存手册，包含课程答案、培养相关、选课、期末、生活相关、好物推荐等内容，希望能对大家有所帮助。</summary>
     <title>XDU-STE 研究生生存手册</title>
@@ -285,8 +285,8 @@
     </author>
     <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
     <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/mermaid4hexo</id>
-    <link href="https://luotian.cyou/post/mermaid4hexo"/>
+    <id>https://luotian.cyou/post/mermaid4hexo.html</id>
+    <link href="https://luotian.cyou/post/mermaid4hexo.html"/>
     <published>2025-07-06T13:14:06.000Z</published>
     <summary>hexo配置mermaid—butterfly主题</summary>
     <title>hexo配置mermaid—butterfly主题</title>
