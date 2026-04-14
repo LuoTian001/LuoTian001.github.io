@@ -10,7 +10,20 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-03-16T11:56:27.317Z</updated>
+  <updated>2026-04-14T13:08:13.989Z</updated>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
+    <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
+    <id>https://luotian.cyou/post/hexo4ubuntu.html</id>
+    <link href="https://luotian.cyou/post/hexo4ubuntu.html"/>
+    <published>2026-04-14T11:03:27.000Z</published>
+    <summary>本教程解决在双系统环境中，如何在 ubuntu 侧编辑和管理 windows 数据盘中的 hexo 博客目录，并解决 sudo 指令使用问题。</summary>
+    <title>双系统中在 ubuntu24.04 侧配置 hexo 博客 — 解决 sudo 指令问题</title>
+    <updated>2026-04-14T13:08:13.989Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -279,16 +292,5 @@
     </summary>
     <title>力扣刷题-哈希表</title>
     <updated>2026-03-02T07:44:36.233Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <id>https://luotian.cyou/post/live-in-xdu.html</id>
-    <link href="https://luotian.cyou/post/live-in-xdu.html"/>
-    <published>2025-07-07T14:25:35.000Z</published>
-    <summary>西电通院研究生生存手册，包含课程答案、培养相关、选课、期末、生活相关、好物推荐等内容，希望能对大家有所帮助。</summary>
-    <title>XDU-STE 研究生生存手册</title>
-    <updated>2026-04-11T15:49:33.573Z</updated>
   </entry>
 </feed>
