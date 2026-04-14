@@ -1,0 +1,59 @@
+*, *::before, *::after {
+    cursor: url('./arrow.cur'), auto !important;
+}
+
+p, span, h1, h2, h3, h4, h5, h6, blockquote, pre, code, kbd, del, em, strong,
+#subtitle, .content, .line,
+input:not([type="range"]):not([type="color"]):not([type="button"]):not([type="submit"]):not([type="checkbox"]):not([type="radio"]),
+textarea,
+#qrcode-tool-root textarea,
+#qrcode-tool-root #parse-result-text,
+#translate-tool-root .trans-textarea {
+    cursor: url('./beam.cur'), text !important;
+}
+
+a, a *, 
+button, button *,
+label, label *,
+select, select *,
+option, summary, summary *,
+svg, svg *,
+.fas, .far, .fab, .iconfont,
+/* Butterfly 侧边栏目录及基础交互组件 */
+.toc-link, .toc-link *,
+.toc-button, .toc-button *,
+#nav, #nav *,
+#page-header a, #page-header button,
+#pagination .page-number, 
+.post-meta-date, 
+.post-meta-date-created,
+.switch-btn, .switch-btn::before,
+.copy-button, .expand, .scroll-down-effects,
+/* 评论区与自定义注入组件 */
+.gt-user-inner, .gt-ico, .gt-user-name, .gt-btn, .gt-btn *, .vbtn, .at_button,
+#qrcode-tool-root .tab-item,
+#qrcode-tool-root .style-card,
+#qrcode-tool-root .btn-mini-upload,
+#qrcode-tool-root .btn-mini-clear,
+#qrcode-tool-root .upload-bar,
+#qrcode-tool-root .btn,
+#crop-modal .btn-cancel,
+#crop-modal .btn-primary,
+#img-style-root .upload-bar,
+#img-style-root .style-card,
+#img-style-root .btn,
+#translate-tool-root .trans-select,
+#translate-tool-root .trans-swap-btn,
+#translate-tool-root .trans-btn-main,
+#translate-tool-root .trans-btn-icon {
+    cursor: url('./link.cur'), pointer !important;
+}
+
+/* 滑块与拾色器使用手型光标不符合 UI 交互常理，强制重置为基础箭头 */
+input[type="range"], input[type="range"] *,
+input[type="color"], input[type="color"] *,
+#qrcode-tool-root .param-slider,
+#img-style-root .param-slider,
+#qrcode-tool-root .color-picker-wrapper {
+    cursor: url('./arrow.cur'), default !important;
+}

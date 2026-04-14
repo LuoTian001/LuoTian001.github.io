@@ -1,0 +1,126 @@
+/* 局部变量定义 */
+#sudoku-root {
+    --s-primary: #2196F3;
+    --s-bg: #fff;
+    --s-panel-bg: #f8f9fa;
+    --s-border-light: #e0e0e0;
+    --s-border-heavy: #34495e;
+    --s-text-main: #333;
+    --s-text-fixed: #2c3e50; /* 预设数字颜色 */
+    --s-text-input: #2980b9; /* 用户输入数字颜色 */
+    --s-text-error: #e74c3c;
+    
+    /* 高亮体系 */
+    --s-bg-selected: #bbdefb;
+    --s-bg-related: #e3f2fd;
+    --s-bg-same-val: #cfd8dc;
+    --s-bg-error: #fadbd8;
+    --s-modal-bg: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme="dark"] #sudoku-root {
+    --s-bg: #1e1e1e;
+    --s-panel-bg: #2d2d2d;
+    --s-border-light: #444;
+    --s-border-heavy: #000;
+    --s-text-main: #eee;
+    --s-text-fixed: #bdc3c7;
+    --s-text-input: #64b5f6;
+    --s-text-error: #ff5252;
+    
+    --s-bg-selected: #1565c0;
+    --s-bg-related: #0d47a1;
+    --s-bg-same-val: #37474f;
+    --s-bg-error: #b71c1c;
+    --s-modal-bg: rgba(30, 30, 30, 0.9);
+}
+
+/* 基础容器 */
+#sudoku-root { 
+    width: 100%; 
+    max-width: 650px; /* 从 600px 适度上调以提供更多的内部呼吸空间 */
+    margin: 0 auto; 
+    padding: 20px; 
+    background: var(--s-bg); 
+    border-radius: 12px; 
+    box-shadow: 0 4px 24px rgba(0,0,0,0.05); 
+    color: var(--s-text-main); 
+    font-family: clear sans, helvetica neue, Arial, sans-serif; 
+    box-sizing: border-box; 
+}
+/* 头部排版 */
+#sudoku-root .s-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+#sudoku-root .s-title-area h1 { margin: 0; font-size: clamp(1.8rem, 6vw, 2.5rem); color: var(--s-primary); line-height: 1; border: none; padding: 0; }
+#sudoku-root .s-title-area .s-desc { margin: 8px 0 0; color: var(--s-text-main); font-size: 0.85rem; opacity: 0.8; }
+#sudoku-root .s-control-area { display: flex; flex-direction: column; align-items: center; width: 100%; }
+#sudoku-root .s-action-row { display: flex; gap: 8px; align-items: center; }
+#sudoku-root .s-select { padding: 10px 20px; border-radius: 6px; border: 1px solid var(--s-border-light); background: var(--s-panel-bg); color: var(--s-text-main); font-size: 0.9rem; outline: none; cursor: pointer; }
+#sudoku-root .s-btn { padding: 10px 25px; border: none; border-radius: 6px; font-size: 1rem; color: white; cursor: pointer; background: var(--s-primary); transition: 0.2s; font-weight: bold; }
+
+#sudoku-root .s-main-content { display: flex; flex-direction: column; gap: 20px; }
+
+/* 棋盘体系 */
+#sudoku-root .s-board-wrapper { position: relative; width: 100%; max-width: 500px; margin: 0 auto; touch-action: manipulation; }
+
+#sudoku-root .s-board { 
+    display: grid; 
+    width: 100%;
+    aspect-ratio: 1 / 1; /* 将长宽比约束上移至父容器 */
+    grid-template-columns: repeat(9, 1fr); 
+    grid-template-rows: repeat(9, 1fr); /* 强制声明行高比例 */
+    background: var(--s-border-heavy); 
+    border: 2px solid var(--s-border-heavy); 
+    gap: 1px; 
+    border-radius: 4px; 
+    overflow: hidden; 
+}
+
+/* 单元格基础样式 */
+#sudoku-root .s-cell { 
+    min-width: 0;
+    min-height: 0; 
+    background: var(--s-bg); 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-size: clamp(1rem, 5vw, 1.8rem); 
+    cursor: pointer; 
+    user-select: none; 
+    transition: background-color 0.1s; 
+    color: var(--s-text-input); 
+}
+/* 宫格加粗边框划分 */
+#sudoku-root .s-cell[data-c="2"], #sudoku-root .s-cell[data-c="5"] { border-right: 2px solid var(--s-border-heavy); }
+#sudoku-root .s-cell[data-r="2"], #sudoku-root .s-cell[data-r="5"] { border-bottom: 2px solid var(--s-border-heavy); }
+
+/* 状态修饰 */
+#sudoku-root .s-cell.s-fixed { color: var(--s-text-fixed); font-weight: bold; cursor: default; }
+#sudoku-root .s-cell.s-selected { background: var(--s-bg-selected); }
+#sudoku-root .s-cell.s-related { background: var(--s-bg-related); }
+#sudoku-root .s-cell.s-same-val { background: var(--s-bg-same-val); }
+#sudoku-root .s-cell.s-error { background: var(--s-bg-error); color: var(--s-text-error); font-weight: bold; }
+
+/* 虚拟键盘 */
+#sudoku-root .s-numpad { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; max-width: 450px; margin: 0 auto; width: 100%; }
+#sudoku-root .s-num-key { aspect-ratio: 1.5; background: var(--s-panel-bg); border: 1px solid var(--s-border-light); border-radius: 8px; font-size: 1.2rem; color: var(--s-text-main); font-weight: bold; cursor: pointer; transition: 0.1s; display: flex; justify-content: center; align-items: center; }
+#sudoku-root .s-num-key:active { background: var(--s-bg-selected); transform: scale(0.95); }
+#sudoku-root .s-key-action { aspect-ratio: auto; padding: 12px; font-size: 1rem; font-weight: bold; }
+#sudoku-root .s-btn-erase { grid-column: span 3; background: rgba(243, 156, 18, 0.1); color: #f39c12; border-color: rgba(243, 156, 18, 0.3); }
+#sudoku-root .s-btn-reset { grid-column: span 2; background: rgba(231, 76, 60, 0.1); color: #e74c3c; border-color: rgba(231, 76, 60, 0.3); }
+
+[data-theme="dark"] #sudoku-root .s-btn-erase { color: #f5b041; background: rgba(243, 156, 18, 0.15); }
+[data-theme="dark"] #sudoku-root .s-btn-reset { color: #ff5252; background: rgba(231, 76, 60, 0.15); }
+
+/* 弹窗设计 */
+#sudoku-root .s-modal-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.2); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 10; display: flex; justify-content: center; align-items: center; animation: sFadeIn 0.3s ease; }
+#sudoku-root .s-modal-content { background: var(--s-modal-bg); padding: 30px 20px; border-radius: 12px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 1px solid var(--s-border-light); width: 80%; }
+#sudoku-root .s-modal-content h2 { margin: 0 0 10px 0; font-size: 1.8rem; border: none; padding: 0; }
+#sudoku-root .s-modal-content p { margin: 0 0 20px 0; color: var(--s-text-main); }
+@keyframes sFadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 500px) {
+    #sudoku-root .s-header { flex-direction: column; gap: 15px; }
+    #sudoku-root .s-control-area { width: 100%; align-items: flex-start; }
+    #sudoku-root .s-action-row { width: 100%; }
+    #sudoku-root .s-select, #sudoku-root .s-btn { flex: 1; text-align: center; }
+}

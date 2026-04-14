@@ -1,0 +1,26 @@
+/* 电子钟字体引入 */
+@font-face {
+  font-family: 'UnidreamLED';
+  src: url('../font/UnidreamLED.ttf');
+  font-display: swap;
+}
+
+div#runtime {
+  width: fit-content;
+  max-width: 100%;
+  margin: 0px auto;
+  color: #333333;
+  padding: 0px 0px;
+  border-radius: 10px;
+  background-color: transparent;
+  font-family: 'UnidreamLED', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+html[data-theme="dark"] div#runtime {
+  color: #c0c0c0;
+}
