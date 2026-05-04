@@ -470,14 +470,14 @@
 
   
   <url>
-    <loc>https://luotian.cyou/tags/MMLab/</loc>
+    <loc>https://luotian.cyou/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
+    <loc>https://luotian.cyou/tags/MMLab/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -498,7 +498,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/</loc>
+    <loc>https://luotian.cyou/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -519,14 +519,14 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/</loc>
+    <loc>https://luotian.cyou/tags/Java/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/Java/</loc>
+    <loc>https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -570,6 +570,13 @@
   </url>
   
   <url>
+    <loc>https://luotian.cyou/categories/%E7%AE%97%E6%B3%95/</loc>
+    <lastmod>2026-05-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
@@ -578,13 +585,6 @@
   
   <url>
     <loc>https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/</loc>
-    <lastmod>2026-05-04</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
-    <loc>https://luotian.cyou/categories/%E7%AE%97%E6%B3%95/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
@@ -612,14 +612,14 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/</loc>
+    <loc>https://luotian.cyou/categories/Java%E7%BC%96%E7%A8%8B/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
-    <loc>https://luotian.cyou/categories/Java%E7%BC%96%E7%A8%8B/</loc>
+    <loc>https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/</loc>
     <lastmod>2026-05-04</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
