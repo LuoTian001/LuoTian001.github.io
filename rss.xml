@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-05-04T06:32:54.050Z</updated>
+  <updated>2026-06-10T15:55:57.260Z</updated>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -22,7 +22,7 @@
     <published>2026-05-04T03:06:44.000Z</published>
     <summary>在 hexo 博客中添加节假日提醒、祝福弹窗功能，使用 lunar-javascript 库计算节日数据，并通过前端脚本实现动态弹窗展示。</summary>
     <title>在 hexo 博客中添加节假日提醒、祝福弹窗 — butterfly 主题</title>
-    <updated>2026-05-04T06:32:54.050Z</updated>
+    <updated>2026-06-10T15:55:57.260Z</updated>
   </entry>
   <entry>
     <author>
@@ -88,7 +88,7 @@
     <published>2026-02-27T10:30:44.000Z</published>
     <summary>本文是基于 Hexo Butterfly 主题的 Live2D AI 聊天功能配置教程。详细介绍了如何在博客中部署支持上下文对话、Markdown 渲染和全站 RAG 检索的 Live2D 看板娘。涵盖核心功能特性介绍以及后端部署步骤，帮助你打造一个生动的博客伴侣。</summary>
     <title>Live2D AI 聊天功能配置教程 — 基于 FastAPI + DeepSeek</title>
-    <updated>2026-04-11T15:49:29.987Z</updated>
+    <updated>2026-06-10T15:56:30.356Z</updated>
   </entry>
   <entry>
     <author>
