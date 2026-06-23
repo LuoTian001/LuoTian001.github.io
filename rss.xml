@@ -10,7 +10,105 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-06-10T15:55:57.260Z</updated>
+  <updated>2026-06-23T21:04:48.469Z</updated>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="网络信息论" scheme="https://luotian.cyou/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="网络信息论" scheme="https://luotian.cyou/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="信息论" scheme="https://luotian.cyou/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <id>https://luotian.cyou/post/Network_info_Theory-Chapter1.html</id>
+    <link href="https://luotian.cyou/post/Network_info_Theory-Chapter1.html"/>
+    <published>2026-06-23T18:39:32.000Z</published>
+    <summary>本文是西电研究生课程网络信息论（Network Information Theory）第一章的复习笔记，基于讲义整理。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen/Fano/数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长/变长编码、Shannon/Huffman 码）、信道容量（DMC、BSC/BEC、高斯信道、反馈容量）、MIMO 信道（SVD 分解、注水算法）等。</summary>
+    <title>西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</title>
+    <updated>2026-06-23T21:04:48.469Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="网络信息论" scheme="https://luotian.cyou/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="网络信息论" scheme="https://luotian.cyou/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="信息论" scheme="https://luotian.cyou/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <id>https://luotian.cyou/post/Network_info_Theory-Chapter2.html</id>
+    <link href="https://luotian.cyou/post/Network_info_Theory-Chapter2.html"/>
+    <published>2026-06-23T18:38:32.000Z</published>
+    <summary>本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA/TDMA/X-DMA 对比、速率分裂技术（Rate-Splitting）、5G NOMA 技术综述。</summary>
+    <title>西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</title>
+    <updated>2026-06-23T20:53:58.533Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="网络信息论" scheme="https://luotian.cyou/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="网络信息论" scheme="https://luotian.cyou/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="信息论" scheme="https://luotian.cyou/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <id>https://luotian.cyou/post/Network_info_Theory-Chapter3.html</id>
+    <link href="https://luotian.cyou/post/Network_info_Theory-Chapter3.html"/>
+    <published>2026-06-23T18:37:32.000Z</published>
+    <summary>本文是西电研究生课程网络信息论第三章的复习笔记，综合课堂讲义整理。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy/More Capable BC、Marton 1979 编码方案（Binning+叠加编码）与 Mutual Covering Lemma、Gelfand-Pinsker 问题与污纸编码 DPC（Costa 1983）。</summary>
+    <title>西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</title>
+    <updated>2026-06-23T21:06:40.587Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="网络信息论" scheme="https://luotian.cyou/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="网络信息论" scheme="https://luotian.cyou/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="信息论" scheme="https://luotian.cyou/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <id>https://luotian.cyou/post/Network_info_Theory-Chapter4.html</id>
+    <link href="https://luotian.cyou/post/Network_info_Theory-Chapter4.html"/>
+    <published>2026-06-23T18:36:32.000Z</published>
+    <summary>本文是西电研究生课程网络信息论第四章的复习笔记，基于课堂讲义整理。内容涵盖：点对点无损压缩回顾与随机 Binning 编码、Slepian-Wolf 定理的完整证明（逆定理+可达性+四错误事件）、k 源扩展、有 Helper 的无损压缩（Ahlswede-Korner-Wyner 定理）、率失真函数 R(D) 与 Shannon 1959 定理、Wyner-Ziv 有损编码（Compress-Bin：Covering 编码 + Packing 译码）、Covering Lemma 与 Packing Lemma 的对偶、Wyner-Ziv 与 Gelfand-Pinsker 的对偶性。</summary>
+    <title>西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</title>
+    <updated>2026-06-23T21:11:33.495Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="网络信息论" scheme="https://luotian.cyou/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="网络信息论" scheme="https://luotian.cyou/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="信息论" scheme="https://luotian.cyou/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <id>https://luotian.cyou/post/Network_info_Theory-Chapter5.html</id>
+    <link href="https://luotian.cyou/post/Network_info_Theory-Chapter5.html"/>
+    <published>2026-06-23T18:35:32.000Z</published>
+    <summary>本文是西电研究生课程网络信息论第五章的复习笔记，基于课堂讲义整理。内容涵盖：中继信道三节点模型与 DM-RC 定义、割集上界（Cover-El Gamal 1979）的两个割解释、直接传输下界与反向退化 RC、多跳下界与分组 Markov 编码、协作多跳下界与条件码本、译码转发（DF）的容量下界与后向译码（Willems 1985）、DF 的局限与部分 DF、压缩转发（CF）的 Compress-Bin 编码方案、高斯中继信道的半比特逼近。</summary>
+    <title>西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</title>
+    <updated>2026-06-23T21:17:29.572Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="网络信息论" scheme="https://luotian.cyou/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="网络信息论" scheme="https://luotian.cyou/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="信息论" scheme="https://luotian.cyou/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <id>https://luotian.cyou/post/Network_info_Theory-Chapter6.html</id>
+    <link href="https://luotian.cyou/post/Network_info_Theory-Chapter6.html"/>
+    <published>2026-06-23T18:34:32.000Z</published>
+    <summary>本文是西电研究生课程网络信息论第六章的复习笔记，基于课堂讲义整理。内容涵盖：IC 模型与容量区域未知的现状、简单界与模二和 IC 实例、三种点对点编码策略（IAN/SD/SND）及其错误事件分析、强干扰与极强干扰的容量区域（Costa-El Gamal 1987）、高斯 IC 的 SNR/INR 条件与 Sato 1981 判据、Han-Kobayashi 1981 编码方案（速率分裂+叠加编码+7 不等式定理）、注入式确定性 IC、半比特定理（Etkin-Tse-Wang 2008）。</summary>
+    <title>西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理</title>
+    <updated>2026-06-23T20:46:55.463Z</updated>
+  </entry>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="网络信息论" scheme="https://luotian.cyou/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="网络信息论" scheme="https://luotian.cyou/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <category term="信息论" scheme="https://luotian.cyou/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/"/>
+    <id>https://luotian.cyou/post/Network_info_Theory-Chapter7.html</id>
+    <link href="https://luotian.cyou/post/Network_info_Theory-Chapter7.html"/>
+    <published>2026-06-23T18:33:32.000Z</published>
+    <summary>本文是西电研究生课程网络信息论第七章的复习笔记，基于课堂讲义整理。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB/MIB/UVOB）的 BA 算法、连续 AWGN 信道的矩阵迭代 BA、AWGN BC 的矩阵迭代。</summary>
+    <title>西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法</title>
+    <updated>2026-06-23T20:14:58.789Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -179,114 +277,5 @@
     </summary>
     <title>hexo外链设置</title>
     <updated>2026-03-02T07:33:14.816Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="深度学习" scheme="https://luotian.cyou/categories/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/"/>
-    <category term="conda" scheme="https://luotian.cyou/tags/conda/"/>
-    <id>https://luotian.cyou/post/conda-commands.html</id>
-    <link href="https://luotian.cyou/post/conda-commands.html"/>
-    <published>2025-08-08T09:03:44.000Z</published>
-    <summary>
-      <![CDATA[<p>&#8195;&#8195;记录一些常用的conda指令。</p>
-<h3 id="1-环境配置"><a href="#1-环境配置" class="headerlink" title="1. 环境配置"></a>1. 环境配置</h3><ul>
-<li><p>查看已有虚拟]]>
-    </summary>
-    <title>常用conda指令</title>
-    <updated>2026-03-02T07:33:41.384Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
-    <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/pangu4hexo.html</id>
-    <link href="https://luotian.cyou/post/pangu4hexo.html"/>
-    <published>2025-07-30T11:01:14.000Z</published>
-    <summary>hexo配置pangu—butterfly主题。</summary>
-    <title>hexo配置pangu—butterfly主题</title>
-    <updated>2026-03-02T07:42:29.613Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="算法" scheme="https://luotian.cyou/categories/%E7%AE%97%E6%B3%95/"/>
-    <category term="字符串" scheme="https://luotian.cyou/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>https://luotian.cyou/post/KMP-Algorithm.html</id>
-    <link href="https://luotian.cyou/post/KMP-Algorithm.html"/>
-    <published>2025-07-23T12:55:58.000Z</published>
-    <summary>
-      <![CDATA[<p>&#8195;&#8195;KMP算法——用于字符串匹配。优点是在匹配的过程中不用回退主指针，子指针会根据子串中最长相等前后缀来进行回退，能够大大降低时间复杂度。<br>&#8195;&#8195;这里有几个定义需要说明：</p>
-<ul>
-<li>前缀：不包含尾字符的所有]]>
-    </summary>
-    <title>KMP算法</title>
-    <updated>2026-03-02T07:43:22.483Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="力扣刷题" scheme="https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/"/>
-    <category term="字符串" scheme="https://luotian.cyou/tags/%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
-    <id>https://luotian.cyou/post/leetcode-String.html</id>
-    <link href="https://luotian.cyou/post/leetcode-String.html"/>
-    <published>2025-07-23T09:49:01.000Z</published>
-    <summary>
-      <![CDATA[<h2 id="力扣-344"><a href="#力扣-344" class="headerlink" title="力扣 344"></a>力扣 344</h2><p>&#8195;&#8195;<a href="https://leetcode.cn/problems/re]]>
-    </summary>
-    <title>力扣刷题-字符串</title>
-    <updated>2026-03-02T07:43:53.030Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="hexo博客" scheme="https://luotian.cyou/categories/hexo%E5%8D%9A%E5%AE%A2/"/>
-    <category term="hexo" scheme="https://luotian.cyou/tags/hexo/"/>
-    <id>https://luotian.cyou/post/hexo-text-align.html</id>
-    <link href="https://luotian.cyou/post/hexo-text-align.html"/>
-    <published>2025-07-21T14:18:23.000Z</published>
-    <summary>
-      <![CDATA[<p>&#8195;&#8195;编写文章的时候发现正文内容没有两端对齐，每段文字末尾没对齐看着不是很美观。这里总结一下配置教程。</p>
-<p>&#8195;&#8195;首先 hexo + butterfly 框架下文章内容的类名叫做 <code>article-contai]]>
-    </summary>
-    <title>hexo全局配置文章对齐方式</title>
-    <updated>2026-02-26T13:39:58.030Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="力扣刷题" scheme="https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/"/>
-    <category term="链表" scheme="https://luotian.cyou/tags/%E9%93%BE%E8%A1%A8/"/>
-    <id>https://luotian.cyou/post/leetcode-Linklist.html</id>
-    <link href="https://luotian.cyou/post/leetcode-Linklist.html"/>
-    <published>2025-07-18T11:22:47.000Z</published>
-    <summary>
-      <![CDATA[<p>&#8195;&#8195;对于一个链表，C++的定义如下：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span]]>
-    </summary>
-    <title>力扣刷题-链表</title>
-    <updated>2026-03-02T07:52:48.575Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="力扣刷题" scheme="https://luotian.cyou/categories/%E5%8A%9B%E6%89%A3%E5%88%B7%E9%A2%98/"/>
-    <category term="数组" scheme="https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/"/>
-    <id>https://luotian.cyou/post/leetcode-Array.html</id>
-    <link href="https://luotian.cyou/post/leetcode-Array.html"/>
-    <published>2025-07-17T11:58:35.000Z</published>
-    <summary>
-      <![CDATA[<h2 id="力扣-704"><a href="#力扣-704" class="headerlink" title="力扣 704"></a>力扣 704</h2><p>&#8195;&#8195;<a href="https://leetcode.cn/problems/bi]]>
-    </summary>
-    <title>力扣刷题-数组</title>
-    <updated>2026-02-26T13:38:18.698Z</updated>
   </entry>
 </feed>

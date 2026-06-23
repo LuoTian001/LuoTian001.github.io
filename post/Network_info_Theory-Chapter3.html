@@ -1,0 +1,1606 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码 | 洛天的小窝</title><meta name="author" content="Luo Tian"><meta name="copyright" content="Luo Tian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文是西电研究生课程网络信息论第三章的复习笔记，综合课堂讲义整理。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy&#x2F;More Capable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码">
+<meta property="og:url" content="https://luotian.cyou/post/Network_info_Theory-Chapter3.html">
+<meta property="og:site_name" content="洛天的小窝">
+<meta property="og:description" content="本文是西电研究生课程网络信息论第三章的复习笔记，综合课堂讲义整理。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy&#x2F;More Capable">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luotian.cyou/img/core/default_blog_cover.webp">
+<meta property="article:published_time" content="2026-06-23T18:37:32.000Z">
+<meta property="article:modified_time" content="2026-06-23T21:06:40.587Z">
+<meta property="article:author" content="Luo Tian">
+<meta property="article:tag" content="信息论">
+<meta property="article:tag" content="网络信息论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luotian.cyou/img/core/default_blog_cover.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码",
+  "url": "https://luotian.cyou/post/Network_info_Theory-Chapter3.html",
+  "image": "https://luotian.cyou/img/core/default_blog_cover.webp",
+  "datePublished": "2026-06-23T18:37:32.000Z",
+  "dateModified": "2026-06-23T21:06:40.587Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Luo Tian",
+      "url": "https://luotian.cyou"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/core/fav.ico"><link rel="canonical" href="https://luotian.cyou/post/Network_info_Theory-Chapter3.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":800,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/mouse/mouse.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/runtime.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/rss.xml" title="洛天的小窝" type="application/atom+xml">
+</head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/core/bkgnd1.webp));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/core/id.webp" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/game/1024game/"><i class="fa-fw fa fa-th-large"></i><span> 1024游戏</span></a></li><li><a class="site-page child" href="/game/sudoku/"><i class="fa-fw fa fa-th"></i><span> 数独游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></li><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/video-parser/"><i class="fa-fw fa fa-video-camera"></i><span> 短视频解析</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li><li><a class="site-page child" href="/tools/qrcode/"><i class="fa-fw fa fa-qrcode"></i><span> 二维码工坊</span></a></li><li><a class="site-page child" href="/tools/base64/"><i class="fa-fw fas fa-exchange-alt"></i><span> Base64编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/core/default_blog_cover.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">洛天的小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/game/1024game/"><i class="fa-fw fa fa-th-large"></i><span> 1024游戏</span></a></li><li><a class="site-page child" href="/game/sudoku/"><i class="fa-fw fa fa-th"></i><span> 数独游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></li><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/video-parser/"><i class="fa-fw fa fa-video-camera"></i><span> 短视频解析</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li><li><a class="site-page child" href="/tools/qrcode/"><i class="fa-fw fa fa-qrcode"></i><span> 二维码工坊</span></a></li><li><a class="site-page child" href="/tools/base64/"><i class="fa-fw fas fa-exchange-alt"></i><span> Base64编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-23T18:37:32.000Z" title="发表于 2026-06-24 02:37:32">2026-06-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-23T21:06:40.587Z" title="更新于 2026-06-24 05:06:40">2026-06-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/">网络信息论</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">7.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>33分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/post/Network_info_Theory-Chapter3.html#post-comment"><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第三章-广播信道（Broadcast-Channels）"><a href="#第三章-广播信道（Broadcast-Channels）" class="headerlink" title="第三章 广播信道（Broadcast Channels）"></a>第三章 广播信道（Broadcast Channels）</h1><blockquote>
+<p><strong>课程</strong>: 网络信息论（Network Information Theory）<br><strong>教材</strong>: A. El Gamal and Y.-H. Kim, <em>Network Information Theory</em>, Cambridge University Press, 2011<br><strong>整理说明</strong>: 本章为广播信道的模型、叠加编码、退化 BC 容量区域及其逆定理证明（Gallager/Nair/EPI）、Marton 编码方案、Gelfand-Pinsker 问题与污纸编码。<br><strong>免责声明</strong>：本笔记内容来源于课程讲义和PPT，经AI辅助汇总完成，仅供学习参考。如有错误或遗漏，请以原始课程资料为准。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-广播信道基本概念">广播信道基本概念</a></li>
+<li><a href="#2-简单界与实例">简单界与实例</a></li>
+<li><a href="#3-叠加编码与内界">叠加编码与内界</a></li>
+<li><a href="#4-退化广播信道">退化广播信道</a></li>
+<li><a href="#5-高斯广播信道">高斯广播信道</a></li>
+<li><a href="#6-Less-Noisy-与-More-Capable-BC">Less Noisy 与 More Capable BC</a></li>
+<li><a href="#7-带公共消息的广播信道">带公共消息的广播信道</a></li>
+<li><a href="#8-Marton-编码方案">Marton 编码方案</a></li>
+<li><a href="#9-Gelfand-Pinsker-问题与污纸编码">Gelfand-Pinsker 问题与污纸编码</a></li>
+<li><a href="#10-考试重点速查表">考试重点速查表</a></li>
+</ol>
+<h2 id="1-广播信道基本概念"><a href="#1-广播信道基本概念" class="headerlink" title="1. 广播信道基本概念"></a>1. 广播信道基本概念</h2><h3 id="1-1-模型描述"><a href="#1-1-模型描述" class="headerlink" title="1.1 模型描述"></a>1.1 模型描述</h3><p>广播信道（Broadcast Channel, BC）是通信网络下行链路的基础模型：<strong>一个发送端，多个接收端</strong>。典型例子：电视广播、无线基站下行、卫星广播、课堂讲授。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    M0[&quot;M₀ (公共消息)&quot;] --&gt; ENC
+    M1[&quot;M₁ (私有消息)&quot;] --&gt; ENC[&quot;编码器&lt;br&#x2F;&gt;X&lt;sup&gt;n&lt;&#x2F;sup&gt;(M₀,M₁,M₂)&quot;]
+    M2[&quot;M₂ (私有消息)&quot;] --&gt; ENC
+    ENC --&gt;|&quot;X&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;| CH[&quot;p(y₁,y₂|x)&quot;]
+    CH --&gt;|&quot;Y₁&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;| DEC1[&quot;译码器 1&lt;br&#x2F;&gt;→ (M̂₀, M̂₁)&quot;]
+    CH --&gt;|&quot;Y₂&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;| DEC2[&quot;译码器 2&lt;br&#x2F;&gt;→ (M̂₀, M̂₂)&quot;]
+  </pre></div>
+<p><strong>离散无记忆 BC（DM-BC）</strong>: 由 $(\mathcal{X}, p(y_1, y_2|x), \mathcal{Y}_1 \times \mathcal{Y}_2)$ 描述。</p>
+<p>无记忆性：</p>
+<script type="math/tex; mode=display">p(y_1^n, y_2^n | x^n) = \prod_{i=1}^{n} p(y_{1,i}, y_{2,i} | x_i)</script><h3 id="1-2-码的定义与可达性"><a href="#1-2-码的定义与可达性" class="headerlink" title="1.2 码的定义与可达性"></a>1.2 码的定义与可达性</h3><p>一个 $(2^{nR_0}, 2^{nR_1}, 2^{nR_2}, n)$ 码包含：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>编码器</strong></td>
+<td>$f: [2^{nR_0}] \times [2^{nR_1}] \times [2^{nR_2}] \to \mathcal{X}^n$，将三个消息嵌入一个码字</td>
+</tr>
+<tr>
+<td><strong>译码器 1</strong></td>
+<td>$g_1: \mathcal{Y}_1^n \to [2^{nR_0}] \times [2^{nR_1}]$</td>
+</tr>
+<tr>
+<td><strong>译码器 2</strong></td>
+<td>$g_2: \mathcal{Y}_2^n \to [2^{nR_0}] \times [2^{nR_2}]$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>速率三元组 $(R_0, R_1, R_2)$ 可达，如果存在一列码使 $P_e^{(n)} \to 0$。<br><strong>容量区域</strong>是所有可达速率三元组的闭包。</p>
+</blockquote>
+<h3 id="1-3-重要事实"><a href="#1-3-重要事实" class="headerlink" title="1.3 重要事实"></a>1.3 重要事实</h3><blockquote>
+<p>⚠️ <strong>BC 的容量区域在一般情况下是未知的！</strong>这与 MAC（已有完整的单字母刻画）形成鲜明对比。</p>
+</blockquote>
+<ul>
+<li>已知最佳内界：<strong>Marton (1979)</strong> 的内界</li>
+<li>已知最佳外界：<strong>Nair-El Gamal (2007)</strong> 的外界</li>
+<li>两者在若干特殊情形下重合</li>
+</ul>
+<p><strong>引理</strong>: BC 的容量区域仅通过<strong>条件边缘分布</strong> $p(y_1|x)$ 和 $p(y_2|x)$ 依赖于 $p(y_1, y_2|x)$，而与 $Y_1$ 和 $Y_2$ 之间的相关性无关。</p>
+<h2 id="2-简单界与实例"><a href="#2-简单界与实例" class="headerlink" title="2. 简单界与实例"></a>2. 简单界与实例</h2><h3 id="2-1-简单界"><a href="#2-1-简单界" class="headerlink" title="2.1 简单界"></a>2.1 简单界</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>界</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>单用户容量</strong></td>
+<td>$R<em>j \leq C_j = \max</em>{p(x)} I(X; Y_j)$，$j = 1, 2$</td>
+</tr>
+<tr>
+<td><strong>和速率上界</strong></td>
+<td>$R<em>1 + R_2 \leq C</em>{12} = \max_{p(x)} I(X; Y_1, Y_2)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 简单界示意
+        direction TB
+        A[&quot;R₂ &#x3D; C₂&quot;]
+        B[&quot;R₁+R₂ &#x3D; C₁₂&quot;]
+        C[&quot;R₁ &#x3D; C₁&quot;]
+    end
+  </pre></div>
+<p>以坐标图表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">R₂</span><br><span class="line">^</span><br><span class="line">| C₂ ●──────────┐</span><br><span class="line">|    │ 可达?     │</span><br><span class="line">|    │     TDMA │───┐</span><br><span class="line">|    │    内界    │   外边界 = ?</span><br><span class="line">|    └──────────●── C₁₂</span><br><span class="line">+-----------------------&gt; R₁</span><br><span class="line">                      C₁</span><br></pre></td></tr></table></figure>
+<h3 id="2-2-特殊情形"><a href="#2-2-特殊情形" class="headerlink" title="2.2 特殊情形"></a>2.2 特殊情形</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>情形</th>
+<th>说明</th>
+<th>容量区域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>仅有公共消息</strong> $(R_1=R_2=0)$</td>
+<td>所有人接收相同消息</td>
+<td>$C<em>0 = \max</em>{p(x)} \min{I(X;Y_1), I(X;Y_2)}$</td>
+</tr>
+<tr>
+<td><strong>对称 BC</strong></td>
+<td>可设 $Y_1 = Y_2$ 求得容量区域</td>
+<td>退化为点对点</td>
+</tr>
+<tr>
+<td><strong>正交分量 BC</strong></td>
+<td>$X = (X_1, X_2)$，$Y_1$ 仅依赖 $X_1$，$Y_2$ 仅依赖 $X_2$</td>
+<td>容量区域为矩形 $R_1 \leq C_1, R_2 \leq C_2$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="2-3-二元对称广播信道（BS-BC）实例"><a href="#2-3-二元对称广播信道（BS-BC）实例" class="headerlink" title="2.3 二元对称广播信道（BS-BC）实例"></a>2.3 二元对称广播信道（BS-BC）实例</h3><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    X[&quot;X ∈ {0,1}&quot;] --&gt; BSC1[&quot;BSC(p₁)&quot;]
+    X --&gt; BSC2[&quot;BSC(p₂)&quot;]
+    BSC1 --&gt; Y1[&quot;Y₁&quot;]
+    BSC2 --&gt; Y2[&quot;Y₂&quot;]
+  </pre></div>
+<p>假设 $p_1 &lt; p_2 &lt; 1/2$。时分（TDMA）内界：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">R₂</span><br><span class="line">^</span><br><span class="line">| 1-H(p₂) ●──────────┐</span><br><span class="line">|         │     TDMA  │</span><br><span class="line">|         │     内界   │</span><br><span class="line">|         └──────────●──</span><br><span class="line">+-------------------&gt; R₁</span><br><span class="line">              1-H(p₁)</span><br></pre></td></tr></table></figure>
+<h2 id="3-叠加编码与内界"><a href="#3-叠加编码与内界" class="headerlink" title="3. 叠加编码与内界"></a>3. 叠加编码与内界</h2><p>叠加编码（Superposition Coding, Cover 1972）是 BC 最基础的编码方案。</p>
+<h3 id="3-1-核心思想"><a href="#3-1-核心思想" class="headerlink" title="3.1 核心思想"></a>3.1 核心思想</h3><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph 叠加编码结构
+        direction TB
+        CLOUD[&quot;云中心 U&lt;sup&gt;n&lt;&#x2F;sup&gt;(m₂)&lt;br&#x2F;&gt;（对两用户均可见）&quot;]
+        SAT[&quot;卫星码字 X&lt;sup&gt;n&lt;&#x2F;sup&gt;(m₁,m₂)&lt;br&#x2F;&gt;（仅好用户可分辨）&quot;]
+        CLOUD --&gt; SAT
+    end
+  </pre></div>
+<blockquote>
+<p><strong>直觉</strong>: 发 $2^{nR_2}$ 个”云”（cloud centers），每个云中包含 $2^{nR_1}$ 个”卫星码字”。</p>
+<ul>
+<li>用户 2（差用户）只能看到云——译 $U$ 获得 $m_2$</li>
+<li>用户 1（好用户）既能看云又能分辨云内的卫星——先译 $U$ 再译 $X$</li>
+</ul>
+</blockquote>
+<h3 id="3-2-BS-BC-的叠加编码实现"><a href="#3-2-BS-BC-的叠加编码实现" class="headerlink" title="3.2 BS-BC 的叠加编码实现"></a>3.2 BS-BC 的叠加编码实现</h3><p><strong>码本生成</strong>:</p>
+<ul>
+<li>$U \sim \text{Bern}(1/2)$，$V \sim \text{Bern}(\alpha)$，$U \perp V$</li>
+<li>$X = U \oplus V$（二元异或）</li>
+<li>独立生成 $2^{nR_2}$ 个 $U^n(m_2) \sim \prod p_U(u_i)$</li>
+<li>独立生成 $2^{nR_1}$ 个 $V^n(m_1) \sim \prod p_V(v_i)$</li>
+<li>发送：$X^n(m_1, m_2) = U^n(m_2) \oplus V^n(m_1)$</li>
+</ul>
+<p><strong>译码</strong>:</p>
+<ul>
+<li><strong>译码器 2</strong>: 从 $Y_2^n = U^n \oplus (V^n \oplus Z_2^n)$ 中恢复 $m_2$（$V$ 视为噪声）<script type="math/tex; mode=display">R_2 \leq I(U; Y_2) = 1 - H(\alpha * p_2)</script></li>
+<li><strong>译码器 1</strong>（逐次干扰消除）:<ol>
+<li>先从 $Y_1^n$ 恢复 $m_2$：$R_2 \leq I(U; Y_1) = 1 - H(\alpha * p_1)$</li>
+<li>再从 $V^n \oplus Z_1^n$ 中恢复 $m_1$：$R_1 \leq I(V; V \oplus Z_1) = H(\alpha * p_1) - H(p_1)$</li>
+</ol>
+</li>
+</ul>
+<p>其中 $a * b = a(1-b) + (1-a)b$ 是二元卷积。</p>
+<h3 id="3-3-叠加编码内界定理（Cover-1972-Bergmans-1973）"><a href="#3-3-叠加编码内界定理（Cover-1972-Bergmans-1973）" class="headerlink" title="3.3 叠加编码内界定理（Cover 1972, Bergmans 1973）"></a>3.3 叠加编码内界定理（Cover 1972, Bergmans 1973）</h3><blockquote>
+<p><strong>定理</strong>: 速率对 $(R_1, R_2)$ 对 BC $p(y_1, y_2|x)$ 是可达的，如果存在某个联合分布 $p(u, x)$ 满足：</p>
+<script type="math/tex; mode=display">\boxed{\begin{aligned}
+R_2 &\leq I(U; Y_2) \\\\
+R_1 &\leq I(X; Y_1 | U) \\\\
+R_1 + R_2 &\leq I(X; Y_1)
+\end{aligned}}</script></blockquote>
+<p><strong>可达性证明</strong>（sketch）:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>码本生成</strong></td>
+<td>独立生成 $2^{nR<em>2}$ 个 $U^n(m_2) \sim \prod p_U$；对每个 $m_2$，条件独立生成 $2^{nR_1}$ 个 $X^n(m_1, m_2) \sim \prod p</em>{X\vert U}$</td>
+</tr>
+<tr>
+<td><strong>编码</strong></td>
+<td>发送 $X^n(m_1, m_2)$</td>
+</tr>
+<tr>
+<td><strong>译码器 2</strong></td>
+<td>找唯一 $m<em>2$ 使得 $(U^n(m_2), Y_2^n) \in T</em>\epsilon^{(n)}$（packing lemma 保证 $R_2 &lt; I(U;Y_2)$ 时 $P_e \to 0$）</td>
+</tr>
+<tr>
+<td><strong>译码器 1</strong></td>
+<td>同时非唯一译码：找唯一 $m<em>1$ 使得 $(U^n(m_2), X^n(m_1, m_2), Y_1^n) \in T</em>\epsilon^{(n)}$ 对某个 $m_2$ 成立</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>错误事件分析</strong>（假设发送 $(M_1, M_2) = (1,1)$）:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>条件</th>
+<th>概率 → 0 的条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$E_{11}$</td>
+<td>正确码字不典型</td>
+<td>无条件（LLN）</td>
+</tr>
+<tr>
+<td>$E_{12}$</td>
+<td>$m_1 \neq 1$ 错误</td>
+<td>$R_1 &lt; I(X;Y_1\vert U) - \delta(\epsilon)$</td>
+</tr>
+<tr>
+<td>$E_{13}$</td>
+<td>$m_1 \neq 1, m_2 \neq 1$ 错误</td>
+<td>$R_1+R_2 &lt; I(X;Y_1) - \delta(\epsilon)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>Packing Lemma</strong>: 若 $X^n(m)$ 条件独立于 $\tilde{Y}^n$ 给定 $\tilde{U}^n$，且 $\vert A\vert \leq 2^{nR}$，则当 $R &lt; I(X;Y|U) - \delta(\epsilon)$ 时，存在某个 $m$ 使 $(\tilde{U}^n, X^n(m), \tilde{Y}^n)$ 联合典型的概率 → 0。</p>
+</blockquote>
+<h2 id="4-退化广播信道"><a href="#4-退化广播信道" class="headerlink" title="4. 退化广播信道"></a>4. 退化广播信道</h2><p>退化 BC 是一类最重要的 BC，其容量区域已被完全确定。</p>
+<h3 id="4-1-退化-BC-的定义"><a href="#4-1-退化-BC-的定义" class="headerlink" title="4.1 退化 BC 的定义"></a>4.1 退化 BC 的定义</h3><p><strong>物理退化</strong>: $X \to Y_1 \to Y_2$ 构成 Markov 链，即存在一个物理级联：</p>
+<script type="math/tex; mode=display">p(y_1, y_2 | x) = p(y_1 | x) p(y_2 | y_1)</script><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    X[&quot;X&quot;] --&gt;|&quot;p(y₁|x)&quot;| Y1[&quot;Y₁&quot;]
+    Y1 --&gt;|&quot;p(y₂|y₁)&quot;| Y2[&quot;Y₂&lt;br&#x2F;&gt;(更差的接收)&quot;]
+  </pre></div>
+<p><strong>随机退化（Stochastically Degraded）</strong>: 存在一个分布 $p’(y_2 | y_1)$ 使得</p>
+<script type="math/tex; mode=display">p(y_2 | x) = \sum_{y_1} p(y_1 | x) p'(y_2 | y_1)</script><p>即 $X \to Y_1 \to \tilde{Y}_2$ 且 $\tilde{Y}_2$ 与 $Y_2$ 同分布。这对 BS-BC 尤为重要——$Y_1$ 经过另一个 BSC 即可得到 $Y_2$。</p>
+<blockquote>
+<p>⚠️ <strong>注意</strong>: 物理退化 ⇒ 随机退化，但反之不一定。然而容量区域仅依赖于条件边缘分布，因此两者在容量意义上等价。</p>
+</blockquote>
+<h3 id="4-2-退化-BC-容量定理"><a href="#4-2-退化-BC-容量定理" class="headerlink" title="4.2 退化 BC 容量定理"></a>4.2 退化 BC 容量定理</h3><blockquote>
+<p><strong>定理（Cover 1972, Bergmans 1973, Gallager 1974）</strong>: 退化 BC $X \to Y_1 \to Y_2$ 的容量区域是满足以下条件的所有 $(R_1, R_2)$ 的集合：</p>
+<script type="math/tex; mode=display">\boxed{\begin{aligned}
+R_1 &\leq I(X; Y_1 | U) \\\\
+R_2 &\leq I(U; Y_2)
+\end{aligned}}</script><p>其中 $U$ 为辅助随机变量，$|\mathcal{U}| \leq \min{|\mathcal{X}|, |\mathcal{Y}_1|, |\mathcal{Y}_2|} + 1$。</p>
+</blockquote>
+<p><strong>可达性</strong>: 叠加编码（§3.3）。退化性保证 $I(U;Y_2) \leq I(U;Y_1)$，故译码器 1 也能可靠恢复 $U$（进而逐次消除）。</p>
+<h3 id="4-3-逆定理-——-Gallager-证明（1974）"><a href="#4-3-逆定理-——-Gallager-证明（1974）" class="headerlink" title="4.3 逆定理 —— Gallager 证明（1974）"></a>4.3 逆定理 —— Gallager 证明（1974）</h3><p>这是 BC 容量理论中最经典的证明之一。核心是识别辅助随机变量 $U$。</p>
+<p><strong>通过码诱导的联合分布</strong>:</p>
+<script type="math/tex; mode=display">(M_1, M_2, X^n, Y_1^n, Y_2^n) \sim 2^{-n(R_1+R_2)} p(x^n|m_1, m_2) \prod_i p(y_{1i}, y_{2i} | x_i)</script><p>由 Fano 不等式（$\epsilon_n \to 0$）:</p>
+<script type="math/tex; mode=display">nR_j = H(M_j) \leq I(M_j; Y_j^n) + n\epsilon_n, \quad j = 1, 2</script><p><strong>关键步骤——识别辅助变量</strong>:</p>
+<script type="math/tex; mode=display">U_i = (M_2, Y_1^{i-1})</script><p>验证 $U<em>i \to X_i \to (Y</em>{1i}, Y_{2i})$ 成立（因为 $X_i = f(M_1, M_2)$ 且信道无记忆）。</p>
+<p><strong>约束 $R_1$</strong>:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+I(M_1; Y_1^n) &\leq I(M_1; Y_1^n | M_2) \quad (\text{因为 } M_1 \perp M_2)\\\\
+&= \sum_{i=1}^{n} I(M_1; Y_{1i} | M_2, Y_1^{i-1}) \quad (\text{链式法则})\\\\
+&= \sum_{i=1}^{n} I(X_i; Y_{1i} | M_2, Y_1^{i-1}) \\\\
+&= \sum_{i=1}^{n} I(X_i; Y_{1i} | U_i)
+\end{aligned}</script><blockquote>
+<p>第三步使用了 $X<em>i = f(M_1, M_2)$ 和 Markov 性 $(Y_1^{i-1}, M_1, M_2) \to X_i \to Y</em>{1i}$。</p>
+</blockquote>
+<p><strong>约束 $R_2$</strong>（利用退化性 $X \to Y_1 \to Y_2$）:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+I(M_2; Y_2^n) &= \sum_{i=1}^{n} I(M_2; Y_{2i} | Y_2^{i-1}) \\\\
+&\leq \sum_{i=1}^{n} I(M_2, Y_2^{i-1}; Y_{2i}) \\\\
+&\leq \sum_{i=1}^{n} I(M_2, Y_1^{i-1}; Y_{2i}) \quad (\text{退化性})\\\\
+&= \sum_{i=1}^{n} I(U_i; Y_{2i})
+\end{aligned}</script><p><strong>引入时间共享变量</strong>: $Q \sim \text{Unif}[1:n]$，$Q \perp (M<em>1, M_2, X^n, Y_1^n, Y_2^n)$。令 $U = (Q, U_Q)$，$X = X_Q$，$Y_1 = Y</em>{1Q}$，$Y<em>2 = Y</em>{2Q}$。则：</p>
+<script type="math/tex; mode=display">nR_1 \leq n I(X; Y_1 | U) + n\epsilon_n, \quad nR_2 \leq n I(U; Y_2) + n\epsilon_n</script><p>两边除以 $n$，令 $n \to \infty$，即得定理的逆方向。</p>
+<h3 id="4-4-逆定理-——-Nair-2013-的替代证明"><a href="#4-4-逆定理-——-Nair-2013-的替代证明" class="headerlink" title="4.4 逆定理 —— Nair (2013) 的替代证明"></a>4.4 逆定理 —— Nair (2013) 的替代证明</h3><p>Nair 提出了一个更简洁的逆定理证明，使用<strong>支撑超平面</strong>方法。</p>
+<p><strong>核心定理</strong>: 闭凸集 $\mathcal{C} \subset \mathbb{R}^n$ 由其支撑函数唯一确定：</p>
+<script type="math/tex; mode=display">S_{\mathcal{C}}(y) = \sup\{y^T x : x \in \mathcal{C}\}, \quad \forall y \in \mathbb{R}^n</script><p>对于退化 BC 的容量区域 $\mathcal{D}$，对 $\lambda &gt; 0$：</p>
+<script type="math/tex; mode=display">\sup_{(R_1, R_2) \in \mathcal{D}} (R_1 + \lambda R_2) = \sup_{p(u,x)} \left[I(X; Y_1 | U) + \lambda I(U; Y_2)\right]</script><p>通过代数展开并利用 <strong>Csiszár 和恒等式</strong>，可完成逆定理证明（细节见 slides pp.24-27）。</p>
+<blockquote>
+<p>📐 <strong>Csiszár Sum Identity (1978)</strong>: 对于 $(U, Y^n, Z^n)$，</p>
+<script type="math/tex; mode=display">\sum_{i=1}^{n} I(Z_{i+1}^n; Y_i | Y^{i-1}, U) = \sum_{i=1}^{n} I(Y^{i-1}; Z_i | Z_{i+1}^n, U)</script><p>这是信息论中处理”过去-未来”对称性的核心工具，广泛应用于多用户信道的逆定理证明。</p>
+</blockquote>
+<h3 id="4-5-BS-BC-退化情形的容量区域"><a href="#4-5-BS-BC-退化情形的容量区域" class="headerlink" title="4.5 BS-BC 退化情形的容量区域"></a>4.5 BS-BC 退化情形的容量区域</h3><p>对于 $p_1 &lt; p_2 &lt; 1/2$ 的 BS-BC，其容量区域是所有满足以下条件的 $(R_1, R_2)$ 的并集（$\alpha \in [0, 1]$）:</p>
+<script type="math/tex; mode=display">R_1 \leq H(\alpha * p_1) - H(p_1), \quad R_2 \leq 1 - H(\alpha * p_2)</script><p><strong>参数 $\alpha$ 的物理意义</strong>: $X = U \oplus V$，$U \sim \text{Bern}(1/2)$，$V \sim \text{Bern}(\alpha)$。$\alpha$ 控制着两层信号之间的功率（或信息）分配。</p>
+<ul>
+<li>$\alpha \to 0$: $V$ 几乎为常数 0，$X \approx U$ → 几乎全传 $R_2$，$R_1 \to 0$</li>
+<li>$\alpha = 1/2$: $U$ 和 $V$ 独立等概，$X$ 为两者之和 → 中间权衡</li>
+<li>$\alpha \to 1$: $V$ 几乎等概 → 侧重传 $R_1$</li>
+</ul>
+<h2 id="5-高斯广播信道"><a href="#5-高斯广播信道" class="headerlink" title="5. 高斯广播信道"></a>5. 高斯广播信道</h2><h3 id="5-1-模型"><a href="#5-1-模型" class="headerlink" title="5.1 模型"></a>5.1 模型</h3><p>高斯 BC 是连续值 BC 的最重要实例：</p>
+<script type="math/tex; mode=display">Y_1 = g_1 X + Z_1, \quad Y_2 = g_2 X + Z_2</script><ul>
+<li>$Z_1 \sim \mathcal{N}(0, N_1)$，$Z_2 \sim \mathcal{N}(0, N_2)$</li>
+<li>功率约束：$\frac{1}{n} \sum_i x_i^2(m_1, m_2) \leq P$</li>
+<li>不失一般性设 $|g_1| \geq |g_2|$（用户 1 比用户 2 的信道更好）</li>
+</ul>
+<p><strong>等效物理退化模型</strong>: 由于 $|g_1| \geq |g_2|$，高斯 BC 天然是退化的：</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    X[&quot;X&quot;] --&gt; Y1[&quot;Y₁ &#x3D; X + Z₁&lt;br&#x2F;&gt;N₁ &#x3D; 1&#x2F;g₁²&quot;]
+    Y1 --&gt;|&quot;+Z̃₂&lt;br&#x2F;&gt;N₂-N₁&quot;| Y2[&quot;Y₂ &#x3D; X + Z₂&lt;br&#x2F;&gt;N₂ &#x3D; 1&#x2F;g₂²&quot;]
+  </pre></div>
+<p>其中 $Z_1 \sim \mathcal{N}(0, N_1)$，$\tilde{Z}_2 \sim \mathcal{N}(0, N_2 - N_1)$（$N_2 \geq N_1$）。</p>
+<h3 id="5-2-高斯-BC-容量区域"><a href="#5-2-高斯-BC-容量区域" class="headerlink" title="5.2 高斯 BC 容量区域"></a>5.2 高斯 BC 容量区域</h3><blockquote>
+<p><strong>定理（Cover 1972, Bergmans 1974）</strong>: 高斯 BC 的容量区域是满足以下条件的所有 $(R_1, R_2)$ 的集合（对某个 $\alpha \in [0, 1]$）：</p>
+<script type="math/tex; mode=display">\boxed{\begin{aligned}
+R_1 &\leq C(\alpha S_1) = \frac{1}{2}\log\left(1 + \alpha \cdot \frac{g_1^2 P}{N_1}\right) \\\\[4pt]
+R_2 &\leq C\!\left(\frac{\bar{\alpha} S_2}{\alpha S_2 + 1}\right) = \frac{1}{2}\log\left(1 + \frac{(1-\alpha)g_2^2 P}{\alpha g_2^2 P + N_2}\right)
+\end{aligned}}</script><p>其中 $S_j = g_j^2 P/N_j$（接收 SNR），$C(x) = \frac{1}{2}\log_2(1+x)$，$\bar{\alpha} = 1 - \alpha$。</p>
+</blockquote>
+<h3 id="5-3-可达性"><a href="#5-3-可达性" class="headerlink" title="5.3 可达性"></a>5.3 可达性</h3><p>取 $U \sim \mathcal{N}(0, \bar{\alpha}P)$，$V \sim \mathcal{N}(0, \alpha P)$，$U \perp V$，$X = U + V$。</p>
+<ul>
+<li>发送 $X^n(m_1, m_2) = V^n(m_1) + U^n(m_2)$</li>
+<li><strong>用户 2</strong>: $Y_2 = V + U + Z_2$，将 $V$ 视为噪声：<script type="math/tex; mode=display">R_2 = I(U; Y_2) = C\!\left(\frac{\bar{\alpha}P}{\alpha P + N_2}\right) = C\!\left(\frac{\bar{\alpha}S_2}{\alpha S_2 + 1}\right)</script></li>
+<li><strong>用户 1</strong>: $Y_1 = V + U + Z_1$，先用 SIC 译 $U$（恢复 $m_2$），消除后再译 $V$（恢复 $m_1$）：<script type="math/tex; mode=display">R_1 = I(V; Y_1 | U) = I(V; V + Z_1) = C(\alpha S_1)</script></li>
+</ul>
+<h3 id="5-4-逆定理（Bergmans-1974）"><a href="#5-4-逆定理（Bergmans-1974）" class="headerlink" title="5.4 逆定理（Bergmans 1974）"></a>5.4 逆定理（Bergmans 1974）</h3><p>逆定理依赖于 <strong>熵功率不等式（EPI）</strong>：</p>
+<blockquote>
+<p><strong>向量 EPI（Shannon 1948, Stam 1959, Blachman 1965）</strong>:<br>若 $X^n \perp Z^n$ 且 $Y^n = X^n + Z^n$，则</p>
+<script type="math/tex; mode=display">2^{2h(Y^n)/n} \geq 2^{2h(X^n)/n} + 2^{2h(Z^n)/n}</script><p>等号成立当且仅当 $X^n$ 与 $Z^n$ 为高斯且协方差矩阵成比例。</p>
+<p><strong>条件 EPI</strong>: 若 $X^n \perp Z^n | U$ 且 $Y^n = X^n + Z^n$，则</p>
+<script type="math/tex; mode=display">2^{2h(Y^n|U)/n} \geq 2^{2h(X^n|U)/n} + 2^{2h(Z^n|U)/n}</script></blockquote>
+<p><strong>逆定理证明概要</strong>（省略趋于零的 $\epsilon_n$ 项）:</p>
+<p>由 Fano：$nR_1 \leq I(M_1; Y_1^n | M_2)$，$nR_2 \leq I(M_2; Y_2^n)$。</p>
+<p>需要证明存在 $\alpha \in [0,1]$ 使 $R_1 \leq nC(\alpha P/N_1)$ 和 $R_2 \leq nC(\bar{\alpha}P/(\alpha P + N_2))$。</p>
+<p><strong>$R_2$ 的处理</strong>:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+I(M_2; Y_2^n) &= h(Y_2^n) - h(Y_2^n | M_2) \\\\
+&\leq \frac{n}{2}\log(2\pi e(P + N_2)) - h(Y_2^n | M_2)
+\end{aligned}</script><p>噪声熵的下界和上界：$h(Z_2^n) \leq h(Y_2^n | M_2) \leq h(Y_2^n)$</p>
+<p>由连续性，存在 $\alpha \in [0,1]$ 使得：</p>
+<script type="math/tex; mode=display">h(Y_2^n | M_2) = \frac{n}{2}\log(2\pi e(\alpha P + N_2))</script><p>因此 $nR_2 \leq nC(\bar{\alpha}P/(\alpha P + N_2))$。</p>
+<p><strong>$R_1$ 的处理</strong>:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+I(M_1; Y_1^n | M_2) &= h(Y_1^n | M_2) - h(Y_1^n | M_1, M_2, X^n) \\\\
+&= h(Y_1^n | M_2) - \frac{n}{2}\log(2\pi e N_1)
+\end{aligned}</script><p>利用条件 EPI 和 $Y_2^n$ 的表示 $Y_2^n = Y_1^n + \tilde{Z}_2^n$：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+2^{2h(Y_2^n|M_2)/n} &\geq 2^{2h(Y_1^n|M_2)/n} + 2\pi e(N_2 - N_1) \\\\
+2\pi e(\alpha P + N_2) &\geq 2^{2h(Y_1^n|M_2)/n} + 2\pi e(N_2 - N_1)
+\end{aligned}</script><p>从而 $h(Y_1^n | M_2) \leq \frac{n}{2}\log(2\pi e(\alpha P + N_1))$。因此：</p>
+<script type="math/tex; mode=display">nR_1 \leq \frac{n}{2}\log(2\pi e(\alpha P + N_1)) - \frac{n}{2}\log(2\pi e N_1) = nC(\alpha P/N_1)</script><h2 id="6-Less-Noisy-与-More-Capable-BC"><a href="#6-Less-Noisy-与-More-Capable-BC" class="headerlink" title="6. Less Noisy 与 More Capable BC"></a>6. Less Noisy 与 More Capable BC</h2><p>退化性是较强的假设。存在两类更弱的条件，叠加编码同样是最优的：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>定义</th>
+<th>关系</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Less Noisy</strong></td>
+<td>$I(U; Y_1) \geq I(U; Y_2)$ 对<strong>所有</strong> $p(u, x)$ 成立</td>
+<td>退化 ⇒ Less Noisy ⇒ More Capable</td>
+</tr>
+<tr>
+<td><strong>More Capable</strong></td>
+<td>$I(X; Y_1) \geq I(X; Y_2)$ 对<strong>所有</strong> $p(x)$ 成立</td>
+<td>仅需比较无条件互信息</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>定理（El Gamal 1979）</strong>: More Capable BC 的容量区域为</p>
+<script type="math/tex; mode=display">R_1 \leq I(X; Y_1 | U), \quad R_2 \leq I(U; Y_2), \quad R_1+R_2 \leq I(X; Y_1)</script><p>对某个 $p(u, x)$，$|\mathcal{U}| \leq \min{|\mathcal{X}|, |\mathcal{Y}_1| \cdot |\mathcal{Y}_2|} + 2$。</p>
+</blockquote>
+<h3 id="6-1-BSC-BEC-混合-BC-的层次结构"><a href="#6-1-BSC-BEC-混合-BC-的层次结构" class="headerlink" title="6.1 BSC + BEC 混合 BC 的层次结构"></a>6.1 BSC + BEC 混合 BC 的层次结构</h3><p>以 $X$ 同时经过 BSC(p) → $Y_1$ 和 BEC($\epsilon$) → $Y_2$ 为例：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>参数范围</th>
+<th>信道类别</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$0 \leq \epsilon \leq 2p$</td>
+<td>退化</td>
+<td>$Y_2$ 是 $Y_1$ 的退化版本</td>
+</tr>
+<tr>
+<td>$2p &lt; \epsilon \leq 4p(1-p)$</td>
+<td>Less Noisy</td>
+<td>非退化，但 $Y_2$ 受更强噪声</td>
+</tr>
+<tr>
+<td>$4p(1-p) &lt; \epsilon \leq H(p)$</td>
+<td>More Capable</td>
+<td>非 Less Noisy，但 $Y_1$ 更强</td>
+</tr>
+<tr>
+<td>$H(p) &lt; \epsilon \leq 1$</td>
+<td>一般 BC</td>
+<td>不属于以上三类，叠加编码非最优</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="7-带公共消息的广播信道"><a href="#7-带公共消息的广播信道" class="headerlink" title="7. 带公共消息的广播信道"></a>7. 带公共消息的广播信道</h2><p>当存在公共消息 $M_0$（两个用户都需译出）时，叠加编码可以自然扩展：</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    M0[&quot;M₀ (公共)&quot;] --&gt; ENC
+    M1[&quot;M₁ (私密)&quot;] --&gt; ENC
+    M2[&quot;M₂ (私密)&quot;] --&gt; ENC
+    ENC --&gt; CH[&quot;p(y₁,y₂|x)&quot;]
+    CH --&gt; D1[&quot;译码器 1&lt;br&#x2F;&gt;→ (M̂₀, M̂₁)&quot;]
+    CH --&gt; D2[&quot;译码器 2&lt;br&#x2F;&gt;→ (M̂₀, M̂₂)&quot;]
+  </pre></div>
+<blockquote>
+<p><strong>定理</strong>: 速率三元组 $(R_0, R_1, R_2)$ 对 DM-BC 可达，如果存在 $p(u, x)$ 满足：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+R_1 &\leq I(X; Y_1 | U) \\\\
+R_0 + R_2 &\leq I(U; Y_2) \\\\
+R_0 + R_1 + R_2 &\leq I(X; Y_1)
+\end{aligned}</script><p>对 More Capable BC 该内界是紧的。</p>
+</blockquote>
+<p><strong>直观</strong>: $U$ 承载公共消息 $M_0$ 和差用户的私密消息 $M_2$，好用户在此基础上还能额外译出其私密消息 $M_1$。</p>
+<h2 id="8-Marton-编码方案"><a href="#8-Marton-编码方案" class="headerlink" title="8. Marton 编码方案"></a>8. Marton 编码方案</h2><p>对于<strong>非退化</strong>的一般 BC，叠加编码不再是最优的。Marton (1979) 通过在叠加编码基础上引入 <strong>binning（分箱）技术</strong>，给出了目前已知最佳的内界。</p>
+<h3 id="8-1-核心难度"><a href="#8-1-核心难度" class="headerlink" title="8.1 核心难度"></a>8.1 核心难度</h3><p>叠加编码中 $U$（给用户 2）和 $X$ 是嵌套的。在非退化 BC 中，两个用户的信号向量可能不是标量嵌套关系，需要允许 $U_1$ 和 $U_2$ <strong>相关</strong>才能达到更高的速率对。</p>
+<p><strong>问题</strong>: 消息 $M_1$ 和 $M_2$ 独立，如何生成<strong>相关的</strong> $U_1^n$ 和 $U_2^n$？</p>
+<blockquote>
+<p><strong>解决方案</strong>: Binning（分箱）——利用联合典型性来”匹配”独立生成的两个序列。</p>
+</blockquote>
+<h3 id="8-2-Marton-编码的码本构造"><a href="#8-2-Marton-编码的码本构造" class="headerlink" title="8.2 Marton 编码的码本构造"></a>8.2 Marton 编码的码本构造</h3><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph 用户1码本
+        B11[&quot;Bin 1: {U₁ⁿ(1,1),...,U₁ⁿ(1,2&lt;sup&gt;nr₁&lt;&#x2F;sup&gt;)}&quot;]
+        B12[&quot;Bin 2: {U₁ⁿ(2,1),...,U₁ⁿ(2,2&lt;sup&gt;nr₁&lt;&#x2F;sup&gt;)}&quot;]
+        B13[&quot;...&quot;]
+        B1R[&quot;Bin 2&lt;sup&gt;nR₁&lt;&#x2F;sup&gt;&quot;]
+    end
+    subgraph 用户2码本
+        B21[&quot;Bin 1: {U₂ⁿ(1,1),...,U₂ⁿ(1,2&lt;sup&gt;nr₂&lt;&#x2F;sup&gt;)}&quot;]
+        B22[&quot;Bin 2: {U₂ⁿ(2,1),...,U₂ⁿ(2,2&lt;sup&gt;nr₂&lt;&#x2F;sup&gt;)}&quot;]
+        B23[&quot;...&quot;]
+        B2R[&quot;Bin 2&lt;sup&gt;nR₂&lt;&#x2F;sup&gt;&quot;]
+    end
+  </pre></div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>生成</strong></td>
+<td>随机独立生成 $2^{n(R_1+r_1)}$ 个 $U_1^n$ 和 $2^{n(R_2+r_2)}$ 个 $U_2^n$</td>
+</tr>
+<tr>
+<td><strong>分箱</strong></td>
+<td>将 $U_1^n$ 均分为 $2^{nR_1}$ 个箱（每箱 $2^{nr_1}$ 个）；$U_2^n$ 同理</td>
+</tr>
+<tr>
+<td><strong>编码</strong></td>
+<td>给定 $(m_1, m_2)$，在箱 $\mathcal{B}_1(m_1) \times \mathcal{B}_2(m_2)$ 中找一对<strong>联合典型</strong>的 $(U_1^n, U_2^n)$，然后发送 $X^n = f^n(U_1^n, U_2^n)$</td>
+</tr>
+<tr>
+<td><strong>译码 1</strong></td>
+<td>在 $\mathcal{B}_1$ 中找与 $Y_1^n$ 联合典型的 $U_1^n$</td>
+</tr>
+<tr>
+<td><strong>译码 2</strong></td>
+<td>在 $\mathcal{B}_2$ 中找与 $Y_2^n$ 联合典型的 $U_2^n$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="8-3-联合典型序列的存在性"><a href="#8-3-联合典型序列的存在性" class="headerlink" title="8.3 联合典型序列的存在性"></a>8.3 联合典型序列的存在性</h3><p><strong>关键问题</strong>: 箱 $\mathcal{B}_1(m_1) \times \mathcal{B}_2(m_2)$ 中能找到一对联合典型的 $(U_1^n, U_2^n)$ 吗？</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph 独立生成的相关性
+        A[&quot;全部 U₁ⁿ 序列&lt;br&#x2F;&gt;大小 &#x3D; 2&lt;sup&gt;nH(U₁)&lt;&#x2F;sup&gt;&quot;]
+        B[&quot;全部 U₂ⁿ 序列&lt;br&#x2F;&gt;大小 &#x3D; 2&lt;sup&gt;nH(U₂)&lt;&#x2F;sup&gt;&quot;]
+        JT[&quot;联合典型序列&lt;br&#x2F;&gt;大小 ≈ 2&lt;sup&gt;nH(U₁,U₂)&lt;&#x2F;sup&gt;&quot;]
+    end
+  </pre></div>
+<ul>
+<li>全部可能的 $(U_1^n, U_2^n)$ 对有 $2^{n[H(U_1)+H(U_2)]}$ 个</li>
+<li>联合典型对约有 $2^{nH(U_1, U_2)}$ 个</li>
+<li>联合典型的比例：$2^{nH(U_1,U_2)} / 2^{n[H(U_1)+H(U_2)]} = 2^{-nI(U_1;U_2)}$</li>
+<li>每箱有 $2^{nr_1} \times 2^{nr_2} = 2^{n(r_1+r_2)}$ 个序列对</li>
+<li>期望联合典型对数：$2^{n(r_1+r_2)} \cdot 2^{-nI(U_1;U_2)}$</li>
+</ul>
+<blockquote>
+<p><strong>充分条件</strong>: $r_1 + r_2 \geq I(U_1; U_2)$，则每箱中以高概率存在联合典型对。这就是 <strong>Mutual Covering Lemma</strong>。</p>
+</blockquote>
+<h3 id="8-4-Marton-内界定理"><a href="#8-4-Marton-内界定理" class="headerlink" title="8.4 Marton 内界定理"></a>8.4 Marton 内界定理</h3><blockquote>
+<p><strong>定理（Marton 1979）</strong>: $(R_1, R_2)$ 可达如果</p>
+<script type="math/tex; mode=display">\boxed{\begin{aligned}
+R_1 &\leq I(U_1; Y_1) \\\\
+R_2 &\leq I(U_2; Y_2) \\\\
+R_1 + R_2 &\leq I(U_1; Y_1) + I(U_2; Y_2) - I(U_1; U_2)
+\end{aligned}}</script><p>对某个 $p(u_1, u_2)$ 和函数 $x(u_1, u_2)$ 成立。</p>
+</blockquote>
+<p><strong>Fourier-Motzkin 消元推导</strong>:</p>
+<ul>
+<li>译 $U_1$：$R_1 + r_1 \leq I(U_1; Y_1)$</li>
+<li>译 $U_2$：$R_2 + r_2 \leq I(U_2; Y_2)$</li>
+<li>联合典型存在：$r_1 + r_2 \geq I(U_1; U_2)$</li>
+<li>消去 $r_1, r_2$（$r_1, r_2 \geq 0$）得 Marton 区域</li>
+</ul>
+<blockquote>
+<p><strong>注意</strong>: Marton 内界一般不是凸的。对于非退化 BC，通常在 Marton 内界基础上还需要取凸壳。</p>
+</blockquote>
+<h3 id="8-5-与-Gelfand-Pinsker-的联系"><a href="#8-5-与-Gelfand-Pinsker-的联系" class="headerlink" title="8.5 与 Gelfand-Pinsker 的联系"></a>8.5 与 Gelfand-Pinsker 的联系</h3><p>考虑 Marton 区域的一个角点（$\alpha = 1$）:</p>
+<script type="math/tex; mode=display">R_1 = I(U_1; Y_1) - I(U_1; U_2), \quad R_2 = I(U_2; Y_2)</script><p>$R_1$ 恰好等于 <strong>Gelfand-Pinsker 速率</strong>——如果我们将 $U_2^n$ 视为发送端<strong>非因果已知</strong>的干扰（状态），而接收端未知。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph Gelfand-Pinsker视角
+        M1[&quot;M₁&quot;] --&gt; ENC1[&quot;编码器&lt;br&#x2F;&gt;已知 U₂ⁿ&quot;]
+        U2[&quot;U₂ⁿ&lt;br&#x2F;&gt;（状态&#x2F;干扰）&quot;] --&gt; ENC1
+        ENC1 --&gt;|&quot;Xⁿ&quot;| CH1[&quot;p(y₁|x,u₂)&quot;]
+        CH1 --&gt;|&quot;Y₁ⁿ&quot;| DEC1[&quot;译码器&quot;]
+    end
+  </pre></div>
+<p>这正是下一节要深入讨论的内容。</p>
+<h2 id="9-Gelfand-Pinsker-问题与污纸编码"><a href="#9-Gelfand-Pinsker-问题与污纸编码" class="headerlink" title="9. Gelfand-Pinsker 问题与污纸编码"></a>9. Gelfand-Pinsker 问题与污纸编码</h2><p>Gelfand-Pinsker (GP) 问题研究的是<strong>发送端非因果已知信道状态</strong>时的信道容量。它是理解 Marton 编码角点和污纸编码（Dirty Paper Coding, DPC）的理论基础。</p>
+<h3 id="9-1-问题设定"><a href="#9-1-问题设定" class="headerlink" title="9.1 问题设定"></a>9.1 问题设定</h3><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    M[&quot;消息 M&quot;] --&gt; ENC[&quot;编码器&lt;br&#x2F;&gt;（非因果已知 Sⁿ）&quot;]
+    S[&quot;状态 Sⁿ ~ ∏ p(s)&lt;br&#x2F;&gt;（DMS）&quot;] --&gt; ENC
+    S --&gt; CH[&quot;信道&lt;br&#x2F;&gt;p(y|x,s)&quot;]
+    ENC --&gt;|&quot;Xⁿ&quot;| CH
+    CH --&gt;|&quot;Yⁿ&quot;| DEC[&quot;译码器&lt;br&#x2F;&gt;（未知 Sⁿ）&quot;]
+    DEC --&gt; MHAT[&quot;M̂&quot;]
+  </pre></div>
+<ul>
+<li><strong>发送端</strong>非因果地知道整个状态序列 $S^n$（例如：写在脏纸上的污渍模式在写字前已完全已知）</li>
+<li><strong>接收端</strong>不知道 $S^n$</li>
+<li>信道转移概率 $p(y|x,s)$</li>
+</ul>
+<h3 id="9-2-不同状态信息情形的容量对比"><a href="#9-2-不同状态信息情形的容量对比" class="headerlink" title="9.2 不同状态信息情形的容量对比"></a>9.2 不同状态信息情形的容量对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>情形</th>
+<th>容量公式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收发均不知状态</td>
+<td>$C = \max_{p(x)} I(X; Y)$</td>
+</tr>
+<tr>
+<td>仅译码端知状态</td>
+<td>$C^{\text{SI-D}} = \max_{p(x)} I(X; Y\vert S)$</td>
+</tr>
+<tr>
+<td>编译码端均知状态</td>
+<td>$C^{\text{SI-ED}} = \max_{p(x\vert s)} I(X; Y\vert S)$</td>
+</tr>
+<tr>
+<td>仅编码端因果知状态</td>
+<td>$C^{\text{CSI-E}} = \max_{p(u), x(u,s), U\perp S} I(U; Y)$</td>
+</tr>
+<tr>
+<td><strong>仅编码端非因果知状态</strong></td>
+<td><strong>$C^{\text{SI-E}} = \max_{p(u\vert s), f(u,s)} [I(U; Y) - I(U; S)]$</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<script type="math/tex; mode=display">C \leq C^{\text{SI-D}}, C^{\text{SI-E}}, C^{\text{CSI-E}} \leq C^{\text{SI-ED}}</script></blockquote>
+<h3 id="9-3-Gelfand-Pinsker-定理"><a href="#9-3-Gelfand-Pinsker-定理" class="headerlink" title="9.3 Gelfand-Pinsker 定理"></a>9.3 Gelfand-Pinsker 定理</h3><blockquote>
+<p><strong>定理（Gelfand-Pinsker 1980）</strong>: 仅发送端非因果已知 DM 状态的信道容量为：</p>
+<script type="math/tex; mode=display">\boxed{C^{\text{SI-E}} = R_{GP} = \max_{p(u|s), f(u,s)} \left[I(U; Y) - I(U; S)\right]}</script><p>其中 $U$ 是辅助随机变量，$|\mathcal{U}| \leq \min{|\mathcal{X}| \cdot |\mathcal{S}|, |\mathcal{Y}| + |\mathcal{S}| - 1}$。</p>
+</blockquote>
+<p><strong>可达性证明——Binning 技术</strong>:</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph Binning编码
+        B1[&quot;Bin 1 (m&#x3D;1):&lt;br&#x2F;&gt;{Uⁿ(1,1),..., Uⁿ(1,2&lt;sup&gt;nR&#39;&lt;&#x2F;sup&gt;)}&quot;]
+        B2[&quot;Bin 2 (m&#x3D;2):&lt;br&#x2F;&gt;{Uⁿ(2,1),..., Uⁿ(2,2&lt;sup&gt;nR&#39;&lt;&#x2F;sup&gt;)}&quot;]
+        BNR[&quot;Bin 2&lt;sup&gt;nR&lt;&#x2F;sup&gt;&quot;]
+    end
+  </pre></div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>步骤</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>码本生成</strong></td>
+<td>固定 $p(u\vert s)$ 和 $f(u,s)$；对每个 $m$ 生成子码本 $\mathcal{C}(m)$ 含 $2^{nR’}$ 个 $U^n$ 序列（设 $\tilde{R} = R + R’$）</td>
+</tr>
+<tr>
+<td><strong>编码</strong></td>
+<td>给定 $m$ 和 $S^n$，在箱 $\mathcal{C}(m)$ 中找与 $S^n$ <strong>联合典型</strong>的 $U^n(\ell)$；发送 $X^n = f(U^n(\ell), S^n)$</td>
+</tr>
+<tr>
+<td><strong>译码</strong></td>
+<td>接收 $Y^n$，找唯一 $(m, \ell)$ 使 $(U^n(m, \ell), Y^n) \in T_\epsilon^{(n)}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>错误分析的关键不等式</strong>:</p>
+<ul>
+<li>箱中存在与 $S^n$ 联合典型的 $U^n$：$R’ \geq I(U; S)$（状态”选择”合适的 $U$）</li>
+<li>译码端恢复 $U$：$R + R’ \leq I(U; Y)$</li>
+<li>联合可得：$R \leq I(U; Y) - I(U; S)$ ✨</li>
+</ul>
+<h3 id="9-4-AWGN-污纸信道（Costa-1983）——Writing-on-Dirty-Paper"><a href="#9-4-AWGN-污纸信道（Costa-1983）——Writing-on-Dirty-Paper" class="headerlink" title="9.4 AWGN 污纸信道（Costa 1983）——Writing on Dirty Paper"></a>9.4 AWGN 污纸信道（Costa 1983）——Writing on Dirty Paper</h3><p>考虑最重要的高斯情形：</p>
+<script type="math/tex; mode=display">Y = X + S + Z</script><ul>
+<li>$S \sim \mathcal{N}(0, Q)$：状态（干扰/污渍）</li>
+<li>$Z \sim \mathcal{N}(0, 1)$：噪声</li>
+<li>$S \perp Z$，$E[X^2] \leq P$</li>
+</ul>
+<p><strong>四种情形的容量</strong>:</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>情形</th>
+<th>容量</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收发均不知 $S$</td>
+<td>$C = C!\left(\frac{P}{1+Q}\right)$</td>
+<td>状态视为噪声</td>
+</tr>
+<tr>
+<td>仅译码端知 $S$</td>
+<td>$C^{\text{SI-D}} = C(P)$</td>
+<td>直接减去 $S$，恢复干净的 AWGN</td>
+</tr>
+<tr>
+<td>编译码均知 $S$</td>
+<td>$C^{\text{SI-ED}} = C(P)$</td>
+<td>同上</td>
+</tr>
+<tr>
+<td><strong>仅编码端知 $S$</strong></td>
+<td><strong>$C^{\text{SI-E}} = C(P)$</strong></td>
+<td>🔑 污纸编码——完美抵消！</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>🎯 <strong>核心结论</strong>: 发送端预先知道污渍，可以通过<strong>污纸编码（DPC）</strong>完全抵消状态的影响，达到<strong>和无状态一样的容量 $C(P)$</strong>！这就是 “Writing on Dirty Paper” 名称的由来。</p>
+</blockquote>
+<h4 id="最优方案推导"><a href="#最优方案推导" class="headerlink" title="最优方案推导"></a>最优方案推导</h4><p>尝试 $U = X + \alpha S$，其中 $X \sim \mathcal{N}(0, P)$，$X \perp S$。</p>
+<p><strong>计算 $I(U; Y)$</strong>:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+I(U; Y) &= h(Y) - h(Y|U) \\\\
+&= h(X+S+Z) - h(X+S+Z | X+\alpha S) \\\\
+&= h(X+S+Z) + h(X+\alpha S) - h(X+S+Z, X+\alpha S) \\\\
+&= \frac{1}{2}\log\frac{(P+Q+1)(P+\alpha^2 Q)}{PQ(1-\alpha)^2 + (P+\alpha^2 Q)}
+\end{aligned}</script><p><strong>计算 $I(U; S)$</strong>:</p>
+<script type="math/tex; mode=display">I(U; S) = h(U) - h(U|S) = \frac{1}{2}\log\frac{P+\alpha^2 Q}{P}</script><p><strong>可达速率</strong>:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+R(\alpha) &= I(U; Y) - I(U; S) \\\\
+&= \frac{1}{2}\log\frac{P(P+Q+1)}{PQ(1-\alpha)^2 + (P+\alpha^2 Q)}
+\end{aligned}</script><p><strong>优化 $\alpha$</strong>: 令分子最大化，取</p>
+<script type="math/tex; mode=display">\alpha^* = \frac{P}{P+1}</script><p>代入得：</p>
+<script type="math/tex; mode=display">R(\alpha^*) = \frac{1}{2}\log(1+P) = C(P)</script><blockquote>
+<p>$\alpha^<em> = \frac{P}{P+1}$ 正是 $X$ 关于 $Y = X + Z$ 的 <em>*L-MMSE 估计系数</em></em>：</p>
+<script type="math/tex; mode=display">\alpha^* = \frac{\text{Cov}(X, X+Z)}{\text{Var}(X+Z)} = \frac{P}{P+1}</script></blockquote>
+<h4 id="DPC-的替代理解（更直观的推导）"><a href="#DPC-的替代理解（更直观的推导）" class="headerlink" title="DPC 的替代理解（更直观的推导）"></a>DPC 的替代理解（更直观的推导）</h4><p>从 MMSE 性质出发:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+I(U; Y) - I(U; S) &= h(U|S) - h(U|Y) \\\\
+h(U|S) &= h(X+\alpha S | S) = h(X) \\\\
+h(U|Y) &= h(X+\alpha S | X+S+Z) \\\\
+&= h(X+\alpha S - \alpha(X+S+Z) | X+S+Z) \quad (\text{减去已知部分})\\\\
+&= h(X - \alpha(X+Z) | X+Z) \\\\
+&= h(X | X+Z) \quad (\text{因为当 } \alpha = \alpha^* \text{ 时}, X - \alpha(X+Z) \perp X+Z)\\\\
+\therefore I(U; Y) - I(U; S) &= h(X) - h(X|X+Z) = I(X; X+Z) = C(P)
+\end{aligned}</script><blockquote>
+<p>关键：当 $\alpha = P/(P+1)$ 时，$X - \alpha(X+Z)$ 与 $X+Z$ 在高斯假设下独立（MMSE 估计的正交性原理），进而也与 $Y = (X+Z) + S$ 独立。</p>
+</blockquote>
+<h3 id="9-5-DPC-在-MIMO-广播信道中的应用"><a href="#9-5-DPC-在-MIMO-广播信道中的应用" class="headerlink" title="9.5 DPC 在 MIMO 广播信道中的应用"></a>9.5 DPC 在 MIMO 广播信道中的应用</h3><ul>
+<li><strong>Caire &amp; Shamai (2003)</strong>: 提出将 DPC 应用于 MIMO 高斯广播信道</li>
+<li><strong>Weingarten-Steinberg-Shamai (2006)</strong>: 利用熵功率不等式证明 DPC 达到的速率区域就是多用户 MIMO GBC 的容量区域</li>
+</ul>
+<p>这一结果确立了 DPC 作为 MIMO 下行链路（多用户 MIMO）容量可达方案的理论地位。</p>
+<h2 id="10-考试重点速查表"><a href="#10-考试重点速查表" class="headerlink" title="10. 考试重点速查表"></a>10. 考试重点速查表</h2><h3 id="10-1-核心公式"><a href="#10-1-核心公式" class="headerlink" title="10.1 核心公式"></a>10.1 核心公式</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>公式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>BC 容量区域（一般）</td>
+<td>未知；Marton 内界 + Nair-El Gamal 外界</td>
+</tr>
+<tr>
+<td>仅公共消息 BC</td>
+<td><script type="math/tex">C_0 = \max_{p(x)} \min\{I(X;Y_1), I(X;Y_2)\}</script></td>
+</tr>
+<tr>
+<td>叠加编码内界</td>
+<td>$R_1 \leq I(X;Y_1\vert U),\; R_2 \leq I(U;Y_2),\; R_1+R_2 \leq I(X;Y_1)$</td>
+</tr>
+<tr>
+<td>退化 BC 容量</td>
+<td>$R_1 \leq I(X;Y_1\vert U),\; R_2 \leq I(U;Y_2)$（$\vert U\vert \leq \min{\vert X\vert,\vert Y_1\vert ,\vert Y_2\vert }+1$）</td>
+</tr>
+<tr>
+<td>高斯 BC 容量</td>
+<td>$R_1 \leq C(\alpha S_1),\; R_2 \leq C(\bar{\alpha}S_2/(\alpha S_2+1))$，$\alpha \in [0,1]$</td>
+</tr>
+<tr>
+<td>More Capable BC</td>
+<td>SC 内界 + $R_1+R_2 \leq I(X;Y_1)$</td>
+</tr>
+<tr>
+<td>带公共消息 BC</td>
+<td>$R_1 \leq I(X;Y_1\vert U),\; R_0+R_2 \leq I(U;Y_2),\; R_0+R_1+R_2 \leq I(X;Y_1)$</td>
+</tr>
+<tr>
+<td>Marton 内界</td>
+<td>$R_j \leq I(U_j;Y_j),\; R_1+R_2 \leq I(U_1;Y_1)+I(U_2;Y_2)-I(U_1;U_2)$</td>
+</tr>
+<tr>
+<td>GP 容量</td>
+<td>$C^{\text{SI-E}} = \max_{p(u\vert s), f(u,s)} [I(U;Y) - I(U;S)]$</td>
+</tr>
+<tr>
+<td>DPC（Costa 1983）</td>
+<td>$C^{\text{SI-E}} = C(P)$（完美抵消状态），$\alpha^* = \frac{P}{P+1}$</td>
+</tr>
+<tr>
+<td>Packing Lemma</td>
+<td>若 $\vert A\vert \leq 2^{nR}$，$R &lt; I(X;Y\vert U)-\delta$，则 $P(\exists m)$ 联合典型 $\to 0$</td>
+</tr>
+<tr>
+<td>EPI（向量）</td>
+<td>$2^{2h(X+Z)/n} \geq 2^{2h(X)/n} + 2^{2h(Z)/n}$</td>
+</tr>
+<tr>
+<td>Csiszár Sum Identity</td>
+<td><script type="math/tex">\sum_i I(Z_{i+1}^n; Y_i\vert Y^{i-1},U) = \sum_i I(Y^{i-1}; Z_i\vert Z_{i+1}^n, U)</script></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="10-2-关键概念对比"><a href="#10-2-关键概念对比" class="headerlink" title="10.2 关键概念对比"></a>10.2 关键概念对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>MAC</th>
+<th>BC</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>拓扑</td>
+<td>多发一收（上行）</td>
+<td>一发多收（下行）</td>
+</tr>
+<tr>
+<td>编码约束</td>
+<td>发送端独立</td>
+<td>发送端协作（同一编码器）</td>
+</tr>
+<tr>
+<td>译码约束</td>
+<td>接收端协作</td>
+<td>接收端独立</td>
+</tr>
+<tr>
+<td>容量区域</td>
+<td><strong>已知</strong>（单字母刻画）</td>
+<td><strong>一般未知</strong></td>
+</tr>
+<tr>
+<td>可达方法</td>
+<td>同时译码 / SC + TS</td>
+<td>叠加编码 / Marton binning</td>
+</tr>
+<tr>
+<td>凸性</td>
+<td>非凸，需取凸壳</td>
+<td>SC 内界自凸</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>退化类型</th>
+<th>定义</th>
+<th>容量是否已知</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>退化 BC</strong></td>
+<td>$X \to Y_1 \to Y_2$</td>
+<td>✅ 已知</td>
+</tr>
+<tr>
+<td><strong>Less Noisy</strong></td>
+<td>$I(U;Y_1) \geq I(U;Y_2)\; \forall p(u,x)$</td>
+<td>✅ 已知（SC）</td>
+</tr>
+<tr>
+<td><strong>More Capable</strong></td>
+<td>$I(X;Y_1) \geq I(X;Y_2)\; \forall p(x)$</td>
+<td>✅ 已知（SC + 和速率约束）</td>
+</tr>
+<tr>
+<td><strong>一般 BC</strong></td>
+<td>以上都不满足</td>
+<td>❌ 未知</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="10-3-各类信道容量对比"><a href="#10-3-各类信道容量对比" class="headerlink" title="10.3 各类信道容量对比"></a>10.3 各类信道容量对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>状态信息情景</th>
+<th>容量公式</th>
+<th>AWGN 特例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>收发均不知</td>
+<td>$\max I(X;Y)$</td>
+<td>$C(P/(1+Q))$</td>
+</tr>
+<tr>
+<td>仅译码知</td>
+<td>$\max I(X;Y\vert S)$</td>
+<td>$C(P)$</td>
+</tr>
+<tr>
+<td>编译码均知</td>
+<td>$\max I(X;Y\vert S)$</td>
+<td>$C(P)$</td>
+</tr>
+<tr>
+<td>编码端因果知</td>
+<td>$\max I(U;Y), U\perp S$</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>编码端非因果知（GP）</strong></td>
+<td>$\max [I(U;Y)-I(U;S)]$</td>
+<td><strong>$C(P)$（DPC 完美抵消）</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="10-4-重要定理与证明方法"><a href="#10-4-重要定理与证明方法" class="headerlink" title="10.4 重要定理与证明方法"></a>10.4 重要定理与证明方法</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>定理</th>
+<th>可达性方法</th>
+<th>逆定理关键工具</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>退化 BC 容量</td>
+<td>叠加编码 + Packing Lemma</td>
+<td>Gallager $U_i=(M_2,Y_1^{i-1})$ / Nair 支撑超平面 + Csiszár Sum Identity</td>
+</tr>
+<tr>
+<td>高斯 BC 容量</td>
+<td>$U,V$ 高斯 + SIC</td>
+<td>EPI（条件 EPI）</td>
+</tr>
+<tr>
+<td>GP 容量</td>
+<td>Binning（分箱编码）</td>
+<td>Csiszár Sum Identity / 凹包络</td>
+</tr>
+<tr>
+<td>DPC $C(P)$</td>
+<td>$U = X + \alpha S$，优化 $\alpha$</td>
+<td>MMSE 正交性</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>复习建议</strong>:</p>
+<ol>
+<li><strong>叠加编码</strong>（§3）是 BC 的基础——必须理解云+卫星的结构、Packing Lemma 的作用、以及译码器 1 的”同时非唯一译码”。</li>
+<li><strong>退化 BC</strong>（§4）的容量定理及其 Gallager 逆定理证明是核心考点——重点掌握 $U_i = (M_2, Y_1^{i-1})$ 的构造和两个速率约束的推导。</li>
+<li><strong>高斯 BC</strong>（§5）的 EPI 逆定理是考试难点——理解为什么需要条件 EPI 以及 $\alpha$ 参数如何通过 $h(Y_2^n|M_2)$ 的连续性引入。</li>
+<li><strong>Marton 编码</strong>（§8）中 binning 的核心思想是从独立消息中生成相关 $U_1, U_2$——理解 $r_1+r_2 \geq I(U_1;U_2)$ 的必要性。</li>
+<li><strong>Gelfand-Pinsker</strong>（§9）是 BC 角点的理论基础——重点掌握 $I(U;Y)-I(U;S)$ 公式和 DPC 中 $\alpha^* = P/(P+1)$ 的推导。</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://luotian.cyou">Luo Tian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://luotian.cyou/post/Network_info_Theory-Chapter3.html">https://luotian.cyou/post/Network_info_Theory-Chapter3.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://luotian.cyou" target="_blank">洛天的小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/">网络信息论</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><div class="post-share"><div class="social-share" data-image="/img/core/default_blog_cover.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/core/QRs/wx.webp" target="_blank"><img class="post-qr-code-img" src="/img/core/QRs/wx.webp" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/core/QRs/zfb.webp" target="_blank"><img class="post-qr-code-img" src="/img/core/QRs/zfb.webp" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img class="cover" src="/img/core/default_blog_cover.webp" onerror="onerror=null;src='/img/core/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA/TDMA/X-DMA 对比、速率分裂技术（Rate-Splitting）、5G NOMA 技术综述。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img class="cover" src="/img/core/default_blog_cover.webp" onerror="onerror=null;src='/img/core/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第四章的复习笔记，基于课堂讲义整理。内容涵盖：点对点无损压缩回顾与随机 Binning 编码、Slepian-Wolf 定理的完整证明（逆定理+可达性+四错误事件）、k 源扩展、有 Helper 的无损压缩（Ahlswede-Korner-Wyner 定理）、率失真函数 R(D) 与 Shannon 1959 定理、Wyner-Ziv 有损编码（Compress-Bin：Covering 编码 + Packing 译码）、Covering Lemma 与 Packing Lemma 的对偶、Wyner-Ziv 与 Gelfand-Pinsker 的对偶性。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第四章的复习笔记，基于课堂讲义整理。内容涵盖：点对点无损压缩回顾与随机 Binning 编码、Slepian-Wolf 定理的完整证明（逆定理+可达性+四错误事件）、k 源扩展、有 Helper 的无损压缩（Ahlswede-Korner-Wyner 定理）、率失真函数 R(D) 与 Shannon 1959 定理、Wyner-Ziv 有损编码（Compress-Bin：Covering 编码 + Packing 译码）、Covering Lemma 与 Packing Lemma 的对偶、Wyner-Ziv 与 Gelfand-Pinsker 的对偶性。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter6.html" title="西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第六章的复习笔记，基于课堂讲义整理。内容涵盖：IC 模型与容量区域未知的现状、简单界与模二和 IC 实例、三种点对点编码策略（IAN/SD/SND）及其错误事件分析、强干扰与极强干扰的容量区域（Costa-El Gamal 1987）、高斯 IC 的 SNR/INR 条件与 Sato 1981 判据、Han-Kobayashi 1981 编码方案（速率分裂+叠加编码+7 不等式定理）、注入式确定性 IC、半比特定理（Etkin-Tse-Wang 2008）。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA/TDMA/X-DMA 对比、速率分裂技术（Rate-Splitting）、5G NOMA 技术综述。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter7.html" title="西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第七章的复习笔记，基于课堂讲义整理。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB/MIB/UVOB）的 BA 算法、连续 AWGN 信道的矩阵迭代 BA、AWGN BC 的矩阵迭代。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第五章的复习笔记，基于课堂讲义整理。内容涵盖：中继信道三节点模型与 DM-RC 定义、割集上界（Cover-El Gamal 1979）的两个割解释、直接传输下界与反向退化 RC、多跳下界与分组 Markov 编码、协作多跳下界与条件码本、译码转发（DF）的容量下界与后向译码（Willems 1985）、DF 的局限与部分 DF、压缩转发（CF）的 Compress-Bin 编码方案、高斯中继信道的半比特逼近。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论（Network Information Theory）第一章的复习笔记，基于讲义整理。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen/Fano/数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长/变长编码、Shannon/Huffman 码）、信道容量（DMC、BSC/BEC、高斯信道、反馈容量）、MIMO 信道（SVD 分解、注水算法）等。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/core/id.webp" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Luo Tian</div><div class="author-info-description">我们生而眺望</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuoTian001"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><p>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！如果你有任何建议或想法，欢迎通过评论与我联系(o゜▽゜)o☆<br>主站：www.luotian.cyou<br>备用：LuoTian001.github.io<br>RSS：www.luotian.cyou/rss.xml</p></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%89%E7%AB%A0-%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%EF%BC%88Broadcast-Channels%EF%BC%89"><span class="toc-text">第三章 广播信道（Broadcast Channels）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-text">1. 广播信道基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E6%A8%A1%E5%9E%8B%E6%8F%8F%E8%BF%B0"><span class="toc-text">1.1 模型描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%A0%81%E7%9A%84%E5%AE%9A%E4%B9%89%E4%B8%8E%E5%8F%AF%E8%BE%BE%E6%80%A7"><span class="toc-text">1.2 码的定义与可达性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E9%87%8D%E8%A6%81%E4%BA%8B%E5%AE%9E"><span class="toc-text">1.3 重要事实</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%AE%80%E5%8D%95%E7%95%8C%E4%B8%8E%E5%AE%9E%E4%BE%8B"><span class="toc-text">2. 简单界与实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%AE%80%E5%8D%95%E7%95%8C"><span class="toc-text">2.1 简单界</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%89%B9%E6%AE%8A%E6%83%85%E5%BD%A2"><span class="toc-text">2.2 特殊情形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BA%8C%E5%85%83%E5%AF%B9%E7%A7%B0%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%EF%BC%88BS-BC%EF%BC%89%E5%AE%9E%E4%BE%8B"><span class="toc-text">2.3 二元对称广播信道（BS-BC）实例</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8F%A0%E5%8A%A0%E7%BC%96%E7%A0%81%E4%B8%8E%E5%86%85%E7%95%8C"><span class="toc-text">3. 叠加编码与内界</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-text">3.1 核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-BS-BC-%E7%9A%84%E5%8F%A0%E5%8A%A0%E7%BC%96%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-text">3.2 BS-BC 的叠加编码实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%8F%A0%E5%8A%A0%E7%BC%96%E7%A0%81%E5%86%85%E7%95%8C%E5%AE%9A%E7%90%86%EF%BC%88Cover-1972-Bergmans-1973%EF%BC%89"><span class="toc-text">3.3 叠加编码内界定理（Cover 1972, Bergmans 1973）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E9%80%80%E5%8C%96%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93"><span class="toc-text">4. 退化广播信道</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E9%80%80%E5%8C%96-BC-%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">4.1 退化 BC 的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E9%80%80%E5%8C%96-BC-%E5%AE%B9%E9%87%8F%E5%AE%9A%E7%90%86"><span class="toc-text">4.2 退化 BC 容量定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E9%80%86%E5%AE%9A%E7%90%86-%E2%80%94%E2%80%94-Gallager-%E8%AF%81%E6%98%8E%EF%BC%881974%EF%BC%89"><span class="toc-text">4.3 逆定理 —— Gallager 证明（1974）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E9%80%86%E5%AE%9A%E7%90%86-%E2%80%94%E2%80%94-Nair-2013-%E7%9A%84%E6%9B%BF%E4%BB%A3%E8%AF%81%E6%98%8E"><span class="toc-text">4.4 逆定理 —— Nair (2013) 的替代证明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-BS-BC-%E9%80%80%E5%8C%96%E6%83%85%E5%BD%A2%E7%9A%84%E5%AE%B9%E9%87%8F%E5%8C%BA%E5%9F%9F"><span class="toc-text">4.5 BS-BC 退化情形的容量区域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%AB%98%E6%96%AF%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93"><span class="toc-text">5. 高斯广播信道</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E6%A8%A1%E5%9E%8B"><span class="toc-text">5.1 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E9%AB%98%E6%96%AF-BC-%E5%AE%B9%E9%87%8F%E5%8C%BA%E5%9F%9F"><span class="toc-text">5.2 高斯 BC 容量区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%8F%AF%E8%BE%BE%E6%80%A7"><span class="toc-text">5.3 可达性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E9%80%86%E5%AE%9A%E7%90%86%EF%BC%88Bergmans-1974%EF%BC%89"><span class="toc-text">5.4 逆定理（Bergmans 1974）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-Less-Noisy-%E4%B8%8E-More-Capable-BC"><span class="toc-text">6. Less Noisy 与 More Capable BC</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-BSC-BEC-%E6%B7%B7%E5%90%88-BC-%E7%9A%84%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84"><span class="toc-text">6.1 BSC + BEC 混合 BC 的层次结构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E5%B8%A6%E5%85%AC%E5%85%B1%E6%B6%88%E6%81%AF%E7%9A%84%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93"><span class="toc-text">7. 带公共消息的广播信道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-Marton-%E7%BC%96%E7%A0%81%E6%96%B9%E6%A1%88"><span class="toc-text">8. Marton 编码方案</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E6%A0%B8%E5%BF%83%E9%9A%BE%E5%BA%A6"><span class="toc-text">8.1 核心难度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-Marton-%E7%BC%96%E7%A0%81%E7%9A%84%E7%A0%81%E6%9C%AC%E6%9E%84%E9%80%A0"><span class="toc-text">8.2 Marton 编码的码本构造</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E8%81%94%E5%90%88%E5%85%B8%E5%9E%8B%E5%BA%8F%E5%88%97%E7%9A%84%E5%AD%98%E5%9C%A8%E6%80%A7"><span class="toc-text">8.3 联合典型序列的存在性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-Marton-%E5%86%85%E7%95%8C%E5%AE%9A%E7%90%86"><span class="toc-text">8.4 Marton 内界定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-%E4%B8%8E-Gelfand-Pinsker-%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-text">8.5 与 Gelfand-Pinsker 的联系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-Gelfand-Pinsker-%E9%97%AE%E9%A2%98%E4%B8%8E%E6%B1%A1%E7%BA%B8%E7%BC%96%E7%A0%81"><span class="toc-text">9. Gelfand-Pinsker 问题与污纸编码</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E9%97%AE%E9%A2%98%E8%AE%BE%E5%AE%9A"><span class="toc-text">9.1 问题设定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E4%B8%8D%E5%90%8C%E7%8A%B6%E6%80%81%E4%BF%A1%E6%81%AF%E6%83%85%E5%BD%A2%E7%9A%84%E5%AE%B9%E9%87%8F%E5%AF%B9%E6%AF%94"><span class="toc-text">9.2 不同状态信息情形的容量对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-Gelfand-Pinsker-%E5%AE%9A%E7%90%86"><span class="toc-text">9.3 Gelfand-Pinsker 定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-AWGN-%E6%B1%A1%E7%BA%B8%E4%BF%A1%E9%81%93%EF%BC%88Costa-1983%EF%BC%89%E2%80%94%E2%80%94Writing-on-Dirty-Paper"><span class="toc-text">9.4 AWGN 污纸信道（Costa 1983）——Writing on Dirty Paper</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%80%E4%BC%98%E6%96%B9%E6%A1%88%E6%8E%A8%E5%AF%BC"><span class="toc-text">最优方案推导</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#DPC-%E7%9A%84%E6%9B%BF%E4%BB%A3%E7%90%86%E8%A7%A3%EF%BC%88%E6%9B%B4%E7%9B%B4%E8%A7%82%E7%9A%84%E6%8E%A8%E5%AF%BC%EF%BC%89"><span class="toc-text">DPC 的替代理解（更直观的推导）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-5-DPC-%E5%9C%A8-MIMO-%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text">9.5 DPC 在 MIMO 广播信道中的应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E8%80%83%E8%AF%95%E9%87%8D%E7%82%B9%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-text">10. 考试重点速查表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E6%A0%B8%E5%BF%83%E5%85%AC%E5%BC%8F"><span class="toc-text">10.1 核心公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94"><span class="toc-text">10.2 关键概念对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E5%90%84%E7%B1%BB%E4%BF%A1%E9%81%93%E5%AE%B9%E9%87%8F%E5%AF%B9%E6%AF%94"><span class="toc-text">10.3 各类信道容量对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-4-%E9%87%8D%E8%A6%81%E5%AE%9A%E7%90%86%E4%B8%8E%E8%AF%81%E6%98%8E%E6%96%B9%E6%B3%95"><span class="toc-text">10.4 重要定理与证明方法</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</a><time datetime="2026-06-23T18:39:32.000Z" title="发表于 2026-06-24 02:39:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</a><time datetime="2026-06-23T18:38:32.000Z" title="发表于 2026-06-24 02:38:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</a><time datetime="2026-06-23T18:37:32.000Z" title="发表于 2026-06-24 02:37:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</a><time datetime="2026-06-23T18:36:32.000Z" title="发表于 2026-06-24 02:36:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界">西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</a><time datetime="2026-06-23T18:35:32.000Z" title="发表于 2026-06-24 02:35:32">2026-06-24</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2026 By Luo Tian</span></div><div class="footer_custom_text"><dev><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">陕ICP备2025072980号-1</a></dev><div id="workboard"></div></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.1/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (false) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    GLOBAL_CONFIG_SITE.pageType === 'post' && getCount()
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/twikoo/1.6.44/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/live2d/live2d.js" defer></script><script src="/js/background.js"></script><script src="/js/runtime.js" defer></script><script src="/js/meta-sync.js"></script><script async src="/js/holiday-popup.js" data-pjax></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script><script> const initPangu = () => { if (typeof pangu !== 'undefined') { pangu.spacingPage(); } }; document.addEventListener('DOMContentLoaded', initPangu); document.addEventListener('pjax:complete', initPangu); </script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>

@@ -1,0 +1,1643 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明 | 洛天的小窝</title><meta name="author" content="Luo Tian"><meta name="copyright" content="Luo Tian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA&#x2F;TDMA&#x2F;X-DMA 对比、速率分裂技术（Rate-Splitting）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明">
+<meta property="og:url" content="https://luotian.cyou/post/Network_info_Theory-Chapter2.html">
+<meta property="og:site_name" content="洛天的小窝">
+<meta property="og:description" content="本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA&#x2F;TDMA&#x2F;X-DMA 对比、速率分裂技术（Rate-Splitting）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luotian.cyou/img/core/default_blog_cover.webp">
+<meta property="article:published_time" content="2026-06-23T18:38:32.000Z">
+<meta property="article:modified_time" content="2026-06-23T20:53:58.533Z">
+<meta property="article:author" content="Luo Tian">
+<meta property="article:tag" content="信息论">
+<meta property="article:tag" content="网络信息论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luotian.cyou/img/core/default_blog_cover.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明",
+  "url": "https://luotian.cyou/post/Network_info_Theory-Chapter2.html",
+  "image": "https://luotian.cyou/img/core/default_blog_cover.webp",
+  "datePublished": "2026-06-23T18:38:32.000Z",
+  "dateModified": "2026-06-23T20:53:58.533Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Luo Tian",
+      "url": "https://luotian.cyou"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/core/fav.ico"><link rel="canonical" href="https://luotian.cyou/post/Network_info_Theory-Chapter2.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":800,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/mouse/mouse.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/runtime.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/rss.xml" title="洛天的小窝" type="application/atom+xml">
+</head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/core/bkgnd1.webp));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/core/id.webp" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/game/1024game/"><i class="fa-fw fa fa-th-large"></i><span> 1024游戏</span></a></li><li><a class="site-page child" href="/game/sudoku/"><i class="fa-fw fa fa-th"></i><span> 数独游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></li><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/video-parser/"><i class="fa-fw fa fa-video-camera"></i><span> 短视频解析</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li><li><a class="site-page child" href="/tools/qrcode/"><i class="fa-fw fa fa-qrcode"></i><span> 二维码工坊</span></a></li><li><a class="site-page child" href="/tools/base64/"><i class="fa-fw fas fa-exchange-alt"></i><span> Base64编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/core/default_blog_cover.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">洛天的小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/game/1024game/"><i class="fa-fw fa fa-th-large"></i><span> 1024游戏</span></a></li><li><a class="site-page child" href="/game/sudoku/"><i class="fa-fw fa fa-th"></i><span> 数独游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></li><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/video-parser/"><i class="fa-fw fa fa-video-camera"></i><span> 短视频解析</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li><li><a class="site-page child" href="/tools/qrcode/"><i class="fa-fw fa fa-qrcode"></i><span> 二维码工坊</span></a></li><li><a class="site-page child" href="/tools/base64/"><i class="fa-fw fas fa-exchange-alt"></i><span> Base64编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-23T18:38:32.000Z" title="发表于 2026-06-24 02:38:32">2026-06-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-23T20:53:58.533Z" title="更新于 2026-06-24 04:53:58">2026-06-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/">网络信息论</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">7.9k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>34分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/post/Network_info_Theory-Chapter2.html#post-comment"><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第二章-多址接入信道（Multiple-Access-Channels）"><a href="#第二章-多址接入信道（Multiple-Access-Channels）" class="headerlink" title="第二章 多址接入信道（Multiple Access Channels）"></a>第二章 多址接入信道（Multiple Access Channels）</h1><blockquote>
+<p><strong>课程</strong>: 网络信息论（Network Information Theory）<br><strong>教材</strong>: A. El Gamal and Y.-H. Kim, <em>Network Information Theory</em>, Cambridge University Press, 2011<br><strong>整理说明</strong>: 本章介绍多址接入信道（MAC）的容量区域理论——从数学模型、容量定理、可达性证明（同时译码与逐次干扰消除）、时间共享与凸壳、高斯 MAC、到 5G NOMA 技术。<br><strong>免责声明</strong>：本笔记内容来源于课程讲义和PPT，经AI辅助汇总完成，仅供学习参考。如有错误或遗漏，请以原始课程资料为准。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-多用户信道容量概述21">多用户信道容量概述（§2.1）</a></li>
+<li><a href="#2-多址接入信道模型与容量定理22">多址接入信道模型与容量定理（§2.2）</a></li>
+<li><a href="#3-可达性证明同时译码23">可达性证明：同时译码（§2.3）</a></li>
+<li><a href="#4-MAC-容量区域的进一步讨论24">MAC 容量区域的进一步讨论（§2.4）</a></li>
+<li><a href="#5-逐次干扰消除译码25">逐次干扰消除译码（§2.5）</a></li>
+<li><a href="#6-高斯多址接入信道26">高斯多址接入信道（§2.6）</a></li>
+<li><a href="#7-5G-中的非正交多址技术27">5G 中的非正交多址技术（§2.7）</a></li>
+<li><a href="#8-本章小结28">本章小结（§2.8）</a></li>
+<li><a href="#9-考试重点速查表">考试重点速查表</a></li>
+</ol>
+<h2 id="1-多用户信道容量概述（§2-1）"><a href="#1-多用户信道容量概述（§2-1）" class="headerlink" title="1. 多用户信道容量概述（§2.1）"></a>1. 多用户信道容量概述（§2.1）</h2><h3 id="1-1-从点对点到多用户"><a href="#1-1-从点对点到多用户" class="headerlink" title="1.1 从点对点到多用户"></a>1.1 从点对点到多用户</h3><p>在第一章中，信道的性能极限由一个<strong>数</strong>——容量 $C$（bits/channel use）——来刻画。进入多用户场景后，情况发生了根本性变化：</p>
+<blockquote>
+<p><strong>多用户信道容量由”速率区域（Rate Region）”来刻画</strong>——区域中的每个点是一个速率向量 $(R_1, R_2, \ldots, R_K)$，表示所有用户可以<strong>同时</strong>以这些速率可靠通信（各自 $P_e \to 0$）。</p>
+</blockquote>
+<h3 id="1-2-容量区域与和速率"><a href="#1-2-容量区域与和速率" class="headerlink" title="1.2 容量区域与和速率"></a>1.2 容量区域与和速率</h3><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 点对点信道
+        C1[&quot;容量 C&lt;br&#x2F;&gt;(一个数)&quot;]
+    end
+    subgraph 多用户信道
+        C2[&quot;容量区域 C&lt;br&#x2F;&gt;(一个区域)&quot;]
+        C2 --&gt; R1[&quot;R₁&quot;]
+        C2 --&gt; R2[&quot;R₂&quot;]
+    end
+  </pre></div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>容量区域</strong> $\mathcal{C}$</td>
+<td>所有可达速率向量的集合的闭包。$\mathcal{C} = {(R_1, \ldots, R_K) : \text{所有 } R_k \text{ 可以同时可靠可达}}$</td>
+</tr>
+<tr>
+<td><strong>和速率容量</strong> $C_{\text{sum}}$</td>
+<td>$C<em>{\text{sum}} = \max</em>{(R<em>1,\ldots,R_K) \in \mathcal{C}} \sum</em>{k=1}^{K} R_k$ 一个单一数值</td>
+</tr>
+<tr>
+<td><strong>和速率点</strong></td>
+<td>容量区域边界上的一个点（对 AWGN BC 而言）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>关键理解</strong>: 在多用户场景中，不同用户之间共享信道资源，存在<strong>速率权衡（Rate Trade-off）</strong>——一个人速率提高往往意味着另一个人速率降低。容量区域的边界精确刻画了这种权衡的最优前沿。</p>
+</blockquote>
+<h2 id="2-多址接入信道模型与容量定理（§2-2）"><a href="#2-多址接入信道模型与容量定理（§2-2）" class="headerlink" title="2. 多址接入信道模型与容量定理（§2.2）"></a>2. 多址接入信道模型与容量定理（§2.2）</h2><h3 id="2-1-MAC-的数学模型"><a href="#2-1-MAC-的数学模型" class="headerlink" title="2.1 MAC 的数学模型"></a>2.1 MAC 的数学模型</h3><p><strong>离散无记忆 MAC</strong> 由 $(\mathcal{X}_1, \mathcal{X}_2, \mathcal{Y}, P(y|x_1, x_2))$ 描述，其中两个发送端独立编码、一个接收端联合译码。</p>
+<h4 id="MAC-系统框图"><a href="#MAC-系统框图" class="headerlink" title="MAC 系统框图"></a>MAC 系统框图</h4><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    W1[&quot;W₁ ∈ {1,…,2&lt;sup&gt;nR₁&lt;&#x2F;sup&gt;}&quot;] --&gt; ENC1[&quot;编码器 1&lt;br&#x2F;&gt;X₁&lt;sup&gt;n&lt;&#x2F;sup&gt;(W₁)&quot;]
+    W2[&quot;W₂ ∈ {1,…,2&lt;sup&gt;nR₂&lt;&#x2F;sup&gt;}&quot;] --&gt; ENC2[&quot;编码器 2&lt;br&#x2F;&gt;X₂&lt;sup&gt;n&lt;&#x2F;sup&gt;(W₂)&quot;]
+    ENC1 --&gt;|&quot;X₁&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;| CH[&quot;MAC&lt;br&#x2F;&gt;P(y|x₁,x₂)&quot;]
+    ENC2 --&gt;|&quot;X₂&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;| CH
+    CH --&gt;|&quot;Y&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;| DEC[&quot;译码器&lt;br&#x2F;&gt;g(Y&lt;sup&gt;n&lt;&#x2F;sup&gt;)&quot;]
+    DEC --&gt; W1HAT[&quot;Ŵ₁&quot;]
+    DEC --&gt; W2HAT[&quot;Ŵ₂&quot;]
+  </pre></div>
+<p><strong>关键特征</strong>:</p>
+<ul>
+<li><strong>发端独立</strong>: $X_1$ 与 $X_2$ 相互独立——两个用户之间不能协作编码。</li>
+<li><strong>收端合作</strong>: 接收端同时收到叠加的信号，可以联合处理——这就是<strong>干扰抑制</strong>的来源。</li>
+<li><strong>信道</strong>: 离散无记忆，即 $P(y^n|x<em>1^n, x_2^n) = \prod</em>{i=1}^{n} P(y<em>i|x</em>{1,i}, x_{2,i})$。</li>
+</ul>
+<h3 id="2-2-码的定义"><a href="#2-2-码的定义" class="headerlink" title="2.2 码的定义"></a>2.2 码的定义</h3><p>一个 $(2^{nR_1}, 2^{nR_2}, n)$ 码由以下部分组成：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>组件</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>消息集</strong></td>
+<td>$W_1 = {1, 2, \ldots, 2^{nR_1}}$，$W_2 = {1, 2, \ldots, 2^{nR_2}}$</td>
+</tr>
+<tr>
+<td><strong>编码函数</strong></td>
+<td>$f_1: W_1 \to \mathcal{X}_1^n$，$f_2: W_2 \to \mathcal{X}_2^n$</td>
+</tr>
+<tr>
+<td><strong>译码函数</strong></td>
+<td>$g: \mathcal{Y}^n \to W_1 \times W_2$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>性能度量——平均错误概率</strong>（假设消息在 $W_1 \times W_2$ 上均匀分布）:</p>
+<script type="math/tex; mode=display">P_e^{(n)} = \frac{1}{2^{n(R_1+R_2)}} \sum_{(w_1,w_2) \in W_1 \times W_2} P\big(g(Y^n) \neq (w_1, w_2) \mid (w_1, w_2) \text{ 发送}\big)</script><h3 id="2-3-可达速率与容量区域"><a href="#2-3-可达速率与容量区域" class="headerlink" title="2.3 可达速率与容量区域"></a>2.3 可达速率与容量区域</h3><blockquote>
+<p>速率对 $(R_1, R_2)$ 是<strong>可达的</strong>，如果存在一列 $(2^{nR_1}, 2^{nR_2}, n)$ 码使得 $P_e^{(n)} \to 0$。</p>
+<p><strong>容量区域</strong>是所有可达速率对 $(R_1, R_2)$ 的集合的闭包。</p>
+</blockquote>
+<h3 id="2-4-MAC-容量定理（Theorem-2-2-1）⭐"><a href="#2-4-MAC-容量定理（Theorem-2-2-1）⭐" class="headerlink" title="2.4 MAC 容量定理（Theorem 2.2.1）⭐"></a>2.4 MAC 容量定理（Theorem 2.2.1）⭐</h3><blockquote>
+<p><strong>定理 2.2.1（MAC 容量区域）</strong>: 容量区域是所有满足以下条件的速率对 $(R_1, R_2)$ 的凸壳的闭包：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+R_1 &< I(X_1; Y | X_2) \\\\
+R_2 &< I(X_2; Y | X_1) \\\\
+R_1 + R_2 &< I(X_1, X_2; Y)
+\end{aligned}</script><p>其中联合分布为 $P(x_1)P(x_2)P(y|x_1, x_2)$（即 $X_1 \perp X_2$）。</p>
+</blockquote>
+<p><strong>容量区域的形状</strong>（五边形区域）:</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph MAC容量区域
+        direction TB
+        A[&quot;A: (0, I(X₂;Y))&quot;]
+        B[&quot;B: (I(X₁;Y), I(X₂;Y|X₁))&quot;]
+        C[&quot;C: (I(X₁;Y|X₂), I(X₂;Y))&quot;]
+        D[&quot;D: (I(X₁;Y), 0)&quot;]
+    end
+  </pre></div>
+<p>以坐标图示意：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">R₂</span><br><span class="line">^</span><br><span class="line">|  A(0, I(X₂;Y))</span><br><span class="line">|  |＼</span><br><span class="line">|  |   ＼  B(I(X₁;Y), I(X₂;Y|X₁))</span><br><span class="line">|  |      ＼</span><br><span class="line">|  |  C(I(X₁;Y|X₂), I(X₂;Y))</span><br><span class="line">|  |       ／</span><br><span class="line">|  |    ／</span><br><span class="line">|  | ／</span><br><span class="line">|  D(I(X₁;Y), 0)</span><br><span class="line">+-----------------------&gt; R₁</span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>上边界</strong>: $R_1 + R_2 = I(X_1, X_2; Y)$——和速率上界</li>
+<li><strong>左边垂直线段</strong>: $R_1 &lt; I(X_1; Y|X_2)$</li>
+<li><strong>右边垂直线段</strong>: $R_2 &lt; I(X_2; Y|X_1)$</li>
+<li><strong>角点 A</strong>: 用户 2 全速，用户 1 不传 → $(0, I(X_2; Y))$</li>
+<li><strong>角点 D</strong>: 用户 1 全速，用户 2 不传 → $(I(X_1; Y), 0)$</li>
+<li><strong>角点 B</strong>: $R_1 = I(X_1; Y)$，$R_2 = I(X_2; Y|X_1)$（先译用户 2，再译用户 1）</li>
+<li><strong>角点 C</strong>: $R_1 = I(X_1; Y|X_2)$，$R_2 = I(X_2; Y)$（先译用户 1，再译用户 2）</li>
+</ul>
+<blockquote>
+<p>📌 <strong>定理的数学含义</strong>: 对每个独立的输入分布 $P(x_1)P(x_2)$，得到一个五边形区域 $R(X_1, X_2)$。最终的容量区域是所有这样的五边形的<strong>并集的凸壳</strong>。</p>
+</blockquote>
+<h3 id="2-5-典型-MAC-实例"><a href="#2-5-典型-MAC-实例" class="headerlink" title="2.5 典型 MAC 实例"></a>2.5 典型 MAC 实例</h3><h4 id="例-1-独立-BSC-信道"><a href="#例-1-独立-BSC-信道" class="headerlink" title="例 1: 独立 BSC 信道"></a>例 1: 独立 BSC 信道</h4><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    X1(&quot;X₁ ∈ {0,1}&quot;) --&gt; BSC1[&quot;BSC(ε₁)&quot;]
+    X2(&quot;X₂ ∈ {0,1}&quot;) --&gt; BSC2[&quot;BSC(ε₂)&quot;]
+    BSC1 --&gt;|&quot;Y₁&quot;| PLUS((&quot;Y &#x3D; (Y₁,Y₂)&quot;))
+    BSC2 --&gt;|&quot;Y₂&quot;| PLUS
+  </pre></div>
+<p>两个用户各经过一个独立 BSC 到达接收端。容量区域可直接由定理 2.2.1 计算。</p>
+<h4 id="例-2-二元乘法信道（Binary-Multiplier-Channel）"><a href="#例-2-二元乘法信道（Binary-Multiplier-Channel）" class="headerlink" title="例 2: 二元乘法信道（Binary Multiplier Channel）"></a>例 2: 二元乘法信道（Binary Multiplier Channel）</h4><script type="math/tex; mode=display">Y = X_1 \cdot X_2</script><ul>
+<li>$\mathcal{X}_1 = \mathcal{X}_2 = {0, 1}$，$\mathcal{Y} = {0, 1}$</li>
+<li>令 $X_1 = 1$（固定），用户 2 可以达到速率 $R_2 = 1$</li>
+<li><strong>即使两用户协作</strong>，和速率的上界也是 1</li>
+<li>通过<strong>时间共享（Time-Sharing）</strong>可以达到 $R_1 + R_2 = 1$</li>
+</ul>
+<blockquote>
+<p><strong>启示</strong>: 乘法信道本质上是”破坏性”的——一个用户传 0 时会”淹没”另一用户的信息。这体现了多址接入中干扰的极端形式。</p>
+</blockquote>
+<h4 id="例-3-二元擦除-MAC（Binary-Erasure-MAC）"><a href="#例-3-二元擦除-MAC（Binary-Erasure-MAC）" class="headerlink" title="例 3: 二元擦除 MAC（Binary Erasure MAC）"></a>例 3: 二元擦除 MAC（Binary Erasure MAC）</h4><script type="math/tex; mode=display">Y = X_1 + X_2, \quad \mathcal{X}_1 = \mathcal{X}_2 = \{0, 1\}, \quad \mathcal{Y} \in \{0, 1, 2\}</script><ul>
+<li><strong>单用户最大速率</strong>: $R_i = 1$（$i = 1, 2$）</li>
+<li>当用户 1 以最大速率 $R_1 = 1$ 传输（$X_1$ 服从 Bernoulli(1/2)），用户 2 面对的等效信道是一个<strong>擦除概率为 $1/2$ 的 BEC</strong>，$C_2 = 1/2$</li>
+<li>利用<strong>逐次干扰消除（Successive Cancellation）</strong>可以达到边界点</li>
+</ul>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 二元擦除MAC
+        X1[&quot;X₁ ∈ {0,1}&quot;] --&gt; PLUS((&quot;Y &#x3D; X₁+X₂&lt;br&#x2F;&gt;Y ∈ {0,1,2}&quot;))
+        X2[&quot;X₂ ∈ {0,1}&quot;] --&gt; PLUS
+    end
+  </pre></div>
+<h4 id="例-4-高斯-MAC（Gaussian-MAC）"><a href="#例-4-高斯-MAC（Gaussian-MAC）" class="headerlink" title="例 4: 高斯 MAC（Gaussian MAC）"></a>例 4: 高斯 MAC（Gaussian MAC）</h4><script type="math/tex; mode=display">Y = X_1 + X_2 + Z, \quad Z \sim \mathcal{N}(0, \sigma^2)</script><p>这是最重要的 MAC 模型，将在 §2.6 中详细分析。</p>
+<h2 id="3-可达性证明：同时译码（§2-3）"><a href="#3-可达性证明：同时译码（§2-3）" class="headerlink" title="3. 可达性证明：同时译码（§2.3）"></a>3. 可达性证明：同时译码（§2.3）</h2><p>本节给出 MAC 容量定理的<strong>可达性证明</strong>，这是理解多用户信息论证明技术的核心。</p>
+<h3 id="3-1-编码方案（随机编码）"><a href="#3-1-编码方案（随机编码）" class="headerlink" title="3.1 编码方案（随机编码）"></a>3.1 编码方案（随机编码）</h3><ol>
+<li><strong>固定输入分布</strong>: $P(x_1, x_2) = P(x_1)P(x_2)$（独立分布）</li>
+<li><strong>随机生成码本</strong>:<ul>
+<li>码本 1: 独立生成 $2^{nR_1}$ 个码字，每个码字的 $n$ 个分量 i.i.d. 服从 $P(x_1)$</li>
+<li>码本 2: 独立生成 $2^{nR_2}$ 个码字，每个码字的 $n$ 个分量 i.i.d. 服从 $P(x_2)$</li>
+</ul>
+</li>
+<li><strong>编码</strong>: 编码器根据消息 $W_1 = i$ 选择码字 $\mathbf{x}_1(i)$；编码器 2 根据消息 $W_2 = j$ 选择码字 $\mathbf{x}_2(j)$。两者<strong>独立选择</strong>。</li>
+</ol>
+<h3 id="3-2-译码方案（同时译码-Simultaneous-Decoding）"><a href="#3-2-译码方案（同时译码-Simultaneous-Decoding）" class="headerlink" title="3.2 译码方案（同时译码 / Simultaneous Decoding）"></a>3.2 译码方案（同时译码 / Simultaneous Decoding）</h3><blockquote>
+<p><strong>同时译码规则</strong>: 若存在<strong>唯一</strong>的码字对 $(\mathbf{x}_1(i), \mathbf{x}_2(j))$ 使得与接收序列 $\mathbf{y}$ 联合典型：</p>
+<script type="math/tex; mode=display">(\mathbf{x}_1(i), \mathbf{x}_2(j), \mathbf{y}) \in T_\varepsilon^{(n)}</script><p>则译码为 $(\hat{W}_1, \hat{W}_2) = (i, j)$；否则宣布错误。</p>
+</blockquote>
+<h3 id="3-3-错误概率分析（证明的核心）"><a href="#3-3-错误概率分析（证明的核心）" class="headerlink" title="3.3 错误概率分析（证明的核心）"></a>3.3 错误概率分析（证明的核心）</h3><p>不失一般性，假设发送的是 $(i, j) = (1, 1)$。定义事件：</p>
+<script type="math/tex; mode=display">E_{i,j} = \left\{(\mathbf{x}_1(i), \mathbf{x}_2(j), \mathbf{y}) \in T_\varepsilon^{(n)}\right\}</script><p>错误概率:</p>
+<script type="math/tex; mode=display">P_e^{(n)} = P\left(E_{1,1}^c \cup \bigcup_{(i,j) \neq (1,1)} E_{i,j}\right)</script><p>利用 Union Bound:</p>
+<script type="math/tex; mode=display">P_e^{(n)} \leq P(E_{1,1}^c) + \sum_{i=1, j \neq 1} P(E_{1,j}) + \sum_{i \neq 1, j=1} P(E_{i,1}) + \sum_{i \neq 1, j \neq 1} P(E_{i,j})</script><h4 id="四类错误的逐一分析"><a href="#四类错误的逐一分析" class="headerlink" title="四类错误的逐一分析"></a>四类错误的逐一分析</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>错误类型</th>
+<th>场景</th>
+<th>概率界</th>
+<th>需要的条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$E_{1,1}^c$</td>
+<td>正确码字对不典型</td>
+<td>$\to 0$（联合 AEP）</td>
+<td>无条件</td>
+</tr>
+<tr>
+<td>$E_{i,1}$ ($i \neq 1$)</td>
+<td>用户 1 错 + 用户 2 对</td>
+<td>$\leq 2^{-n[I(X_1;Y\vert X_2)-3\varepsilon]}$</td>
+<td>$R_1 &lt; I(X_1;Y\vert X_2)$</td>
+</tr>
+<tr>
+<td>$E_{1,j}$ ($j \neq 1$)</td>
+<td>用户 1 对 + 用户 2 错</td>
+<td>$\leq 2^{-n[I(X_2;Y\vert X_1)-3\varepsilon]}$</td>
+<td>$R_2 &lt; I(X_2;Y\vert X_1)$</td>
+</tr>
+<tr>
+<td>$E_{i,j}$ ($i,j \neq 1$)</td>
+<td>两用户都错</td>
+<td>$\leq 2^{-n[I(X_1,X_2;Y)-2\varepsilon]}$</td>
+<td>$R_1+R_2 &lt; I(X_1,X_2;Y)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="详细推导（以-E-i-j-为例，-i-j-neq-1-）"><a href="#详细推导（以-E-i-j-为例，-i-j-neq-1-）" class="headerlink" title="详细推导（以 $E_{i,j}$ 为例，$i, j \neq 1$）"></a>详细推导（以 $E_{i,j}$ 为例，$i, j \neq 1$）</h4><p>当 $i \neq 1, j \neq 1$ 时，$\mathbf{x}_1(i)$、$\mathbf{x}_2(j)$ 和 $\mathbf{y}$ 是<strong>相互独立</strong>地从各自的边际分布中抽取的。因此：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+P(E_{i,j}) &= \sum_{(\mathbf{x}_1, \mathbf{x}_2, \mathbf{y}) \in T_\varepsilon^{(n)}} P(\mathbf{x}_1)P(\mathbf{x}_2)P(\mathbf{y}) \\\\
+&\leq |T_\varepsilon^{(n)}| \cdot 2^{-n[H(X_1)-\varepsilon]} \cdot 2^{-n[H(X_2)-\varepsilon]} \cdot 2^{-n[H(Y)-\varepsilon]} \\\\
+&\leq 2^{n[H(X_1,X_2,Y)+\varepsilon]} \cdot 2^{-n[H(X_1)+H(X_2)+H(Y)-3\varepsilon]} \\\\
+&= 2^{-n[I(X_1,X_2;Y)-2\varepsilon]}
+\end{aligned}</script><p>其中关键一步使用了恒等式：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+H(X_1,X_2,Y) - [H(X_1)+H(X_2)+H(Y)] &= H(Y|X_1,X_2) - H(Y) \\\\
+&= -I(X_1,X_2;Y)
+\end{aligned}</script><blockquote>
+<p>因为 $X_1, X_2$ 独立，$H(X_1)+H(X_2) = H(X_1,X_2)$。</p>
+</blockquote>
+<p><strong>对 $i \neq 1$ 的和式</strong>:</p>
+<script type="math/tex; mode=display">\sum_{i \neq 1, j \neq 1} P(E_{i,j}) \leq 2^{nR_1} \cdot 2^{nR_2} \cdot 2^{-n[I(X_1,X_2;Y)-2\varepsilon]} = 2^{-n[I(X_1,X_2;Y)-R_1-R_2-2\varepsilon]}</script><blockquote>
+<p>当 $R_1 + R_2 &lt; I(X_1, X_2; Y)$ 时，此项 $\to 0$。</p>
+</blockquote>
+<h4 id="详细推导（以-E-i-1-为例，-i-neq-1-）"><a href="#详细推导（以-E-i-1-为例，-i-neq-1-）" class="headerlink" title="详细推导（以 $E_{i,1}$ 为例，$i \neq 1$）"></a>详细推导（以 $E_{i,1}$ 为例，$i \neq 1$）</h4><p>此时 $\mathbf{x}_2(1)$ 和 $\mathbf{y}$ 是从联合分布中抽取的（相关），而 $\mathbf{x}_1(i)$ 是独立抽取的：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+P(E_{i,1}) &= \sum_{(\mathbf{x}_1, \mathbf{x}_2, \mathbf{y}) \in T_\varepsilon^{(n)}} P(\mathbf{x}_1)P(\mathbf{x}_2, \mathbf{y}) \\\\
+&\leq |T_\varepsilon^{(n)}| \cdot 2^{-n[H(X_1)-\varepsilon]} \cdot 2^{-n[H(X_2,Y)-\varepsilon]} \\\\
+&\leq 2^{n[H(X_1,X_2,Y)+\varepsilon]} \cdot 2^{-n[H(X_1)+H(X_2,Y)-2\varepsilon]} \\\\
+&= 2^{-n[I(X_1;Y|X_2)-3\varepsilon]}
+\end{aligned}</script><p>其中恒等式链：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+H(X_1,X_2,Y) - [H(X_1)+H(X_2,Y)] &= H(X_1|X_2,Y) - H(X_1) \\\\
+&= -I(X_1; X_2, Y) \\\\
+&= -[I(X_1; X_2) + I(X_1; Y|X_2)] \\\\
+&= -I(X_1; Y|X_2) \quad (\text{因为 } X_1 \perp X_2)
+\end{aligned}</script><h4 id="总错误概率上界"><a href="#总错误概率上界" class="headerlink" title="总错误概率上界"></a>总错误概率上界</h4><p>汇总以上分析：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+P_e^{(n)} &\leq P(E_{1,1}^c) \\\\
+&\quad + 2^{nR_1} \cdot 2^{-n[I(X_1;Y|X_2)-3\varepsilon]} \\\\
+&\quad + 2^{nR_2} \cdot 2^{-n[I(X_2;Y|X_1)-3\varepsilon]} \\\\
+&\quad + 2^{n(R_1+R_2)} \cdot 2^{-n[I(X_1,X_2;Y)-2\varepsilon]}
+\end{aligned}</script><p>当满足定理 2.2.1 的三个不等式时，所有项随 $n \to \infty$ 而趋于 0。</p>
+<blockquote>
+<p><strong>结论</strong>: 平均错误概率可任意小，因此<strong>存在</strong>至少一个好码 $C^<em>$ 使 $P_e^{(n)} \to 0$。这就证明了定理 2.2.1 中的速率区域是<em>*可达的</em></em>。</p>
+</blockquote>
+<h3 id="3-4-关于边界点"><a href="#3-4-关于边界点" class="headerlink" title="3.4 关于边界点"></a>3.4 关于边界点</h3><p>不同的译码顺序可以达到五边形的不同角点：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>角点</th>
+<th>速率对</th>
+<th>译码策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>B</td>
+<td>$(I(X_1;Y), I(X_2;Y\vert X_1))$</td>
+<td>先译用户 2（将用户 1 当噪声），再译用户 1</td>
+</tr>
+<tr>
+<td>C</td>
+<td>$(I(X_1;Y\vert X_2), I(X_2;Y))$</td>
+<td>先译用户 1（将用户 2 当噪声），再译用户 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>角点可用逐次干扰消除（SIC）达到</strong>——在信息论意义下 SIC 是最优的。</li>
+<li><strong>非角点</strong>: 通过<strong>时间共享（Time-Sharing）</strong>在角点之间插值达到。</li>
+</ul>
+<h2 id="4-MAC-容量区域的进一步讨论（§2-4）"><a href="#4-MAC-容量区域的进一步讨论（§2-4）" class="headerlink" title="4. MAC 容量区域的进一步讨论（§2.4）"></a>4. MAC 容量区域的进一步讨论（§2.4）</h2><h3 id="4-1-时间共享（Time-Sharing）"><a href="#4-1-时间共享（Time-Sharing）" class="headerlink" title="4.1 时间共享（Time-Sharing）"></a>4.1 时间共享（Time-Sharing）</h3><p>时间共享是时分多址（TDMA）的推广：允许发送端在每个时隙中同时以<strong>不同速率</strong>传输，而非轮流独占信道。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 时间共享构造
+        TS1[&quot;λn 个符号&lt;br&#x2F;&gt;使用码本 1&lt;br&#x2F;&gt;速率 R &#x3D; (R₁,R₂)&quot;]
+        TS2[&quot;(1-λ)n 个符号&lt;br&#x2F;&gt;使用码本 2&lt;br&#x2F;&gt;速率 R&#39; &#x3D; (R₁&#39;,R₂&#39;)&quot;]
+        TS1 --&gt; TS2
+    end
+  </pre></div>
+<ul>
+<li><strong>构造</strong>: 给定两个不同速率的码序列，构造第三个码——前 $\lambda n$ 个符号使用码本 1，后 $(1-\lambda)n$ 个符号使用码本 2。</li>
+<li><strong>可达速率</strong>: $R_{\text{new}} = \lambda R + (1-\lambda)R’$</li>
+<li><strong>译码</strong>: 分别对两段进行独立译码。</li>
+</ul>
+<blockquote>
+<p><strong>TDMA 和 FDMA</strong> 都是时间共享的特例——分别在 $(R_1, 0)$ 和 $(0, R_2)$ 两个点之间时间共享。</p>
+</blockquote>
+<h3 id="4-2-凸壳（Convex-Hull）"><a href="#4-2-凸壳（Convex-Hull）" class="headerlink" title="4.2 凸壳（Convex Hull）"></a>4.2 凸壳（Convex Hull）</h3><p>由于两个用户可以使用独立的输入分布，每个乘积分布 $P(x_1)P(x_2)$ 对应一个可达区域 $R_p$。<strong>所有 $R_p$ 的并集不一定是凸的</strong>，但通过时间共享可以取凸壳来获得更大的可达区域。</p>
+<blockquote>
+<p><strong>凸壳的定义</strong>: 集合 $S$ 的凸壳是包含 $S$ 的最小凸集，等价于 $S$ 中点的所有凸组合的集合。</p>
+</blockquote>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph 凸壳示意
+        direction LR
+        R1[&quot;Rₚ₁ 区域&quot;]
+        R2[&quot;Rₚ₂ 区域&quot;]
+        R3[&quot;Rₚ₃ 区域&quot;]
+    end
+    CH[&quot;凸壳 &#x3D; 包含所有 Rₚ 的最小凸集&quot;]
+    R1 --&gt; CH
+    R2 --&gt; CH
+    R3 --&gt; CH
+  </pre></div>
+<h4 id="用时间共享变量-Q-表示凸组合"><a href="#用时间共享变量-Q-表示凸组合" class="headerlink" title="用时间共享变量 $Q$ 表示凸组合"></a>用时间共享变量 $Q$ 表示凸组合</h4><p>引入随机变量 $Q$（$|Q| \leq 3$，实际上 $\vert Q\vert \leq 2$ 就足够了），取值为 $i$ 的概率为 $\lambda_i$，定义联合分布：</p>
+<script type="math/tex; mode=display">P(q, x_1, x_2, y) = P(q) \cdot P(x_1|q) \cdot P(x_2|q) \cdot P(y|x_1, x_2)</script><p>其中 $P(x_1|q)P(x_2|q) = P_q(x_1, x_2)$（即当 $Q=q$ 时的 $(X_1, X_2)$ 分布）。</p>
+<p>于是凸壳中的任意点满足：</p>
+<script type="math/tex; mode=display">R_1 < I(X_1; Y | X_2, Q), \quad R_2 < I(X_2; Y | X_1, Q), \quad R_1+R_2 < I(X_1, X_2; Y | Q)</script><p>因为：</p>
+<script type="math/tex; mode=display">I(X_1; Y | X_2, Q) = \sum_q P(q) I_{P_q}(X_1; Y | X_2)</script><blockquote>
+<p><strong>关键</strong>: 引入 $Q$ 后，互信息是各 $R_q$ 区域中速率的凸组合。因此引入 $Q$ <strong>等价于已做时间共享</strong>——不必再额外取凸运算。</p>
+</blockquote>
+<h3 id="4-3-时间共享变量的基数界"><a href="#4-3-时间共享变量的基数界" class="headerlink" title="4.3 时间共享变量的基数界"></a>4.3 时间共享变量的基数界</h3><blockquote>
+<p><strong>$\vert Q\vert \leq 2$ 就足够了！</strong></p>
+</blockquote>
+<p><strong>理由</strong>: 凸壳中的任意点都可以表示为至多<strong>两个</strong>$R(X_1, X_2)$ 区域中点的凸组合（Carathéodory 定理在二维中的推论）。</p>
+<p>每个点都在不超过两个 $R(X_1, X_2)$ 区域的并集的凸闭包中。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph Fig 2.8 解释
+        direction LR
+        subgraph a[&quot;(a) 两个区域&quot;]
+            A1[&quot;Rₚ₁&quot;] 
+            A2[&quot;Rₚ₂&quot;]
+        end
+        subgraph b[&quot;(b) 凸组合&quot;]
+            B1[&quot;λR₁ + (1-λ)R₂&quot;]
+        end
+    end
+  </pre></div>
+<h3 id="4-4-编码时间共享（Coded-Time-Sharing）"><a href="#4-4-编码时间共享（Coded-Time-Sharing）" class="headerlink" title="4.4 编码时间共享（Coded Time-Sharing）"></a>4.4 编码时间共享（Coded Time-Sharing）</h3><p>Han–Kobayashi (1981) 提出了一种更精细的时间共享方法：</p>
+<ol>
+<li><strong>随机生成时间共享序列</strong>: $\mathbf{q}^n \sim \prod_{i=1}^{n} P_Q(q_i)$</li>
+<li><strong>条件独立生成码字</strong>: 在给定 $\mathbf{q}^n$ 的条件下，独立生成：<ul>
+<li><script type="math/tex; mode=display">\mathbf{x}_1^n(w_1) \sim \prod_{i=1}^{n} P_{X_1|Q}(x_{1,i}|q_i)</script></li>
+<li><script type="math/tex; mode=display">\mathbf{x}_2^n(w_2) \sim \prod_{i=1}^{n} P_{X_2|Q}(x_{2,i}|q_i)</script></li>
+</ul>
+</li>
+</ol>
+<blockquote>
+<p><strong>与普通时间共享的区别</strong>: 编码时间共享中，$Q$ 序列也作为码本的一部分随机生成，而非预先固定。</p>
+</blockquote>
+<h3 id="4-5-和速率容量"><a href="#4-5-和速率容量" class="headerlink" title="4.5 和速率容量"></a>4.5 和速率容量</h3><script type="math/tex; mode=display">\begin{aligned}
+C_{\text{sum}} &= \max_{P(q)P(x_1|q)P(x_2|q)} I(X_1, X_2; Y | Q) \quad \text{（凸的）}\\\\
+&= \max_{P(x_1)P(x_2)} I(X_1, X_2; Y) \quad \text{（一般非凸）}
+\end{aligned}</script><blockquote>
+<p><strong>困难</strong>: 第二个最大化问题一般不是凸的，这正是需要时间共享来凸化容量区域的原因。</p>
+</blockquote>
+<h2 id="5-逐次干扰消除译码（§2-5）"><a href="#5-逐次干扰消除译码（§2-5）" class="headerlink" title="5. 逐次干扰消除译码（§2.5）"></a>5. 逐次干扰消除译码（§2.5）</h2><p>除了 §2.3 中的同时译码方案，MAC 容量区域的角点也可以通过<strong>逐次干扰消除（Successive Cancellation, SC）译码</strong>来达到。</p>
+<h3 id="5-1-目标"><a href="#5-1-目标" class="headerlink" title="5.1 目标"></a>5.1 目标</h3><p>达到五边形区域 $R(X_1, X_2)$ 的两个角点之一，例如：</p>
+<script type="math/tex; mode=display">R_1 < I(X_1; Y), \quad R_2 < I(X_2; Y | X_1)</script><p>（这对应于<strong>先译 $X_1$，再译 $X_2$</strong>的角点 B。）</p>
+<h3 id="5-2-译码步骤"><a href="#5-2-译码步骤" class="headerlink" title="5.2 译码步骤"></a>5.2 译码步骤</h3><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    Y[&quot;接收 Y&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;] --&gt; STEP1[&quot;步骤 1: 译用户 1&lt;br&#x2F;&gt;找唯一 Ŵ₁ 使得&lt;br&#x2F;&gt;(X₁&lt;sup&gt;n&lt;&#x2F;sup&gt;(Ŵ₁), Y&lt;sup&gt;n&lt;&#x2F;sup&gt;) ∈ T&lt;sub&gt;ε&lt;&#x2F;sub&gt;&lt;sup&gt;(n)&lt;&#x2F;sup&gt;&quot;]
+    STEP1 --&gt;|&quot;找到 Ŵ₁&quot;| STEP2[&quot;步骤 2: 译用户 2&lt;br&#x2F;&gt;找唯一 Ŵ₂ 使得&lt;br&#x2F;&gt;(X₁&lt;sup&gt;n&lt;&#x2F;sup&gt;(Ŵ₁), X₂&lt;sup&gt;n&lt;&#x2F;sup&gt;(Ŵ₂), Y&lt;sup&gt;n&lt;&#x2F;sup&gt;) ∈ T&lt;sub&gt;ε&lt;&#x2F;sub&gt;&lt;sup&gt;(n)&lt;&#x2F;sup&gt;&quot;]
+    STEP2 --&gt; OUT[&quot;输出 (Ŵ₁, Ŵ₂)&quot;]
+    STEP1 --&gt;|&quot;失败&quot;| ERR[&quot;宣布错误&quot;]
+    STEP2 --&gt;|&quot;失败&quot;| ERR
+  </pre></div>
+<h3 id="5-3-错误事件（假设发送-W-1-W-2-1-1-）"><a href="#5-3-错误事件（假设发送-W-1-W-2-1-1-）" class="headerlink" title="5.3 错误事件（假设发送 $(W_1, W_2) = (1, 1)$）"></a>5.3 错误事件（假设发送 $(W_1, W_2) = (1, 1)$）</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>事件</th>
+<th>条件</th>
+<th>概率控制</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$E_1$</td>
+<td><script type="math/tex">(\mathbf{x}_1(1), \mathbf{x}_2(1), \mathbf{y}) \notin T_\varepsilon^{(n)}</script></td>
+<td>联合 AEP $\to 0$</td>
+</tr>
+<tr>
+<td>$E_2$</td>
+<td><script type="math/tex">\exists w_1 \neq 1: (\mathbf{x}_1(w_1), \mathbf{y}) \in T_\varepsilon^{(n)}</script></td>
+<td>$R_1 &lt; I(X_1;Y)$</td>
+</tr>
+<tr>
+<td>$E_3$</td>
+<td><script type="math/tex">\exists w_2 \neq 1: (\mathbf{x}_1(1), \mathbf{x}_2(w_2), \mathbf{y}) \in T_\varepsilon^{(n)}</script></td>
+<td>$R_2 &lt; I(X_2;Y\vert X_1)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>另一角点</strong>的可达性通过交换译码顺序得到。<strong>非角点</strong>通过时间共享达到。</p>
+</blockquote>
+<h3 id="5-4-同时译码-vs-逐次干扰消除"><a href="#5-4-同时译码-vs-逐次干扰消除" class="headerlink" title="5.4 同时译码 vs 逐次干扰消除"></a>5.4 同时译码 vs 逐次干扰消除</h3><blockquote>
+<p>对于 DM-MAC，<strong>同时译码（Simultaneous Decoding）并不比逐次干扰消除（SC Decoding）+ 时间共享达到更高的速率</strong>。两者都能达到相同的容量区域。</p>
+</blockquote>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>译码方法</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>同时译码</strong></td>
+<td>一步找到与接收序列联合典型的码字对；不需要指定译码顺序</td>
+</tr>
+<tr>
+<td><strong>逐次干扰消除</strong></td>
+<td>先译一个用户（将另一个当噪声），消除后再译第二个；译码顺序有先后</td>
+</tr>
+<tr>
+<td><strong>时间共享 + SC</strong></td>
+<td>可以达到整个容量区域（包括非角点）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="6-高斯多址接入信道（§2-6）"><a href="#6-高斯多址接入信道（§2-6）" class="headerlink" title="6. 高斯多址接入信道（§2.6）"></a>6. 高斯多址接入信道（§2.6）</h2><p>高斯 MAC 是最重要的多址信道模型，直接描述了无线通信中多个用户同时向基站发送信号的基本场景。</p>
+<h3 id="6-1-基本模型"><a href="#6-1-基本模型" class="headerlink" title="6.1 基本模型"></a>6.1 基本模型</h3><script type="math/tex; mode=display">Y = X_1 + X_2 + Z, \quad Z \sim \mathcal{N}(0, \sigma_z^2)</script><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    X1[&quot;X₁ ~ N(0,P₁)&quot;] --&gt; PLUS((&quot;+&quot;))
+    X2[&quot;X₂ ~ N(0,P₂)&quot;] --&gt; PLUS
+    Z[&quot;Z ~ N(0,σ²)&quot;] --&gt; PLUS
+    PLUS --&gt; Y[&quot;Y&quot;]
+  </pre></div>
+<p><strong>功率约束</strong>（每用户）:</p>
+<script type="math/tex; mode=display">\frac{1}{n}\sum_{i=1}^{n} x_{j,i}^2(w_j) \leq P_j, \quad j \in \{1, 2\}</script><h3 id="6-2-高斯-MAC-容量区域"><a href="#6-2-高斯-MAC-容量区域" class="headerlink" title="6.2 高斯 MAC 容量区域"></a>6.2 高斯 MAC 容量区域</h3><p>令 $C(x) = \frac{1}{2}\log_2(1 + x)$，则容量区域为：</p>
+<script type="math/tex; mode=display">\boxed{
+\begin{aligned}
+R_1 &\leq C\left(\frac{P_1}{\sigma_z^2}\right) \\\\
+R_2 &\leq C\left(\frac{P_2}{\sigma_z^2}\right) \\\\
+R_1 + R_2 &\leq C\left(\frac{P_1 + P_2}{\sigma_z^2}\right)
+\end{aligned}}</script><blockquote>
+<p><strong>最优输入分布</strong>: $X_1 \sim \mathcal{N}(0, P_1)$，$X_2 \sim \mathcal{N}(0, P_2)$（星座成形/Constellation Shaping）。</p>
+</blockquote>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 高斯MAC容量区域
+        direction TB
+        A2[&quot;C(P₂&#x2F;σ²)&quot;]
+        D2[&quot;C(P₁&#x2F;σ²)&quot;]
+        SUM[&quot;C((P₁+P₂)&#x2F;σ²)&quot;]
+    end
+  </pre></div>
+<p>以坐标图表示：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">R₂</span><br><span class="line">^</span><br><span class="line">|  C(P₂/σ²)</span><br><span class="line">|  |＼</span><br><span class="line">|  |   ＼</span><br><span class="line">|  |      ＼ 和速率 = C((P₁+P₂)/σ²)</span><br><span class="line">|  |         ＼</span><br><span class="line">|  |            ＼</span><br><span class="line">+-----------------------&gt; R₁</span><br><span class="line">              C(P₁/σ²)</span><br></pre></td></tr></table></figure>
+<h4 id="推导（关键步骤）"><a href="#推导（关键步骤）" class="headerlink" title="推导（关键步骤）"></a>推导（关键步骤）</h4><p>以 $I(X_1; Y|X_2)$ 为例：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+I(X_1; Y|X_2) &= h(Y|X_2) - h(Y|X_1, X_2) \\\\
+&= h(X_1 + X_2 + Z | X_2) - h(X_1 + X_2 + Z | X_1, X_2) \\\\
+&= h(X_1 + Z | X_2) - h(Z) \\\\
+&= h(X_1 + Z) - h(Z) \quad (\text{因为 } X_1 \perp X_2 \text{ 且 } Z \perp X_2)\\\\
+&\leq \frac{1}{2}\log\left[2\pi e(P_1 + \sigma_z^2)\right] - \frac{1}{2}\log\left[2\pi e\sigma_z^2\right] \\\\
+&= \frac{1}{2}\log\left(1 + \frac{P_1}{\sigma_z^2}\right) = C\left(\frac{P_1}{\sigma_z^2}\right)
+\end{aligned}</script><blockquote>
+<p><strong>关键发现</strong>: 对于高斯 MAC，<strong>不需要时间共享</strong>——单个 $R(X_1, X_2)$ 区域本身就是凸的，即为最终容量区域。</p>
+</blockquote>
+<h3 id="6-3-多用户扩展"><a href="#6-3-多用户扩展" class="headerlink" title="6.3 多用户扩展"></a>6.3 多用户扩展</h3><p>推广到 $m$ 个等功率 $P$ 的发送端：</p>
+<script type="math/tex; mode=display">R_{\text{total}} = C\left(\frac{mP}{\sigma_z^2}\right) \to \infty \quad \text{当 } m \to \infty</script><p>但<strong>每用户平均速率</strong>趋于 0：</p>
+<script type="math/tex; mode=display">\frac{1}{m}C\left(\frac{mP}{\sigma_z^2}\right) \to 0</script><blockquote>
+<p><strong>启示</strong>: 当存在许多用户时，尽管有大量干扰，仍然可以传输任意大的总信息量——但每个用户获得的速率份额微乎其微。</p>
+</blockquote>
+<h3 id="6-4-一般化高斯-MAC-模型"><a href="#6-4-一般化高斯-MAC-模型" class="headerlink" title="6.4 一般化高斯 MAC 模型"></a>6.4 一般化高斯 MAC 模型</h3><script type="math/tex; mode=display">Y_k = h_1 X_{1,k} + h_2 X_{2,k} + Z_k, \quad Z_k \sim \mathcal{N}(0, 1)</script><p>记 $S_j = h_j^2 P_j$（接收信噪比），则容量区域为：</p>
+<script type="math/tex; mode=display">R_1 \leq C(S_1), \quad R_2 \leq C(S_2), \quad R_1+R_2 \leq C(S_1+S_2)</script><h3 id="6-5-X-DMA：高维空间中的多址接入"><a href="#6-5-X-DMA：高维空间中的多址接入" class="headerlink" title="6.5 X-DMA：高维空间中的多址接入"></a>6.5 X-DMA：高维空间中的多址接入</h3><p>MAC 在多维信号空间中有更多的设计自由度。考虑 2 维信号：</p>
+<script type="math/tex; mode=display">\mathbf{Y} = \mathbf{h}_1 X_1 + \mathbf{h}_2 X_2 + \mathbf{Z}</script><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph 多维空间中的多址对比
+        TDMA[&quot;TDMA&lt;br&#x2F;&gt;h₁&#x3D;[1,0]ᵀ, h₂&#x3D;[0,1]ᵀ&lt;br&#x2F;&gt;正交时隙&quot;]
+        FDMA[&quot;FDMA&lt;br&#x2F;&gt;h₁&#x3D;[1,1]ᵀ&#x2F;√2, h₂&#x3D;[1,-1]ᵀ&#x2F;√2&lt;br&#x2F;&gt;正交频率&quot;]
+        NOMA[&quot;NOMA&lt;br&#x2F;&gt;h₁, h₂ 非正交&lt;br&#x2F;&gt;功率域区分&quot;]
+    end
+  </pre></div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>多址方式</th>
+<th>签名向量</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>TDMA</strong></td>
+<td>$\mathbf{h}_1 = [1, 0]^T$, $\mathbf{h}_2 = [0, 1]^T$</td>
+<td>时间正交，无干扰</td>
+</tr>
+<tr>
+<td><strong>FDMA</strong></td>
+<td>$\mathbf{h}_1 = \frac{1}{\sqrt{2}}[1, 1]^T$, $\mathbf{h}_2 = \frac{1}{\sqrt{2}}[1, -1]^T$</td>
+<td>频率正交，无干扰</td>
+</tr>
+<tr>
+<td><strong>CDMA/NOMA</strong></td>
+<td>$\mathbf{h}_1, \mathbf{h}_2$ 非正交</td>
+<td>有干扰，但总速率更高</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="非正交签名的速率分析"><a href="#非正交签名的速率分析" class="headerlink" title="非正交签名的速率分析"></a>非正交签名的速率分析</h4><p>考虑 $|\mathbf{h}_i|^2 = 1$，各用户独立高斯输入，噪声为白高斯：</p>
+<ul>
+<li><strong>用户 2 的速率</strong>（用户 1 视为噪声）:</li>
+</ul>
+<script type="math/tex; mode=display">R_2 \leq I(X_2; Y|X_1) = \frac{1}{2}\log\left(1 + \frac{P_2}{\sigma^2}\|\mathbf{h}_2\|^2\right)</script><blockquote>
+<p>在白高斯噪声下，将接收信号投影到 $\mathbf{h}_2$ 方向是最优的。</p>
+</blockquote>
+<ul>
+<li><strong>和速率</strong>:</li>
+</ul>
+<script type="math/tex; mode=display">R_1 + R_2 \leq I(X_1, X_2; Y) = \frac{1}{2}\log\frac{|\mathbf{K}_Y|}{|\mathbf{K}_Z|}</script><ul>
+<li><strong>用户 1 的速率</strong>（在已知用户 2 以全功率和全速率发送时）:</li>
+</ul>
+<script type="math/tex; mode=display">R_1 = \frac{1}{2}\log\frac{|\mathbf{K}_Y|}{|\mathbf{K}_{Z'}|}</script><p>其中 $\mathbf{K}_{Z’} = P_2\mathbf{h}_2\mathbf{h}_2^H + \sigma^2\mathbf{I}$ 是”用户 2 + 噪声”的协方差矩阵。</p>
+<h4 id="白化方法"><a href="#白化方法" class="headerlink" title="白化方法"></a>白化方法</h4><p>将有色噪声问题转化为白噪声问题：设 $\mathbf{K}_{Z’} = \mathbf{B}\mathbf{B}^H$（Cholesky 分解），左乘 $\mathbf{B}^{-1}$：</p>
+<script type="math/tex; mode=display">\mathbf{Y}' = \mathbf{B}^{-1}\mathbf{Y} = \mathbf{B}^{-1}\mathbf{h}_1 X_1 + \mathbf{W}</script><p>其中 $\mathbf{W}$ 是单位方差的<strong>白</strong>噪声。然后投影到 $\mathbf{B}^{-1}\mathbf{h}_1$ 方向可得用户 1 的可达速率。</p>
+<h3 id="6-6-FDMA-与-TDMA-的速率分析"><a href="#6-6-FDMA-与-TDMA-的速率分析" class="headerlink" title="6.6 FDMA 与 TDMA 的速率分析"></a>6.6 FDMA 与 TDMA 的速率分析</h3><h4 id="FDMA（频分多址）"><a href="#FDMA（频分多址）" class="headerlink" title="FDMA（频分多址）"></a>FDMA（频分多址）</h4><p>分配带宽 $\alpha W$ 给用户 1，$(1-\alpha)W$ 给用户 2：</p>
+<script type="math/tex; mode=display">R_1 = \alpha W \log\left(1 + \frac{P_1}{\alpha W N_0}\right), \quad R_2 = (1-\alpha)W \log\left(1 + \frac{P_2}{(1-\alpha)W N_0}\right)</script><blockquote>
+<p><strong>最优带宽分配</strong>: $\alpha = \frac{P_1}{P_1 + P_2}$，即带宽与功率成正比时达到和速率最大。</p>
+</blockquote>
+<h4 id="TDMA（时分多址，可变功率）"><a href="#TDMA（时分多址，可变功率）" class="headerlink" title="TDMA（时分多址，可变功率）"></a>TDMA（时分多址，可变功率）</h4><p>时隙 $\tau_1 + \tau_2 = T$，$\alpha = \tau_1/T$。在 $\tau_k$ 期间，功率可提升为 $P_k/\alpha$：</p>
+<script type="math/tex; mode=display">R_1 = \alpha W \log\left(1 + \frac{P_1}{\alpha W N_0}\right), \quad R_2 = (1-\alpha)W \log\left(1 + \frac{P_2}{(1-\alpha)W N_0}\right)</script><blockquote>
+<p><strong>结论</strong>: 可变功率 TDMA 的速率表达式与 FDMA <strong>完全相同</strong>——两者在容量意义下是等价的。</p>
+</blockquote>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 多址方式对比
+        direction TB
+        OPT[&quot;最优方案&lt;br&#x2F;&gt;叠加编码 + SIC&lt;br&#x2F;&gt;达到容量边界&quot;]
+        FDMA2[&quot;FDMA &#x2F; TDMA&lt;br&#x2F;&gt;正交分配&quot;]
+        TDMA2[&quot;朴素 TDMA&lt;br&#x2F;&gt;时分复用&lt;br&#x2F;&gt;（无功率提升）&quot;]
+        OPT --&gt;|&quot;优于&quot;| FDMA2
+        FDMA2 --&gt;|&quot;优于&quot;| TDMA2
+    end
+  </pre></div>
+<h3 id="6-7-速率分裂（Rate-Splitting）"><a href="#6-7-速率分裂（Rate-Splitting）" class="headerlink" title="6.7 速率分裂（Rate-Splitting）"></a>6.7 速率分裂（Rate-Splitting）</h3><p>速率分裂是多用户通信中的一种常用编码技术。核心思想：将一个用户的消息<strong>分裂</strong>为两个或多个子消息，在不同的译码阶段分别消除。</p>
+<h4 id="方案描述"><a href="#方案描述" class="headerlink" title="方案描述"></a>方案描述</h4><p>将用户 1 的消息分裂为两个子消息，速率分别为 $R<em>{1,a}$ 和 $R</em>{1,b}$：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+R_1 &\to R_{1,a} + R_{1,b} \\\\
+P_1 &\to P_{1,a} + P_{1,b}, \quad P_{1,b} = \delta, \quad P_{1,a} = P_1 - \delta
+\end{aligned}</script><script type="math/tex; mode=display">X_1 = X_{1,a} + X_{1,b}</script><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    W1[&quot;W₁&quot;] --&gt; SPLIT[&quot;速率分裂&quot;]
+    SPLIT --&gt; W1A[&quot;W₁,a&lt;br&#x2F;&gt;速率 R₁,a&lt;br&#x2F;&gt;功率 P₁-δ&quot;]
+    SPLIT --&gt; W1B[&quot;W₁,b&lt;br&#x2F;&gt;速率 R₁,b&lt;br&#x2F;&gt;功率 δ&quot;]
+    W1A --&gt; ENC1A[&quot;X₁,a&quot;]
+    W1B --&gt; ENC1B[&quot;X₁,b&quot;]
+    ENC1A --&gt; PLUS1((&quot;+&quot;))
+    ENC1B --&gt; PLUS1
+    PLUS1 --&gt;|&quot;X₁&quot;| CH2[&quot;信道&quot;]
+    W2[&quot;W₂&quot;] --&gt; ENC2[&quot;X₂&lt;br&#x2F;&gt;功率 P₂&quot;]
+    ENC2 --&gt;|&quot;X₂&quot;| CH2
+    CH2 --&gt;|&quot;Y&quot;| DEC2[&quot;SIC 译码:&lt;br&#x2F;&gt;1. 译 X₁,a&lt;br&#x2F;&gt;2. 译 X₂&lt;br&#x2F;&gt;3. 译 X₁,b&quot;]
+  </pre></div>
+<p><strong>信道输出</strong>:</p>
+<script type="math/tex; mode=display">Y = X_{1,a} + X_{1,b} + X_2 + Z</script><p><strong>译码顺序</strong>: $X<em>{1,a} \to X_2 \to X</em>{1,b}$</p>
+<h4 id="可达速率"><a href="#可达速率" class="headerlink" title="可达速率"></a>可达速率</h4><script type="math/tex; mode=display">\begin{aligned}
+R_{1,a} &= \frac{1}{2}\log\left(1 + \frac{P_1 - \delta}{\delta + P_2 + \sigma^2}\right) \\\\[4pt]
+R_2 &\leq \frac{1}{2}\log\left(1 + \frac{P_2}{\delta + \sigma^2}\right) \\\\[4pt]
+R_{1,b} &= \frac{1}{2}\log\left(1 + \frac{\delta}{\sigma^2}\right)
+\end{aligned}</script><p>用户 1 的总速率:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+R_1 &= R_{1,a} + R_{1,b} \\\\
+&= \frac{1}{2}\log\left(1 + \frac{P_1 - \delta}{\delta + P_2 + \sigma^2}\right) + \frac{1}{2}\log\left(1 + \frac{\delta}{\sigma^2}\right) \\\\
+&= \frac{1}{2}\log\left(1 + \frac{P_1 + P_2}{\sigma^2}\right) - \frac{1}{2}\log\left(1 + \frac{P_2}{\delta + \sigma^2}\right) \\\\
+&= R_{\Sigma} - R_2
+\end{aligned}</script><blockquote>
+<p><strong>速率分裂的意义</strong>: 通过在功率域上分裂信号，可以灵活调整译码顺序，使得一个用户的部分信息在另一用户之前消除（减少干扰），其余部分在之后译码。这在非正交多址（NOMA）中是核心技术。</p>
+</blockquote>
+<h2 id="7-5G-中的非正交多址技术（§2-7）"><a href="#7-5G-中的非正交多址技术（§2-7）" class="headerlink" title="7. 5G 中的非正交多址技术（§2.7）"></a>7. 5G 中的非正交多址技术（§2.7）</h2><p>非正交多址（NOMA）是 5G 移动通信系统中提高频谱效率的关键技术。各方案对比如下：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>NOMA 方案</th>
+<th>全称</th>
+<th>核心原理</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PD-NOMA</strong></td>
+<td>功率域 NOMA</td>
+<td>不同用户在功率域叠加，接收端用 SIC</td>
+<td>原理简单，标准化进展快</td>
+</tr>
+<tr>
+<td><strong>SCMA</strong></td>
+<td>稀疏码多址接入</td>
+<td>稀疏映射 + 高维星座</td>
+<td>成形增益 + 分集增益，复杂度高</td>
+</tr>
+<tr>
+<td><strong>IDMA</strong></td>
+<td>交织区分多址</td>
+<td>不同用户使用不同码片级交织器</td>
+<td>2002 年最早提出，实现简单</td>
+</tr>
+<tr>
+<td><strong>PDMA</strong></td>
+<td>图样分割多址接入</td>
+<td>资源-用户稀疏映射矩阵</td>
+<td>基于因子图的迭代接收</td>
+</tr>
+<tr>
+<td><strong>MUSA</strong></td>
+<td>多用户共享接入</td>
+<td>非正交复数扩频 + SIC</td>
+<td>利用远近效应功率差异</td>
+</tr>
+<tr>
+<td><strong>RSMA</strong></td>
+<td>资源扩频多址接入</td>
+<td>扩频序列非正交</td>
+<td>—</td>
+</tr>
+<tr>
+<td><strong>IGMA</strong></td>
+<td>交织格分多址接入</td>
+<td>格结构 + 交织</td>
+<td>—</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph NOMA技术分类
+        PD[&quot;功率域 NOMA&lt;br&#x2F;&gt;PD-NOMA&quot;]
+        CODE[&quot;码域 NOMA&quot;]
+        CODE --&gt; SCMA2[&quot;SCMA&lt;br&#x2F;&gt;稀疏码多址&quot;]
+        CODE --&gt; PDMA2[&quot;PDMA&lt;br&#x2F;&gt;图样分割&quot;]
+        CODE --&gt; IDMA2[&quot;IDMA&lt;br&#x2F;&gt;交织区分&quot;]
+        CODE --&gt; MUSA2[&quot;MUSA&lt;br&#x2F;&gt;多用户共享&quot;]
+    end
+  </pre></div>
+<blockquote>
+<p><strong>综述文献</strong>: Dai et al., “A Survey of Non-Orthogonal Multiple Access for 5G”, <em>IEEE Comm. Surveys &amp; Tutorials</em>, 2018.</p>
+</blockquote>
+<h2 id="8-本章小结（§2-8）"><a href="#8-本章小结（§2-8）" class="headerlink" title="8. 本章小结（§2.8）"></a>8. 本章小结（§2.8）</h2><h3 id="8-1-MAC-的重要地位"><a href="#8-1-MAC-的重要地位" class="headerlink" title="8.1 MAC 的重要地位"></a>8.1 MAC 的重要地位</h3><blockquote>
+<p>MAC 是<strong>极少数</strong>已经获得了完整单字母（single-letter）容量区域刻画的多用户信道之一。大多数其他多用户信道（干扰信道、中继信道等）的容量区域至今仍为开放问题。</p>
+</blockquote>
+<h3 id="8-2-容量可达方法总结"><a href="#8-2-容量可达方法总结" class="headerlink" title="8.2 容量可达方法总结"></a>8.2 容量可达方法总结</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>方法</th>
+<th>适用范围</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SC 译码 + 时间共享</strong></td>
+<td>整个容量区域</td>
+<td>角点用 SC，非角点用时间共享</td>
+</tr>
+<tr>
+<td><strong>同时译码 + 时间共享</strong></td>
+<td>整个容量区域</td>
+<td>对 DM-MAC，不比 SC + TS 更好</td>
+</tr>
+<tr>
+<td><strong>编码时间共享</strong></td>
+<td>整个容量区域</td>
+<td>Han–Kobayashi 方法</td>
+</tr>
+<tr>
+<td><strong>速率分裂</strong></td>
+<td>高斯 MAC</td>
+<td>将一个用户拆分为虚拟多用户</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="8-3-本章核心概念速览"><a href="#8-3-本章核心概念速览" class="headerlink" title="8.3 本章核心概念速览"></a>8.3 本章核心概念速览</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>一句话解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>时间共享（Time-Sharing）</strong></td>
+<td>在不同传输策略之间按时分比例切换</td>
+</tr>
+<tr>
+<td><strong>时间共享变量 $Q$</strong></td>
+<td>用辅助随机变量实现凸组合</td>
+</tr>
+<tr>
+<td><strong>编码时间共享</strong></td>
+<td>$Q$ 序列也随机生成并作为码本的一部分</td>
+</tr>
+<tr>
+<td><strong>同时译码</strong></td>
+<td>一步找到与接收序列联合典型的码字对</td>
+</tr>
+<tr>
+<td><strong>SC 译码 + 时间共享</strong></td>
+<td>逐次消除一个用户，再译另一个；角点最优</td>
+</tr>
+<tr>
+<td><strong>速率分裂</strong></td>
+<td>将一个用户拆分为多个虚拟用户，分层消除</td>
+</tr>
+<tr>
+<td><strong>凸壳</strong></td>
+<td>通过时间共享将所有 $R_p$ 区域的并集凸化</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="9-考试重点速查表"><a href="#9-考试重点速查表" class="headerlink" title="9. 考试重点速查表"></a>9. 考试重点速查表</h2><h3 id="9-1-核心公式"><a href="#9-1-核心公式" class="headerlink" title="9.1 核心公式"></a>9.1 核心公式</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>公式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MAC 容量区域</td>
+<td>$R_1 &lt; I(X_1;Y\vert X_2),\; R_2 &lt; I(X_2;Y\vert X_1),\; R_1+R_2 &lt; I(X_1,X_2;Y)$</td>
+</tr>
+<tr>
+<td>MAC 容量（凸壳形式）</td>
+<td>$R_1 &lt; I(X_1;Y\vert X_2,Q),\; R_2 &lt; I(X_2;Y\vert X_1,Q),\; R_1+R_2 &lt; I(X_1,X_2;Y\vert Q)$</td>
+</tr>
+<tr>
+<td>和速率容量</td>
+<td><script type="math/tex">C_{\text{sum}} = \max_{P(q)P(x_1\vert q)P(x_2\vert q)} I(X_1,X_2;Y\vert Q)</script></td>
+</tr>
+<tr>
+<td>高斯 MAC 容量</td>
+<td>$R_j \leq C(P_j/\sigma^2),\; R_1+R_2 \leq C((P_1+P_2)/\sigma^2),\; C(x)=\frac{1}{2}\log(1+x)$</td>
+</tr>
+<tr>
+<td>FDMA/TDMA 速率</td>
+<td>$R_1 = \alpha W\log(1+P_1/(\alpha WN_0))$</td>
+</tr>
+<tr>
+<td>速率分裂 $R_1$</td>
+<td>$R_1 = C((P_1+P_2)/\sigma^2) - C(P_2/(\delta+\sigma^2))$</td>
+</tr>
+<tr>
+<td>$E_{i,j}$ 错误概率界</td>
+<td>$P(E_{i,j}) \leq 2^{-n[I(X_1,X_2;Y)-2\varepsilon]}$</td>
+</tr>
+<tr>
+<td>$E_{i,1}$ 错误概率界</td>
+<td>$P(E_{i,1}) \leq 2^{-n[I(X_1;Y\vert X_2)-3\varepsilon]}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="9-2-关键概念对比"><a href="#9-2-关键概念对比" class="headerlink" title="9.2 关键概念对比"></a>9.2 关键概念对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>点对点信道</th>
+<th>多址接入信道（MAC）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户数</td>
+<td>1 发 1 收</td>
+<td>多 发 1 收</td>
+</tr>
+<tr>
+<td>性能度量</td>
+<td>容量 $C$（一个数）</td>
+<td>容量区域 $\mathcal{C}$（一个区域）</td>
+</tr>
+<tr>
+<td>编码约束</td>
+<td>无</td>
+<td>各发送端独立编码</td>
+</tr>
+<tr>
+<td>干扰处理</td>
+<td>无</td>
+<td>需在接收端处理或抑制</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>同时译码</th>
+<th>逐次干扰消除（SC）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>译码方式</td>
+<td>一步找联合典型码字对</td>
+<td>分层译码，逐个消除</td>
+</tr>
+<tr>
+<td>可达性</td>
+<td>整个五边形区域</td>
+<td>角点可达，非角点需时间共享</td>
+</tr>
+<tr>
+<td>对 DM-MAC</td>
+<td>不比 SC+TS 更好</td>
+<td>SC+TS 已足够</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>FDMA</th>
+<th>TDMA</th>
+<th>NOMA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>正交性</td>
+<td>频率正交</td>
+<td>时间正交</td>
+<td>非正交</td>
+</tr>
+<tr>
+<td>干扰</td>
+<td>无</td>
+<td>无</td>
+<td>有，通过 SIC 消除</td>
+</tr>
+<tr>
+<td>容量逼近</td>
+<td>多数场景次优</td>
+<td>多数场景次优</td>
+<td>可达容量边界</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="9-3-重要定理"><a href="#9-3-重要定理" class="headerlink" title="9.3 重要定理"></a>9.3 重要定理</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>定理</th>
+<th>核心结论</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>MAC 容量定理</strong></td>
+<td>$R_1&lt; I(X_1;Y\vert X_2)$, $R_2&lt; I(X_2;Y\vert X_1)$, $R_1+R_2&lt; I(X_1,X_2;Y)$，取凸壳闭包</td>
+</tr>
+<tr>
+<td><strong>高斯 MAC 容量</strong></td>
+<td>无需时间共享，单个 $R(X_1,X_2)$ 即凸</td>
+</tr>
+<tr>
+<td><strong>时间共享变量基数界</strong></td>
+<td>$\vert Q\vert \leq 2$ 足够</td>
+</tr>
+<tr>
+<td><strong>和速率多用户极限</strong></td>
+<td>$R_{\text{total}} = C(mP/\sigma^2) \to \infty$，但每用户速率 $\to 0$</td>
+</tr>
+<tr>
+<td><strong>同时译码 = SC+TS</strong></td>
+<td>对 DM-MAC，同时译码不比 SC+TS 更好</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="9-4-证明题常用工具"><a href="#9-4-证明题常用工具" class="headerlink" title="9.4 证明题常用工具"></a>9.4 证明题常用工具</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Union Bound</strong></td>
+<td>将总错误概率分解为各错误事件概率之和</td>
+</tr>
+<tr>
+<td><strong>联合 AEP</strong></td>
+<td>控制 $E_{1,1}^c$ 概率（正确码字不典型的概率）</td>
+</tr>
+<tr>
+<td><strong>典型集大小界</strong></td>
+<td>$\vert T_\varepsilon^{(n)}\vert \leq 2^{n[H+\varepsilon]}$</td>
+</tr>
+<tr>
+<td><strong>独立抽取概率界</strong></td>
+<td>定理 1.2.2，用于错误码字”碰巧”与接收序列联合典型的概率</td>
+</tr>
+<tr>
+<td><strong>链式法则</strong></td>
+<td>分解 $H(X_1,X_2,Y)$ 为各分量条件熵之和</td>
+</tr>
+<tr>
+<td><strong>恒等式</strong> $I(X_1;X_2,Y) = I(X_1;X_2) + I(X_1;Y\vert X_2)$</td>
+<td>$E_{i,1}$ 类型错误的推导关键</td>
+</tr>
+<tr>
+<td><strong>凸壳</strong></td>
+<td>通过时间共享连接不同 $R_p$ 区域的速率点</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>复习建议</strong>:</p>
+<ol>
+<li><strong>MAC 容量定理的证明</strong>（§2.3）是本章绝对核心——必须能手写完整的错误概率分析（四类错误 + union bound + 典型集界）。</li>
+<li>理解<strong>五边形区域</strong>的几何意义：两个垂直线段（单用户速率约束）+ 45° 斜线（和速率约束）。能画出容量区域示意图。</li>
+<li>掌握<strong>高斯 MAC</strong> 的容量区域公式，会推导 $I(X_1;Y|X_2) \leq C(P_1/\sigma^2)$。</li>
+<li>理解<strong>时间共享</strong>为什么是需要的（$R_p$ 区域不一定是凸的）以及 $Q$ 变量如何实现凸化。</li>
+<li><strong>速率分裂</strong>是 NOMA 的数学基础——理解为什么把一个用户拆成两个可以调整速率边界。</li>
+<li>计算题可能涉及：给定 $(P_1, P_2, \sigma^2)$ 画 MAC 容量区域、FDMA/TDMA 的速率计算、速率分裂方案的速率推导。</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://luotian.cyou">Luo Tian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://luotian.cyou/post/Network_info_Theory-Chapter2.html">https://luotian.cyou/post/Network_info_Theory-Chapter2.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://luotian.cyou" target="_blank">洛天的小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/">网络信息论</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><div class="post-share"><div class="social-share" data-image="/img/core/default_blog_cover.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/core/QRs/wx.webp" target="_blank"><img class="post-qr-code-img" src="/img/core/QRs/wx.webp" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/core/QRs/zfb.webp" target="_blank"><img class="post-qr-code-img" src="/img/core/QRs/zfb.webp" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"><img class="cover" src="/img/core/default_blog_cover.webp" onerror="onerror=null;src='/img/core/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论（Network Information Theory）第一章的复习笔记，基于讲义整理。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen/Fano/数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长/变长编码、Shannon/Huffman 码）、信道容量（DMC、BSC/BEC、高斯信道、反馈容量）、MIMO 信道（SVD 分解、注水算法）等。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"><img class="cover" src="/img/core/default_blog_cover.webp" onerror="onerror=null;src='/img/core/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第三章的复习笔记，综合课堂讲义整理。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy/More Capable BC、Marton 1979 编码方案（Binning+叠加编码）与 Mutual Covering Lemma、Gelfand-Pinsker 问题与污纸编码 DPC（Costa 1983）。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论（Network Information Theory）第一章的复习笔记，基于讲义整理。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen/Fano/数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长/变长编码、Shannon/Huffman 码）、信道容量（DMC、BSC/BEC、高斯信道、反馈容量）、MIMO 信道（SVD 分解、注水算法）等。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第五章的复习笔记，基于课堂讲义整理。内容涵盖：中继信道三节点模型与 DM-RC 定义、割集上界（Cover-El Gamal 1979）的两个割解释、直接传输下界与反向退化 RC、多跳下界与分组 Markov 编码、协作多跳下界与条件码本、译码转发（DF）的容量下界与后向译码（Willems 1985）、DF 的局限与部分 DF、压缩转发（CF）的 Compress-Bin 编码方案、高斯中继信道的半比特逼近。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第三章的复习笔记，综合课堂讲义整理。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy/More Capable BC、Marton 1979 编码方案（Binning+叠加编码）与 Mutual Covering Lemma、Gelfand-Pinsker 问题与污纸编码 DPC（Costa 1983）。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter6.html" title="西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第六章的复习笔记，基于课堂讲义整理。内容涵盖：IC 模型与容量区域未知的现状、简单界与模二和 IC 实例、三种点对点编码策略（IAN/SD/SND）及其错误事件分析、强干扰与极强干扰的容量区域（Costa-El Gamal 1987）、高斯 IC 的 SNR/INR 条件与 Sato 1981 判据、Han-Kobayashi 1981 编码方案（速率分裂+叠加编码+7 不等式定理）、注入式确定性 IC、半比特定理（Etkin-Tse-Wang 2008）。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第四章的复习笔记，基于课堂讲义整理。内容涵盖：点对点无损压缩回顾与随机 Binning 编码、Slepian-Wolf 定理的完整证明（逆定理+可达性+四错误事件）、k 源扩展、有 Helper 的无损压缩（Ahlswede-Korner-Wyner 定理）、率失真函数 R(D) 与 Shannon 1959 定理、Wyner-Ziv 有损编码（Compress-Bin：Covering 编码 + Packing 译码）、Covering Lemma 与 Packing Lemma 的对偶、Wyner-Ziv 与 Gelfand-Pinsker 的对偶性。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter7.html" title="西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第七章的复习笔记，基于课堂讲义整理。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB/MIB/UVOB）的 BA 算法、连续 AWGN 信道的矩阵迭代 BA、AWGN BC 的矩阵迭代。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/core/id.webp" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Luo Tian</div><div class="author-info-description">我们生而眺望</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuoTian001"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><p>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！如果你有任何建议或想法，欢迎通过评论与我联系(o゜▽゜)o☆<br>主站：www.luotian.cyou<br>备用：LuoTian001.github.io<br>RSS：www.luotian.cyou/rss.xml</p></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E7%AB%A0-%E5%A4%9A%E5%9D%80%E6%8E%A5%E5%85%A5%E4%BF%A1%E9%81%93%EF%BC%88Multiple-Access-Channels%EF%BC%89"><span class="toc-text">第二章 多址接入信道（Multiple Access Channels）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E5%A4%9A%E7%94%A8%E6%88%B7%E4%BF%A1%E9%81%93%E5%AE%B9%E9%87%8F%E6%A6%82%E8%BF%B0%EF%BC%88%C2%A72-1%EF%BC%89"><span class="toc-text">1. 多用户信道容量概述（§2.1）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BB%8E%E7%82%B9%E5%AF%B9%E7%82%B9%E5%88%B0%E5%A4%9A%E7%94%A8%E6%88%B7"><span class="toc-text">1.1 从点对点到多用户</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E5%AE%B9%E9%87%8F%E5%8C%BA%E5%9F%9F%E4%B8%8E%E5%92%8C%E9%80%9F%E7%8E%87"><span class="toc-text">1.2 容量区域与和速率</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E5%A4%9A%E5%9D%80%E6%8E%A5%E5%85%A5%E4%BF%A1%E9%81%93%E6%A8%A1%E5%9E%8B%E4%B8%8E%E5%AE%B9%E9%87%8F%E5%AE%9A%E7%90%86%EF%BC%88%C2%A72-2%EF%BC%89"><span class="toc-text">2. 多址接入信道模型与容量定理（§2.2）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-MAC-%E7%9A%84%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="toc-text">2.1 MAC 的数学模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MAC-%E7%B3%BB%E7%BB%9F%E6%A1%86%E5%9B%BE"><span class="toc-text">MAC 系统框图</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%A0%81%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="toc-text">2.2 码的定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E5%8F%AF%E8%BE%BE%E9%80%9F%E7%8E%87%E4%B8%8E%E5%AE%B9%E9%87%8F%E5%8C%BA%E5%9F%9F"><span class="toc-text">2.3 可达速率与容量区域</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-MAC-%E5%AE%B9%E9%87%8F%E5%AE%9A%E7%90%86%EF%BC%88Theorem-2-2-1%EF%BC%89%E2%AD%90"><span class="toc-text">2.4 MAC 容量定理（Theorem 2.2.1）⭐</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E5%85%B8%E5%9E%8B-MAC-%E5%AE%9E%E4%BE%8B"><span class="toc-text">2.5 典型 MAC 实例</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-1-%E7%8B%AC%E7%AB%8B-BSC-%E4%BF%A1%E9%81%93"><span class="toc-text">例 1: 独立 BSC 信道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-2-%E4%BA%8C%E5%85%83%E4%B9%98%E6%B3%95%E4%BF%A1%E9%81%93%EF%BC%88Binary-Multiplier-Channel%EF%BC%89"><span class="toc-text">例 2: 二元乘法信道（Binary Multiplier Channel）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-3-%E4%BA%8C%E5%85%83%E6%93%A6%E9%99%A4-MAC%EF%BC%88Binary-Erasure-MAC%EF%BC%89"><span class="toc-text">例 3: 二元擦除 MAC（Binary Erasure MAC）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B-4-%E9%AB%98%E6%96%AF-MAC%EF%BC%88Gaussian-MAC%EF%BC%89"><span class="toc-text">例 4: 高斯 MAC（Gaussian MAC）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%8F%AF%E8%BE%BE%E6%80%A7%E8%AF%81%E6%98%8E%EF%BC%9A%E5%90%8C%E6%97%B6%E8%AF%91%E7%A0%81%EF%BC%88%C2%A72-3%EF%BC%89"><span class="toc-text">3. 可达性证明：同时译码（§2.3）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E7%BC%96%E7%A0%81%E6%96%B9%E6%A1%88%EF%BC%88%E9%9A%8F%E6%9C%BA%E7%BC%96%E7%A0%81%EF%BC%89"><span class="toc-text">3.1 编码方案（随机编码）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E8%AF%91%E7%A0%81%E6%96%B9%E6%A1%88%EF%BC%88%E5%90%8C%E6%97%B6%E8%AF%91%E7%A0%81-Simultaneous-Decoding%EF%BC%89"><span class="toc-text">3.2 译码方案（同时译码 &#x2F; Simultaneous Decoding）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E9%94%99%E8%AF%AF%E6%A6%82%E7%8E%87%E5%88%86%E6%9E%90%EF%BC%88%E8%AF%81%E6%98%8E%E7%9A%84%E6%A0%B8%E5%BF%83%EF%BC%89"><span class="toc-text">3.3 错误概率分析（证明的核心）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%9B%9B%E7%B1%BB%E9%94%99%E8%AF%AF%E7%9A%84%E9%80%90%E4%B8%80%E5%88%86%E6%9E%90"><span class="toc-text">四类错误的逐一分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E6%8E%A8%E5%AF%BC%EF%BC%88%E4%BB%A5-E-i-j-%E4%B8%BA%E4%BE%8B%EF%BC%8C-i-j-neq-1-%EF%BC%89"><span class="toc-text">详细推导（以 $E_{i,j}$ 为例，$i, j \neq 1$）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%A6%E7%BB%86%E6%8E%A8%E5%AF%BC%EF%BC%88%E4%BB%A5-E-i-1-%E4%B8%BA%E4%BE%8B%EF%BC%8C-i-neq-1-%EF%BC%89"><span class="toc-text">详细推导（以 $E_{i,1}$ 为例，$i \neq 1$）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%80%BB%E9%94%99%E8%AF%AF%E6%A6%82%E7%8E%87%E4%B8%8A%E7%95%8C"><span class="toc-text">总错误概率上界</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%85%B3%E4%BA%8E%E8%BE%B9%E7%95%8C%E7%82%B9"><span class="toc-text">3.4 关于边界点</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-MAC-%E5%AE%B9%E9%87%8F%E5%8C%BA%E5%9F%9F%E7%9A%84%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%AE%A8%E8%AE%BA%EF%BC%88%C2%A72-4%EF%BC%89"><span class="toc-text">4. MAC 容量区域的进一步讨论（§2.4）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%97%B6%E9%97%B4%E5%85%B1%E4%BA%AB%EF%BC%88Time-Sharing%EF%BC%89"><span class="toc-text">4.1 时间共享（Time-Sharing）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%87%B8%E5%A3%B3%EF%BC%88Convex-Hull%EF%BC%89"><span class="toc-text">4.2 凸壳（Convex Hull）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%94%A8%E6%97%B6%E9%97%B4%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F-Q-%E8%A1%A8%E7%A4%BA%E5%87%B8%E7%BB%84%E5%90%88"><span class="toc-text">用时间共享变量 $Q$ 表示凸组合</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E6%97%B6%E9%97%B4%E5%85%B1%E4%BA%AB%E5%8F%98%E9%87%8F%E7%9A%84%E5%9F%BA%E6%95%B0%E7%95%8C"><span class="toc-text">4.3 时间共享变量的基数界</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E7%BC%96%E7%A0%81%E6%97%B6%E9%97%B4%E5%85%B1%E4%BA%AB%EF%BC%88Coded-Time-Sharing%EF%BC%89"><span class="toc-text">4.4 编码时间共享（Coded Time-Sharing）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-%E5%92%8C%E9%80%9F%E7%8E%87%E5%AE%B9%E9%87%8F"><span class="toc-text">4.5 和速率容量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E9%80%90%E6%AC%A1%E5%B9%B2%E6%89%B0%E6%B6%88%E9%99%A4%E8%AF%91%E7%A0%81%EF%BC%88%C2%A72-5%EF%BC%89"><span class="toc-text">5. 逐次干扰消除译码（§2.5）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E7%9B%AE%E6%A0%87"><span class="toc-text">5.1 目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E8%AF%91%E7%A0%81%E6%AD%A5%E9%AA%A4"><span class="toc-text">5.2 译码步骤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E9%94%99%E8%AF%AF%E4%BA%8B%E4%BB%B6%EF%BC%88%E5%81%87%E8%AE%BE%E5%8F%91%E9%80%81-W-1-W-2-1-1-%EF%BC%89"><span class="toc-text">5.3 错误事件（假设发送 $(W_1, W_2) &#x3D; (1, 1)$）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E5%90%8C%E6%97%B6%E8%AF%91%E7%A0%81-vs-%E9%80%90%E6%AC%A1%E5%B9%B2%E6%89%B0%E6%B6%88%E9%99%A4"><span class="toc-text">5.4 同时译码 vs 逐次干扰消除</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E9%AB%98%E6%96%AF%E5%A4%9A%E5%9D%80%E6%8E%A5%E5%85%A5%E4%BF%A1%E9%81%93%EF%BC%88%C2%A72-6%EF%BC%89"><span class="toc-text">6. 高斯多址接入信道（§2.6）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%9F%BA%E6%9C%AC%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.1 基本模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E9%AB%98%E6%96%AF-MAC-%E5%AE%B9%E9%87%8F%E5%8C%BA%E5%9F%9F"><span class="toc-text">6.2 高斯 MAC 容量区域</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8E%A8%E5%AF%BC%EF%BC%88%E5%85%B3%E9%94%AE%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="toc-text">推导（关键步骤）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-%E5%A4%9A%E7%94%A8%E6%88%B7%E6%89%A9%E5%B1%95"><span class="toc-text">6.3 多用户扩展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-4-%E4%B8%80%E8%88%AC%E5%8C%96%E9%AB%98%E6%96%AF-MAC-%E6%A8%A1%E5%9E%8B"><span class="toc-text">6.4 一般化高斯 MAC 模型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-5-X-DMA%EF%BC%9A%E9%AB%98%E7%BB%B4%E7%A9%BA%E9%97%B4%E4%B8%AD%E7%9A%84%E5%A4%9A%E5%9D%80%E6%8E%A5%E5%85%A5"><span class="toc-text">6.5 X-DMA：高维空间中的多址接入</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%9D%9E%E6%AD%A3%E4%BA%A4%E7%AD%BE%E5%90%8D%E7%9A%84%E9%80%9F%E7%8E%87%E5%88%86%E6%9E%90"><span class="toc-text">非正交签名的速率分析</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%99%BD%E5%8C%96%E6%96%B9%E6%B3%95"><span class="toc-text">白化方法</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-6-FDMA-%E4%B8%8E-TDMA-%E7%9A%84%E9%80%9F%E7%8E%87%E5%88%86%E6%9E%90"><span class="toc-text">6.6 FDMA 与 TDMA 的速率分析</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#FDMA%EF%BC%88%E9%A2%91%E5%88%86%E5%A4%9A%E5%9D%80%EF%BC%89"><span class="toc-text">FDMA（频分多址）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#TDMA%EF%BC%88%E6%97%B6%E5%88%86%E5%A4%9A%E5%9D%80%EF%BC%8C%E5%8F%AF%E5%8F%98%E5%8A%9F%E7%8E%87%EF%BC%89"><span class="toc-text">TDMA（时分多址，可变功率）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-7-%E9%80%9F%E7%8E%87%E5%88%86%E8%A3%82%EF%BC%88Rate-Splitting%EF%BC%89"><span class="toc-text">6.7 速率分裂（Rate-Splitting）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%96%B9%E6%A1%88%E6%8F%8F%E8%BF%B0"><span class="toc-text">方案描述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%8F%AF%E8%BE%BE%E9%80%9F%E7%8E%87"><span class="toc-text">可达速率</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-5G-%E4%B8%AD%E7%9A%84%E9%9D%9E%E6%AD%A3%E4%BA%A4%E5%A4%9A%E5%9D%80%E6%8A%80%E6%9C%AF%EF%BC%88%C2%A72-7%EF%BC%89"><span class="toc-text">7. 5G 中的非正交多址技术（§2.7）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E6%9C%AC%E7%AB%A0%E5%B0%8F%E7%BB%93%EF%BC%88%C2%A72-8%EF%BC%89"><span class="toc-text">8. 本章小结（§2.8）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-MAC-%E7%9A%84%E9%87%8D%E8%A6%81%E5%9C%B0%E4%BD%8D"><span class="toc-text">8.1 MAC 的重要地位</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E5%AE%B9%E9%87%8F%E5%8F%AF%E8%BE%BE%E6%96%B9%E6%B3%95%E6%80%BB%E7%BB%93"><span class="toc-text">8.2 容量可达方法总结</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-%E6%9C%AC%E7%AB%A0%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5%E9%80%9F%E8%A7%88"><span class="toc-text">8.3 本章核心概念速览</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E8%80%83%E8%AF%95%E9%87%8D%E7%82%B9%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-text">9. 考试重点速查表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E6%A0%B8%E5%BF%83%E5%85%AC%E5%BC%8F"><span class="toc-text">9.1 核心公式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94"><span class="toc-text">9.2 关键概念对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E9%87%8D%E8%A6%81%E5%AE%9A%E7%90%86"><span class="toc-text">9.3 重要定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E8%AF%81%E6%98%8E%E9%A2%98%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="toc-text">9.4 证明题常用工具</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</a><time datetime="2026-06-23T18:39:32.000Z" title="发表于 2026-06-24 02:39:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</a><time datetime="2026-06-23T18:38:32.000Z" title="发表于 2026-06-24 02:38:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</a><time datetime="2026-06-23T18:37:32.000Z" title="发表于 2026-06-24 02:37:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</a><time datetime="2026-06-23T18:36:32.000Z" title="发表于 2026-06-24 02:36:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界">西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</a><time datetime="2026-06-23T18:35:32.000Z" title="发表于 2026-06-24 02:35:32">2026-06-24</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2026 By Luo Tian</span></div><div class="footer_custom_text"><dev><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">陕ICP备2025072980号-1</a></dev><div id="workboard"></div></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.1/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (false) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    GLOBAL_CONFIG_SITE.pageType === 'post' && getCount()
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/twikoo/1.6.44/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/live2d/live2d.js" defer></script><script src="/js/background.js"></script><script src="/js/runtime.js" defer></script><script src="/js/meta-sync.js"></script><script async src="/js/holiday-popup.js" data-pjax></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script><script> const initPangu = () => { if (typeof pangu !== 'undefined') { pangu.spacingPage(); } }; document.addEventListener('DOMContentLoaded', initPangu); document.addEventListener('pjax:complete', initPangu); </script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>

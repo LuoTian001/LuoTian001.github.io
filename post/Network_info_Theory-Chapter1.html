@@ -1,0 +1,1839 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量 | 洛天的小窝</title><meta name="author" content="Luo Tian"><meta name="copyright" content="Luo Tian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文是西电研究生课程网络信息论（Network Information Theory）第一章的复习笔记，基于讲义整理。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen&#x2F;Fano&#x2F;数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长&#x2F;变长编码、Shannon&#x2F;Huffman 码）、信道容量（DMC、BSC&#x2F;BEC、高斯信道、反馈容量）、MIMO 信">
+<meta property="og:type" content="article">
+<meta property="og:title" content="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量">
+<meta property="og:url" content="https://luotian.cyou/post/Network_info_Theory-Chapter1.html">
+<meta property="og:site_name" content="洛天的小窝">
+<meta property="og:description" content="本文是西电研究生课程网络信息论（Network Information Theory）第一章的复习笔记，基于讲义整理。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen&#x2F;Fano&#x2F;数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长&#x2F;变长编码、Shannon&#x2F;Huffman 码）、信道容量（DMC、BSC&#x2F;BEC、高斯信道、反馈容量）、MIMO 信">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luotian.cyou/img/core/default_blog_cover.webp">
+<meta property="article:published_time" content="2026-06-23T18:39:32.000Z">
+<meta property="article:modified_time" content="2026-06-23T21:04:48.469Z">
+<meta property="article:author" content="Luo Tian">
+<meta property="article:tag" content="信息论">
+<meta property="article:tag" content="网络信息论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luotian.cyou/img/core/default_blog_cover.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量",
+  "url": "https://luotian.cyou/post/Network_info_Theory-Chapter1.html",
+  "image": "https://luotian.cyou/img/core/default_blog_cover.webp",
+  "datePublished": "2026-06-23T18:39:32.000Z",
+  "dateModified": "2026-06-23T21:04:48.469Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Luo Tian",
+      "url": "https://luotian.cyou"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/core/fav.ico"><link rel="canonical" href="https://luotian.cyou/post/Network_info_Theory-Chapter1.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":800,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/mouse/mouse.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/runtime.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/rss.xml" title="洛天的小窝" type="application/atom+xml">
+</head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/core/bkgnd1.webp));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/core/id.webp" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/game/1024game/"><i class="fa-fw fa fa-th-large"></i><span> 1024游戏</span></a></li><li><a class="site-page child" href="/game/sudoku/"><i class="fa-fw fa fa-th"></i><span> 数独游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></li><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/video-parser/"><i class="fa-fw fa fa-video-camera"></i><span> 短视频解析</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li><li><a class="site-page child" href="/tools/qrcode/"><i class="fa-fw fa fa-qrcode"></i><span> 二维码工坊</span></a></li><li><a class="site-page child" href="/tools/base64/"><i class="fa-fw fas fa-exchange-alt"></i><span> Base64编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/core/default_blog_cover.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">洛天的小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/game/1024game/"><i class="fa-fw fa fa-th-large"></i><span> 1024游戏</span></a></li><li><a class="site-page child" href="/game/sudoku/"><i class="fa-fw fa fa-th"></i><span> 数独游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></li><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/video-parser/"><i class="fa-fw fa fa-video-camera"></i><span> 短视频解析</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li><li><a class="site-page child" href="/tools/qrcode/"><i class="fa-fw fa fa-qrcode"></i><span> 二维码工坊</span></a></li><li><a class="site-page child" href="/tools/base64/"><i class="fa-fw fas fa-exchange-alt"></i><span> Base64编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-23T18:39:32.000Z" title="发表于 2026-06-24 02:39:32">2026-06-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-23T21:04:48.469Z" title="更新于 2026-06-24 05:04:48">2026-06-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/">网络信息论</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">13.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>53分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/post/Network_info_Theory-Chapter1.html#post-comment"><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第一章-引言与回顾"><a href="#第一章-引言与回顾" class="headerlink" title="第一章 引言与回顾"></a>第一章 引言与回顾</h1><blockquote>
+<p><strong>课程</strong>: 网络信息论（Network Information Theory）<br><strong>教材</strong>: A. El Gamal and Y.-H. Kim, <em>Network Information Theory</em>, Cambridge University Press, 2011<br><strong>整理说明</strong>: 本文按教材 1.1~1.8 节顺序展开。<br><strong>免责声明</strong>：本笔记内容来源于课程讲义和PPT，经AI辅助汇总完成，仅供学习参考。如有错误或遗漏，请以原始课程资料为准。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-课程概述与信息论基础">课程概述与信息论基础</a></li>
+<li><a href="#2-熵与互信息11">熵与互信息（§1.1）</a></li>
+<li><a href="#3-典型序列12">典型序列（§1.2）</a></li>
+<li><a href="#4-信源编码13">信源编码（§1.3）</a></li>
+<li><a href="#5-信道容量14">信道容量（§1.4）</a></li>
+<li><a href="#6-关于容量的进一步讨论15">关于容量的进一步讨论（§1.5）</a></li>
+<li><a href="#7-操作性信道容量16">操作性信道容量（§1.6）</a></li>
+<li><a href="#8-零错误容量17">零错误容量（§1.7）</a></li>
+<li><a href="#9-MIMO-信道18">MIMO 信道（§1.8）</a></li>
+<li><a href="#10-考试重点速查表">考试重点速查表</a></li>
+</ol>
+<h2 id="1-课程概述与信息论基础"><a href="#1-课程概述与信息论基础" class="headerlink" title="1. 课程概述与信息论基础"></a>1. 课程概述与信息论基础</h2><h3 id="1-1-信息论的诞生"><a href="#1-1-信息论的诞生" class="headerlink" title="1.1 信息论的诞生"></a>1.1 信息论的诞生</h3><p>1948年，Shannon 应用概率统计方法研究数字通信问题，提出了通信系统的数学模型，并建立了下列<strong>四个基本定理</strong>，由此奠定了点对点数字通信的完整理论基础：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>定理</th>
+<th>对应核心概念</th>
+<th>简要含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>信道编码定理</strong></td>
+<td>容量（Capacity）</td>
+<td>信道存在一个最大可靠传输速率</td>
+</tr>
+<tr>
+<td><strong>无损信源编码定理</strong></td>
+<td>熵（Entropy）</td>
+<td>信源可以被压缩到其熵为止，不能再低</td>
+</tr>
+<tr>
+<td><strong>有损信源编码定理</strong></td>
+<td>率失真函数（Rate-Distortion）</td>
+<td>允许失真时，所需速率由率失真函数给出</td>
+</tr>
+<tr>
+<td><strong>分离定理</strong></td>
+<td>标准二进制接口</td>
+<td>信源编码与信道编码可以分开设计而不损失性能</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>此外，<strong>数据处理定理（Data Processing Theorem）</strong> 告诉我们对接收信号做任何后处理都不会增加信息量，这指导了现代通信系统采用软判决译码而非硬判决的设计原则。</p>
+<blockquote>
+<p><strong>Viterbi (1991) 的名言</strong>: “本世纪下半叶数字通信的进步，由信息论的教训所引导，但由固态电子学的进步所推动。”（<em>Advances in digital communication in the latter half of this century were guided by the lessons of information theory but fueled by the progress in solid state electronics.</em>）</p>
+</blockquote>
+<h3 id="1-2-网络信息流与最大流-最小割定理"><a href="#1-2-网络信息流与最大流-最小割定理" class="headerlink" title="1.2 网络信息流与最大流-最小割定理"></a>1.2 网络信息流与最大流-最小割定理</h3><p>网络信息论研究的是<strong>多节点网络</strong>中的信息传输极限。其数学基础之一是图论中的 <strong>最大流-最小割定理</strong>（Ford-Fulkerson, Elias-Feistein-Shannon, 1956）。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 网络模型
+        S((&quot;信源 S&quot;)) --&gt;|C₁| A((&quot;节点 A&quot;))
+        S --&gt;|C₂| B((&quot;节点 B&quot;))
+        A --&gt;|C₃| B
+        A --&gt;|C₄| D((&quot;信宿 D&quot;))
+        B --&gt;|C₅| D
+    end
+  </pre></div>
+<blockquote>
+<p><strong>最大流-最小割定理</strong>：网络中从源到宿的最大信息流等于所有割集中的最小割容量。</p>
+<script type="math/tex; mode=display">C = \min_{S} C(S) \quad \text{bits/transmission}\\\\ C(S)=\sum_{j\in S,k\in S^c} C_{jk}</script><p>$C(S)$是割 $(S,S^c)$ 的总容量：将所有节点划分为两个子集 $S$ （含源）和 $S^c$ （含宿），割容量等于<strong>从$S$指向$S^c$的所有链路的容量之和</strong>。$C_{jk}$ 是从节点 $j \in S$ 到节点 $k \in S^c$ 的链路容量。</p>
+</blockquote>
+<p><strong>理解要点</strong>: 网络的整体传输能力受限于”瓶颈”割——就像沙漏的腰部决定了流沙的速度，无论其他部分多粗。</p>
+<h3 id="1-3-网络信息论的研究要素与历史"><a href="#1-3-网络信息论的研究要素与历史" class="headerlink" title="1.3 网络信息论的研究要素与历史"></a>1.3 网络信息论的研究要素与历史</h3><p>与传统点对点通信不同，多用户通信系统引入了三个关键新元素：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>含义</th>
+<th>典型场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>干扰（Interference）</strong></td>
+<td>多个发射机的信号在接收端相互叠加</td>
+<td>多址接入、干扰信道</td>
+</tr>
+<tr>
+<td><strong>协作（Cooperation）</strong></td>
+<td>节点之间可以共享信息、协同传输</td>
+<td>中继信道、分布式天线</td>
+</tr>
+<tr>
+<td><strong>反馈（Feedback）</strong></td>
+<td>接收端可以将信息回传给发送端</td>
+<td>双向通信、ARQ</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>发展历程</strong>:</p>
+<ul>
+<li><strong>1961年</strong>: Shannon 发表第一篇网络信息论论文 “Two-way communication channels”</li>
+<li><strong>1970s~1980s</strong>: 大量理论研究涌现（多址信道、广播信道、中继信道等）</li>
+<li><strong>1990s 中期至今</strong>: 无线通信网络的蓬勃发展重新点燃了对网络信息论的研究兴趣</li>
+</ul>
+<blockquote>
+<p>网络信息论的核心目标是回答多用户网络中的<strong>基本信息流问题</strong>——每个用户最多能以多快的速率可靠通信？</p>
+</blockquote>
+<h2 id="2-熵与互信息（§1-1）"><a href="#2-熵与互信息（§1-1）" class="headerlink" title="2. 熵与互信息（§1.1）"></a>2. 熵与互信息（§1.1）</h2><p>本节回顾信息论中最基础的几个量：熵、条件熵、相对熵、互信息，以及它们之间的不等式关系。这些是后续所有定理推导的数学语言。</p>
+<h3 id="2-1-熵（Entropy）——不确定度的度量"><a href="#2-1-熵（Entropy）——不确定度的度量" class="headerlink" title="2.1 熵（Entropy）——不确定度的度量"></a>2.1 熵（Entropy）——不确定度的度量</h3><p>设 $X$ 为离散随机变量，取值于有限字母表 $\mathcal{X}$，概率质量函数 $P(x) = \Pr{X = x}$，$x \in \mathcal{X}$。</p>
+<script type="math/tex; mode=display">H(X) = \sum_x P(x)\log\frac{1}{P(x)} = -\sum_x P(x)\log P(x)</script><blockquote>
+<p><strong>物理意义</strong>: 熵 $H(X)$ 是对随机变量 $X$ <strong>不确定度</strong>（随机性）的度量。一个确定性的事件（$P(x)=1$）的熵为 0；等概分布的熵最大。</p>
+</blockquote>
+<h4 id="联合熵与条件熵"><a href="#联合熵与条件熵" class="headerlink" title="联合熵与条件熵"></a>联合熵与条件熵</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>公式</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$H(XY) = E[-\log P(x,y)] = -\sum_x\sum_y P(x,y)\log P(x,y)$</td>
+<td><strong>联合熵</strong>：同时观察 $X$ 和 $Y$ 的不确定度</td>
+</tr>
+<tr>
+<td>$H(X\vert Y) = -\sum_x\sum_y P(x,y)\log P(x\vert y)$</td>
+<td><strong>条件熵</strong>：已知 $Y$ 后，$X$ 剩余的不确定度</td>
+</tr>
+<tr>
+<td>$H(X\vert Y) \leq H(X)$</td>
+<td>条件作用不会增加不确定度（等号当 $X$ 与 $Y$ 独立）</td>
+</tr>
+<tr>
+<td>$H(XY) = H(X) + H(Y\vert X)$</td>
+<td>联合熵的链式法则（2 变量）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="链式法则"><a href="#链式法则" class="headerlink" title="链式法则"></a>链式法则</h4><p>将两个变量的链式法则推广到 $N$ 个变量：</p>
+<script type="math/tex; mode=display">H(X_1, X_2, \ldots, X_N) = \sum_{n=1}^{N} H(X_n | X_1, \ldots, X_{n-1})</script><blockquote>
+<p><strong>含义</strong>: 一个随机向量所包含的总不确定度，等于逐个观察每个分量时，在已知前面分量的条件下新增的不确定度之和。</p>
+</blockquote>
+<h4 id="离散熵的上界"><a href="#离散熵的上界" class="headerlink" title="离散熵的上界"></a>离散熵的上界</h4><script type="math/tex; mode=display">H(X) \leq \log|\mathcal{X}|</script><p>其中 $|\mathcal{X}|$ 是字母表大小，等号当且仅当 $X$ 服从<strong>均匀分布</strong>。直觉：当所有可能取值等可能时，最难预测，不确定度最大。</p>
+<h4 id="微分熵（连续随机变量）"><a href="#微分熵（连续随机变量）" class="headerlink" title="微分熵（连续随机变量）"></a>微分熵（连续随机变量）</h4><p>对于连续随机变量，熵的定义需要从求和变为积分：</p>
+<script type="math/tex; mode=display">h(X) = -\int f(x)\log f(x)\,dx = -E[\log f(x)]</script><blockquote>
+<p><strong>注意</strong>: 微分熵与离散熵不同，它可以为负值（例如方差很小的均匀分布），且不具有绝对参考意义。在信息论中，微分熵通常以<strong>差值</strong>的形式出现（如互信息中）。</p>
+</blockquote>
+<p><strong>给定方差下的最大微分熵</strong>: 在所有具有相同方差的连续分布中，<strong>高斯分布</strong>具有最大的微分熵。</p>
+<script type="math/tex; mode=display">h(X) \leq \frac{1}{2}\log\left(2\pi e\sigma^2\right)</script><p><strong>向量情形的最大微分熵</strong>: 设随机向量 $\mathbf{X} \in \mathbb{R}^n$ 具有协方差矩阵 $K = E[(\mathbf{X}-E(\mathbf{X}))(\mathbf{X}-E(\mathbf{X}))^T]$，则</p>
+<script type="math/tex; mode=display">h(\mathbf{X}) \leq \frac{1}{2}\log\left[(2\pi e)^n\vert K\vert\right] \leq \frac{1}{2}\log\left[(2\pi e)^n\left|E[\mathbf{X}\mathbf{X}^T]\right|\right]</script><p>等式成立当且仅当 $\mathbf{X} \sim \mathcal{N}(0, K)$。这个结论在 MIMO 信道容量推导中非常重要——<strong>最优输入分布是高斯分布</strong>。</p>
+<h3 id="2-2-相对熵（KL-散度）——两个分布的”距离”"><a href="#2-2-相对熵（KL-散度）——两个分布的”距离”" class="headerlink" title="2.2 相对熵（KL 散度）——两个分布的”距离”"></a>2.2 相对熵（KL 散度）——两个分布的”距离”</h3><script type="math/tex; mode=display">D(P\|Q) = \sum_{x \in \text{supp}(P)} P(x)\log\frac{P(x)}{Q(x)}</script><p>其中 $\text{supp}(P) = {x: P(x) &gt; 0}$ 是 $P$ 的支撑集。</p>
+<blockquote>
+<p><strong>注意</strong>: $D(P|Q)$ 不是真正意义上的距离（不对称、不满足三角不等式），但 $D(P|Q) \geq 0$ 恒成立（由 Jensen 不等式可证），等号当且仅当 $P=Q$。</p>
+</blockquote>
+<p><strong>相对熵的直观理解</strong>: 如果用分布 $Q$ 来近似真实分布 $P$，则在编码时平均每个符号要多花 $D(P|Q)$ 比特。这就是为什么 KL 散度也被称为”信息散度”（Information Divergence）。</p>
+<h3 id="2-3-互信息（Mutual-Information）——信息共享量"><a href="#2-3-互信息（Mutual-Information）——信息共享量" class="headerlink" title="2.3 互信息（Mutual Information）——信息共享量"></a>2.3 互信息（Mutual Information）——信息共享量</h3><p>互信息度量一个随机变量<strong>包含</strong>关于另一个随机变量的信息量。它是信息论中最核心的量之一。</p>
+<script type="math/tex; mode=display">I(X;Y) = D\big(P(x,y)\,\big\|\,P(x)P(y)\big) = \sum_{x,y} P(x,y)\log\frac{P(x,y)}{P(x)P(y)}</script><blockquote>
+<p><strong>定义解读</strong>: 互信息就是联合分布 $P(x,y)$ 与”假设独立时的分布”$P(x)P(y)$ 之间的 KL 散度——它衡量 $X$ 和 $Y$ 偏离独立的程度。</p>
+</blockquote>
+<h4 id="互信息的多种等价形式"><a href="#互信息的多种等价形式" class="headerlink" title="互信息的多种等价形式"></a>互信息的多种等价形式</h4><script type="math/tex; mode=display">I(X;Y) = H(Y) - H(Y|X) = H(X) - H(X|Y)</script><blockquote>
+<p><strong>理解</strong>: $I(X;Y) = H(Y) - H(Y|X)$ 表示”已知 $X$ 使 $Y$ 的不确定度减少了多少”。</p>
+</blockquote>
+<h4 id="三种情形的互信息计算公式"><a href="#三种情形的互信息计算公式" class="headerlink" title="三种情形的互信息计算公式"></a>三种情形的互信息计算公式</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>情形</th>
+<th>公式</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>离散-离散</strong>: $X,Y$ 均离散</td>
+<td>$I(X;Y) = H(Y) - H(Y\vert X) = H(X) - H(X\vert Y)$</td>
+</tr>
+<tr>
+<td><strong>连续-连续</strong>: $(X,Y) \sim f(x,y)$</td>
+<td>$I(X;Y) = h(Y) - h(Y\vert X) = h(X) - h(X\vert Y) = \iint f(x,y)\log\frac{f(x,y)}{f(x)f(y)}dxdy$</td>
+</tr>
+<tr>
+<td><strong>混合</strong>: $X$ 离散, $Y\vert X=x \sim f(y\vert x)$ 连续</td>
+<td>$I(X;Y) = h(Y) - h(Y\vert X) = H(X) - H(X\vert Y) = \sum_x P(x)\int f(y\vert x)\log\frac{f(y\vert x)}{f(y)}dy$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>第三种情形</strong>在通信系统中最常见：$X$ 是离散的发送符号，$Y$ 是叠加了连续噪声的接收信号。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">      H(XY) = 全集</span><br><span class="line">┌─────────────────────────┐</span><br><span class="line">│  ┌─────────┐  ┌───────┐ │</span><br><span class="line">│  │ H(X│Y)  │  │H(Y│X) │ │</span><br><span class="line">│  │         │  │       │ │</span><br><span class="line">│  │   ┌─────┴──┴──┐    │ │</span><br><span class="line">│  │   │  I(X;Y)   │    │ │</span><br><span class="line">│  │   └───────────┘    │ │</span><br><span class="line">│  └────────────────────┘ │</span><br><span class="line">└─────────────────────────┘</span><br></pre></td></tr></table></figure>
+<ul>
+<li>$H(X) = H(X|Y) + I(X;Y)$</li>
+<li>$H(Y) = H(Y|X) + I(X;Y)$</li>
+<li>$H(XY) = H(X|Y) + I(X;Y) + H(Y|X)$</li>
+</ul>
+<h4 id="条件互信息"><a href="#条件互信息" class="headerlink" title="条件互信息"></a>条件互信息</h4><script type="math/tex; mode=display">I(X;Y|Z) = H(Y|Z) - H(Y|XZ)</script><p>含义：在已知 $Z$ 的条件下，$X$ 中包含的关于 $Y$ 的信息。</p>
+<blockquote>
+<p>⚠️ <strong>重要</strong>: $I(X;Y|Z)$ 与 $I(X;Y)$ 之间<strong>没有</strong>普遍的大小关系！条件作用可以增加互信息（例如 $X,Y$ 独立但 $X,Y$ 通过 $Z$ 相关联时），也可以减少互信息（例如 $Z$ 已经包含了 $X$ 和 $Y$ 的共享信息时）。</p>
+</blockquote>
+<h4 id="互信息的链式法则"><a href="#互信息的链式法则" class="headerlink" title="互信息的链式法则"></a>互信息的链式法则</h4><script type="math/tex; mode=display">I(X;YZ) = I(X;Z) + I(X;Y|Z)</script><script type="math/tex; mode=display">I(X_1 X_2 \ldots X_n; Y) = \sum_{n=1}^{N} I(X_n; Y | X_1, \ldots, X_{n-1})</script><blockquote>
+<p><strong>物理意义</strong>: 一串随机变量 $X_1^n$ 整体包含的关于 $Y$ 的信息，等于逐个观察 $X_i$ 时在已知前面变量的条件下新增的信息之和。这与熵的链式法则完全对偶。</p>
+</blockquote>
+<h3 id="2-4-四个重要不等式"><a href="#2-4-四个重要不等式" class="headerlink" title="2.4 四个重要不等式"></a>2.4 四个重要不等式</h3><p>这些不等式是信息论证明的核心工具。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>不等式</th>
+<th>数学表达</th>
+<th>条件 / 备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>IT 不等式</strong></td>
+<td>$\log r \leq (r-1)\log e$</td>
+<td>$r &gt; 0$ 为任意正实数，等号成立 iff $r = 1$；常用对数底为 2 时：$\log_2 r \leq (r-1)\log_2 e$</td>
+</tr>
+<tr>
+<td><strong>Jensen 不等式</strong></td>
+<td>$E[f(X)] \geq f(E[X])$</td>
+<td>$f$ 为凸函数（convex-∪）；若 $f$ 为凹函数则不等号反向</td>
+</tr>
+<tr>
+<td><strong>数据处理不等式</strong></td>
+<td>$I(X;Z) \geq I(X;Y)$</td>
+<td>若 $X \to Z \to Y$ 构成 Markov 链，则对数据的任何处理都不会增加其中包含的原始信息量</td>
+</tr>
+<tr>
+<td><strong>Fano 不等式</strong></td>
+<td>$H_2(P_e) + P_e\log(\vert \mathcal{X}\vert-1) \geq H(X\vert Y)$</td>
+<td>$P_e = \Pr(\hat{X} \neq X)$ 为根据 $Y$ 猜 $X$ 的错误概率</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Fano 不等式的含义</strong>: 如果知道了 $Y$ 能很好地推测 $X$（即 $H(X|Y)$ 很小），那么错误概率 $P_e$ 也必须很小。反过来，如果 $H(X|Y)$ 很大（$Y$ 没有消除多少关于 $X$ 的不确定性），那么无论怎么猜，$P_e$ 都不可能太小。</p>
+<h3 id="2-5-熵与互信息的凸性"><a href="#2-5-熵与互信息的凸性" class="headerlink" title="2.5 熵与互信息的凸性"></a>2.5 熵与互信息的凸性</h3><p>凸性是求解最优化问题（如信道容量 $C = \max_{P(x)} I(X;Y)$）的数学保证。</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>性质</th>
+<th>说明</th>
+<th>应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$H(X)$ 是 $P(x)$ 的<strong>凹函数</strong>（convex-∩）</td>
+<td>对两个分布的混合，熵不小于各自熵的加权平均</td>
+<td>—</td>
+</tr>
+<tr>
+<td>固定 $P(y\vert x)$，$I(X;Y)$ 是 $P(x)$ 的<strong>凹函数</strong></td>
+<td>这意味着局部最大值就是全局最大值</td>
+<td><strong>容量计算</strong>时可以用凸优化算法（如 Blahut-Arimoto）</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="3-典型序列（§1-2）"><a href="#3-典型序列（§1-2）" class="headerlink" title="3. 典型序列（§1.2）"></a>3. 典型序列（§1.2）</h2><p>典型序列是 Shannon 证明编码定理的核心工具。其基本思想是：当序列长度 $n$ 很大时，几乎所有出现的序列都”看起来一样”——它们属于一个称为<strong>典型集</strong>的子集，该子集虽然只占所有可能序列的极小比例，却占据了几乎全部概率。</p>
+<h3 id="3-1-基本设定"><a href="#3-1-基本设定" class="headerlink" title="3.1 基本设定"></a>3.1 基本设定</h3><p>考虑一个 DMS（离散无记忆信源），它以独立同分布（i.i.d.）方式从有限字母表 $\mathcal{X}$ 中产生符号。令 $X^n = (X_1, X_2, \ldots, X_n)$ 为长度为 $n$ 的序列，$N(a|X^n)$ 表示字母 $a \in \mathcal{X}$ 在 $X^n$ 中出现的次数。</p>
+<blockquote>
+<p>记号约定：$x^n$ 和 $\mathbf{x}$ 在本文中可互换使用，均表示序列 $(x_1, x_2, \ldots, x_n)$。</p>
+</blockquote>
+<h3 id="3-2-型方法（Method-of-Types）"><a href="#3-2-型方法（Method-of-Types）" class="headerlink" title="3.2 型方法（Method of Types）"></a>3.2 型方法（Method of Types）</h3><p>型方法是分析离散序列的强大组合工具。一个序列的<strong>型</strong>就是该序列中每个符号出现的经验频率。</p>
+<script type="math/tex; mode=display">P_x(a) \triangleq \frac{1}{n}\,N(a|x^n), \quad \forall a \in \mathcal{X}</script><p><strong>型类</strong> $T(P_x)$ 是所有具有相同型 $P_x$ 的长度为 $n$ 的序列的集合：</p>
+<script type="math/tex; mode=display">T(P_x) = \{x \in \mathcal{X}^n : x \text{ 具有型 } P_x\}</script><blockquote>
+<p><strong>例</strong>: $\mathcal{X} = {1, 2, 3}$，序列 $x = (1,1,3,2,1)$ 即长度 $n=5$。</p>
+<ul>
+<li>$P_x(1) = 3/5$（1 出现了 3 次）</li>
+<li>$P_x(2) = 1/5$（2 出现了 1 次）</li>
+<li>$P_x(3) = 1/5$（3 出现了 1 次）</li>
+</ul>
+<p>型类 $T(P_x) = {11123, 11132, 11213, \ldots, 32111}$ 即所有包含 3 个 1、1 个 2、1 个 3 的长度为 5 的序列。（共计 $\frac{5!}{3!\,1!\,1!} = 20$ 个序列）</p>
+</blockquote>
+<h3 id="3-3-弱典型序列（熵-典型序列）"><a href="#3-3-弱典型序列（熵-典型序列）" class="headerlink" title="3.3 弱典型序列（熵-典型序列）"></a>3.3 弱典型序列（熵-典型序列）</h3><p><strong>理论根基——弱大数定律（WLLN）</strong>:</p>
+<script type="math/tex; mode=display">P\left(\left|\frac{1}{n}\sum_{i=1}^{n} X_i - \mu\right| \geq \varepsilon\right) \leq \frac{\sigma^2}{n\varepsilon^2}</script><blockquote>
+<p>样本均值依概率收敛到总体均值。</p>
+</blockquote>
+<p>将 WLLN 应用于 $\log\frac{1}{P(X_i)}$（其期望正是 $H(X)$），即得到信息论中最重要的性质——<strong>渐近等分性质（AEP）</strong>：</p>
+<script type="math/tex; mode=display">\frac{1}{n}\log\frac{1}{P(X^n)} \to H(X) \quad \text{依概率收敛}</script><p>即对任意 $\varepsilon &gt; 0$：</p>
+<script type="math/tex; mode=display">\lim_{n \to \infty} P\left(\left|-\frac{1}{n}\log P(X^n) - H(X)\right| \leq \varepsilon\right) = 1</script><blockquote>
+<p>AEP 的含义：当 $n$ 充分大时，一个随机产生的序列几乎一定满足 $P(x^n) \approx 2^{-nH(X)}$，即每个典型序列的概率都约等于 $2^{-nH(X)}$。</p>
+</blockquote>
+<p><strong>Shannon 的典型定义</strong>: 序列 $x^n$ 相对于 $\varepsilon$ 和 $P(x)$ 是典型的，如果</p>
+<script type="math/tex; mode=display">\left|-\frac{1}{n}\log P(x^n) - H(X)\right| \leq \varepsilon</script><p><strong>典型集</strong>:</p>
+<script type="math/tex; mode=display">T_\varepsilon = \left\{x^n \in \mathcal{X}^n : \left|-\frac{1}{n}\log P(x^n) - H(X)\right| \leq \varepsilon\right\}</script><h4 id="典型集的三个核心性质"><a href="#典型集的三个核心性质" class="headerlink" title="典型集的三个核心性质"></a>典型集的三个核心性质</h4><p>这三个性质精确刻画了”典型集虽小但几乎包含所有概率”：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>性质</th>
+<th>数学表达</th>
+<th>直观解释</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>(a) 近似等概</strong></td>
+<td>$2^{-n[H(X)+\varepsilon]} \leq P(x^n) \leq 2^{-n[H(X)-\varepsilon]}$</td>
+<td>典型集中的每个序列有大致相同的概率</td>
+</tr>
+<tr>
+<td><strong>(b) 高概率</strong></td>
+<td>$P(X^n \in T_\varepsilon) &gt; 1 - \delta \to 1$（当 $n \to \infty$）</td>
+<td>随机序列几乎一定落入典型集</td>
+</tr>
+<tr>
+<td><strong>(c) 数量极少</strong></td>
+<td>$(1-\varepsilon)2^{n[H(X)-\varepsilon]} \leq \vert T_\varepsilon\vert \leq 2^{n[H(X)+\varepsilon]}$</td>
+<td>典型集大小约为 $2^{nH(X)}$</td>
+</tr>
+<tr>
+<td></td>
+<td>$\frac{\vert T_\varepsilon\vert }{\vert \mathcal{X}^n\vert } \leq 2^{-n[\log\vert \mathcal{X}\vert-H(X)-\varepsilon]} \to 0$</td>
+<td>典型序列占总序列的比例趋于 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>核心洞察</strong>: 虽然总共有 $|\mathcal{X}|^n$ 种可能的序列，但典型集的大小只有约 $2^{nH(X)}$ 个。当 $H(X) &lt; \log|\mathcal{X}|$（非均匀分布时），典型序列只是冰山一角——但概率几乎全部集中于此。</p>
+</blockquote>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 全部序列空间 X^n
+        T[&quot;典型集 T&lt;sub&gt;ε&lt;&#x2F;sub&gt;&lt;br&#x2F;&gt;大小 ≈ 2&lt;sup&gt;nH(X)&lt;&#x2F;sup&gt;&lt;br&#x2F;&gt;概率 ≈ 1&quot;]
+        NT[&quot;非典型集&lt;br&#x2F;&gt;大小 ≈ |X|&lt;sup&gt;n&lt;&#x2F;sup&gt;&lt;br&#x2F;&gt;概率 ≈ 0&quot;]
+    end
+    style T fill:#e1f5fe
+    style NT fill:#ffebee
+  </pre></div>
+<h3 id="3-4-强典型序列（仅适用于离散随机变量）"><a href="#3-4-强典型序列（仅适用于离散随机变量）" class="headerlink" title="3.4 强典型序列（仅适用于离散随机变量）"></a>3.4 强典型序列（仅适用于离散随机变量）</h3><p>弱典型的条件只约束了整体对数概率，而强典型要求<strong>每种符号</strong>的经验频率都接近真实概率。</p>
+<p><strong>定义 1</strong>（绝对偏差）:</p>
+<script type="math/tex; mode=display">T_\varepsilon = \left\{x^n : \left|\frac{1}{n}N(a|x^n) - P_X(a)\right| < \varepsilon \;\text{或}\; |\mathcal{X}|\varepsilon\right\}</script><p>其中令 $N(a|x^n) = 0$ 若 $P_X(a) = 0$。</p>
+<p><strong>定义 2</strong>（ε-字母-典型，相对偏差）:</p>
+<script type="math/tex; mode=display">T_\varepsilon = \left\{x^n : \left|\frac{1}{n}N(a|x^n) - P_X(a)\right| < \varepsilon P_X(a)\right\}</script><blockquote>
+<p><strong>弱典型 vs 强典型的区别</strong>:</p>
+<ul>
+<li>弱典型：只要求 $-\frac{1}{n}\log P(x^n) \approx H(X)$，即整体对数概率接近熵值。</li>
+<li>强典型：要求每种符号的出现频率都接近其真实概率。强典型必然弱典型，反之不成立。</li>
+<li>适用场景：弱典型可用于连续分布，强典型仅适用于离散分布。信道编码定理的经典证明中二者均可使用。</li>
+</ul>
+</blockquote>
+<h3 id="3-5-联合典型序列"><a href="#3-5-联合典型序列" class="headerlink" title="3.5 联合典型序列"></a>3.5 联合典型序列</h3><p>当涉及两个（或多个）相关随机变量时，需要联合典型的概念。设 $(X^n, Y^n)$ 是从联合分布 $P(x,y)$ 中 i.i.d. 抽取的序列对。</p>
+<p><strong>联合典型集</strong>:</p>
+<script type="math/tex; mode=display">T_\varepsilon^{(n)} = \left\{(x^n, y^n) \in (\mathcal{X}^n, \mathcal{Y}^n) : \begin{aligned} &\left|-\frac{1}{n}\log P(x^n) - H(X)\right| < \varepsilon \\\\ &\left|-\frac{1}{n}\log P(y^n) - H(Y)\right| < \varepsilon \\\\ &\left|-\frac{1}{n}\log P(x^n, y^n) - H(XY)\right| < \varepsilon \end{aligned}\right\}</script><p>满足：$2^{-n[H(XY)+\varepsilon]} &lt; P(x^n, y^n) &lt; 2^{-n[H(XY)-\varepsilon]}$</p>
+<blockquote>
+<p><strong>条件解读</strong>: 联合典型要求三者同时典型——$x^n$ 关于 $X$ 的边际分布典型，$y^n$ 关于 $Y$ 的边际分布典型，且 $(x^n, y^n)$ 关于联合分布典型。</p>
+</blockquote>
+<h4 id="联合-AEP-定理（Theorem-1-2-1）"><a href="#联合-AEP-定理（Theorem-1-2-1）" class="headerlink" title="联合 AEP 定理（Theorem 1.2.1）"></a>联合 AEP 定理（Theorem 1.2.1）</h4><p>设 $(X^n, Y^n)$ 从 $P(x,y)$ i.i.d. 抽取，则当 $n \to \infty$ 时：</p>
+<ol>
+<li>$P\big((x^n, y^n) \in T_\varepsilon^{(n)}\big) \to 1$ ——联合典型几乎一定发生</li>
+<li>$|T_\varepsilon^{(n)}| \leq 2^{n[H(XY)+\varepsilon]}$ ——联合典型集大小的上界</li>
+</ol>
+<blockquote>
+<p><strong>解读</strong>: (1) 表明联合典型也是”高概率”事件；(2) 表明联合典型集的大小由联合熵 $H(XY)$ 决定。</p>
+</blockquote>
+<h4 id="定理-1-2-2（独立抽取的联合典型概率）"><a href="#定理-1-2-2（独立抽取的联合典型概率）" class="headerlink" title="定理 1.2.2（独立抽取的联合典型概率）"></a>定理 1.2.2（独立抽取的联合典型概率）</h4><p>若 $\tilde{x}^n$ 和 $\tilde{y}^n$ 是<strong>分别独立</strong>地从 $P(x)$ 和 $P(y)$ 中抽取的（即 $(\tilde{x}^n, \tilde{y}^n) \sim P(x^n)P(y^n)$），则</p>
+<script type="math/tex; mode=display">P\left((\tilde{x}^n, \tilde{y}^n) \in T_\varepsilon^{(n)}(XY)\right) \leq 2^{-n[I(X;Y)-3\varepsilon]}</script><blockquote>
+<p>🔑 <strong>这是信道编码定理证明中最关键的界之一！</strong></p>
+<p><strong>意义</strong>: 两个独立抽取的序列”碰巧看起来像”联合典型的概率随 $n$ <strong>指数衰减</strong>，衰减速率正是互信息 $I(X;Y)$。当 $I(X;Y) &gt; 0$ 时，$n$ 稍大后这个概率就几乎为 0。</p>
+<p><strong>在编码定理中的应用</strong>: 随机生成码本，每个码字是独立地从 $P(x)$ 生成的。译码时，接收端寻找与接收序列 $y^n$ 联合典型的码字。如果发送的是码字 $x^n(1)$，则 $(x^n(1), y^n)$ 以高概率联合典型（定理 1.2.1），而其他所有不相关的码字与 $y^n$ 联合典型的概率以 $2^{-nI(X;Y)}$ 衰减（定理 1.2.2）。只要总码字数 $&lt; 2^{nI(X;Y)}$，由联合界（union bound），错误概率 → 0。</p>
+</blockquote>
+<h4 id="强联合典型集"><a href="#强联合典型集" class="headerlink" title="强联合典型集"></a>强联合典型集</h4><script type="math/tex; mode=display">T_\varepsilon^{(n)} = \left\{(x^n, y^n) : \left|\frac{1}{n}N(a,b|x^n,y^n) - P(a,b)\right| \leq \varepsilon P(a,b),\; \forall a \in \mathcal{X}, b \in \mathcal{Y}\right\}</script><p>其中 $N(a,b|x^n,y^n)$ 是序列对 $(x_1,y_1), (x_2,y_2), \ldots, (x_n,y_n)$ 中 $(a,b)$ 同时出现的次数。</p>
+<h2 id="4-信源编码（§1-3）"><a href="#4-信源编码（§1-3）" class="headerlink" title="4. 信源编码（§1.3）"></a>4. 信源编码（§1.3）</h2><p>信源编码研究如何用尽可能少的比特来表示信源输出。这里的理论基础由 Shannon 的无损信源编码定理给出——压缩极限由信源的熵决定。</p>
+<h3 id="4-1-离散无记忆信源（DMS）"><a href="#4-1-离散无记忆信源（DMS）" class="headerlink" title="4.1 离散无记忆信源（DMS）"></a>4.1 离散无记忆信源（DMS）</h3><blockquote>
+<p><strong>DMS</strong>: 以 i.i.d. 方式从离散有限字母表 $\mathcal{X}$ 中发射符号的设备。每次发射独立于历史，且服从相同的分布 $P(x)$。</p>
+</blockquote>
+<h4 id="信源编码问题的框图（Fig-1-3）"><a href="#信源编码问题的框图（Fig-1-3）" class="headerlink" title="信源编码问题的框图（Fig. 1.3）"></a>信源编码问题的框图（Fig. 1.3）</h4><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    SRC[&quot;信源&lt;br&#x2F;&gt;DMS&quot;] --&gt;|&quot;X&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;| ENC[&quot;信源编码器&lt;br&#x2F;&gt;压缩为索引 W&quot;]
+    ENC --&gt;|&quot;W ∈ {1,…,2&lt;sup&gt;nR&lt;&#x2F;sup&gt;}&quot;| DEC[&quot;信源译码器&lt;br&#x2F;&gt;恢复序列&quot;]
+    DEC --&gt;|&quot;X̂&lt;sup&gt;n&lt;&#x2F;sup&gt;&quot;| SINK[&quot;信宿&quot;]
+  </pre></div>
+<p><strong>目标</strong>: 在保证 $P(\hat{X}^n \neq X^n) \to 0$（当 $n \to \infty$）的前提下，最小化平均编码速率：</p>
+<script type="math/tex; mode=display">R = \frac{E[\ell(X^n)]}{n}</script><p>其中 $\ell(X^n)$ 是码字 $C(X^n)$ 的长度（比特数）。</p>
+<h3 id="4-2-定长信源编码-——-基于-AEP-的数据压缩"><a href="#4-2-定长信源编码-——-基于-AEP-的数据压缩" class="headerlink" title="4.2 定长信源编码 —— 基于 AEP 的数据压缩"></a>4.2 定长信源编码 —— 基于 AEP 的数据压缩</h3><p>利用 AEP，可以构造一个非常简单的定长编码方案：</p>
+<p><strong>编码步骤</strong>:</p>
+<ol>
+<li>将所有典型序列从 1 到 $|T_\varepsilon^{(n)}|$ 编号，需要 $\lceil n[H(X) + \varepsilon] \rceil + 1$ 比特。</li>
+<li>用一个额外的标志比特 <strong>‘0’</strong> 表示”这是典型序列”，后跟编号。</li>
+<li>若输入序列不是典型序列（小概率事件），则发送标志比特 <strong>‘1’</strong>，后跟 $n\log|\mathcal{X}| + 1$ 比特直接描述该序列。</li>
+</ol>
+<p><strong>期望码长分析</strong>:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+E[\ell(X^n)] &\leq P(X^n \in T_\varepsilon) \cdot [n(H+\varepsilon) + 2] + P(X^n \notin T_\varepsilon) \cdot [n\log|\mathcal{X}| + 2] \\\\
+&\leq 1 \cdot [n(H+\varepsilon) + 2] + \varepsilon \cdot [n\log|\mathcal{X}| + 2] \\\\
+&= n(H + \varepsilon) + \varepsilon n\log|\mathcal{X}| + 2\varepsilon + 2 \\\\
+&= n\left(H + \varepsilon + \varepsilon\log|\mathcal{X}| + \frac{2(1+\varepsilon)}{n}\right) \\\\
+&= n(H + \varepsilon')
+\end{aligned}</script><p>其中 $\varepsilon’ = \varepsilon + \varepsilon\log|\mathcal{X}| + \frac{2(1+\varepsilon)}{n} \to 0$ 当 $\varepsilon \to 0$ 且 $n$ 充分大。</p>
+<p>因此：$R = E[\ell(X^n)]/n \leq H(X) + \varepsilon’$，即<strong>任意略高于熵的速率都可达</strong>。</p>
+<h4 id="无损信源编码定理（Theorem-1-3-1）"><a href="#无损信源编码定理（Theorem-1-3-1）" class="headerlink" title="无损信源编码定理（Theorem 1.3.1）"></a>无损信源编码定理（Theorem 1.3.1）</h4><blockquote>
+<ul>
+<li>若 $R &gt; H(X)$，则存在编码方案使 $P_e \to 0$（$R$ 可达）</li>
+<li>若 $R &lt; H(X)$，则任何编码方案的 $P_e$ 都不可能趋于 0（$R$ 不可达）</li>
+</ul>
+</blockquote>
+<p><strong>编码效率</strong>: $\eta = H(X)/R \leq 1$。当 $R$ 接近 $H(X)$ 时效率接近 100%。</p>
+<h3 id="4-3-变长信源编码"><a href="#4-3-变长信源编码" class="headerlink" title="4.3 变长信源编码"></a>4.3 变长信源编码</h3><p>变长编码可以对高频符号用短码字、低频符号用长码字，从而获得比定长编码更高的效率。</p>
+<h4 id="前缀码"><a href="#前缀码" class="headerlink" title="前缀码"></a>前缀码</h4><blockquote>
+<p><strong>定义</strong>: 前缀码是指任何码字都不是其他码字前缀的编码。前缀码可以即时译码（收到完整的码字即可立即译出对应符号，无需查看后续比特）。</p>
+</blockquote>
+<h4 id="Kraft-不等式"><a href="#Kraft-不等式" class="headerlink" title="Kraft 不等式"></a>Kraft 不等式</h4><p>这是判断一组码字长度能否构成前缀码的充要条件：</p>
+<script type="math/tex; mode=display">\sum_{i=1}^{K} D^{-l_i} \leq 1 \tag{1.1}</script><p>其中 $D$ 是编码字母表大小（$D=2$ 为二进制编码），$l_i$ 是第 $i$ 个码字的长度。</p>
+<blockquote>
+<p><strong>重要性质</strong>: 每个<strong>满前缀码</strong>（即不能再添加任何码字而不破坏前缀性质的码）以<strong>等式</strong>满足 Kraft 不等式。</p>
+</blockquote>
+<h3 id="4-4-最优码的构造"><a href="#4-4-最优码的构造" class="headerlink" title="4.4 最优码的构造"></a>4.4 最优码的构造</h3><p>最优前缀码是最小化期望码长 $L = \sum_i P_i l_i$ 的前缀码。求解以下优化问题：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\min \quad & L = \sum_i P_i l_i \\\\
+\text{s.t.} \quad & \sum_{i=1}^{K} D^{-l_i} \leq 1
+\end{aligned}</script><p>拉格朗日乘子法给出理论最优解（忽略整数约束）:</p>
+<script type="math/tex; mode=display">l_i^* = -\log_D P_i</script><p>即每个符号的理想码长等于其<strong>自信息</strong>（以 $D$ 为底）。此时期望码长 $L^* = H_D(X)$。</p>
+<h4 id="前缀信源编码定理（Theorem-1-3-2）"><a href="#前缀信源编码定理（Theorem-1-3-2）" class="headerlink" title="前缀信源编码定理（Theorem 1.3.2）"></a>前缀信源编码定理（Theorem 1.3.2）</h4><p>对于任意熵为 $H(X)$ 的 DMS，存在 $D$ 元前缀码，使得对长度为 $n$ 的信源分组进行编码时，<strong>每符号</strong>的平均码长 $\bar{L}_n$ 满足：</p>
+<script type="math/tex; mode=display">\frac{H(X)}{\log D} \leq \bar{L}_n < \frac{H(X)}{\log D} + \frac{1}{n}</script><blockquote>
+<p><strong>解读</strong>: 当分组长度 $n \to \infty$ 时，平均码长可以无限逼近熵值 $H(X)/\log D$（以 $D$ 元为单位）。</p>
+</blockquote>
+<h3 id="4-5-Shannon-码与-Huffman-码"><a href="#4-5-Shannon-码与-Huffman-码" class="headerlink" title="4.5 Shannon 码与 Huffman 码"></a>4.5 Shannon 码与 Huffman 码</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>编码</th>
+<th>构造方法</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Shannon 码</strong></td>
+<td>$l_i = \lceil -\log_D P_i \rceil$（对理想码长向上取整）</td>
+<td>构造简单，在 1 比特内达到最优</td>
+</tr>
+<tr>
+<td><strong>Huffman 码</strong></td>
+<td>贪心算法：反复合并两个最小概率的信源符号，自底向上构建二叉树</td>
+<td><strong>最优前缀码</strong>，在单个符号级别达到最小期望码长</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="5-信道容量（§1-4）"><a href="#5-信道容量（§1-4）" class="headerlink" title="5. 信道容量（§1.4）"></a>5. 信道容量（§1.4）</h2><p>信道容量是通信系统最核心的极限指标——它给出了在给定信道上实现可靠通信的最高速率。</p>
+<h3 id="5-1-离散无记忆信道（DMC）"><a href="#5-1-离散无记忆信道（DMC）" class="headerlink" title="5.1 离散无记忆信道（DMC）"></a>5.1 离散无记忆信道（DMC）</h3><blockquote>
+<p><strong>DMC 的定义</strong>: 信道在时刻 $n$ 的输出 $Y_n$ 仅依赖于该时刻的输入 $X_n$，与之前的所有输入输出无关：</p>
+<script type="math/tex; mode=display">P(y_n | x_1, \ldots, x_n, y_1, \ldots, y_{n-1}) = P(y_n | x_n)</script></blockquote>
+<p><strong>无反馈时</strong>，$n$ 次使用的联合条件概率简化为乘积：</p>
+<script type="math/tex; mode=display">P(\mathbf{y}|\mathbf{x}) = \prod_{i=1}^{n} P(y_i|x_i)</script><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    X(&quot;X ∈ X&lt;br&#x2F;&gt;输入符号&quot;) --&gt;|&quot;P(y|x)&quot;| Y(&quot;Y ∈ Y&lt;br&#x2F;&gt;输出符号&quot;)
+  </pre></div>
+<blockquote>
+<p><strong>DMC 由三要素描述</strong>: 输入字母表 $\mathcal{X}$、输出字母表 $\mathcal{Y}$、转移概率矩阵 $P(y|x)$。</p>
+</blockquote>
+<h3 id="5-2-容量的双重定义"><a href="#5-2-容量的双重定义" class="headerlink" title="5.2 容量的双重定义"></a>5.2 容量的双重定义</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>概念</th>
+<th>定义</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>信息容量</strong></td>
+<td>$C = \max_{P(X)} I(X;Y)$</td>
+<td>数学优化问题：找到使互信息最大的输入分布</td>
+</tr>
+<tr>
+<td><strong>操作容量</strong></td>
+<td>所有可达速率的上确界</td>
+<td>工程定义：实际可以可靠通信的最高速率</td>
+</tr>
+<tr>
+<td><strong>可达速率</strong> $R$</td>
+<td>存在 $(2^{nR}, n)$ 码序列，使最大（或平均）错误概率 $P_e^{(n)} \to 0$（$n \to \infty$）</td>
+<td>存在性定义</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="噪声信道编码定理（Theorem-1-4-1）"><a href="#噪声信道编码定理（Theorem-1-4-1）" class="headerlink" title="噪声信道编码定理（Theorem 1.4.1）"></a>噪声信道编码定理（Theorem 1.4.1）</h4><blockquote>
+<p>任意低于 $C = \max_{P(X)} I(X;Y)$ 的速率都是可达的。</p>
+</blockquote>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 可达性
+        A[&quot;R &lt; C: 可达&lt;br&#x2F;&gt;存在编码使 P&lt;sub&gt;e&lt;&#x2F;sub&gt; → 0&quot;]
+        B[&quot;R &gt; C: 不可达&lt;br&#x2F;&gt;任何编码 P&lt;sub&gt;e&lt;&#x2F;sub&gt; 不趋于 0&quot;]
+    end
+    style A fill:#c8e6c9
+    style B fill:#ffcdd2
+  </pre></div>
+<p><strong>这一定理的重要意义</strong>:</p>
+<ol>
+<li>它建立了<strong>操作容量 = 信息容量</strong>的等价关系。从此”容量”一词既指 $C = \max I(X;Y)$ 的计算值，也指可达速率的上确界，两者等价。</li>
+<li>它解决了容量的<strong>计算问题</strong>——将工程上的可达速率问题转化为互信息的最大化问题，这在数学上是可求解的。</li>
+<li><strong>证明方法</strong>: Shannon 采用”<strong>随机编码 + 典型集译码</strong>“的方法：随机生成大量码字，译码时寻找与接收序列联合典型的码字。分析的是码本集合上的<strong>平均</strong>错误概率，由此推出至少存在一个好的码本使错误概率任意小。</li>
+</ol>
+<h3 id="5-3-典型信道的容量计算"><a href="#5-3-典型信道的容量计算" class="headerlink" title="5.3 典型信道的容量计算"></a>5.3 典型信道的容量计算</h3><h4 id="1-二元对称信道（BSC）"><a href="#1-二元对称信道（BSC）" class="headerlink" title="(1) 二元对称信道（BSC）"></a>(1) 二元对称信道（BSC）</h4><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    X0(&quot;0&quot;) --&gt;|&quot;1-ε&quot;| Y0(&quot;0&quot;)
+    X0 --&gt;|&quot;ε&quot;| Y1(&quot;1&quot;)
+    X1(&quot;1&quot;) --&gt;|&quot;ε&quot;| Y0(&quot;0&quot;)
+    X1 --&gt;|&quot;1-ε&quot;| Y1(&quot;1&quot;)
+  </pre></div>
+<ul>
+<li>输入和输出均为 ${0, 1}$，交叉概率为 $\varepsilon$（即每个比特以概率 $\varepsilon$ 被翻转）。</li>
+<li>最优输入分布：等概（$P(0) = P(1) = 1/2$）。</li>
+</ul>
+<script type="math/tex; mode=display">C = 1 - H_2(\varepsilon)</script><p>其中 $H_2(p) = -p\log_2 p - (1-p)\log_2(1-p)$ 为<strong>二元熵函数</strong>。</p>
+<blockquote>
+<ul>
+<li>$\varepsilon = 0$（无噪声）→ $C = 1$ bit/使用</li>
+<li>$\varepsilon = 0.5$（完全随机）→ $C = 0$（信道无意义）</li>
+<li>图像关于 $\varepsilon = 0.5$ 对称</li>
+</ul>
+</blockquote>
+<h4 id="2-二元擦除信道（BEC）"><a href="#2-二元擦除信道（BEC）" class="headerlink" title="(2) 二元擦除信道（BEC）"></a>(2) 二元擦除信道（BEC）</h4><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    X0(&quot;0&quot;) --&gt;|&quot;1-α&quot;| Y0(&quot;0&quot;)
+    X0 --&gt;|&quot;α&quot;| Ye(&quot;e&quot;)
+    X1(&quot;1&quot;) --&gt;|&quot;α&quot;| Ye(&quot;e&quot;)
+    X1 --&gt;|&quot;1-α&quot;| Y1(&quot;1&quot;)
+  </pre></div>
+<ul>
+<li>输入 ${0,1}$，输出 ${0, e, 1}$，符号以概率 $\alpha$ 被擦除（接收端知道它被擦除了，但不知道原值）。</li>
+</ul>
+<p>推导过程：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+C &= \max_{P(X)} [H(X) - H(X|Y)] \\\\
+&= \max_{P(X)} \left[H(X) - \sum_i P(Y=i)H(X|Y=i)\right] \\\\
+&= \max_{P(X)} [H(X) - P(Y=e)H(X|Y=e)] \quad (\text{因为 } Y=0,1 \text{ 时 } H(X|Y)=0)\\\\
+&= \max_{P(X)} H(X)(1-\alpha) = 1 - \alpha
+\end{aligned}</script><blockquote>
+<p><strong>理解</strong>: 当擦除概率为 $\alpha$ 时，$\alpha$ 比例的传输被浪费（知道丢了但不知道丢了什么），剩下 $1-\alpha$ 的传输是完美的（知道收到的是 0 还是 1 就确知原值）。</p>
+</blockquote>
+<h4 id="3-一般离散无记忆信道的容量界"><a href="#3-一般离散无记忆信道的容量界" class="headerlink" title="(3) 一般离散无记忆信道的容量界"></a>(3) 一般离散无记忆信道的容量界</h4><script type="math/tex; mode=display">\sum_{i=1}^{n} I(X^n; Y^n) \leq \sum_{i=1}^{n} I(X_i; Y_i) \leq nC</script><blockquote>
+<p>这个不等式将<strong>序列互信息</strong>与<strong>单符号互信息</strong>联系起来：$n$ 次使用信道获得的总互信息，最多等于每次单独使用的互信息之和（当输入在时间上独立时取等号）。</p>
+</blockquote>
+<p><strong>一般信道的数值计算</strong>: 当信道不是对称的，最优输入分布没有闭式解时，使用 <strong>Blahut-Arimoto 算法</strong>（一种交替优化的迭代算法）来数值计算容量。</p>
+<h3 id="5-4-信源-信道分离定理"><a href="#5-4-信源-信道分离定理" class="headerlink" title="5.4 信源-信道分离定理"></a>5.4 信源-信道分离定理</h3><blockquote>
+<p>考虑将一个满足 AEP 的 i.i.d. 信源 $V^n$ 通过 DMC $P(y|x)$ 进行可靠传输。<br>这可以做到当且仅当 $H(V) &lt; C$。</p>
+</blockquote>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    V[&quot;信源 V&lt;br&#x2F;&gt;熵 H(V)&quot;] --&gt; ENC_S[&quot;信源编码器&lt;br&#x2F;&gt;压缩&quot;]
+    ENC_S --&gt; ENC_C[&quot;信道编码器&lt;br&#x2F;&gt;加冗余&quot;]
+    ENC_C --&gt; CH[&quot;信道 P(y|x)&lt;br&#x2F;&gt;容量 C&quot;]
+    CH --&gt; DEC_C[&quot;信道译码器&quot;]
+    DEC_C --&gt; DEC_S[&quot;信源译码器&quot;]
+    DEC_S --&gt; VHAT[&quot;V̂&quot;]
+  </pre></div>
+<p><strong>分离定理的意义</strong>: 我们可以<strong>独立地</strong>设计信源编码（压缩到 $H(V)$）和信道编码（达到 $C$），然后将二者级联。只要 $H(V) &lt; C$，整个系统就可以可靠工作。这极大地简化了通信系统的工程设计——信源编码和信道编码可以作为两个独立模块来优化。</p>
+<h3 id="5-5-反馈容量"><a href="#5-5-反馈容量" class="headerlink" title="5.5 反馈容量"></a>5.5 反馈容量</h3><p><strong>Theorem 1.4.2</strong>: 对于 DMC，反馈不增加容量。</p>
+<script type="math/tex; mode=display">C_{FB} = C = \max_{P(x)} I(X;Y)</script><blockquote>
+<ul>
+<li><strong>容量不变</strong>: 无论有没有从接收端到发送端的完美反馈链路，信道的香农容量都是一样的。</li>
+<li><strong>但反馈有价值</strong>: 反馈<strong>极大地简化了编码方案</strong>——有了反馈，可以用简单的重传协议达到接近容量；没有反馈则需要复杂的前向纠错码（如 Turbo 码、LDPC 码、Polar 码）。</li>
+</ul>
+</blockquote>
+<h3 id="5-6-高斯信道"><a href="#5-6-高斯信道" class="headerlink" title="5.6 高斯信道"></a>5.6 高斯信道</h3><p>高斯信道是模拟通信系统最基础的模型。接收信号等于输入信号乘以信道增益再加高斯白噪声。</p>
+<script type="math/tex; mode=display">Y = hX + Z</script><ul>
+<li>$h$: 信道增益（可以固定，也可以随机——对应衰落信道）</li>
+<li>$Z \sim \mathcal{N}(0, \sigma_z^2)$: 加性高斯白噪声（AWGN）</li>
+<li>功率约束：$E[X^2] \leq P$</li>
+</ul>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    X(&quot;X&lt;br&#x2F;&gt;E[X²] ≤ P&quot;) --&gt;|&quot;×h&quot;| PLUS((&quot;+&quot;))
+    Z((&quot;Z ~ N(0,σ²)&quot;)) --&gt; PLUS
+    PLUS --&gt; Y(&quot;Y &#x3D; hX + Z&quot;)
+  </pre></div>
+<p><strong>高斯信道互信息的推导</strong>:</p>
+<p>当 $X \sim \mathcal{N}(0, P)$ 时，$Y \sim \mathcal{N}(0, h^2P + \sigma_z^2)$。</p>
+<script type="math/tex; mode=display">\begin{aligned}
+I(X;Y) &= h(Y) - h(Y|X) \\\\
+&= h(Y) - h(Z) \quad (\text{因为已知 } X \text{ 后 } Y \text{ 的随机性仅来自 } Z)\\\\
+&= \frac{1}{2}\log\left[2\pi e(h^2P + \sigma_z^2)\right] - \frac{1}{2}\log\left[2\pi e\sigma_z^2\right] \\\\
+&= \frac{1}{2}\log\left(1 + \frac{h^2P}{\sigma_z^2}\right)
+\end{aligned}</script><blockquote>
+<p>这就是著名的 <strong>Shannon 公式</strong>: $C = \frac{1}{2}\log_2(1 + \text{SNR})$ bits/real dimension。</p>
+<ul>
+<li>$\text{SNR} = h^2P / \sigma_z^2$ 是信噪比。</li>
+<li>当 SNR 很高时，$C \approx \frac{1}{2}\log_2(\text{SNR})$——容量随 SNR 的对数增长。</li>
+<li>当 SNR 很低时，$C \approx \frac{\text{SNR}}{2\ln 2}$——容量近似与 SNR 成线性关系。</li>
+</ul>
+</blockquote>
+<h4 id="衰落信道"><a href="#衰落信道" class="headerlink" title="衰落信道"></a>衰落信道</h4><p>当 $h$ 是与 $X$ 和 $Z$ 独立的随机变量时（分布密度为 $P_h(\cdot)$），信道输出扩充为向量 $Y’ = [hX + Z, h]$（接收端已知 $h$）：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+C &= \max_{P(X)} I(X; Y, H) \\\\
+&= \max_{P(X)} [I(X; H) + I(X; Y|H)] \\\\
+&= \max_{P(X)} I(X; Y|H) \quad (\text{因为 } X \text{ 与 } H \text{ 独立})\\\\
+&= \max_{P(X)} \{E_h[H(Y|H=h)] - H(Z)\} \\\\
+&\leq \int_a P_h(a) \cdot \frac{1}{2}\log\left(1 + \frac{a^2P}{\sigma_z^2}\right) da \\\\
+&= E_h[I(X; Y|H=h)]
+\end{aligned}</script><blockquote>
+<p><strong>物理含义</strong>: 在衰落信道中，容量等于<strong>各衰落状态下瞬时容量的统计平均</strong>（当发射端不知道信道状态时，这是上界；当发射端知道信道状态并做功率注水时，可达容量可能更大）。</p>
+</blockquote>
+<h4 id="并行高斯信道：注水定理"><a href="#并行高斯信道：注水定理" class="headerlink" title="并行高斯信道：注水定理"></a>并行高斯信道：注水定理</h4><p>当多个并行高斯子信道共享总功率约束时，最优功率分配策略是<strong>注水（Water-Filling）</strong>——将更多的功率分配给增益（或信噪比）较高的子信道，对增益过低的子信道可能不分配功率。具体公式见 §9.5 节的 MIMO 注水算法。</p>
+<h4 id="波形信道（限带-AWGN-信道）"><a href="#波形信道（限带-AWGN-信道）" class="headerlink" title="波形信道（限带 AWGN 信道）"></a>波形信道（限带 AWGN 信道）</h4><script type="math/tex; mode=display">y(t) = x(t) + z(t)</script><p>其中 $z(t)$ 是高斯随机过程。若 $x(t)$ 仅在 $[-W, W]$ 频率范围有非零分量，则：</p>
+<script type="math/tex; mode=display">C = W\log_2(1 + \text{SNR}) \quad \text{bits/s}</script><blockquote>
+<p>这就是 <strong>Shannon-Hartley 定理</strong>：容量 = 带宽 × 频谱效率上界。增加带宽或增加功率都可以提高容量，但效果不同——功率增加使容量对数增长，带宽增加使容量线性增长（但 SNR 随之下降）。</p>
+</blockquote>
+<h2 id="6-关于容量的进一步讨论（§1-5）"><a href="#6-关于容量的进一步讨论（§1-5）" class="headerlink" title="6. 关于容量的进一步讨论（§1.5）"></a>6. 关于容量的进一步讨论（§1.5）</h2><p>本节从更精确的数学角度审视”容量”这个概念，澄清一些容易被误解的细节。</p>
+<h3 id="6-1-可靠通信的速率上界"><a href="#6-1-可靠通信的速率上界" class="headerlink" title="6.1 可靠通信的速率上界"></a>6.1 可靠通信的速率上界</h3><p>将一次传输 $N$ 个符号视为一个整体（超符号），其上界为：</p>
+<script type="math/tex; mode=display">\bar{C} = \max_{P(X^N)} \frac{1}{N} I(X^N; Y^N)</script><p>展开互信息：</p>
+<script type="math/tex; mode=display">\begin{equation}\begin{aligned}
+I(X^N; Y^N) &= H(Y^N) - H(Y^N|X^N) \\\\
+&\leq \sum_{i=1}^{N} H(Y_i) - H(Y^N|X^N) \quad (\text{链式法则 + 条件不增熵})\\\\
+&= \sum_{i=1}^{N} H(Y_i) - \sum_{i=1}^{N} H(Y_i|X_i) \quad (\text{信道无记忆})\\\\
+&= \sum_{i=1}^{N} I(X_i; Y_i)
+\end{aligned}\end{equation}</script><h4 id="等号成立条件"><a href="#等号成立条件" class="headerlink" title="等号成立条件"></a>等号成立条件</h4><p>式 (1) 取等号要求<strong>输出符号在时间上独立</strong>。实现此条件的一种方式是使<strong>输入符号在时间上独立</strong>。</p>
+<p>在此条件下优化输入分布 $P(X^N)$ 以最大化 $I(X^N; Y^N)$，等价于在每个时刻独立地选择 $P(X_i)$ 以最大化单符号互信息。因此：</p>
+<script type="math/tex; mode=display">\bar{C} = \frac{1}{N} \sum_{i=1}^{N} \max_{P(X_i)} I(X_i; Y_i) = \max_{P(X_1)} I(X_1; Y_1) = C</script><blockquote>
+<p><strong>结论</strong>: 即使允许任意 $N$ 符号联合编码，能达到的最高速率也不会超过单符号互信息优化的结果 $C$。</p>
+</blockquote>
+<h3 id="6-2-一个重要澄清-⚠️"><a href="#6-2-一个重要澄清-⚠️" class="headerlink" title="6.2 一个重要澄清 ⚠️"></a>6.2 一个重要澄清 ⚠️</h3><blockquote>
+<p><strong>问</strong>: “式(1.2)取等号”是否意味着不需要编码就能达到容量？</p>
+<p><strong>答</strong>: <strong>不！</strong>这是对容量概念最常见的误解。</p>
+</blockquote>
+<ul>
+<li>上述推导只是”信息”容量的优化结果——它告诉我们 $C = \max I(X;Y)$ 是互信息的上界，<strong>但不考虑错误概率</strong>。</li>
+<li><strong>可靠通信无法恰好以速率 $C$ 实现</strong>——$C$ 只是一个上确界（supremum），不是可达速率本身。</li>
+<li>对于任意<strong>严格小于</strong> $C$ 的速率（无论多接近 $C$），信道编码定理保证存在编码使可靠通信成为可能——此时输出符号<strong>几乎</strong>独立。</li>
+<li>编码的作用是将 $n$ 次信道使用<strong>耦合</strong>起来，使得在译码端可以”平均掉”噪声的影响（大数定律），代价是引入了时延。</li>
+</ul>
+<h2 id="7-操作性信道容量（§1-6）"><a href="#7-操作性信道容量（§1-6）" class="headerlink" title="7. 操作性信道容量（§1.6）"></a>7. 操作性信道容量（§1.6）</h2><p>为了精确陈述信道编码定理，需要严格定义”可达速率”和”容量”。</p>
+<h3 id="7-1-精确定义"><a href="#7-1-精确定义" class="headerlink" title="7.1 精确定义"></a>7.1 精确定义</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>术语</th>
+<th>定义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>$(n, \varepsilon)$-码</strong></td>
+<td>对信道 ${P<em>n : \mathcal{X}^n \to \mathcal{Y}^n}</em>{n=1}^{\infty}$ ，一个长度为 $n$ 的分组码，其<strong>最大</strong>错误概率 $\leq \varepsilon$</td>
+</tr>
+<tr>
+<td><strong>$\varepsilon$-可达速率</strong> $R$</td>
+<td>若对任意 $\delta &gt; 0$ 和所有充分大的 $n$，存在速率 $&gt; R - \delta$ 的 $(n, \varepsilon)$-码</td>
+</tr>
+<tr>
+<td><strong>可达速率</strong> $R$</td>
+<td>对<strong>所有</strong> $0 &lt; \varepsilon &lt; 1$ 都是 $\varepsilon$-可达的速率</td>
+</tr>
+<tr>
+<td><strong>$\varepsilon$-容量</strong> $C_\varepsilon$</td>
+<td>所有 $\varepsilon$-可达速率的上确界</td>
+</tr>
+<tr>
+<td><strong>容量</strong> $C$</td>
+<td>所有可达速率的上确界</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>关键性质</strong>:  $\lim<em>{\varepsilon \to 0} C</em>\varepsilon = C$ ——当对错误概率的要求越来越严格时， $\varepsilon$-容量趋于（无错误约束下的）容量。</p>
+<h3 id="7-2-噪声信道编码定理（正式表述）"><a href="#7-2-噪声信道编码定理（正式表述）" class="headerlink" title="7.2 噪声信道编码定理（正式表述）"></a>7.2 噪声信道编码定理（正式表述）</h3><p>对于任意 $0 &lt; \varepsilon &lt; 1$，DMC 的 $\varepsilon$-容量为：</p>
+<script type="math/tex; mode=display">C_\varepsilon = C = \max_{P_X} I(P_X, P_{Y|X}) = \max_{P(X)} I(X;Y)</script><blockquote>
+<p><strong>数学意义</strong>: 这一表述将”容量”从操作性定义（可达速率的上确界）转化为信息论定义（互信息的最大值），使得信道容量在原则上可以计算到任意精度。这是 Shannon 理论最漂亮的结论之一。</p>
+</blockquote>
+<h2 id="8-零错误容量（§1-7）"><a href="#8-零错误容量（§1-7）" class="headerlink" title="8. 零错误容量（§1.7）"></a>8. 零错误容量（§1.7）</h2><p>Shannon 于 1956 年提出了一个比普通容量更严格的概念——零错误容量（Zero-Error Capacity）。</p>
+<h3 id="8-1-动机与定义"><a href="#8-1-动机与定义" class="headerlink" title="8.1 动机与定义"></a>8.1 动机与定义</h3><p>普通容量允许错误概率 $\to 0$（但不是严格为 0）。零错误容量要求<strong>严格零错误</strong>——译码器<strong>永远不会</strong>犯错误。</p>
+<p><strong>Bhattacharyya 距离</strong>: 两个输入符号 $a_i$ 和 $a_j$ 被称为处于”无穷 Bhattacharyya 距离”，若它们的输出分布完全不重叠：</p>
+<script type="math/tex; mode=display">\sum_k \sqrt{P(k|i)\,P(k|j)} = 0</script><blockquote>
+<p><strong>直观</strong>: 这意味着接收端从收到的输出符号可以<strong>绝对确定</strong>发送的是 $a_i$ 还是 $a_j$，两个符号不可能被混淆。</p>
+</blockquote>
+<p><strong>零错误容量的定义</strong>: 对每个 $n$，令 $\mathcal{C}^{(n)}$ 是长度为 $n$ 的最大分组码，满足其中任意两个<strong>不同的</strong>码字 $x^m$ 和 $x^{m’}$ 都有：</p>
+<script type="math/tex; mode=display">\sum_y \sqrt{P(y|x^m)\,P(y|x^{m'})} = 0</script><p>（即任意两个码字的输出分布完全不重叠）。令 $M_n = |\mathcal{C}^{(n)}|$，则：</p>
+<script type="math/tex; mode=display">C_0 = \sup_n \frac{1}{n}\log M_n</script><blockquote>
+<p>$C_0$ 是使得译码错误概率<strong>严格为零</strong>的任意分组码的最大可达速率。</p>
+</blockquote>
+<h3 id="8-2-定理-1-7-1-及其证明"><a href="#8-2-定理-1-7-1-及其证明" class="headerlink" title="8.2 定理 1.7.1 及其证明"></a>8.2 定理 1.7.1 及其证明</h3><blockquote>
+<p><strong>定理</strong>: 要么 $C_0 = 0$，要么 $C_0 \geq 1$。</p>
+</blockquote>
+<p><strong>证明</strong>:</p>
+<p>若 $C_0 \neq 0$，则存在某两个输入符号 $a_i$ 和 $a_j$ 满足 $\sum_k \sqrt{P(k|i)P(k|j)} = 0$。</p>
+<p>取两个长度为 1 的码字 $x_1 = a_i$ 和 $x_2 = a_j$。译码器从不会混淆这两个码字（因为输出分布不重叠），因此译码错误概率为 0。使用这两个码字，可以以 <strong>1 bit/symbol</strong> 的速率可靠通信。因此 $C_0 \geq 1$。</p>
+<blockquote>
+<p>📌 <strong>复习注意</strong>: 零错误容量的具体计算通常非常困难，即使是简单的信道（如五边形信道），其零错误容量至今未知。这是一个著名的开放问题。</p>
+</blockquote>
+<h2 id="9-MIMO-信道（§1-8）"><a href="#9-MIMO-信道（§1-8）" class="headerlink" title="9. MIMO 信道（§1.8）"></a>9. MIMO 信道（§1.8）</h2><p>多输入多输出（MIMO）技术是现代无线通信最重要的技术突破之一。通过在收发两端配置多根天线，MIMO 系统可以在<strong>不增加带宽和发射功率</strong>的前提下显著提高频谱效率。</p>
+<h3 id="9-1-系统模型"><a href="#9-1-系统模型" class="headerlink" title="9.1 系统模型"></a>9.1 系统模型</h3><p>考虑一个具有 $N$ 根发射天线和 $M$ 根接收天线的单用户 MIMO 系统（记为 $(N, M)$ 系统）。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph 发射端
+        TX1[&quot;TX 1&quot;]
+        TX2[&quot;TX 2&quot;]
+        TXd[&quot;...&quot;]
+        TXN[&quot;TX N&quot;]
+    end
+    
+    subgraph 信道矩阵 H
+        Hdesc[&quot;H ∈ ℂ&lt;sup&gt;M×N&lt;&#x2F;sup&gt;&lt;br&#x2F;&gt;h&lt;sub&gt;ij&lt;&#x2F;sub&gt;: 天线 j → 天线 i 的增益&quot;]
+    end
+    
+    subgraph 接收端
+        RX1((&quot;RX 1&lt;br&#x2F;&gt;+&quot;))
+        RX2((&quot;RX 2&lt;br&#x2F;&gt;+&quot;))
+        RXd(&quot;...&quot;)
+        RXM((&quot;RX M&lt;br&#x2F;&gt;+&quot;))
+    end
+    
+    TX1 --&gt;|&quot;x₁&quot;| Hdesc
+    TX2 --&gt;|&quot;x₂&quot;| Hdesc
+    TXN --&gt;|&quot;x&lt;sub&gt;N&lt;&#x2F;sub&gt;&quot;| Hdesc
+    Hdesc --&gt; RX1
+    Hdesc --&gt; RX2
+    Hdesc --&gt; RXM
+    
+    N1[&quot;n₁ ~ CN(0,N₀)&quot;] --&gt; RX1
+    N2[&quot;n₂ ~ CN(0,N₀)&quot;] --&gt; RX2
+    NM[&quot;n&lt;sub&gt;M&lt;&#x2F;sub&gt; ~ CN(0,N₀)&quot;] --&gt; RXM
+    
+    RX1 --&gt;|&quot;y₁&quot;| OUT[&quot;接收向量 y ∈ ℂ&lt;sup&gt;M&lt;&#x2F;sup&gt;&quot;]
+    RX2 --&gt;|&quot;y₂&quot;| OUT
+    RXM --&gt;|&quot;y&lt;sub&gt;M&lt;&#x2F;sub&gt;&quot;| OUT
+  </pre></div>
+<h4 id="数学模型"><a href="#数学模型" class="headerlink" title="数学模型"></a>数学模型</h4><p>在离散时间基带下，MIMO 信道描述为：</p>
+<script type="math/tex; mode=display">\mathbf{y} = \mathbf{H}\mathbf{x} + \mathbf{n} \tag{1.3}</script><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>符号</th>
+<th>维度</th>
+<th>含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$\mathbf{x}$</td>
+<td>$N \times 1$</td>
+<td>发射信号向量（复值）</td>
+</tr>
+<tr>
+<td>$\mathbf{y}$</td>
+<td>$M \times 1$</td>
+<td>接收信号向量（复值）</td>
+</tr>
+<tr>
+<td>$\mathbf{H}$</td>
+<td>$M \times N$</td>
+<td>信道矩阵，$h_{ij}$ 表示从发射天线 $j$ 到接收天线 $i$ 的信道增益</td>
+</tr>
+<tr>
+<td>$\mathbf{n}$</td>
+<td>$M \times 1$</td>
+<td>噪声向量，$\mathbf{n} \sim \mathcal{CN}(0, N_0\mathbf{I}_M)$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>功率约束</strong>: 总发射功率受限于 $P$，与天线数 $N$ 无关：</p>
+<script type="math/tex; mode=display">E[\|\mathbf{x}\|^2] = E[\mathbf{x}^H\mathbf{x}] = \text{tr}(E[\mathbf{x}\mathbf{x}^H]) = \text{tr}(\mathbf{K}_x) \leq P</script><p>其中 $\mathbf{K}_x = E[\mathbf{x}\mathbf{x}^H]$ 是发射信号的协方差矩阵。</p>
+<p><strong>归一化</strong>: 假设每根接收天线的接收功率等于总发射功率（在确定性 $\mathbf{H}$ 情形下）：</p>
+<script type="math/tex; mode=display">\sum_{n=1}^{N} |h_{mn}|^2 = N, \quad m = 1, 2, \ldots, M</script><p>对于随机 $\mathbf{H}$（富散射环境），假设 $\mathbf{H}$ 的各项为 i.i.d. 零均值复高斯变量，每维方差 $1/2$。此时每条接收天线的平均 SNR = $P/N_0$。</p>
+<h3 id="9-2-MIMO-信道容量的推导"><a href="#9-2-MIMO-信道容量的推导" class="headerlink" title="9.2 MIMO 信道容量的推导"></a>9.2 MIMO 信道容量的推导</h3><p><strong>容量定义</strong>（确定性信道，接收端已知 $\mathbf{H}$）:</p>
+<script type="math/tex; mode=display">C(\mathbf{H}) = \max_{p(\mathbf{x}): E[\|\mathbf{x}\|^2] \leq P} I(\mathbf{x}; \mathbf{y}, \mathbf{H})</script><p>展开：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+C(\mathbf{H}) &= \max_{p(\mathbf{x})} [I(\mathbf{x}; \mathbf{H}) + I(\mathbf{x}; \mathbf{y}|\mathbf{H})] \\\\
+&= \max_{p(\mathbf{x})} I(\mathbf{x}; \mathbf{y}|\mathbf{H}) \quad (\text{因为 } \mathbf{x} \text{ 与 } \mathbf{H} \text{ 独立})\\\\
+&= \max_{p(\mathbf{x})} [H(\mathbf{y}|\mathbf{H}) - H(\mathbf{y}|\mathbf{x}, \mathbf{H})]
+\end{aligned}</script><p>已知 $\mathbf{x}$ 和 $\mathbf{H}$ 时，$\mathbf{y} = \mathbf{H}\mathbf{x} + \mathbf{n}$ 的随机性仅来自 $\mathbf{n}$：</p>
+<script type="math/tex; mode=display">H(\mathbf{y}|\mathbf{x}, \mathbf{H}) = H(\mathbf{n}) = \log_2\det(\pi e N_0 \mathbf{I}_M)</script><p>这是一个与输入无关的常数。因此最大化 $I(\mathbf{x}; \mathbf{y}|\mathbf{H})$ 等价于最大化 $H(\mathbf{y}|\mathbf{H})$。</p>
+<blockquote>
+<p><strong>关键结论</strong>: 在给定协方差矩阵 $\mathbf{K}_y$ 的随机向量中，<strong>零均值循环对称复高斯（ZMCSCG）</strong> 分布最大化微分熵。这就要求 $\mathbf{x}$ 也是 ZMCSCG 分布——这就是 MIMO 容量达到时的最优输入分布。</p>
+</blockquote>
+<p>代入协方差矩阵 $\mathbf{K}_y = \mathbf{H}\mathbf{K}_x\mathbf{H}^H + N_0\mathbf{I}_M$：</p>
+<script type="math/tex; mode=display">I(\mathbf{x}; \mathbf{y}|\mathbf{H}) = \log_2\det(\pi e \mathbf{K}_y) - \log_2\det(\pi e N_0 \mathbf{I}_M) = \log_2\det\left(\mathbf{I}_M + \frac{1}{N_0}\mathbf{H}\mathbf{K}_x\mathbf{H}^H\right)</script><h4 id="MIMO-容量的一般表达式"><a href="#MIMO-容量的一般表达式" class="headerlink" title="MIMO 容量的一般表达式"></a>MIMO 容量的一般表达式</h4><script type="math/tex; mode=display">C(\mathbf{H}) = \max_{\mathbf{K}_x: \text{tr}(\mathbf{K}_x) = P} \log_2\det\left(\mathbf{I}_M + \frac{1}{N_0}\mathbf{H}\mathbf{K}_x\mathbf{H}^H\right) \tag{1.6}</script><p>利用行列式恒等式 $\det(\mathbf{I}_m + \mathbf{A}\mathbf{B}) = \det(\mathbf{I}_n + \mathbf{B}\mathbf{A})$（$\mathbf{A}$ 为 $m \times n$，$\mathbf{B}$ 为 $n \times m$）：</p>
+<script type="math/tex; mode=display">C(\mathbf{H}) = \max_{\mathbf{K}_x: \text{tr}(\mathbf{K}_x) = P} \log_2\det\left(\mathbf{I}_N + \frac{1}{N_0}\mathbf{K}_x\mathbf{H}^H\mathbf{H}\right)</script><h3 id="9-3-情形一：发射端未知信道（No-CSIT）"><a href="#9-3-情形一：发射端未知信道（No-CSIT）" class="headerlink" title="9.3 情形一：发射端未知信道（No CSIT）"></a>9.3 情形一：发射端未知信道（No CSIT）</h3><p>若发射端不知道信道状态信息（CSIT），但接收端知道（CSIR），且信道矩阵 $\mathbf{H}$ 服从零均值空间白化（ZMSW）模型，则最优策略是<strong>各天线独立等功率分配</strong>：</p>
+<script type="math/tex; mode=display">\mathbf{K}_x = \frac{P}{N}\mathbf{I}_N</script><p>容量简化为：</p>
+<script type="math/tex; mode=display">C = \begin{cases}
+\log_2\det\left(\mathbf{I}_M + \dfrac{\text{SNR}}{N}\mathbf{H}\mathbf{H}^H\right), & M < N \\\\[10pt]
+\log_2\det\left(\mathbf{I}_N + \dfrac{\text{SNR}}{N}\mathbf{H}^H\mathbf{H}\right), & M \geq N
+\end{cases} \tag{1.7}</script><p>其中 $\text{SNR} = P/N_0$。</p>
+<blockquote>
+<p><strong>直观</strong>: 发射端不知道信道，无法做定向波束赋形，只能”均匀喷洒”功率。在富散射环境下，这正是最优策略。</p>
+</blockquote>
+<h3 id="9-4-情形二：SVD-并行分解——将-MIMO-化为并行标量信道"><a href="#9-4-情形二：SVD-并行分解——将-MIMO-化为并行标量信道" class="headerlink" title="9.4 情形二：SVD 并行分解——将 MIMO 化为并行标量信道"></a>9.4 情形二：SVD 并行分解——将 MIMO 化为并行标量信道</h3><p>MIMO 信道最深刻的结构性质是：通过<strong>奇异值分解（SVD）</strong>，可以将 MIMO 信道转化为若干个并行的独立标量高斯子信道。</p>
+<h4 id="SVD-分解"><a href="#SVD-分解" class="headerlink" title="SVD 分解"></a>SVD 分解</h4><p>任何 $M \times N$ 复矩阵 $\mathbf{H}$ 可以分解为：</p>
+<script type="math/tex; mode=display">\mathbf{H} = \mathbf{U}\boldsymbol{\Lambda}\mathbf{V}^H \tag{1.8}</script><ul>
+<li>$\boldsymbol{\Lambda} \in \mathbb{R}^{M \times N}$: 非负实对角矩阵</li>
+<li>$\mathbf{U} \in \mathbb{C}^{M \times M}$: 酉矩阵，$\mathbf{U}\mathbf{U}^H = \mathbf{I}_M$</li>
+<li>$\mathbf{V} \in \mathbb{C}^{N \times N}$: 酉矩阵，$\mathbf{V}\mathbf{V}^H = \mathbf{I}_N$</li>
+<li>$\boldsymbol{\Lambda}$ 的对角元是 $\mathbf{H}\mathbf{H}^H$ 的特征值的非负平方根（即 $\mathbf{H}$ 的奇异值）</li>
+</ul>
+<h4 id="等效变换"><a href="#等效变换" class="headerlink" title="等效变换"></a>等效变换</h4><p>代入 (1.8) 到 (1.3)：</p>
+<script type="math/tex; mode=display">\mathbf{y} = \mathbf{U}\boldsymbol{\Lambda}\mathbf{V}^H\mathbf{x} + \mathbf{n}</script><p>令 $\tilde{\mathbf{y}} = \mathbf{U}^H\mathbf{y}$，$\tilde{\mathbf{x}} = \mathbf{V}^H\mathbf{x}$，$\tilde{\mathbf{n}} = \mathbf{U}^H\mathbf{n}$。由于 $\mathbf{U}$ 和 $\mathbf{V}$ 是可逆酉矩阵，$\tilde{\mathbf{n}}$ 与 $\mathbf{n}$ 同分布，且 $E[\tilde{\mathbf{x}}^H\tilde{\mathbf{x}}] = E[\mathbf{x}^H\mathbf{x}]$。于是原信道等价于：</p>
+<script type="math/tex; mode=display">\tilde{\mathbf{y}} = \boldsymbol{\Lambda}\tilde{\mathbf{x}} + \tilde{\mathbf{n}} \tag{1.12}</script><p>展开为标量形式：</p>
+<script type="math/tex; mode=display">\begin{aligned}
+\tilde{y}_i &= \sqrt{\lambda_i}\,\tilde{x}_i + \tilde{n}_i, \quad 1 \leq i \leq m \\\\
+\tilde{y}_i &= \tilde{n}_i, \quad m+1 \leq i \leq M
+\end{aligned} \tag{1.13}</script><p>其中 $m = \min(M, N)$，$\lambda_i$ 是 $\mathbf{H}\mathbf{H}^H$（或 $\mathbf{H}^H\mathbf{H}$）的正特征值。</p>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph 原始 MIMO 信道
+        X[&quot;x&quot;] --&gt; H[&quot;H&quot;] --&gt; PLUS((&quot;+&quot;)) --&gt; Y[&quot;y&quot;]
+        N1[&quot;n&quot;] --&gt; PLUS
+    end
+    
+    subgraph SVD变换 H &#x3D; UΛV&lt;sup&gt;H&lt;&#x2F;sup&gt;
+        X2[&quot;x&quot;] --&gt; VH[&quot;V&lt;sup&gt;H&lt;&#x2F;sup&gt;&quot;] --&gt; XT[&quot;x̃&quot;]
+        XT --&gt; LAMBDA[&quot;Λ&lt;br&#x2F;&gt;对角阵&quot;] --&gt; YT[&quot;ỹ&quot;]
+        YT --&gt; UH[&quot;U&quot;] --&gt; Y2[&quot;y&quot;]
+        N2[&quot;ñ &#x3D; U&lt;sup&gt;H&lt;&#x2F;sup&gt;n&quot;] --&gt; LAMBDA
+    end
+    
+    subgraph 等效并行子信道
+        S1[&quot;子信道 1: √λ₁&quot;]
+        S2[&quot;子信道 2: √λ₂&quot;]
+        SD[&quot;...&quot;]
+        SM[&quot;子信道 m: √λ&lt;sub&gt;m&lt;&#x2F;sub&gt;&quot;]
+    end
+  </pre></div>
+<blockquote>
+<p><strong>物理含义</strong>: SVD 变换揭示 MIMO 信道实际上是由 $m = \min(M, N)$ 个<strong>并行的独立标量高斯子信道</strong>组成的——这就是 Fig. 1.5 和 Fig. 1.6 的核心内容。</p>
+<ul>
+<li>若 $N &gt; M$（发射天线多于接收天线）：最多有 $M$ 个有效的非零增益子信道；多余的发射天线不增加子信道数量，但通过波束赋形可提高每个子信道的增益。</li>
+<li>若 $M &gt; N$（接收天线多于发射天线）：最多有 $N$ 个有效的非零增益子信道；多余的接收天线提供分集增益。</li>
+</ul>
+</blockquote>
+<h4 id="特征值与-Wishart-矩阵"><a href="#特征值与-Wishart-矩阵" class="headerlink" title="特征值与 Wishart 矩阵"></a>特征值与 Wishart 矩阵</h4><p>令 $\lambda_i$ 为 $\mathbf{H}\mathbf{H}^H$ 的特征值，由 $\mathbf{H}\mathbf{H}^H\mathbf{z} = \lambda\mathbf{z}$（$\mathbf{z} \neq 0$）定义。</p>
+<p><strong>Wishart 矩阵</strong>:</p>
+<script type="math/tex; mode=display">\mathbf{W} = \begin{cases}
+\mathbf{H}\mathbf{H}^H, & M < N \\\\
+\mathbf{H}^H\mathbf{H}, & M \geq N
+\end{cases}</script><ul>
+<li>$\mathbf{W}$ 的非零特征值个数 = $\text{rank}(\mathbf{H}) = r \leq m = \min(M, N)$</li>
+<li>若信道是<strong>满秩</strong>的（富散射环境），$r = m$</li>
+<li>$\sqrt{\lambda_i}$ 也称为 $\mathbf{H}$ 的奇异值</li>
+</ul>
+<p>特征值通过解 $\det(\lambda\mathbf{I}_m - \mathbf{W}) = 0$ 求得。</p>
+<h3 id="9-5-情形三：发射端已知信道（CSIT-CSIR）——注水算法"><a href="#9-5-情形三：发射端已知信道（CSIT-CSIR）——注水算法" class="headerlink" title="9.5 情形三：发射端已知信道（CSIT + CSIR）——注水算法"></a>9.5 情形三：发射端已知信道（CSIT + CSIR）——注水算法</h3><p>当收发两端都已知完美信道信息时，发射端可以对各并行子信道进行<strong>最优功率分配</strong>。这就是著名的<strong>注水（Water-Filling）算法</strong>。</p>
+<p>将 SVD 代入容量公式 (1.6)，利用酉矩阵的性质化简，得到在并行子信道上的功率分配问题：</p>
+<script type="math/tex; mode=display">C = \max_{\sum_{i=1}^{m} P_i \leq P} \sum_{i=1}^{m} \log_2\left(1 + \frac{P_i\lambda_i}{N_0}\right)</script><p>这是一个凸优化问题。求解得到最优功率分配：</p>
+<script type="math/tex; mode=display">P_i = \left(\mu - \frac{N_0}{\lambda_i}\right)^+, \quad i = 1, 2, \ldots, m \tag{1.14}</script><p>其中 $a^+ = \max(0, a)$，$\mu$ 为”水位”参数，由总功率约束确定：</p>
+<script type="math/tex; mode=display">\sum_{i=1}^{m} P_i = P \tag{1.15}</script><h4 id="注水容量的表达式"><a href="#注水容量的表达式" class="headerlink" title="注水容量的表达式"></a>注水容量的表达式</h4><script type="math/tex; mode=display">C_{WF} = \sum_{i=1}^{m} \frac{1}{2}\log_2\left[1 + \frac{(\mu\lambda_i - N_0)^+}{N_0}\right] = \sum_{i=1}^{m} \frac{1}{2}\log_2(\mu\lambda_i)^+ \tag{1.16}</script><blockquote>
+<p>容量可达时的输入协方差矩阵为：$\mathbf{K}_x = \mathbf{V}\mathbf{P}\mathbf{V}^H$，其中 $\mathbf{P} = \text{diag}(P_1, P_2, \ldots, P_m, 0, \ldots, 0)$ 为 $N \times N$ 对角阵。</p>
+</blockquote>
+<h4 id="注水的物理解释"><a href="#注水的物理解释" class="headerlink" title="注水的物理解释"></a>注水的物理解释</h4><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph 注水原理示意
+        direction TB
+        CH1[&quot;子信道 1&lt;br&#x2F;&gt;λ₁ 大 → 底低&lt;br&#x2F;&gt;P₁ 大 ✓&quot;]
+        CH2[&quot;子信道 2&lt;br&#x2F;&gt;λ₂ 中等&lt;br&#x2F;&gt;P₂ 中等 ✓&quot;]
+        CH3[&quot;子信道 3&lt;br&#x2F;&gt;λ₃ 太小 → 底太高&lt;br&#x2F;&gt;P₃ &#x3D; 0 ✗&quot;]
+    end
+    
+    subgraph 水位线
+        MU[&quot;水位 μ&quot;]
+    end
+  </pre></div>
+<blockquote>
+<p>将总功率 $P$ 看作”水”，倒入各子信道的”容器”中。每个子信道的<strong>底高</strong>为 $N_0/\lambda_i$——增益 $\lambda_i$ 越大，底越低，能容纳更多的水（功率）；增益过小的子信道（底高于水位 $\mu$），得不到任何功率分配。</p>
+</blockquote>
+<h4 id="注水算法的迭代步骤"><a href="#注水算法的迭代步骤" class="headerlink" title="注水算法的迭代步骤"></a>注水算法的迭代步骤</h4><ol>
+<li><strong>初始化</strong>: 设迭代次数 $p = 1$，假设所有 $m-p+1$ 个子信道都被使用。</li>
+<li><strong>计算水位</strong>:<script type="math/tex; mode=display">\mu = \frac{1}{m-p+1}\left(P + N_0\sum_{i=1}^{m-p+1}\frac{1}{\lambda_i}\right) \tag{1.17}</script></li>
+<li><strong>分配功率</strong>:<script type="math/tex; mode=display">P_i = \mu - \frac{N_0}{\lambda_i}, \quad i = 1, 2, \ldots, m-p+1 \tag{1.18}</script></li>
+<li><strong>检查</strong>: 若增益最低的子信道功率 $P<em>{m-p+1} &lt; 0$，则<strong>丢弃</strong>该子信道（设 $P</em>{m-p+1} = 0$），令 $p \gets p+1$，返回步骤 2。</li>
+<li><strong>终止</strong>: 直至所有保留子信道的 $P_i \geq 0$，或 $p = m$（所有子信道都被丢弃）。</li>
+</ol>
+<blockquote>
+<p><strong>计算说明</strong>: 在实践中，先对特征值 $\lambda_i$ 从大到小排序，然后依次尝试分配。注水算法通常只需少数几次迭代即可收敛。</p>
+</blockquote>
+<h4 id="注水效果总结"><a href="#注水效果总结" class="headerlink" title="注水效果总结"></a>注水效果总结</h4><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>条件</th>
+<th>策略</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>子信道增益高（$\lambda_i$ 大）</td>
+<td>分配较多功率</td>
+</tr>
+<tr>
+<td>子信道增益低（$\lambda_i$ 小）</td>
+<td>分配较少功率</td>
+</tr>
+<tr>
+<td>子信道增益极低（$N_0/\lambda_i &gt; \mu$）</td>
+<td>不分配功率（弃用）</td>
+</tr>
+<tr>
+<td>无 CSIT</td>
+<td>所有天线等功率分配 $\mathbf{K}_x = \frac{P}{N}\mathbf{I}_N$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h2 id="10-考试重点速查表"><a href="#10-考试重点速查表" class="headerlink" title="10. 考试重点速查表"></a>10. 考试重点速查表</h2><h3 id="10-1-核心公式汇总"><a href="#10-1-核心公式汇总" class="headerlink" title="10.1 核心公式汇总"></a>10.1 核心公式汇总</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>公式</th>
+<th>页码</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>熵</td>
+<td>$H(X) = -\sum_x P(x)\log P(x)$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>联合熵链式法则</td>
+<td>$H(X<em>1^n) = \sum</em>{i=1}^n H(X_i \vert X_1^{i-1})$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>微分熵</td>
+<td>$h(X) = -\int f(x)\log f(x)dx$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>最大微分熵（标量）</td>
+<td>$h(X) \leq \frac{1}{2}\log(2\pi e\sigma^2)$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>最大微分熵（向量）</td>
+<td>$h(\mathbf{X}) \leq \frac{1}{2}\log(2\pi e)^n\vert K\vert$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>KL 散度</td>
+<td>$D(P\vert Q) = \sum_x P(x)\log\frac{P(x)}{Q(x)}$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>互信息</td>
+<td>$I(X;Y) = H(Y) - H(Y\vert X) = \sum_{x,y} P(x,y)\log\frac{P(x,y)}{P(x)P(y)}$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>互信息链式法则</td>
+<td>$I(X<em>1^n;Y) = \sum</em>{i=1}^n I(X_i;Y\vert X_1^{i-1})$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>Jensen 不等式</td>
+<td>$E[f(X)] \geq f(E[X])$（$f$ 凸）</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>数据处理不等式</td>
+<td>$X \to Z \to Y \implies I(X;Z) \geq I(X;Y)$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>Fano 不等式</td>
+<td>$H_2(P_e) + P_e\log(\vert \mathcal{X}\vert-1) \geq H(X\vert Y)$</td>
+<td>§1.1</td>
+</tr>
+<tr>
+<td>AEP</td>
+<td>$-\frac{1}{n}\log P(X^n) \to H(X)$ 依概率收敛</td>
+<td>§1.2</td>
+</tr>
+<tr>
+<td>典型集大小</td>
+<td>$\vert T_\varepsilon\vert \approx 2^{nH(X)}$</td>
+<td>§1.2</td>
+</tr>
+<tr>
+<td>联合典型概率界</td>
+<td>$P((\tilde{x}^n,\tilde{y}^n) \in T_\varepsilon^{(n)}) \leq 2^{-n[I(X;Y)-3\varepsilon]}$</td>
+<td>§1.2</td>
+</tr>
+<tr>
+<td>Kraft 不等式</td>
+<td>$\sum_i D^{-l_i} \leq 1$</td>
+<td>§1.3</td>
+</tr>
+<tr>
+<td>信源编码定理</td>
+<td>$H(X)/\log D \leq \bar{L}_n &lt; H(X)/\log D + 1/n$</td>
+<td>§1.3</td>
+</tr>
+<tr>
+<td>BSC 容量</td>
+<td>$C = 1 - H_2(\varepsilon)$</td>
+<td>§1.4</td>
+</tr>
+<tr>
+<td>BEC 容量</td>
+<td>$C = 1 - \alpha$</td>
+<td>§1.4</td>
+</tr>
+<tr>
+<td>高斯信道容量</td>
+<td>$C = \frac{1}{2}\log(1 + \text{SNR})$</td>
+<td>§1.4</td>
+</tr>
+<tr>
+<td>Shannon-Hartley</td>
+<td>$C = W\log_2(1 + \text{SNR})$ bits/s</td>
+<td>§1.4</td>
+</tr>
+<tr>
+<td>MIMO 容量（一般）</td>
+<td>$C = \max_{\text{tr}(\mathbf{K}_x)=P} \log_2\det(\mathbf{I} + \frac{1}{N_0}\mathbf{H}\mathbf{K}_x\mathbf{H}^H)$</td>
+<td>§1.8</td>
+</tr>
+<tr>
+<td>注水功率分配</td>
+<td>$P_i = (\mu - N_0/\lambda_i)^+$</td>
+<td>§1.8</td>
+</tr>
+<tr>
+<td>注水容量</td>
+<td><script type="math/tex">C_{WF} = \sum_{i=1}^{m} \frac{1}{2} \log_2(\mu \lambda_i)^+</script></td>
+<td>§1.8</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="10-2-关键概念对比"><a href="#10-2-关键概念对比" class="headerlink" title="10.2 关键概念对比"></a>10.2 关键概念对比</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>弱典型</th>
+<th>强典型</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>条件</td>
+<td>$\vert -\frac{1}{n}\log P(x^n) - H(X)\vert \leq \varepsilon$</td>
+<td>$\vert \frac{1}{n}N(a\vert x^n) - P_X(a)\vert &lt; \varepsilon P_X(a)$</td>
+</tr>
+<tr>
+<td>关注点</td>
+<td>整体对数概率</td>
+<td>每种符号的经验频率</td>
+</tr>
+<tr>
+<td>适用范围</td>
+<td>离散 + 连续</td>
+<td>仅离散</td>
+</tr>
+<tr>
+<td>在证明中</td>
+<td>用于信道编码定理（联合典型译码）</td>
+<td>用于更精细的分析</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>维度</th>
+<th>无 CSIT</th>
+<th>有 CSIT + CSIR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>策略</td>
+<td>等功率分配 $\mathbf{K}_x = \frac{P}{N}\mathbf{I}_N$</td>
+<td>注水功率分配</td>
+</tr>
+<tr>
+<td>容量</td>
+<td>$C = \log_2\det(\mathbf{I} + \frac{\text{SNR}}{N}\mathbf{H}\mathbf{H}^H)$</td>
+<td>$C_{WF} = \sum \frac{1}{2}\log_2(\mu\lambda_i)^+$</td>
+</tr>
+<tr>
+<td>何时最优</td>
+<td>ZMSW 信道模型</td>
+<td>发射端已知 $\mathbf{H}$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="10-3-重要定理速查"><a href="#10-3-重要定理速查" class="headerlink" title="10.3 重要定理速查"></a>10.3 重要定理速查</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>定理</th>
+<th>核心结论</th>
+<th>关键条件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>信道编码定理</strong></td>
+<td>$R &lt; C$ 可达，$R &gt; C$ 不可达</td>
+<td>DMC，$n \to \infty$</td>
+</tr>
+<tr>
+<td><strong>信源编码定理</strong></td>
+<td>$R &gt; H(X)$ 可达，$R &lt; H(X)$ 不可达</td>
+<td>DMS，$n \to \infty$</td>
+</tr>
+<tr>
+<td><strong>分离定理</strong></td>
+<td>信源编码 + 信道编码可独立设计</td>
+<td>$H(V) &lt; C$</td>
+</tr>
+<tr>
+<td><strong>反馈容量</strong></td>
+<td>$C_{FB} = C$（反馈不增容量但简化编码）</td>
+<td>DMC</td>
+</tr>
+<tr>
+<td><strong>联合 AEP</strong></td>
+<td>联合典型高概率出现；独立抽取的联合典型概率指数小</td>
+<td>i.i.d. 抽取</td>
+</tr>
+<tr>
+<td><strong>零错误容量</strong></td>
+<td>$C_0 = 0$ 或 $C_0 \geq 1$</td>
+<td>Bhattacharyya 距离无穷大</td>
+</tr>
+<tr>
+<td><strong>最大微分熵</strong></td>
+<td>给定协方差下高斯分布最优</td>
+<td>连续随机向量</td>
+</tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>复习策略建议</strong>:</p>
+<ol>
+<li><strong>熵与互信息</strong>（§1.1~§1.2）是整门课的数学语言——必须烂熟于心。重点掌握链式法则、AEP 的陈述和应用、Fano 不等式。</li>
+<li><strong>信源编码</strong>（§1.3）与<strong>信道容量</strong>（§1.4）是 Shannon 理论的两大支柱。理解 Kraft 不等式→信源编码定理的逻辑链，以及 $C = \max I(X;Y)$→信道编码定理的证明思路。</li>
+<li><strong>MIMO</strong>（§1.8）是网络信息论在物理层的核心应用。SVD 并行分解 + 注水算法是必须掌握的推导。</li>
+<li>考试中的计算题大概率涉及：BSC/BEC 容量计算、高斯信道互信息推导、MIMO 注水功率分配。</li>
+<li>证明题的核心工具：Fano 不等式（下界）、典型集界 + union bound（上界）、链式法则（展开/合并）、Jensen 不等式（凸性分析）。</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://luotian.cyou">Luo Tian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://luotian.cyou/post/Network_info_Theory-Chapter1.html">https://luotian.cyou/post/Network_info_Theory-Chapter1.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://luotian.cyou" target="_blank">洛天的小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/">网络信息论</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><div class="post-share"><div class="social-share" data-image="/img/core/default_blog_cover.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/core/QRs/wx.webp" target="_blank"><img class="post-qr-code-img" src="/img/core/QRs/wx.webp" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/core/QRs/zfb.webp" target="_blank"><img class="post-qr-code-img" src="/img/core/QRs/zfb.webp" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img class="cover" src="/img/core/default_blog_cover.webp" onerror="onerror=null;src='/img/core/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA/TDMA/X-DMA 对比、速率分裂技术（Rate-Splitting）、5G NOMA 技术综述。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第五章的复习笔记，基于课堂讲义整理。内容涵盖：中继信道三节点模型与 DM-RC 定义、割集上界（Cover-El Gamal 1979）的两个割解释、直接传输下界与反向退化 RC、多跳下界与分组 Markov 编码、协作多跳下界与条件码本、译码转发（DF）的容量下界与后向译码（Willems 1985）、DF 的局限与部分 DF、压缩转发（CF）的 Compress-Bin 编码方案、高斯中继信道的半比特逼近。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA/TDMA/X-DMA 对比、速率分裂技术（Rate-Splitting）、5G NOMA 技术综述。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第四章的复习笔记，基于课堂讲义整理。内容涵盖：点对点无损压缩回顾与随机 Binning 编码、Slepian-Wolf 定理的完整证明（逆定理+可达性+四错误事件）、k 源扩展、有 Helper 的无损压缩（Ahlswede-Korner-Wyner 定理）、率失真函数 R(D) 与 Shannon 1959 定理、Wyner-Ziv 有损编码（Compress-Bin：Covering 编码 + Packing 译码）、Covering Lemma 与 Packing Lemma 的对偶、Wyner-Ziv 与 Gelfand-Pinsker 的对偶性。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter7.html" title="西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第七章的复习笔记，基于课堂讲义整理。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB/MIB/UVOB）的 BA 算法、连续 AWGN 信道的矩阵迭代 BA、AWGN BC 的矩阵迭代。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter6.html" title="西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第六章的复习笔记，基于课堂讲义整理。内容涵盖：IC 模型与容量区域未知的现状、简单界与模二和 IC 实例、三种点对点编码策略（IAN/SD/SND）及其错误事件分析、强干扰与极强干扰的容量区域（Costa-El Gamal 1987）、高斯 IC 的 SNR/INR 条件与 Sato 1981 判据、Han-Kobayashi 1981 编码方案（速率分裂+叠加编码+7 不等式定理）、注入式确定性 IC、半比特定理（Etkin-Tse-Wang 2008）。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第三章的复习笔记，综合课堂讲义整理。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy/More Capable BC、Marton 1979 编码方案（Binning+叠加编码）与 Mutual Covering Lemma、Gelfand-Pinsker 问题与污纸编码 DPC（Costa 1983）。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/core/id.webp" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Luo Tian</div><div class="author-info-description">我们生而眺望</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuoTian001"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><p>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！如果你有任何建议或想法，欢迎通过评论与我联系(o゜▽゜)o☆<br>主站：www.luotian.cyou<br>备用：LuoTian001.github.io<br>RSS：www.luotian.cyou/rss.xml</p></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E7%AB%A0-%E5%BC%95%E8%A8%80%E4%B8%8E%E5%9B%9E%E9%A1%BE"><span class="toc-text">第一章 引言与回顾</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E8%AF%BE%E7%A8%8B%E6%A6%82%E8%BF%B0%E4%B8%8E%E4%BF%A1%E6%81%AF%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="toc-text">1. 课程概述与信息论基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BF%A1%E6%81%AF%E8%AE%BA%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="toc-text">1.1 信息论的诞生</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E6%B5%81%E4%B8%8E%E6%9C%80%E5%A4%A7%E6%B5%81-%E6%9C%80%E5%B0%8F%E5%89%B2%E5%AE%9A%E7%90%86"><span class="toc-text">1.2 网络信息流与最大流-最小割定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3-%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA%E7%9A%84%E7%A0%94%E7%A9%B6%E8%A6%81%E7%B4%A0%E4%B8%8E%E5%8E%86%E5%8F%B2"><span class="toc-text">1.3 网络信息论的研究要素与历史</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E7%86%B5%E4%B8%8E%E4%BA%92%E4%BF%A1%E6%81%AF%EF%BC%88%C2%A71-1%EF%BC%89"><span class="toc-text">2. 熵与互信息（§1.1）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%86%B5%EF%BC%88Entropy%EF%BC%89%E2%80%94%E2%80%94%E4%B8%8D%E7%A1%AE%E5%AE%9A%E5%BA%A6%E7%9A%84%E5%BA%A6%E9%87%8F"><span class="toc-text">2.1 熵（Entropy）——不确定度的度量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E5%90%88%E7%86%B5%E4%B8%8E%E6%9D%A1%E4%BB%B6%E7%86%B5"><span class="toc-text">联合熵与条件熵</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99"><span class="toc-text">链式法则</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%A6%BB%E6%95%A3%E7%86%B5%E7%9A%84%E4%B8%8A%E7%95%8C"><span class="toc-text">离散熵的上界</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BE%AE%E5%88%86%E7%86%B5%EF%BC%88%E8%BF%9E%E7%BB%AD%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%EF%BC%89"><span class="toc-text">微分熵（连续随机变量）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E7%9B%B8%E5%AF%B9%E7%86%B5%EF%BC%88KL-%E6%95%A3%E5%BA%A6%EF%BC%89%E2%80%94%E2%80%94%E4%B8%A4%E4%B8%AA%E5%88%86%E5%B8%83%E7%9A%84%E2%80%9D%E8%B7%9D%E7%A6%BB%E2%80%9D"><span class="toc-text">2.2 相对熵（KL 散度）——两个分布的”距离”</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3-%E4%BA%92%E4%BF%A1%E6%81%AF%EF%BC%88Mutual-Information%EF%BC%89%E2%80%94%E2%80%94%E4%BF%A1%E6%81%AF%E5%85%B1%E4%BA%AB%E9%87%8F"><span class="toc-text">2.3 互信息（Mutual Information）——信息共享量</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%92%E4%BF%A1%E6%81%AF%E7%9A%84%E5%A4%9A%E7%A7%8D%E7%AD%89%E4%BB%B7%E5%BD%A2%E5%BC%8F"><span class="toc-text">互信息的多种等价形式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%89%E7%A7%8D%E6%83%85%E5%BD%A2%E7%9A%84%E4%BA%92%E4%BF%A1%E6%81%AF%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F"><span class="toc-text">三种情形的互信息计算公式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9D%A1%E4%BB%B6%E4%BA%92%E4%BF%A1%E6%81%AF"><span class="toc-text">条件互信息</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BA%92%E4%BF%A1%E6%81%AF%E7%9A%84%E9%93%BE%E5%BC%8F%E6%B3%95%E5%88%99"><span class="toc-text">互信息的链式法则</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-4-%E5%9B%9B%E4%B8%AA%E9%87%8D%E8%A6%81%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-text">2.4 四个重要不等式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-5-%E7%86%B5%E4%B8%8E%E4%BA%92%E4%BF%A1%E6%81%AF%E7%9A%84%E5%87%B8%E6%80%A7"><span class="toc-text">2.5 熵与互信息的凸性</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%85%B8%E5%9E%8B%E5%BA%8F%E5%88%97%EF%BC%88%C2%A71-2%EF%BC%89"><span class="toc-text">3. 典型序列（§1.2）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E5%9F%BA%E6%9C%AC%E8%AE%BE%E5%AE%9A"><span class="toc-text">3.1 基本设定</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2-%E5%9E%8B%E6%96%B9%E6%B3%95%EF%BC%88Method-of-Types%EF%BC%89"><span class="toc-text">3.2 型方法（Method of Types）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3-%E5%BC%B1%E5%85%B8%E5%9E%8B%E5%BA%8F%E5%88%97%EF%BC%88%E7%86%B5-%E5%85%B8%E5%9E%8B%E5%BA%8F%E5%88%97%EF%BC%89"><span class="toc-text">3.3 弱典型序列（熵-典型序列）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B8%E5%9E%8B%E9%9B%86%E7%9A%84%E4%B8%89%E4%B8%AA%E6%A0%B8%E5%BF%83%E6%80%A7%E8%B4%A8"><span class="toc-text">典型集的三个核心性质</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4-%E5%BC%BA%E5%85%B8%E5%9E%8B%E5%BA%8F%E5%88%97%EF%BC%88%E4%BB%85%E9%80%82%E7%94%A8%E4%BA%8E%E7%A6%BB%E6%95%A3%E9%9A%8F%E6%9C%BA%E5%8F%98%E9%87%8F%EF%BC%89"><span class="toc-text">3.4 强典型序列（仅适用于离散随机变量）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-5-%E8%81%94%E5%90%88%E5%85%B8%E5%9E%8B%E5%BA%8F%E5%88%97"><span class="toc-text">3.5 联合典型序列</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%81%94%E5%90%88-AEP-%E5%AE%9A%E7%90%86%EF%BC%88Theorem-1-2-1%EF%BC%89"><span class="toc-text">联合 AEP 定理（Theorem 1.2.1）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E7%90%86-1-2-2%EF%BC%88%E7%8B%AC%E7%AB%8B%E6%8A%BD%E5%8F%96%E7%9A%84%E8%81%94%E5%90%88%E5%85%B8%E5%9E%8B%E6%A6%82%E7%8E%87%EF%BC%89"><span class="toc-text">定理 1.2.2（独立抽取的联合典型概率）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E8%81%94%E5%90%88%E5%85%B8%E5%9E%8B%E9%9B%86"><span class="toc-text">强联合典型集</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BF%A1%E6%BA%90%E7%BC%96%E7%A0%81%EF%BC%88%C2%A71-3%EF%BC%89"><span class="toc-text">4. 信源编码（§1.3）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E7%A6%BB%E6%95%A3%E6%97%A0%E8%AE%B0%E5%BF%86%E4%BF%A1%E6%BA%90%EF%BC%88DMS%EF%BC%89"><span class="toc-text">4.1 离散无记忆信源（DMS）</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%A1%E6%BA%90%E7%BC%96%E7%A0%81%E9%97%AE%E9%A2%98%E7%9A%84%E6%A1%86%E5%9B%BE%EF%BC%88Fig-1-3%EF%BC%89"><span class="toc-text">信源编码问题的框图（Fig. 1.3）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E5%AE%9A%E9%95%BF%E4%BF%A1%E6%BA%90%E7%BC%96%E7%A0%81-%E2%80%94%E2%80%94-%E5%9F%BA%E4%BA%8E-AEP-%E7%9A%84%E6%95%B0%E6%8D%AE%E5%8E%8B%E7%BC%A9"><span class="toc-text">4.2 定长信源编码 —— 基于 AEP 的数据压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%97%A0%E6%8D%9F%E4%BF%A1%E6%BA%90%E7%BC%96%E7%A0%81%E5%AE%9A%E7%90%86%EF%BC%88Theorem-1-3-1%EF%BC%89"><span class="toc-text">无损信源编码定理（Theorem 1.3.1）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E5%8F%98%E9%95%BF%E4%BF%A1%E6%BA%90%E7%BC%96%E7%A0%81"><span class="toc-text">4.3 变长信源编码</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E7%A0%81"><span class="toc-text">前缀码</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Kraft-%E4%B8%8D%E7%AD%89%E5%BC%8F"><span class="toc-text">Kraft 不等式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-%E6%9C%80%E4%BC%98%E7%A0%81%E7%9A%84%E6%9E%84%E9%80%A0"><span class="toc-text">4.4 最优码的构造</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%89%8D%E7%BC%80%E4%BF%A1%E6%BA%90%E7%BC%96%E7%A0%81%E5%AE%9A%E7%90%86%EF%BC%88Theorem-1-3-2%EF%BC%89"><span class="toc-text">前缀信源编码定理（Theorem 1.3.2）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-5-Shannon-%E7%A0%81%E4%B8%8E-Huffman-%E7%A0%81"><span class="toc-text">4.5 Shannon 码与 Huffman 码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E4%BF%A1%E9%81%93%E5%AE%B9%E9%87%8F%EF%BC%88%C2%A71-4%EF%BC%89"><span class="toc-text">5. 信道容量（§1.4）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E7%A6%BB%E6%95%A3%E6%97%A0%E8%AE%B0%E5%BF%86%E4%BF%A1%E9%81%93%EF%BC%88DMC%EF%BC%89"><span class="toc-text">5.1 离散无记忆信道（DMC）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E5%AE%B9%E9%87%8F%E7%9A%84%E5%8F%8C%E9%87%8D%E5%AE%9A%E4%B9%89"><span class="toc-text">5.2 容量的双重定义</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%99%AA%E5%A3%B0%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81%E5%AE%9A%E7%90%86%EF%BC%88Theorem-1-4-1%EF%BC%89"><span class="toc-text">噪声信道编码定理（Theorem 1.4.1）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-3-%E5%85%B8%E5%9E%8B%E4%BF%A1%E9%81%93%E7%9A%84%E5%AE%B9%E9%87%8F%E8%AE%A1%E7%AE%97"><span class="toc-text">5.3 典型信道的容量计算</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E4%BA%8C%E5%85%83%E5%AF%B9%E7%A7%B0%E4%BF%A1%E9%81%93%EF%BC%88BSC%EF%BC%89"><span class="toc-text">(1) 二元对称信道（BSC）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E4%BA%8C%E5%85%83%E6%93%A6%E9%99%A4%E4%BF%A1%E9%81%93%EF%BC%88BEC%EF%BC%89"><span class="toc-text">(2) 二元擦除信道（BEC）</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E4%B8%80%E8%88%AC%E7%A6%BB%E6%95%A3%E6%97%A0%E8%AE%B0%E5%BF%86%E4%BF%A1%E9%81%93%E7%9A%84%E5%AE%B9%E9%87%8F%E7%95%8C"><span class="toc-text">(3) 一般离散无记忆信道的容量界</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-%E4%BF%A1%E6%BA%90-%E4%BF%A1%E9%81%93%E5%88%86%E7%A6%BB%E5%AE%9A%E7%90%86"><span class="toc-text">5.4 信源-信道分离定理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-5-%E5%8F%8D%E9%A6%88%E5%AE%B9%E9%87%8F"><span class="toc-text">5.5 反馈容量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-6-%E9%AB%98%E6%96%AF%E4%BF%A1%E9%81%93"><span class="toc-text">5.6 高斯信道</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%A1%B0%E8%90%BD%E4%BF%A1%E9%81%93"><span class="toc-text">衰落信道</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B9%B6%E8%A1%8C%E9%AB%98%E6%96%AF%E4%BF%A1%E9%81%93%EF%BC%9A%E6%B3%A8%E6%B0%B4%E5%AE%9A%E7%90%86"><span class="toc-text">并行高斯信道：注水定理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A2%E5%BD%A2%E4%BF%A1%E9%81%93%EF%BC%88%E9%99%90%E5%B8%A6-AWGN-%E4%BF%A1%E9%81%93%EF%BC%89"><span class="toc-text">波形信道（限带 AWGN 信道）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%85%B3%E4%BA%8E%E5%AE%B9%E9%87%8F%E7%9A%84%E8%BF%9B%E4%B8%80%E6%AD%A5%E8%AE%A8%E8%AE%BA%EF%BC%88%C2%A71-5%EF%BC%89"><span class="toc-text">6. 关于容量的进一步讨论（§1.5）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E5%8F%AF%E9%9D%A0%E9%80%9A%E4%BF%A1%E7%9A%84%E9%80%9F%E7%8E%87%E4%B8%8A%E7%95%8C"><span class="toc-text">6.1 可靠通信的速率上界</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E5%8F%B7%E6%88%90%E7%AB%8B%E6%9D%A1%E4%BB%B6"><span class="toc-text">等号成立条件</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E4%B8%80%E4%B8%AA%E9%87%8D%E8%A6%81%E6%BE%84%E6%B8%85-%E2%9A%A0%EF%B8%8F"><span class="toc-text">6.2 一个重要澄清 ⚠️</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-%E6%93%8D%E4%BD%9C%E6%80%A7%E4%BF%A1%E9%81%93%E5%AE%B9%E9%87%8F%EF%BC%88%C2%A71-6%EF%BC%89"><span class="toc-text">7. 操作性信道容量（§1.6）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E7%B2%BE%E7%A1%AE%E5%AE%9A%E4%B9%89"><span class="toc-text">7.1 精确定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-%E5%99%AA%E5%A3%B0%E4%BF%A1%E9%81%93%E7%BC%96%E7%A0%81%E5%AE%9A%E7%90%86%EF%BC%88%E6%AD%A3%E5%BC%8F%E8%A1%A8%E8%BF%B0%EF%BC%89"><span class="toc-text">7.2 噪声信道编码定理（正式表述）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-%E9%9B%B6%E9%94%99%E8%AF%AF%E5%AE%B9%E9%87%8F%EF%BC%88%C2%A71-7%EF%BC%89"><span class="toc-text">8. 零错误容量（§1.7）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E5%8A%A8%E6%9C%BA%E4%B8%8E%E5%AE%9A%E4%B9%89"><span class="toc-text">8.1 动机与定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-%E5%AE%9A%E7%90%86-1-7-1-%E5%8F%8A%E5%85%B6%E8%AF%81%E6%98%8E"><span class="toc-text">8.2 定理 1.7.1 及其证明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-MIMO-%E4%BF%A1%E9%81%93%EF%BC%88%C2%A71-8%EF%BC%89"><span class="toc-text">9. MIMO 信道（§1.8）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E7%B3%BB%E7%BB%9F%E6%A8%A1%E5%9E%8B"><span class="toc-text">9.1 系统模型</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%95%B0%E5%AD%A6%E6%A8%A1%E5%9E%8B"><span class="toc-text">数学模型</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-MIMO-%E4%BF%A1%E9%81%93%E5%AE%B9%E9%87%8F%E7%9A%84%E6%8E%A8%E5%AF%BC"><span class="toc-text">9.2 MIMO 信道容量的推导</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#MIMO-%E5%AE%B9%E9%87%8F%E7%9A%84%E4%B8%80%E8%88%AC%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">MIMO 容量的一般表达式</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-%E6%83%85%E5%BD%A2%E4%B8%80%EF%BC%9A%E5%8F%91%E5%B0%84%E7%AB%AF%E6%9C%AA%E7%9F%A5%E4%BF%A1%E9%81%93%EF%BC%88No-CSIT%EF%BC%89"><span class="toc-text">9.3 情形一：发射端未知信道（No CSIT）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-4-%E6%83%85%E5%BD%A2%E4%BA%8C%EF%BC%9ASVD-%E5%B9%B6%E8%A1%8C%E5%88%86%E8%A7%A3%E2%80%94%E2%80%94%E5%B0%86-MIMO-%E5%8C%96%E4%B8%BA%E5%B9%B6%E8%A1%8C%E6%A0%87%E9%87%8F%E4%BF%A1%E9%81%93"><span class="toc-text">9.4 情形二：SVD 并行分解——将 MIMO 化为并行标量信道</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#SVD-%E5%88%86%E8%A7%A3"><span class="toc-text">SVD 分解</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AD%89%E6%95%88%E5%8F%98%E6%8D%A2"><span class="toc-text">等效变换</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%80%BC%E4%B8%8E-Wishart-%E7%9F%A9%E9%98%B5"><span class="toc-text">特征值与 Wishart 矩阵</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-5-%E6%83%85%E5%BD%A2%E4%B8%89%EF%BC%9A%E5%8F%91%E5%B0%84%E7%AB%AF%E5%B7%B2%E7%9F%A5%E4%BF%A1%E9%81%93%EF%BC%88CSIT-CSIR%EF%BC%89%E2%80%94%E2%80%94%E6%B3%A8%E6%B0%B4%E7%AE%97%E6%B3%95"><span class="toc-text">9.5 情形三：发射端已知信道（CSIT + CSIR）——注水算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%B0%B4%E5%AE%B9%E9%87%8F%E7%9A%84%E8%A1%A8%E8%BE%BE%E5%BC%8F"><span class="toc-text">注水容量的表达式</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%B0%B4%E7%9A%84%E7%89%A9%E7%90%86%E8%A7%A3%E9%87%8A"><span class="toc-text">注水的物理解释</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%B0%B4%E7%AE%97%E6%B3%95%E7%9A%84%E8%BF%AD%E4%BB%A3%E6%AD%A5%E9%AA%A4"><span class="toc-text">注水算法的迭代步骤</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B3%A8%E6%B0%B4%E6%95%88%E6%9E%9C%E6%80%BB%E7%BB%93"><span class="toc-text">注水效果总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E8%80%83%E8%AF%95%E9%87%8D%E7%82%B9%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-text">10. 考试重点速查表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-%E6%A0%B8%E5%BF%83%E5%85%AC%E5%BC%8F%E6%B1%87%E6%80%BB"><span class="toc-text">10.1 核心公式汇总</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E5%85%B3%E9%94%AE%E6%A6%82%E5%BF%B5%E5%AF%B9%E6%AF%94"><span class="toc-text">10.2 关键概念对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-%E9%87%8D%E8%A6%81%E5%AE%9A%E7%90%86%E9%80%9F%E6%9F%A5"><span class="toc-text">10.3 重要定理速查</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</a><time datetime="2026-06-23T18:39:32.000Z" title="发表于 2026-06-24 02:39:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</a><time datetime="2026-06-23T18:38:32.000Z" title="发表于 2026-06-24 02:38:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</a><time datetime="2026-06-23T18:37:32.000Z" title="发表于 2026-06-24 02:37:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</a><time datetime="2026-06-23T18:36:32.000Z" title="发表于 2026-06-24 02:36:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界">西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</a><time datetime="2026-06-23T18:35:32.000Z" title="发表于 2026-06-24 02:35:32">2026-06-24</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2026 By Luo Tian</span></div><div class="footer_custom_text"><dev><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">陕ICP备2025072980号-1</a></dev><div id="workboard"></div></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.1/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (false) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    GLOBAL_CONFIG_SITE.pageType === 'post' && getCount()
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/twikoo/1.6.44/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/live2d/live2d.js" defer></script><script src="/js/background.js"></script><script src="/js/runtime.js" defer></script><script src="/js/meta-sync.js"></script><script async src="/js/holiday-popup.js" data-pjax></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script><script> const initPangu = () => { if (typeof pangu !== 'undefined') { pangu.spacingPage(); } }; document.addEventListener('DOMContentLoaded', initPangu); document.addEventListener('pjax:complete', initPangu); </script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>

@@ -1,0 +1,988 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法 | 洛天的小窝</title><meta name="author" content="Luo Tian"><meta name="copyright" content="Luo Tian"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="本文是西电研究生课程网络信息论第七章的复习笔记，基于课堂讲义整理。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB&#x2F;MIB&#x2F;UVOB）的 BA 算法、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法">
+<meta property="og:url" content="https://luotian.cyou/post/Network_info_Theory-Chapter7.html">
+<meta property="og:site_name" content="洛天的小窝">
+<meta property="og:description" content="本文是西电研究生课程网络信息论第七章的复习笔记，基于课堂讲义整理。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB&#x2F;MIB&#x2F;UVOB）的 BA 算法、">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://luotian.cyou/img/core/default_blog_cover.webp">
+<meta property="article:published_time" content="2026-06-23T18:33:32.000Z">
+<meta property="article:modified_time" content="2026-06-23T20:14:58.789Z">
+<meta property="article:author" content="Luo Tian">
+<meta property="article:tag" content="信息论">
+<meta property="article:tag" content="网络信息论">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://luotian.cyou/img/core/default_blog_cover.webp"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法",
+  "url": "https://luotian.cyou/post/Network_info_Theory-Chapter7.html",
+  "image": "https://luotian.cyou/img/core/default_blog_cover.webp",
+  "datePublished": "2026-06-23T18:33:32.000Z",
+  "dateModified": "2026-06-23T20:14:58.789Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Luo Tian",
+      "url": "https://luotian.cyou"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/core/fav.ico"><link rel="canonical" href="https://luotian.cyou/post/Network_info_Theory-Chapter7.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css?v=5.5.4"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!true && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          const mediaQueryDark = window.matchMedia('(prefers-color-scheme: dark)')
+          const mediaQueryLight = window.matchMedia('(prefers-color-scheme: light)')
+
+          if (theme === undefined) {
+            if (mediaQueryLight.matches) activateLightMode()
+            else if (mediaQueryDark.matches) activateDarkMode()
+            else {
+              const hour = new Date().getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            mediaQueryDark.addEventListener('change', () => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else {
+            theme === 'light' ? activateLightMode() : activateDarkMode()
+          }
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: {"path":"/search.xml","preload":false,"top_n_per_article":1,"unescape":false,"pagination":{"enable":false,"hitsPerPage":8},"languages":{"hits_empty":"未找到符合您查询的内容：${query}","hits_stats":"共找到 ${hits} 篇文章"}},
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":800,"highlightFullpage":false,"highlightMacStyle":true},
+  copy: {
+    success: '复制成功',
+    error: '复制失败',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.13.0/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: false,
+    rightside: false,
+  },
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin><link rel="stylesheet" href="/css/font.css"><link rel="stylesheet" href="/css/mouse/mouse.css"><link rel="stylesheet" href="/css/custom.css"><link rel="stylesheet" href="/css/runtime.css"><meta name="generator" content="Hexo 8.1.1"><link rel="alternate" href="/rss.xml" title="洛天的小窝" type="application/atom+xml">
+</head><body><div class="bg-animation" id="web_bg" style="background-image: url(/url(/img/core/bkgnd1.webp));"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img text-center"><img src="/img/core/id.webp" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"/></div><div class="site-data text-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/game/1024game/"><i class="fa-fw fa fa-th-large"></i><span> 1024游戏</span></a></li><li><a class="site-page child" href="/game/sudoku/"><i class="fa-fw fa fa-th"></i><span> 数独游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></li><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/video-parser/"><i class="fa-fw fa fa-video-camera"></i><span> 短视频解析</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li><li><a class="site-page child" href="/tools/qrcode/"><i class="fa-fw fa fa-qrcode"></i><span> 二维码工坊</span></a></li><li><a class="site-page child" href="/tools/base64/"><i class="fa-fw fas fa-exchange-alt"></i><span> Base64编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url(/img/core/default_blog_cover.webp);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><span class="site-name">洛天的小窝</span></a><a class="nav-page-title" href="/"><span class="site-name">西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  返回首页</span></span></a></span><div id="menus"><div id="search-button"><span class="site-page social-icon search"><i class="fas fa-search fa-fw"></i><span> 搜索</span></span></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 主页</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-graduation-cap"></i><span> 博文</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/categories/"><i class="fa-fw fa fa-folder-open"></i><span> 分类</span></a></li><li><a class="site-page child" href="/tags/"><i class="fa-fw fa fa-tags"></i><span> 标签</span></a></li><li><a class="site-page child" href="/archives/"><i class="fa-fw fa fa-folder-open"></i><span> 归档</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/timeline/"><i class="fa-fw fa fa-heart"></i><span> 日志</span></a></li></ul></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-gamepad"></i><span> 游戏</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/game/1024game/"><i class="fa-fw fa fa-th-large"></i><span> 1024游戏</span></a></li><li><a class="site-page child" href="/game/sudoku/"><i class="fa-fw fa fa-th"></i><span> 数独游戏</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/messageboard/"><i class="fa-fw fa fa-paper-plane"></i><span> 留言板</span></a></div><div class="menus_item"><span class="site-page group"><i class="fa-fw fa fa-wrench"></i><span> 工具</span><i class="fas fa-chevron-down"></i></span><ul class="menus_item_child"><li><a class="site-page child" href="/tools/"><i class="fa-fw fas fa-toolbox"></i><span> 工具箱</span></a></li><li><a class="site-page child" href="/tools/ocrlatex/"><i class="fa-fw fa fa-asterisk"></i><span> 公式识别</span></a></li><li><a class="site-page child" href="/tools/video-parser/"><i class="fa-fw fa fa-video-camera"></i><span> 短视频解析</span></a></li><li><a class="site-page child" href="/tools/translate/"><i class="fa-fw fa fa-language"></i><span> 语言翻译</span></a></li><li><a class="site-page child" href="/tools/splitter/"><i class="fa-fw fa fa-th"></i><span> 图片九宫格</span></a></li><li><a class="site-page child" href="/tools/img-style/"><i class="fa-fw fa fa-image"></i><span> 图片风格化</span></a></li><li><a class="site-page child" href="/tools/qrcode/"><i class="fa-fw fa fa-qrcode"></i><span> 二维码工坊</span></a></li><li><a class="site-page child" href="/tools/base64/"><i class="fa-fw fas fa-exchange-alt"></i><span> Base64编码</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/flink/"><i class="fa-fw fas fa-handshake"></i><span> 友链</span></a></div></div><div id="toggle-menu"><span class="site-page"><i class="fas fa-bars fa-fw"></i></span></div></div></nav><div id="post-info"><h1 class="post-title">西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-06-23T18:33:32.000Z" title="发表于 2026-06-24 02:33:32">2026-06-24</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-06-23T20:14:58.789Z" title="更新于 2026-06-24 04:14:58">2026-06-24</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/">网络信息论</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">总字数:</span><span class="word-count">4.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>19分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-commentcount"><i class="far fa-comments fa-fw post-meta-icon"></i><span class="post-meta-label">评论数:</span><a href="/post/Network_info_Theory-Chapter7.html#post-comment"><span id="twikoo-count"><i class="fa-solid fa-spinner fa-spin"></i></span></a></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="第七章-Blahut-Arimoto-算法（Blahut-Arimoto-Algorithms）"><a href="#第七章-Blahut-Arimoto-算法（Blahut-Arimoto-Algorithms）" class="headerlink" title="第七章 Blahut-Arimoto 算法（Blahut-Arimoto Algorithms）"></a>第七章 Blahut-Arimoto 算法（Blahut-Arimoto Algorithms）</h1><blockquote>
+<p><strong>课程</strong>: 网络信息论（Network Information Theory）<br><strong>教材</strong>: A. El Gamal and Y.-H. Kim, <em>Network Information Theory</em>, Cambridge University Press, 2011<br><strong>整理说明</strong>: 本章专门介绍计算信道容量和 BC 容量区域的 <strong>Blahut-Arimoto (BA) 算法</strong>——一种通过交替最大化（Alternative Maximization）来求解互信息最大化问题的迭代算法。从离散信道的经典 BA 算法出发，逐步扩展到退化 BC、一般 BC（SCIB/MIB/UVOB），以及连续信道（AWGN）的矩阵迭代版本。本章26年不考。<br><strong>免责声明</strong>：本笔记内容来源于课程讲义和PPT，经AI辅助汇总完成，仅供学习参考。如有错误或遗漏，请以原始课程资料为准。</p>
+</blockquote>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h2><ol>
+<li><a href="#1-问题背景与梯度上升">问题背景与梯度上升</a></li>
+<li><a href="#2-BA-算法的核心思想——交替最大化">BA 算法的核心思想——交替最大化</a></li>
+<li><a href="#3-BA-算法给定-q-求最优-Q">BA 算法：给定 q 求最优 Q</a></li>
+<li><a href="#4-BA-算法给定-Q-求最优-q">BA 算法：给定 Q 求最优 q</a></li>
+<li><a href="#5-收敛性分析">收敛性分析</a></li>
+<li><a href="#6-停止准则与图示">停止准则与图示</a></li>
+<li><a href="#7-BA-算法在退化广播信道中的应用">BA 算法在退化广播信道中的应用</a></li>
+<li><a href="#8-BA-算法在一般广播信道中的应用">BA 算法在一般广播信道中的应用</a></li>
+<li><a href="#9-连续信道的-BA-算法">连续信道的 BA 算法</a></li>
+<li><a href="#10-数值结果与考试重点">数值结果与考试重点</a></li>
+</ol>
+<h2 id="1-问题背景与梯度上升"><a href="#1-问题背景与梯度上升" class="headerlink" title="1. 问题背景与梯度上升"></a>1. 问题背景与梯度上升</h2><h3 id="1-1-信道容量的计算问题"><a href="#1-1-信道容量的计算问题" class="headerlink" title="1.1 信道容量的计算问题"></a>1.1 信道容量的计算问题</h3><p>点对点信道 $p(y|x)$ 的容量定义为：</p>
+<script type="math/tex; mode=display">\boxed{C = \max_{q(x)} I(X; Y)}</script><p>其中 $I(X;Y)$ 是输入分布 $q(x)$ 的<strong>凹函数</strong>。</p>
+<blockquote>
+<p>虽然容量有简洁的闭式表达，但对于一般的离散无记忆信道（DMC），<strong>没有解析解</strong>——需要用数值算法来求解最优输入分布 $q^*(x)$。</p>
+</blockquote>
+<h3 id="1-2-梯度上升法"><a href="#1-2-梯度上升法" class="headerlink" title="1.2 梯度上升法"></a>1.2 梯度上升法</h3><p>最直接的方法：梯度上升。</p>
+<p>假设 $|\mathcal{X}| = n$，自由变量为 $q_X(1), q_X(2), \ldots, q_X(n-1)$（最后一个由 $\sum q = 1$ 确定）。</p>
+<p><strong>梯度公式</strong>:</p>
+<script type="math/tex; mode=display">\frac{\partial I(X;Y)}{\partial q(x)} = \sum_y \big(p(y|n) - p(y|x)\big)\ln q(y) + H(Y|X=n) - H(Y|X=x)</script><p><strong>更新规则</strong>: $q \leftarrow q + \tau \cdot \nabla I(q)$</p>
+<h4 id="例：Z-信道"><a href="#例：Z-信道" class="headerlink" title="例：Z 信道"></a>例：Z 信道</h4><p>信道矩阵 $W_{ij} = p(Y=j | X=i)$:</p>
+<script type="math/tex; mode=display">W = \begin{pmatrix} 1 & 0 \\\\ 0.5 & 0.5 \end{pmatrix}</script><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    X0[&quot;X&#x3D;0&quot;] --&gt;|&quot;1&quot;| Y0[&quot;Y&#x3D;0&quot;]
+    X0 --&gt;|&quot;0&quot;| Y1[&quot;Y&#x3D;1&quot;]
+    X1[&quot;X&#x3D;1&quot;] --&gt;|&quot;0.5&quot;| Y0
+    X1 --&gt;|&quot;0.5&quot;| Y1
+  </pre></div>
+<ul>
+<li>梯度上升：步长 0.1，初始 $p_X(0) = 0.2$</li>
+<li>收敛到最优值 $p_X^*(0) = 0.6$</li>
+</ul>
+<p><strong>梯度上升的问题</strong>：步长选择敏感，收敛速度不保证，需要投影回概率单纯形。</p>
+<h2 id="2-BA-算法的核心思想——交替最大化"><a href="#2-BA-算法的核心思想——交替最大化" class="headerlink" title="2. BA 算法的核心思想——交替最大化"></a>2. BA 算法的核心思想——交替最大化</h2><p>Blahut 和 Arimoto 于 <strong>1972 年独立</strong>提出了更优雅的算法。核心技巧是将原问题重构为<strong>双变量</strong>的交替最大化问题。</p>
+<h3 id="2-1-目标函数重构"><a href="#2-1-目标函数重构" class="headerlink" title="2.1 目标函数重构"></a>2.1 目标函数重构</h3><p>原始问题：</p>
+<script type="math/tex; mode=display">\max_{q(x)} I(X;Y) = \max_{q(x)} \sum_{x,y} q(x)p(y|x) \ln\frac{q(x|y)}{q(x)}</script><p>引入辅助变量 $Q(x|y)$（一个条件分布），构造<strong>扩展的目标函数</strong>：</p>
+<script type="math/tex; mode=display">\boxed{f(q, Q) = \sum_{x,y} q(x)p(y|x) \ln\frac{Q(x|y)}{q(x)}}</script><blockquote>
+<p>🔑 <strong>关键性质</strong>:</p>
+<ol>
+<li>$f(q) = I(X;Y) = f(q, Q) + D<em>{X|Y}(q | Q)$，其中 $D</em>{X|Y}$ 是条件 KL 散度</li>
+<li>$f(q) \geq f(q, Q)$ 对所有 $Q$ 成立（因为 KL 散度 $\geq 0$）</li>
+<li>给定 $q$，最优的 $Q$ 是 $Q<a href="x|y">q</a> = q(x|y)$（后验概率），此时 $D_{X|Y}=0$</li>
+</ol>
+</blockquote>
+<div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph 交替最大化
+        Q0[&quot;Q₀&quot;] --&gt;|&quot;max_q f(q,Q₀)&quot;| Q1[&quot;q₁&quot;]
+        Q1 --&gt;|&quot;max_Q f(q₁,Q)&quot;| Q2[&quot;Q₁&quot;]
+        Q2 --&gt;|&quot;max_q f(q,Q₁)&quot;| Q3[&quot;q₂&quot;]
+        Q3 --&gt;|&quot;max_Q f(q₂,Q)&quot;| Q4[&quot;Q₂&quot;]
+        Q4 --&gt;|&quot;...&quot;| QN[&quot;收敛&quot;]
+    end
+  </pre></div>
+<blockquote>
+<p><strong>交替最大化流程</strong>: $q_0 \to Q_1 \to q_1 \to Q_2 \to q_2 \to \cdots$，每一步都保证目标函数不降。</p>
+</blockquote>
+<h3 id="2-2-为什么交替最大化有效？"><a href="#2-2-为什么交替最大化有效？" class="headerlink" title="2.2 为什么交替最大化有效？"></a>2.2 为什么交替最大化有效？</h3><p>原问题 $f(q)$ 虽然对 $q$ 是凹的，但直接优化仍不方便。引入 $Q$ 后：</p>
+<ul>
+<li>$f(q, Q)$ 对 $q$ 是<strong>凹的</strong>（给定 $Q$ 时）</li>
+<li>$f(q, Q)$ 对 $Q$ 是<strong>凹的</strong>（给定 $q$ 时）</li>
+<li>每一步子问题都有<strong>闭式解</strong>！</li>
+</ul>
+<h2 id="3-BA-算法：给定-q-求最优-Q"><a href="#3-BA-算法：给定-q-求最优-Q" class="headerlink" title="3. BA 算法：给定 q 求最优 Q"></a>3. BA 算法：给定 q 求最优 Q</h2><h3 id="3-1-推导"><a href="#3-1-推导" class="headerlink" title="3.1 推导"></a>3.1 推导</h3><script type="math/tex; mode=display">f(q) = f(q, Q) + \underbrace{\sum_y q(y) \sum_x q(x|y) \ln\frac{q(x|y)}{Q(x|y)}}_{D_{X|Y}(q\|Q) \;\geq\; 0}</script><p>条件 KL 散度 $D_{X|Y}(q|Q) \geq 0$，等号成立当且仅当 $Q(x|y) = q(x|y)$（对所有 $x,y$）。</p>
+<blockquote>
+<p>因此，给定 $q$，<strong>最优 $Q[q]$ 就是后验概率分布</strong>：</p>
+<script type="math/tex; mode=display">\boxed{Q[q](x|y) = q(x|y) = \frac{q(x)p(y|x)}{\sum_{x'} q(x')p(y|x')}} \tag{1}</script><p>且此时 $f(q) = f(q, Q[q]) \geq f(q, Q)$（对所有 $Q$）。</p>
+</blockquote>
+<h2 id="4-BA-算法：给定-Q-求最优-q"><a href="#4-BA-算法：给定-Q-求最优-q" class="headerlink" title="4. BA 算法：给定 Q 求最优 q"></a>4. BA 算法：给定 Q 求最优 q</h2><h3 id="4-1-推导"><a href="#4-1-推导" class="headerlink" title="4.1 推导"></a>4.1 推导</h3><p>将 $f(q, Q)$ 写为”标准形式”：</p>
+<script type="math/tex; mode=display">f(q, Q) = \sum_x q(x) \sum_y p(y|x) \ln\frac{Q(x|y)}{q(x)} = \sum_x q(x)\big(d[Q](x) - \ln q(x)\big)</script><p>其中定义了<strong>关键量</strong>：</p>
+<script type="math/tex; mode=display">\boxed{d[Q](x) = \sum_y p(y|x) \ln Q(x|y)}</script><blockquote>
+<p>$d<a href="x">Q</a>$ 可理解为在给定 $Q$ 下，输入 $x$ 的”信息势能”（information potential）。</p>
+</blockquote>
+<h3 id="4-2-拉格朗日乘子法"><a href="#4-2-拉格朗日乘子法" class="headerlink" title="4.2 拉格朗日乘子法"></a>4.2 拉格朗日乘子法</h3><p>给定 $Q$，求解 $\max_{q} f(q, Q)$，约束 $\sum_x q(x) = 1$：</p>
+<script type="math/tex; mode=display">\frac{\partial}{\partial q(x)}\left[\sum_{x'} q(x')(d[Q](x') - \ln q(x')) + \lambda\Big(1 - \sum_{x'} q(x')\Big)\right] = 0</script><script type="math/tex; mode=display">\implies d[Q](x) - \ln q(x) - 1 - \lambda = 0</script><script type="math/tex; mode=display">\implies q(x) \propto \exp\{d[Q](x)\}</script><p><strong>归一化后</strong>:</p>
+<script type="math/tex; mode=display">\boxed{q[Q](x) = \frac{1}{S_d} \exp\{d[Q](x)\}} \tag{2}</script><p>其中 $S<em>d = \sum</em>{x’} \exp{d<a href="x&#39;">Q</a>}$ 是归一化常数。</p>
+<h3 id="4-3-两个重要推论"><a href="#4-3-两个重要推论" class="headerlink" title="4.3 两个重要推论"></a>4.3 两个重要推论</h3><p>由 (2) 直接可得：</p>
+<script type="math/tex; mode=display">\boxed{d[Q](x) - \ln q[Q](x) \equiv \ln S_d} \tag{3}</script><p>（对所有 $x$ 恒为常数！）</p>
+<p>以及：</p>
+<script type="math/tex; mode=display">\boxed{f(q[Q], Q) = \ln S_d = \ln \sum_x \exp\{d[Q](x)\}} \tag{4}</script><h3 id="4-4-BA-算法的一次完整迭代"><a href="#4-4-BA-算法的一次完整迭代" class="headerlink" title="4.4 BA 算法的一次完整迭代"></a>4.4 BA 算法的一次完整迭代</h3><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    QK[&quot;当前 Q&lt;sub&gt;k&lt;&#x2F;sub&gt;&quot;] --&gt;|&quot;q[Q&lt;sub&gt;k&lt;&#x2F;sub&gt;] ∝ exp{d[Q&lt;sub&gt;k&lt;&#x2F;sub&gt;](x)}&quot;| QK1[&quot;q&lt;sub&gt;k&lt;&#x2F;sub&gt;&quot;]
+    QK1 --&gt;|&quot;Q[q&lt;sub&gt;k&lt;&#x2F;sub&gt;](x|y) &#x3D; q&lt;sub&gt;k&lt;&#x2F;sub&gt;(x|y)&quot;| NK[&quot;Q&lt;sub&gt;k+1&lt;&#x2F;sub&gt;&quot;]
+    NK --&gt; QK
+  </pre></div>
+<p><strong>算法伪代码</strong>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">初始化: q₀(x)（通常均匀分布）</span><br><span class="line">重复:</span><br><span class="line">  1. Q_&#123;k&#125;(x|y) = q_&#123;k-1&#125;(x|y)        // 后验概率</span><br><span class="line">  2. d_k(x) = Σ_y p(y|x) ln Q_k(x|y)  // 信息势能</span><br><span class="line">  3. q_k(x) ∝ exp&#123;d_k(x)&#125;             // 更新输入分布</span><br><span class="line">  停止: 当 q_k ≈ q_&#123;k-1&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="5-收敛性分析"><a href="#5-收敛性分析" class="headerlink" title="5. 收敛性分析"></a>5. 收敛性分析</h2><h3 id="5-1-单调性"><a href="#5-1-单调性" class="headerlink" title="5.1 单调性"></a>5.1 单调性</h3><p>每一步保证目标函数不降：</p>
+<script type="math/tex; mode=display">f(q_{k-1}) = f(q_{k-1}, Q_k) \leq f(q_k, Q_k) = \ln S_d^{(k)}</script><p>即 $f(q<em>k) \geq f(q</em>{k-1})$。序列 ${f(q_k)}$ 单调不减且有上界（最大互信息 $C$），因此<strong>收敛</strong>。</p>
+<h3 id="5-2-收敛速度"><a href="#5-2-收敛速度" class="headerlink" title="5.2 收敛速度"></a>5.2 收敛速度</h3><p>令 $q^*$ 为真实最优分布。可以证明：</p>
+<script type="math/tex; mode=display">\sum_{n=1}^{N} \big(f(q^*) - f(q_n, Q_n)\big) \leq D_X(q^* \| q_0)</script><blockquote>
+<p><strong>解读</strong>: 所有迭代的”遗憾”之和被初始分布与最优分布之间的 KL 散度所控制。由于 $f(q^<em>)-f(q_n) \geq 0$ 且求和有界，必然有 $f(q^</em>) - f(q_n, Q_n) \to 0$。</p>
+</blockquote>
+<p><strong>详细推导</strong>:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+f(q^*) - f(q_n, Q_n) - \sum_x q^*(x)\ln\frac{q_n(x)}{q_{n-1}(x)}
+&= \sum_x q^*(x)\big(d[Q_n](x) - \ln q_{n-1}(x)\big) \\\\
+&= \sum_{x,y} q^*(x)p(y|x) \ln\frac{q_{n-1}(x|y)}{q_{n-1}(x)} \quad (\text{因为 } Q_n = q_{n-1}(x|y))\\\\
+&= \sum_{x,y} q^*(x)p(y|x) \ln\frac{p(y|x)}{q_{n-1}(y)} \\\\
+&= -D_Y(q^* \| q_{n-1}) \leq 0
+\end{aligned}</script><p>因此：</p>
+<script type="math/tex; mode=display">\sum_{n=1}^{N}\big(f(q^*) - f(q_n, Q_n)\big) \leq D_X(q^*\|q_0) - D_X(q^*\|q_N) \leq D_X(q^*\|q_0)</script><h2 id="6-停止准则与图示"><a href="#6-停止准则与图示" class="headerlink" title="6. 停止准则与图示"></a>6. 停止准则与图示</h2><h3 id="6-1-最优性条件（KKT-条件）"><a href="#6-1-最优性条件（KKT-条件）" class="headerlink" title="6.1 最优性条件（KKT 条件）"></a>6.1 最优性条件（KKT 条件）</h3><p>$q(x)$ 最大化 $I(X;Y)$ 的<strong>充要条件</strong>是存在常数 $D$ 使得：</p>
+<script type="math/tex; mode=display">\boxed{\sum_y p(y|x) \ln\frac{p(y|x)}{q(y)} \begin{cases}
+= D, & q(x) > 0 \\\\
+\leq D, & q(x) = 0
+\end{cases}} \tag{5}</script><blockquote>
+<p><strong>物理含义</strong>: 在最优分布下，所有被使用的输入（$q(x) &gt; 0$）产生相同的”信息势能” $D$（等于容量 $C$）；未使用的输入势能不超过 $D$。</p>
+</blockquote>
+<h3 id="6-2-停止准则"><a href="#6-2-停止准则" class="headerlink" title="6.2 停止准则"></a>6.2 停止准则</h3><p>算法停止当以下差值足够小：</p>
+<script type="math/tex; mode=display">\max_x\big(d[Q[q]](x) - \ln q(x)\big) - \sum_x q(x)\big(d[Q[q]](x) - \ln q(x)\big) < \epsilon</script><blockquote>
+<p>当 $q = q^*$ 时，由 (3) 知 $d<a href="x">Q[q]</a> - \ln q(x) \equiv \ln S_d$（对所有 $x$），上式恰为 0。</p>
+</blockquote>
+<h3 id="6-3-BA-与梯度上升的对比"><a href="#6-3-BA-与梯度上升的对比" class="headerlink" title="6.3 BA 与梯度上升的对比"></a>6.3 BA 与梯度上升的对比</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">             BA 算法                 梯度上升</span><br><span class="line">收敛速度:     快（超线性）              慢（线性，依赖步长）</span><br><span class="line">步长选择:     无需（自动）              需要调参</span><br><span class="line">单调性:       严格单调不减             不一定（可能震荡）</span><br><span class="line">计算量:       每次迭代 O(|X||Y|)      类似</span><br><span class="line">闭式解:       每步有                     每步无（需线搜索）</span><br></pre></td></tr></table></figure>
+<h2 id="7-BA-算法在退化广播信道中的应用"><a href="#7-BA-算法在退化广播信道中的应用" class="headerlink" title="7. BA 算法在退化广播信道中的应用"></a>7. BA 算法在退化广播信道中的应用</h2><h3 id="7-1-退化-BC-的容量区域支撑超平面"><a href="#7-1-退化-BC-的容量区域支撑超平面" class="headerlink" title="7.1 退化 BC 的容量区域支撑超平面"></a>7.1 退化 BC 的容量区域支撑超平面</h3><p>退化 BC $X \to Y \to Z$ 的容量区域边界可由<strong>支撑超平面</strong>刻画：</p>
+<script type="math/tex; mode=display">\theta R_1 + \bar{\theta} R_2 = \begin{cases}
+\max_{q(x)} I(X; Y), & \theta \in [\frac{1}{2}, 1] \\\\[4pt]
+\max_{q(u,x)} F(q(u,x)), & \theta \in [0, \frac{1}{2})
+\end{cases}</script><p>其中 $F(q(u,x)) = \theta I(X; Y|U) + \bar{\theta} I(U; Z)$。</p>
+<h3 id="7-2-BA-目标函数"><a href="#7-2-BA-目标函数" class="headerlink" title="7.2 BA 目标函数"></a>7.2 BA 目标函数</h3><script type="math/tex; mode=display">F(q, Q) = \bar{\theta} \sum_{u,x} q(u,x)\big(d[Q](u,x) - \ln q(u,x)\big)</script><p>其中（$\theta &lt; 1/2$ 时）:</p>
+<script type="math/tex; mode=display">\boxed{d[Q](u,x) = \sum_{y,z} p(y,z|x)\left[\ln Q(x|y,u)Q(u|z) + \frac{\bar{\theta}-\theta}{\bar{\theta}}\ln\frac{Q(y|u)}{p(y|x)}\right]}</script><blockquote>
+<p>该表达式与经典 BA 的 $d<a href="x">Q</a> = \sum_y p(y|x)\ln Q(x|y)$ 结构完全相同——只是将单字母 $x$ 替换为”超符号”$(u,x)$，并扩展了 $d[Q]$ 的定义以包含退化 BC 的叠加编码结构。</p>
+</blockquote>
+<h2 id="8-BA-算法在一般广播信道中的应用"><a href="#8-BA-算法在一般广播信道中的应用" class="headerlink" title="8. BA 算法在一般广播信道中的应用"></a>8. BA 算法在一般广播信道中的应用</h2><h3 id="8-1-三类界"><a href="#8-1-三类界" class="headerlink" title="8.1 三类界"></a>8.1 三类界</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>界</th>
+<th>全称</th>
+<th>性质</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>SCIB</strong></td>
+<td>叠加编码内界（Superposition Coding Inner Bound）</td>
+<td>可达区域</td>
+</tr>
+<tr>
+<td><strong>MIB</strong></td>
+<td>Marton 内界（Marton’s Inner Bound）</td>
+<td>可达区域</td>
+</tr>
+<tr>
+<td><strong>UVOB</strong></td>
+<td>UV 外界（Nair-El Gamal UV Outer Bound）</td>
+<td>不可超越的外界</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="8-2-SCIB-的-BA-算法"><a href="#8-2-SCIB-的-BA-算法" class="headerlink" title="8.2 SCIB 的 BA 算法"></a>8.2 SCIB 的 BA 算法</h3><p>SCIB 的支撑超平面形如：</p>
+<script type="math/tex; mode=display">\theta R_1 + \bar{\theta}R_2 = \max_{q(u,x)} \min_{\alpha \in [0,1]} F(\alpha, q(u,x))</script><p>其中 $F(\alpha, q) = \theta I(X; Y|U) + \bar{\theta}\bar{\alpha}I(U; Y) + \bar{\theta}\alpha I(U; Z)$。</p>
+<blockquote>
+<p>⚠️ <strong>max-min 结构</strong>——不能直接套用 BA。但通过 <strong>Terkelsen 型定理</strong>可以交换 max 和 min：</p>
+<script type="math/tex; mode=display">\max_q \min_{\alpha} F(\alpha, q) = \min_{\alpha} \max_q F(\alpha, q)</script></blockquote>
+<p><strong>迭代算法</strong>: 在 BA（最大化 $q$）和梯度下降（最小化 $\alpha$）之间交替：</p>
+<script type="math/tex; mode=display">\alpha_{k+1} = \alpha_k - \tau \cdot \bar{\theta} \cdot \big(I(U; Z) - I(U; Y)\big)</script><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph LR
+    subgraph SCIB 双循环
+        AK[&quot;αₖ&quot;] --&gt; BA[&quot;BA: max_q F(αₖ,q)&quot;]
+        BA --&gt; QK[&quot;qₖ&quot;]
+        QK --&gt; GD[&quot;梯度下降: αₖ₊₁&quot;]
+        GD --&gt; AK
+    end
+  </pre></div>
+<h3 id="8-3-MIB-的-BA-算法"><a href="#8-3-MIB-的-BA-算法" class="headerlink" title="8.3 MIB 的 BA 算法"></a>8.3 MIB 的 BA 算法</h3><p>Marton 内界的目标函数结构类似，但辅助变量扩展到 $(U,V,W,X)$：</p>
+<script type="math/tex; mode=display">M(\alpha, q, Q) = \bar{\theta} \sum_{u,v,w,x} q(u,v,w,x)\big(d[Q](u,v,w,x) - \ln q(u,v,w,x)\big)</script><p>其中 $d[Q]$ 包含 $\ln Q(w|z), \ln Q(w|y), \ln Q(v|w,z), \ln Q(u|w,y), \ln Q(u|v,w), \ln Q(x|u,v,w)$ 等分量——对应于 Marton 编码中的多种条件结构。</p>
+<h3 id="8-4-UVOB-的-BA-算法"><a href="#8-4-UVOB-的-BA-算法" class="headerlink" title="8.4 UVOB 的 BA 算法"></a>8.4 UVOB 的 BA 算法</h3><p>UV 外界的目标函数（$\alpha, \beta \in [0,1]$ 满足 $\bar{\theta}\alpha + \theta\beta \geq \max{\theta, \bar{\theta}}$）:</p>
+<script type="math/tex; mode=display">G(\alpha, \beta, q, Q) = -(\bar{\theta}\alpha + \theta\beta) \sum_x q(x)\ln q(x) + \cdots</script><p>有两个辅助函数 $d_1[Q]$ 和 $d_2[Q]$，分别对应两个速率约束。</p>
+<h3 id="8-5-BSSC-数值结果"><a href="#8-5-BSSC-数值结果" class="headerlink" title="8.5 BSSC 数值结果"></a>8.5 BSSC 数值结果</h3><p>二元偏斜对称 BC（BSSC）:</p>
+<script type="math/tex; mode=display">P_{Y|X} = \begin{pmatrix} 1 & 0 \\\\ 0.5 & 0.5 \end{pmatrix}, \quad P_{Z|X} = \begin{pmatrix} 0.5 & 0.5 \\\\ 0 & 1 \end{pmatrix}</script><ul>
+<li>该信道的<strong>容量区域未知</strong>（BSSC 不属于退化/Less Noisy/More Capable 任一类！）</li>
+<li><strong>和速率</strong>: MIB = 0.3616 bits, UVOB = 0.3725 bits</li>
+<li><strong>MIB ⊊ UVOB</strong>：内外界之间有微小但确实的间隙</li>
+<li>BA 算法成功计算了 $\theta = 0.4$ 时的支撑超平面值</li>
+</ul>
+<h2 id="9-连续信道的-BA-算法"><a href="#9-连续信道的-BA-算法" class="headerlink" title="9. 连续信道的 BA 算法"></a>9. 连续信道的 BA 算法</h2><h3 id="9-1-连续信道的挑战"><a href="#9-1-连续信道的挑战" class="headerlink" title="9.1 连续信道的挑战"></a>9.1 连续信道的挑战</h3><p>BA 算法对离散有限字母表有效，但不适用于一般连续信道。通常做法是<strong>量化</strong>——但量化区间缩小会导致状态空间指数增长。</p>
+<blockquote>
+<p>例如 MIB 中，辅助变量空间大小为 $|\mathcal{X}|^3 \cdot (|\mathcal{X}|+4)$。若 $|\mathcal{X}| = 1000$，则约 $10^{12}$ 个状态——不可行。</p>
+</blockquote>
+<p><strong>解决方案</strong>: 如果涉及的 pdf 可以由<strong>有限参数</strong>刻画（如高斯分布仅由均值和协方差决定），BA 算法仍可能适用。</p>
+<h3 id="9-2-AWGN-信道的-BA——矩阵迭代"><a href="#9-2-AWGN-信道的-BA——矩阵迭代" class="headerlink" title="9.2 AWGN 信道的 BA——矩阵迭代"></a>9.2 AWGN 信道的 BA——矩阵迭代</h3><p><strong>问题</strong>: $\max_{0 \preceq M \preceq I} \log|M+S| - \log|S|$，其中输入 $X \sim \mathcal{N}(0, M)$。</p>
+<p><strong>BA 算法的矩阵推广</strong>:</p>
+<h4 id="给定-q-（即给定-M-）求-Q"><a href="#给定-q-（即给定-M-）求-Q" class="headerlink" title="给定 $q$（即给定 $M$）求 $Q$"></a>给定 $q$（即给定 $M$）求 $Q$</h4><p>$Q(x|y) = q(x|y)$ 是高斯后验：</p>
+<script type="math/tex; mode=display">Q(x|y) \sim \mathcal{N}\big(Ay,\; AS\big)</script><p>其中 $A = M(M+S)^{-1}$，$AS = M(M+S)^{-1}S$（Schur 补）。</p>
+<h4 id="给定-Q-求-q"><a href="#给定-Q-求-q" class="headerlink" title="给定 $Q$ 求 $q$"></a>给定 $Q$ 求 $q$</h4><script type="math/tex; mode=display">q[Q](x) \propto \exp\{d[Q](x)\}</script><p>计算 $d<a href="x">Q</a> = E_{Y|x}[\ln Q(x|Y)]$ 涉及高斯期望，可解析求出——结果仍是高斯分布。</p>
+<p><strong>核心推导</strong>（slides pp.30-32）:</p>
+<script type="math/tex; mode=display">\begin{aligned}
+d[Q](x) &= \text{const} + E_{Y|x}\big[(x-AY)^T(AS)^{-1}(x-AY)\big] \\\\
+&= \text{const} + x^T(I-A)^T(AS)^{-1}(I-A)x
+\end{aligned}</script><p>利用 $I-A = S(M+S)^{-1}$ 和 $A^{-1}-I = SM^{-1}$：</p>
+<script type="math/tex; mode=display">(I-A)^T(AS)^{-1}(I-A) = (MS^{-1}M+M)^{-1}</script><p><strong>最终得到矩阵更新规则</strong>:</p>
+<script type="math/tex; mode=display">\boxed{M_{\text{new}} = MS^{-1}M + M}</script><p>加上投影以满足功率约束：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">特征分解: M = VDV^T</span><br><span class="line">投影:     D_&#123;ii&#125; ← min(D_&#123;ii&#125;, 1)</span><br><span class="line">重构:     M ← V·diag(min(D_&#123;ii&#125;,1))·V^T</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p><strong>物理含义</strong>: 迭代 $M \leftarrow MS^{-1}M + M$ 在低噪声方向（$S_{ii}$ 小的方向）会增大功率，在高噪声方向会减小功率。经过投影后，最优解是所有特征值都收敛到 1——即 $M^* = I$（各方向等功率），与已知的最优输入分布一致。</p>
+</blockquote>
+<h3 id="9-3-AWGN-广播信道的-BA——矩阵迭代"><a href="#9-3-AWGN-广播信道的-BA——矩阵迭代" class="headerlink" title="9.3 AWGN 广播信道的 BA——矩阵迭代"></a>9.3 AWGN 广播信道的 BA——矩阵迭代</h3><p>两用户高斯向量 BC $Y_1 = X + Z_1, Y_2 = X + Z_2$（$Z_i \sim \mathcal{N}(0, S_i)$）。</p>
+<p>叠加编码：$X = U + V$，$U \sim \mathcal{N}(0, K_U)$，$V \sim \mathcal{N}(0, K_V)$。</p>
+<p>支撑超平面（$\lambda \geq 1$）:</p>
+<script type="math/tex; mode=display">R_1 + \lambda R_2 = \max_{0 \preceq K_U \preceq I} \big(\log|K_U+S_1| - \lambda\log|K_U+S_2|\big) \tag{6}</script><p><strong>矩阵更新规则</strong>（投影后）:</p>
+<script type="math/tex; mode=display">\boxed{K_U \leftarrow \left[(K_U S_1^{-1} K_U + K_U)^{-1} + \lambda \cdot (K_U + S_2)^{-1}\right]^{-1}}</script><blockquote>
+<p>这是 BA 算法在 MIMO 高斯 BC 中的核心迭代公式——交替更新 $K_U$（对应于 $U$ 的协方差矩阵）和 $K_V = I - K_U$。</p>
+</blockquote>
+<h2 id="10-数值结果与考试重点"><a href="#10-数值结果与考试重点" class="headerlink" title="10. 数值结果与考试重点"></a>10. 数值结果与考试重点</h2><h3 id="10-1-BA-算法迭代效果图示"><a href="#10-1-BA-算法迭代效果图示" class="headerlink" title="10.1 BA 算法迭代效果图示"></a>10.1 BA 算法迭代效果图示</h3><p>对于 AWGN 信道（$S = \text{diag}(1,3,5,7,9)$，初始 $M = 0.2I$）:</p>
+<ul>
+<li><strong>目标函数值</strong>: 从 ~0 快速上升到约 1.5 nats（约 20 次迭代接近收敛）</li>
+<li><strong>特征值收敛</strong>: 所有 5 个特征值趋向 1（约 60 次迭代完全收敛）</li>
+</ul>
+<p>对于 AWGN BC（$S_1 = \text{diag}(1,3,5,7,9), S_2 = \text{diag}(9,7,5,3,1), \lambda = 2$）:</p>
+<ul>
+<li><strong>目标函数值</strong>: 收敛到约 -13.3 nats</li>
+<li><strong>特征值收敛</strong>: 最大特征值约 0.9，中间 0.5，最小 0.1——体现了”注水”式的功率分配</li>
+</ul>
+<h3 id="10-2-考试重点速查表"><a href="#10-2-考试重点速查表" class="headerlink" title="10.2 考试重点速查表"></a>10.2 考试重点速查表</h3><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>公式 / 关键点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>容量最大化</strong></td>
+<td>$C = \max_{q(x)} I(X;Y)$，凹函数</td>
+</tr>
+<tr>
+<td><strong>扩展目标函数</strong></td>
+<td>$f(q,Q) = \sum_{x,y} q(x)p(y\vert x)\ln\frac{Q(x\vert y)}{q(x)}$</td>
+</tr>
+<tr>
+<td><strong>给定 q 求 Q</strong></td>
+<td>$Q<a href="x\vert y">q</a> = q(x\vert y) = \frac{q(x)p(y\vert x)}{\sum q p}$（后验概率）</td>
+</tr>
+<tr>
+<td><strong>信息势能</strong></td>
+<td>$d<a href="x">Q</a> = \sum_y p(y\vert x)\ln Q(x\vert y)$</td>
+</tr>
+<tr>
+<td><strong>给定 Q 求 q</strong></td>
+<td>$q<a href="x">Q</a> \propto \exp{d<a href="x">Q</a>}$</td>
+</tr>
+<tr>
+<td><strong>目标函数值</strong></td>
+<td>$f(q[Q], Q) = \ln\sum_x \exp{d<a href="x">Q</a>}$</td>
+</tr>
+<tr>
+<td><strong>单调性</strong></td>
+<td>$f(q<em>{k-1}) = f(q</em>{k-1}, Q_k) \leq f(q_k, Q_k)$</td>
+</tr>
+<tr>
+<td><strong>收敛界</strong></td>
+<td>$\sum_{n=1}^{N}(f(q^<em>)-f(q_n,Q_n)) \leq D_X(q^</em>\vert q_0)$</td>
+</tr>
+<tr>
+<td><strong>停止准则</strong></td>
+<td>$\max_x(d[Q]-\ln q) - \sum_x q(d[Q]-\ln q) &lt; \epsilon$</td>
+</tr>
+<tr>
+<td><strong>AWGN 矩阵更新</strong></td>
+<td>$M \leftarrow MS^{-1}M + M$，投影后 $M<em>{ii} \leftarrow \min(M</em>{ii}, 1)$</td>
+</tr>
+<tr>
+<td><strong>AWGN BC 矩阵更新</strong></td>
+<td>$K_U \leftarrow [(K_U S_1^{-1}K_U+K_U)^{-1} + \lambda(K_U+S_2)^{-1}]^{-1}$</td>
+</tr>
+<tr>
+<td><strong>SCIB α 梯度下降</strong></td>
+<td>$\alpha_{k+1} = \alpha_k - \tau \cdot \bar{\theta}(I(U;Z)-I(U;Y))$</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="10-3-BA-算法的核心思想速览"><a href="#10-3-BA-算法的核心思想速览" class="headerlink" title="10.3 BA 算法的核心思想速览"></a>10.3 BA 算法的核心思想速览</h3><div class="mermaid-wrap"><pre class="mermaid-src" data-config="{}" hidden>
+    graph TB
+    subgraph BA算法精髓
+        A[&quot;原问题: max_q I(X;Y)&lt;br&#x2F;&gt;(凹,但无闭式解)&quot;]
+        B[&quot;引入Q(x|y): 扩展为 f(q,Q)&quot;]
+        C[&quot;交替最大化:&lt;br&#x2F;&gt;1. Q←q(x|y) (后验)&lt;br&#x2F;&gt;2. q∝exp{d[Q](x)}&quot;]
+        D[&quot;闭式解 + 单调收敛&lt;br&#x2F;&gt;+ 收敛速度保证&quot;]
+        A --&gt; B --&gt; C --&gt; D
+    end
+  </pre></div>
+<blockquote>
+<p><strong>复习建议</strong>:</p>
+<ol>
+<li><strong>BA 算法的两步更新</strong>（§3-4）是核心——必须能默写 $Q<a href="x|y">q</a> = q(x|y)$（后验）和 $q<a href="x">Q</a> \propto \exp{d<a href="x">Q</a>}$（Gibbs 分布）这两个闭式解，以及它们分别使条件 KL 散度为零和使 $d[Q]-\ln q$ 恒为常数的性质。</li>
+<li><strong>交替最大化的正确性</strong>（§2, §5）——理解 $f(q) = f(q,Q) + D_{X|Y}(q|Q)$ 是保证 $f(q) \geq f(q,Q)$ 且等号可达的关键。</li>
+<li><strong>收敛性证明</strong>（§5）——核心是用 $D_X(q^*|q_0)$ 控制所有迭代的遗憾之和，这表明 BA 算法在有限步内必然逼近最优值。</li>
+<li><strong>连续信道的矩阵 BA</strong>（§9）——理解为什么高斯情形下的 $q[Q]$ 更新退化为一个矩阵二次型优化，以及矩阵迭代 $M \leftarrow MS^{-1}M+M$ 的推导。</li>
+<li><strong>BC 的 BA 算法</strong>（§7-8）——理解支撑超平面的思想（通过扫描 $\theta/\lambda$ 来描出容量区域边界），以及 max-min 交换（Terkelsen 定理）在 SCIB 中的应用。</li>
+</ol>
+</blockquote>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://luotian.cyou">Luo Tian</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://luotian.cyou/post/Network_info_Theory-Chapter7.html">https://luotian.cyou/post/Network_info_Theory-Chapter7.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来源 <a href="https://luotian.cyou" target="_blank">洛天的小窝</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E7%BD%91%E7%BB%9C%E4%BF%A1%E6%81%AF%E8%AE%BA/">网络信息论</a><a class="post-meta__tags" href="/tags/%E4%BF%A1%E6%81%AF%E8%AE%BA/">信息论</a></div><div class="post-share"><div class="social-share" data-image="/img/core/default_blog_cover.webp" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><div class="post-reward"><div class="reward-button"><i class="fas fa-qrcode"></i>赞助</div><div class="reward-main"><ul class="reward-all"><li class="reward-item"><a href="/img/core/QRs/wx.webp" target="_blank"><img class="post-qr-code-img" src="/img/core/QRs/wx.webp" alt="wechat"/></a><div class="post-qr-code-desc">wechat</div></li><li class="reward-item"><a href="/img/core/QRs/zfb.webp" target="_blank"><img class="post-qr-code-img" src="/img/core/QRs/zfb.webp" alt="alipay"/></a><div class="post-qr-code-desc">alipay</div></li></ul></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related" href="/post/Network_info_Theory-Chapter6.html" title="西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理"><img class="cover" src="/img/core/default_blog_cover.webp" onerror="onerror=null;src='/img/core/404.jpg'" alt="cover of previous post"><div class="info"><div class="info-1"><div class="info-item-1">上一篇</div><div class="info-item-2">西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第六章的复习笔记，基于课堂讲义整理。内容涵盖：IC 模型与容量区域未知的现状、简单界与模二和 IC 实例、三种点对点编码策略（IAN/SD/SND）及其错误事件分析、强干扰与极强干扰的容量区域（Costa-El Gamal 1987）、高斯 IC 的 SNR/INR 条件与 Sato 1981 判据、Han-Kobayashi 1981 编码方案（速率分裂+叠加编码+7 不等式定理）、注入式确定性 IC、半比特定理（Etkin-Tse-Wang 2008）。</div></div></div></a><a class="pagination-related" href="/post/Holidays-Popup-4-Hexo.html" title="在 hexo 博客中添加节假日提醒、祝福弹窗 — butterfly 主题"><img class="cover" src="/img/banner/study/holiday-pop-hexo.webp" onerror="onerror=null;src='/img/core/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">下一篇</div><div class="info-item-2">在 hexo 博客中添加节假日提醒、祝福弹窗 — butterfly 主题</div></div><div class="info-2"><div class="info-item-1">在 hexo 博客中添加节假日提醒、祝福弹窗功能，使用 lunar-javascript 库计算节日数据，并通过前端脚本实现动态弹窗展示。</div></div></div></a></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><a class="pagination-related" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第四章的复习笔记，基于课堂讲义整理。内容涵盖：点对点无损压缩回顾与随机 Binning 编码、Slepian-Wolf 定理的完整证明（逆定理+可达性+四错误事件）、k 源扩展、有 Helper 的无损压缩（Ahlswede-Korner-Wyner 定理）、率失真函数 R(D) 与 Shannon 1959 定理、Wyner-Ziv 有损编码（Compress-Bin：Covering 编码 + Packing 译码）、Covering Lemma 与 Packing Lemma 的对偶、Wyner-Ziv 与 Gelfand-Pinsker 的对偶性。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA/TDMA/X-DMA 对比、速率分裂技术（Rate-Splitting）、5G NOMA 技术综述。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第三章的复习笔记，综合课堂讲义整理。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy/More Capable BC、Marton 1979 编码方案（Binning+叠加编码）与 Mutual Covering Lemma、Gelfand-Pinsker 问题与污纸编码 DPC（Costa 1983）。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论（Network Information Theory）第一章的复习笔记，基于讲义整理。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen/Fano/数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长/变长编码、Shannon/Huffman 码）、信道容量（DMC、BSC/BEC、高斯信道、反馈容量）、MIMO 信道（SVD 分解、注水算法）等。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter6.html" title="西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第六章的复习笔记，基于课堂讲义整理。内容涵盖：IC 模型与容量区域未知的现状、简单界与模二和 IC 实例、三种点对点编码策略（IAN/SD/SND）及其错误事件分析、强干扰与极强干扰的容量区域（Costa-El Gamal 1987）、高斯 IC 的 SNR/INR 条件与 Sato 1981 判据、Han-Kobayashi 1981 编码方案（速率分裂+叠加编码+7 不等式定理）、注入式确定性 IC、半比特定理（Etkin-Tse-Wang 2008）。</div></div></div></a><a class="pagination-related" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"><img class="cover" src="/img/core/default_blog_cover.webp" alt="cover"><div class="info text-center"><div class="info-1"><div class="info-item-1"><i class="far fa-calendar-alt fa-fw"></i> 2026-06-24</div><div class="info-item-2">西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</div></div><div class="info-2"><div class="info-item-1">本文是西电研究生课程网络信息论第五章的复习笔记，基于课堂讲义整理。内容涵盖：中继信道三节点模型与 DM-RC 定义、割集上界（Cover-El Gamal 1979）的两个割解释、直接传输下界与反向退化 RC、多跳下界与分组 Markov 编码、协作多跳下界与条件码本、译码转发（DF）的容量下界与后向译码（Willems 1985）、DF 的局限与部分 DF、压缩转发（CF）的 Compress-Bin 编码方案、高斯中继信道的半比特逼近。</div></div></div></a></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="twikoo-wrap"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/img/core/id.webp" onerror="this.onerror=null;this.src='/img/core/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Luo Tian</div><div class="author-info-description">我们生而眺望</div><div class="site-data"><a href="/archives/"><div class="headline">文章</div><div class="length-num">41</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">15</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">11</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/LuoTian001"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content"><p>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！如果你有任何建议或想法，欢迎通过评论与我联系(o゜▽゜)o☆<br>主站：www.luotian.cyou<br>备用：LuoTian001.github.io<br>RSS：www.luotian.cyou/rss.xml</p></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%AC%AC%E4%B8%83%E7%AB%A0-Blahut-Arimoto-%E7%AE%97%E6%B3%95%EF%BC%88Blahut-Arimoto-Algorithms%EF%BC%89"><span class="toc-text">第七章 Blahut-Arimoto 算法（Blahut-Arimoto Algorithms）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E5%BD%95"><span class="toc-text">目录</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E9%97%AE%E9%A2%98%E8%83%8C%E6%99%AF%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87"><span class="toc-text">1. 问题背景与梯度上升</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-%E4%BF%A1%E9%81%93%E5%AE%B9%E9%87%8F%E7%9A%84%E8%AE%A1%E7%AE%97%E9%97%AE%E9%A2%98"><span class="toc-text">1.1 信道容量的计算问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2-%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87%E6%B3%95"><span class="toc-text">1.2 梯度上升法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BE%8B%EF%BC%9AZ-%E4%BF%A1%E9%81%93"><span class="toc-text">例：Z 信道</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-BA-%E7%AE%97%E6%B3%95%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E2%80%94%E2%80%94%E4%BA%A4%E6%9B%BF%E6%9C%80%E5%A4%A7%E5%8C%96"><span class="toc-text">2. BA 算法的核心思想——交替最大化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1-%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0%E9%87%8D%E6%9E%84"><span class="toc-text">2.1 目标函数重构</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BA%A4%E6%9B%BF%E6%9C%80%E5%A4%A7%E5%8C%96%E6%9C%89%E6%95%88%EF%BC%9F"><span class="toc-text">2.2 为什么交替最大化有效？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-BA-%E7%AE%97%E6%B3%95%EF%BC%9A%E7%BB%99%E5%AE%9A-q-%E6%B1%82%E6%9C%80%E4%BC%98-Q"><span class="toc-text">3. BA 算法：给定 q 求最优 Q</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1-%E6%8E%A8%E5%AF%BC"><span class="toc-text">3.1 推导</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-BA-%E7%AE%97%E6%B3%95%EF%BC%9A%E7%BB%99%E5%AE%9A-Q-%E6%B1%82%E6%9C%80%E4%BC%98-q"><span class="toc-text">4. BA 算法：给定 Q 求最优 q</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-%E6%8E%A8%E5%AF%BC"><span class="toc-text">4.1 推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95"><span class="toc-text">4.2 拉格朗日乘子法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-%E4%B8%A4%E4%B8%AA%E9%87%8D%E8%A6%81%E6%8E%A8%E8%AE%BA"><span class="toc-text">4.3 两个重要推论</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-4-BA-%E7%AE%97%E6%B3%95%E7%9A%84%E4%B8%80%E6%AC%A1%E5%AE%8C%E6%95%B4%E8%BF%AD%E4%BB%A3"><span class="toc-text">4.4 BA 算法的一次完整迭代</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-%E6%94%B6%E6%95%9B%E6%80%A7%E5%88%86%E6%9E%90"><span class="toc-text">5. 收敛性分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-1-%E5%8D%95%E8%B0%83%E6%80%A7"><span class="toc-text">5.1 单调性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-2-%E6%94%B6%E6%95%9B%E9%80%9F%E5%BA%A6"><span class="toc-text">5.2 收敛速度</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6-%E5%81%9C%E6%AD%A2%E5%87%86%E5%88%99%E4%B8%8E%E5%9B%BE%E7%A4%BA"><span class="toc-text">6. 停止准则与图示</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#6-1-%E6%9C%80%E4%BC%98%E6%80%A7%E6%9D%A1%E4%BB%B6%EF%BC%88KKT-%E6%9D%A1%E4%BB%B6%EF%BC%89"><span class="toc-text">6.1 最优性条件（KKT 条件）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-2-%E5%81%9C%E6%AD%A2%E5%87%86%E5%88%99"><span class="toc-text">6.2 停止准则</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#6-3-BA-%E4%B8%8E%E6%A2%AF%E5%BA%A6%E4%B8%8A%E5%8D%87%E7%9A%84%E5%AF%B9%E6%AF%94"><span class="toc-text">6.3 BA 与梯度上升的对比</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#7-BA-%E7%AE%97%E6%B3%95%E5%9C%A8%E9%80%80%E5%8C%96%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text">7. BA 算法在退化广播信道中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#7-1-%E9%80%80%E5%8C%96-BC-%E7%9A%84%E5%AE%B9%E9%87%8F%E5%8C%BA%E5%9F%9F%E6%94%AF%E6%92%91%E8%B6%85%E5%B9%B3%E9%9D%A2"><span class="toc-text">7.1 退化 BC 的容量区域支撑超平面</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#7-2-BA-%E7%9B%AE%E6%A0%87%E5%87%BD%E6%95%B0"><span class="toc-text">7.2 BA 目标函数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#8-BA-%E7%AE%97%E6%B3%95%E5%9C%A8%E4%B8%80%E8%88%AC%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-text">8. BA 算法在一般广播信道中的应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#8-1-%E4%B8%89%E7%B1%BB%E7%95%8C"><span class="toc-text">8.1 三类界</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-2-SCIB-%E7%9A%84-BA-%E7%AE%97%E6%B3%95"><span class="toc-text">8.2 SCIB 的 BA 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-3-MIB-%E7%9A%84-BA-%E7%AE%97%E6%B3%95"><span class="toc-text">8.3 MIB 的 BA 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-4-UVOB-%E7%9A%84-BA-%E7%AE%97%E6%B3%95"><span class="toc-text">8.4 UVOB 的 BA 算法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#8-5-BSSC-%E6%95%B0%E5%80%BC%E7%BB%93%E6%9E%9C"><span class="toc-text">8.5 BSSC 数值结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#9-%E8%BF%9E%E7%BB%AD%E4%BF%A1%E9%81%93%E7%9A%84-BA-%E7%AE%97%E6%B3%95"><span class="toc-text">9. 连续信道的 BA 算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#9-1-%E8%BF%9E%E7%BB%AD%E4%BF%A1%E9%81%93%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-text">9.1 连续信道的挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-2-AWGN-%E4%BF%A1%E9%81%93%E7%9A%84-BA%E2%80%94%E2%80%94%E7%9F%A9%E9%98%B5%E8%BF%AD%E4%BB%A3"><span class="toc-text">9.2 AWGN 信道的 BA——矩阵迭代</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%99%E5%AE%9A-q-%EF%BC%88%E5%8D%B3%E7%BB%99%E5%AE%9A-M-%EF%BC%89%E6%B1%82-Q"><span class="toc-text">给定 $q$（即给定 $M$）求 $Q$</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%BB%99%E5%AE%9A-Q-%E6%B1%82-q"><span class="toc-text">给定 $Q$ 求 $q$</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#9-3-AWGN-%E5%B9%BF%E6%92%AD%E4%BF%A1%E9%81%93%E7%9A%84-BA%E2%80%94%E2%80%94%E7%9F%A9%E9%98%B5%E8%BF%AD%E4%BB%A3"><span class="toc-text">9.3 AWGN 广播信道的 BA——矩阵迭代</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#10-%E6%95%B0%E5%80%BC%E7%BB%93%E6%9E%9C%E4%B8%8E%E8%80%83%E8%AF%95%E9%87%8D%E7%82%B9"><span class="toc-text">10. 数值结果与考试重点</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#10-1-BA-%E7%AE%97%E6%B3%95%E8%BF%AD%E4%BB%A3%E6%95%88%E6%9E%9C%E5%9B%BE%E7%A4%BA"><span class="toc-text">10.1 BA 算法迭代效果图示</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-2-%E8%80%83%E8%AF%95%E9%87%8D%E7%82%B9%E9%80%9F%E6%9F%A5%E8%A1%A8"><span class="toc-text">10.2 考试重点速查表</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#10-3-BA-%E7%AE%97%E6%B3%95%E7%9A%84%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3%E9%80%9F%E8%A7%88"><span class="toc-text">10.3 BA 算法的核心思想速览</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter1.html" title="西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量">西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</a><time datetime="2026-06-23T18:39:32.000Z" title="发表于 2026-06-24 02:39:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter2.html" title="西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明">西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</a><time datetime="2026-06-23T18:38:32.000Z" title="发表于 2026-06-24 02:38:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter3.html" title="西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码">西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</a><time datetime="2026-06-23T18:37:32.000Z" title="发表于 2026-06-24 02:37:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter4.html" title="西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv">西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</a><time datetime="2026-06-23T18:36:32.000Z" title="发表于 2026-06-24 02:36:32">2026-06-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"><img src="/img/core/default_blog_cover.webp" onerror="this.onerror=null;this.src='/img/core/404.jpg'" alt="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界"/></a><div class="content"><a class="title" href="/post/Network_info_Theory-Chapter5.html" title="西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界">西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</a><time datetime="2026-06-23T18:35:32.000Z" title="发表于 2026-06-24 02:35:32">2026-06-24</time></div></div></div></div></div></div></main><footer id="footer" style="background: transparent;"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2023 - 2026 By Luo Tian</span></div><div class="footer_custom_text"><dev><a href="https://beian.miit.gov.cn/#/Integrated/index" target="_blank">陕ICP备2025072980号-1</a></dev><div id="workboard"></div></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="日间和夜间模式切换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="前往评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.4"></script><script src="/js/main.js?v=5.5.4"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@6.1.9/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const loadMathjax = () => {
+    if (!window.MathJax) {
+      window.MathJax = {
+        loader: {
+          load: [
+            // Four font extension packages (optional)
+            //- '[tex]/bbm',
+            //- '[tex]/bboldx',
+            //- '[tex]/dsfont',
+            '[tex]/mhchem'
+          ],
+          paths: {
+            'mathjax-newcm': '[mathjax]/../@mathjax/mathjax-newcm-font',
+
+            //- // Four font extension packages (optional)
+            //- 'mathjax-bbm-extension': '[mathjax]/../@mathjax/mathjax-bbm-font-extension',
+            //- 'mathjax-bboldx-extension': '[mathjax]/../@mathjax/mathjax-bboldx-font-extension',
+            //- 'mathjax-dsfont-extension': '[mathjax]/../@mathjax/mathjax-dsfont-font-extension',
+            'mathjax-mhchem-extension': '[mathjax]/../@mathjax/mathjax-mhchem-font-extension'
+          }
+        },
+        output: {
+          font: 'mathjax-newcm',
+        },
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']],
+          tags: 'none',
+          packages: {
+            '[+]': [
+              'mhchem'
+            ]
+          }
+        },
+        chtml: {
+          scale: 1.1
+        },
+        options: {
+          enableMenu: true,
+          menuOptions: {
+            settings: {
+              enrich: false  // Turn off Braille and voice narration text automatic generation
+            }
+          },
+          renderActions: {
+            findScript: [10, doc => {
+              for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+                const display = !!node.type.match(/; *mode=display/)
+                const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+                const text = document.createTextNode('')
+                node.parentNode.replaceChild(text, node)
+                math.start = {node: text, delim: '', n: 0}
+                math.end = {node: text, delim: '', n: 0}
+                doc.math.push(math)
+              }
+            }, '']
+          }
+        }
+      }
+
+      const script = document.createElement('script')
+      script.src = 'https://cdn.jsdelivr.net/npm/mathjax@4.1.1/tex-mml-chtml.min.js'
+      script.id = 'MathJax-script'
+      script.async = true
+      document.head.appendChild(script)
+    } else {
+      MathJax.startup.document.state(0)
+      MathJax.texReset()
+      MathJax.typesetPromise()
+    }
+  }
+
+  btf.addGlobalFn('encrypt', loadMathjax, 'mathjax')
+  window.pjax ? loadMathjax() : window.addEventListener('load', loadMathjax)
+})()</script><script>(() => {
+  const parseViewBox = viewBox => {
+    if (!viewBox) return null
+    const parts = viewBox.trim().split(/[\s,]+/).map(n => Number(n))
+    if (parts.length !== 4 || parts.some(n => Number.isNaN(n))) return null
+    return parts
+  }
+
+  const getSvgViewBox = svg => {
+    const attr = parseViewBox(svg.getAttribute('viewBox'))
+    if (attr) return attr
+
+    // Fallback: use bbox to build a viewBox
+    try {
+      const bbox = svg.getBBox()
+      if (bbox && bbox.width && bbox.height) return [bbox.x, bbox.y, bbox.width, bbox.height]
+    } catch (e) {
+      // getBBox may fail on some edge cases; ignore
+    }
+
+    const w = Number(svg.getAttribute('width')) || 0
+    const h = Number(svg.getAttribute('height')) || 0
+    if (w > 0 && h > 0) return [0, 0, w, h]
+    return [0, 0, 100, 100]
+  }
+
+  const setSvgViewBox = (svg, vb) => {
+    svg.setAttribute('viewBox', `${vb[0]} ${vb[1]} ${vb[2]} ${vb[3]}`)
+  }
+
+  const clamp = (v, min, max) => Math.max(min, Math.min(max, v))
+
+  const openSvgInNewTab = ({ source, initViewBox }) => {
+    const getClonedSvg = () => {
+      if (typeof source === 'string') {
+        const template = document.createElement('template')
+        template.innerHTML = source.trim()
+        const svg = template.content.querySelector('svg')
+        return svg ? svg.cloneNode(true) : null
+      }
+      if (source && typeof source.cloneNode === 'function') {
+        return source.cloneNode(true)
+      }
+      return null
+    }
+
+    const clone = getClonedSvg()
+    if (!clone) return
+    if (initViewBox && initViewBox.length === 4) {
+      clone.setAttribute('viewBox', initViewBox.join(' '))
+    }
+    if (!clone.getAttribute('xmlns')) clone.setAttribute('xmlns', 'http://www.w3.org/2000/svg')
+    if (!clone.getAttribute('xmlns:xlink') && clone.outerHTML.includes('xlink:')) {
+      clone.setAttribute('xmlns:xlink', 'http://www.w3.org/1999/xlink')
+    }
+    // inject background to match current theme
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark'
+    const bg = getComputedStyle(document.body).backgroundColor || (isDark ? '#1e1e1e' : '#ffffff')
+    if (!clone.style.background) clone.style.background = bg
+
+    const serializer = new XMLSerializer()
+    const svgSource = serializer.serializeToString(clone)
+    const htmlSource = `<!doctype html><html><head><meta charset="utf-8" />
+      <style>
+        html, body { width: 100%; height: 100%; margin: 0; display: flex; align-items: center; justify-content: center; background: ${bg}; }
+        svg { max-width: 100%; max-height: 100%; height: auto; width: auto; }
+      </style>
+      </head><body>${svgSource}</body></html>`
+    const blob = new Blob([htmlSource], { type: 'text/html;charset=utf-8' })
+    const url = URL.createObjectURL(blob)
+    window.open(url, '_blank', 'noopener')
+    setTimeout(() => URL.revokeObjectURL(url), 30000)
+  }
+
+  const attachMermaidViewerButton = wrap => {
+    let btn = wrap.querySelector('.mermaid-open-btn')
+    if (!btn) {
+      btn = document.createElement('button')
+      btn.type = 'button'
+      btn.className = 'mermaid-open-btn'
+      wrap.appendChild(btn)
+    }
+
+    btn.innerHTML = '<i class="fa fa-search fa-fw" aria-hidden="true"></i>'
+
+    if (!btn.__mermaidViewerBound) {
+      btn.addEventListener('click', e => {
+        e.preventDefault()
+        e.stopPropagation()
+        const svg = wrap.__mermaidOriginalSvg || wrap.querySelector('svg')
+        if (!svg) return
+        const initViewBox = wrap.__mermaidInitViewBox
+        if (typeof svg === 'string') {
+          openSvgInNewTab({ source: svg, initViewBox })
+          return
+        }
+        openSvgInNewTab({ source: svg, initViewBox })
+      })
+      btn.__mermaidViewerBound = true
+    }
+  }
+
+  // Zoom around a point (px, py) in the SVG viewport (in viewBox coordinates)
+  const zoomAtPoint = (vb, factor, px, py) => {
+    const w = vb[2] * factor
+    const h = vb[3] * factor
+    const nx = px - (px - vb[0]) * factor
+    const ny = py - (py - vb[1]) * factor
+    return [nx, ny, w, h]
+  }
+
+  const initMermaidGestures = wrap => {
+    const svg = wrap.querySelector('svg')
+    if (!svg) return
+
+    // Ensure viewBox exists so gestures always work
+    const initVb = getSvgViewBox(svg)
+    wrap.__mermaidInitViewBox = initVb
+    wrap.__mermaidCurViewBox = initVb.slice()
+    setSvgViewBox(svg, initVb)
+
+    // Avoid binding multiple times on themeChange/pjax
+    if (wrap.__mermaidGestureBound) return
+    wrap.__mermaidGestureBound = true
+
+    // Helper: map client (viewport) coordinate -> viewBox coordinate
+    const clientToViewBox = (clientX, clientY) => {
+      const rect = svg.getBoundingClientRect()
+      const vb = wrap.__mermaidCurViewBox || getSvgViewBox(svg)
+      const x = vb[0] + (clientX - rect.left) * (vb[2] / rect.width)
+      const y = vb[1] + (clientY - rect.top) * (vb[3] / rect.height)
+      return { x, y, rect, vb }
+    }
+
+    const state = {
+      pointers: new Map(),
+      startVb: null,
+      startDist: 0,
+      startCenter: null
+    }
+
+    const clampVb = vb => {
+      const init = wrap.__mermaidInitViewBox || vb
+      const minW = init[2] * 0.1
+      const maxW = init[2] * 10
+      const minH = init[3] * 0.1
+      const maxH = init[3] * 10
+      vb[2] = clamp(vb[2], minW, maxW)
+      vb[3] = clamp(vb[3], minH, maxH)
+      return vb
+    }
+
+    const setCurVb = vb => {
+      vb = clampVb(vb)
+      wrap.__mermaidCurViewBox = vb
+      setSvgViewBox(svg, vb)
+    }
+
+    const onPointerDown = e => {
+      // Allow only primary button for mouse
+      if (e.pointerType === 'mouse' && e.button !== 0) return
+      svg.setPointerCapture(e.pointerId)
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      if (state.pointers.size === 1) {
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      } else if (state.pointers.size === 2) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        state.startDist = Math.hypot(dx, dy)
+        state.startVb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        state.startCenter = { x: (pts[0].x + pts[1].x) / 2, y: (pts[0].y + pts[1].y) / 2 }
+      }
+    }
+
+    const onPointerMove = e => {
+      if (!state.pointers.has(e.pointerId)) return
+      state.pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+
+      // Pan with 1 pointer
+      if (state.pointers.size === 1 && state.startVb) {
+        const p = [...state.pointers.values()][0]
+        const prev = { x: e.clientX - e.movementX, y: e.clientY - e.movementY }
+        // movementX/Y unreliable on touch, compute from stored last position
+        const last = wrap.__mermaidLastSinglePointer || p
+        const dxClient = p.x - last.x
+        const dyClient = p.y - last.y
+        wrap.__mermaidLastSinglePointer = p
+
+        const { rect } = clientToViewBox(p.x, p.y)
+        const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+        const dx = dxClient * (vb[2] / rect.width)
+        const dy = dyClient * (vb[3] / rect.height)
+        setCurVb([vb[0] - dx, vb[1] - dy, vb[2], vb[3]])
+        return
+      }
+
+      // Pinch zoom with 2 pointers
+      if (state.pointers.size === 2 && state.startVb && state.startDist > 0) {
+        const pts = [...state.pointers.values()]
+        const dx = pts[0].x - pts[1].x
+        const dy = pts[0].y - pts[1].y
+        const dist = Math.hypot(dx, dy)
+        if (!dist) return
+        const factor = state.startDist / dist // dist bigger => zoom in (viewBox smaller)
+
+        const cx = (pts[0].x + pts[1].x) / 2
+        const cy = (pts[0].y + pts[1].y) / 2
+        const centerClient = { x: cx, y: cy }
+
+        const pxy = clientToViewBox(centerClient.x, centerClient.y)
+        const cpx = pxy.x
+        const cpy = pxy.y
+
+        const vb = zoomAtPoint(state.startVb, factor, cpx, cpy)
+        setCurVb(vb)
+      }
+    }
+
+    const onPointerUpOrCancel = e => {
+      state.pointers.delete(e.pointerId)
+      if (state.pointers.size === 0) {
+        state.startVb = null
+        state.startDist = 0
+        state.startCenter = null
+        wrap.__mermaidLastSinglePointer = null
+      } else if (state.pointers.size === 1) {
+        // reset single pointer baseline to avoid jump
+        wrap.__mermaidLastSinglePointer = [...state.pointers.values()][0]
+      }
+    }
+
+    // Wheel zoom (mouse/trackpad)
+    const onWheel = e => {
+      // ctrlKey on mac trackpad pinch; we treat both as zoom
+      e.preventDefault()
+      const delta = e.deltaY
+      const zoomFactor = delta > 0 ? 1.1 : 0.9
+      const { x, y } = clientToViewBox(e.clientX, e.clientY)
+      const vb = (wrap.__mermaidCurViewBox || getSvgViewBox(svg)).slice()
+      setCurVb(zoomAtPoint(vb, zoomFactor, x, y))
+    }
+
+    const onDblClick = () => {
+      const init = wrap.__mermaidInitViewBox
+      if (!init) return
+      wrap.__mermaidCurViewBox = init.slice()
+      setSvgViewBox(svg, init)
+    }
+
+    svg.addEventListener('pointerdown', onPointerDown)
+    svg.addEventListener('pointermove', onPointerMove)
+    svg.addEventListener('pointerup', onPointerUpOrCancel)
+    svg.addEventListener('pointercancel', onPointerUpOrCancel)
+    svg.addEventListener('wheel', onWheel, { passive: false })
+    svg.addEventListener('dblclick', onDblClick)
+  }
+
+  const runMermaid = ele => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    ele.forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+
+      // Clear old render (themeChange/pjax will rerun)
+      const oldSvg = item.querySelector('svg')
+      if (oldSvg) oldSvg.remove()
+      item.__mermaidGestureBound = false
+
+      const config = mermaidSrc.dataset.config ? JSON.parse(mermaidSrc.dataset.config) : {}
+      if (!config.theme) {
+        config.theme = theme
+      }
+      const mermaidThemeConfig = `%%{init: ${JSON.stringify(config)}}%%\n`
+      const mermaidID = `mermaid-${index}`
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+      const renderMermaid = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+        if (false) initMermaidGestures(item)
+        item.__mermaidOriginalSvg = svg
+        if (true) attachMermaidViewerButton(item)
+      }
+
+
+      // mermaid v9 and v10 compatibility
+      typeof renderFn === 'string' ? renderMermaid(renderFn) : renderFn.then(({ svg }) => renderMermaid(svg))
+    })
+  }
+
+  const codeToMermaid = () => {
+    const codeMermaidEle = document.querySelectorAll('pre > code.mermaid')
+    if (codeMermaidEle.length === 0) return
+
+    codeMermaidEle.forEach(ele => {
+      const preEle = document.createElement('pre')
+      preEle.className = 'mermaid-src'
+      preEle.hidden = true
+      preEle.textContent = ele.textContent
+      const newEle = document.createElement('div')
+      newEle.className = 'mermaid-wrap'
+      newEle.appendChild(preEle)
+      ele.parentNode.replaceWith(newEle)
+    })
+  }
+
+  const loadMermaid = () => {
+    if (false) codeToMermaid()
+    const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+    if ($mermaid.length === 0) return
+
+    const runMermaidFn = () => runMermaid($mermaid)
+    btf.addGlobalFn('themeChange', runMermaidFn, 'mermaid')
+    window.loadMermaid ? runMermaidFn() : btf.getScript('https://cdn.jsdelivr.net/npm/mermaid@11.12.2/dist/mermaid.min.js').then(runMermaidFn)
+  }
+
+  btf.addGlobalFn('encrypt', loadMermaid, 'mermaid')
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><script>(() => {
+  const isShuoshuo = GLOBAL_CONFIG_SITE.pageType === 'shuoshuo'
+  const option = null
+
+  const getCount = () => {
+    const countELement = document.getElementById('twikoo-count')
+    if(!countELement) return
+    twikoo.getCommentsCount({
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      urls: [window.location.pathname],
+      includeReply: false
+    }).then(res => {
+      countELement.textContent = res[0].count
+    }).catch(err => {
+      console.error(err)
+    })
+  }
+
+  const init = (el = document, path = location.pathname) => {
+    twikoo.init({
+      el: el.querySelector('#twikoo-wrap'),
+      envId: 'https://twikoo.luotian.cyou',
+      region: '',
+      onCommentLoaded: () => {
+        btf.loadLightbox(document.querySelectorAll('#twikoo .tk-content img:not(.tk-owo-emotion)'))
+      },
+      ...option,
+      path: isShuoshuo ? path : (option && option.path) || path
+    })
+
+    GLOBAL_CONFIG_SITE.pageType === 'post' && getCount()
+
+    isShuoshuo && (window.shuoshuoComment.destroyTwikoo = () => {
+      if (el.children.length) {
+        el.innerHTML = ''
+        el.classList.add('no-comment')
+      }
+    })
+  }
+
+  const loadTwikoo = (el, path) => {
+    if (typeof twikoo === 'object') setTimeout(() => init(el, path), 0)
+    else btf.getScript('https://mirrors.sustech.edu.cn/cdnjs/ajax/libs/twikoo/1.6.44/twikoo.all.min.js').then(() => init(el, path))
+  }
+
+  if (isShuoshuo) {
+    'Twikoo' === 'Twikoo'
+      ? window.shuoshuoComment = { loadComment: loadTwikoo }
+      : window.loadOtherComment = loadTwikoo
+    return
+  }
+
+  if ('Twikoo' === 'Twikoo' || !false) {
+    if (false) btf.loadComment(document.getElementById('twikoo-wrap'), loadTwikoo)
+    else loadTwikoo()
+  } else {
+    window.loadOtherComment = loadTwikoo
+  }
+})()</script></div><script src="/live2d/live2d.js" defer></script><script src="/js/background.js"></script><script src="/js/runtime.js" defer></script><script src="/js/meta-sync.js"></script><script async src="/js/holiday-popup.js" data-pjax></script><script src="https://cdnjs.cloudflare.com/ajax/libs/pangu/4.0.7/pangu.min.js"></script><script> const initPangu = () => { if (typeof pangu !== 'undefined') { pangu.spacingPage(); } }; document.addEventListener('DOMContentLoaded', initPangu); document.addEventListener('pjax:complete', initPangu); </script><script src="https://cdn.jsdelivr.net/npm/pjax@0.2.8/pjax.min.js" defer="defer"></script><script>document.addEventListener('DOMContentLoaded', () => {
+  const pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+  window.pjax = new Pjax({
+    elements: 'a:not([target="_blank"])',
+    selectors: pjaxSelectors,
+    cacheBust: false,
+    analytics: false,
+    scrollRestoration: false
+  })
+
+  const triggerPjaxFn = (val) => {
+    if (!val) return
+    Object.values(val).forEach(fn => {
+      try {
+        fn()
+      } catch (err) {
+        console.debug('Pjax callback failed:', err)
+      }
+    })
+  }
+
+  document.addEventListener('pjax:send', () => {
+    // removeEventListener
+    btf.removeGlobalFnEvent('pjaxSendOnce')
+    btf.removeGlobalFnEvent('themeChange')
+
+    // reset readmode
+    const $bodyClassList = document.body.classList
+    if ($bodyClassList.contains('read-mode')) $bodyClassList.remove('read-mode')
+
+    triggerPjaxFn(window.globalFn.pjaxSend)
+  })
+
+  document.addEventListener('pjax:complete', () => {
+    btf.removeGlobalFnEvent('pjaxCompleteOnce')
+    document.querySelectorAll('script[data-pjax]').forEach(item => {
+      const newScript = document.createElement('script')
+      const content = item.text || item.textContent || item.innerHTML || ""
+      Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+      newScript.appendChild(document.createTextNode(content))
+      item.parentNode.replaceChild(newScript, item)
+    })
+
+    triggerPjaxFn(window.globalFn.pjaxComplete)
+  })
+
+  document.addEventListener('pjax:error', e => {
+    if (e.request.status === 404) {
+      true
+        ? pjax.loadUrl('/404.html')
+        : window.location.href = e.request.responseURL
+    }
+  })
+})</script><div id="local-search"><div class="search-dialog"><nav class="search-nav"><span class="search-dialog-title">搜索</span><i class="fas fa-spinner fa-pulse" id="loading-status" hidden="hidden"></i><button class="search-close-button"><i class="fas fa-times"></i></button></nav><div class="text-center" id="loading-database"><i class="fas fa-spinner fa-pulse"></i><span>  数据加载中</span></div><div class="local-search-input"><input placeholder="搜索文章" type="text"/></div><hr/><div id="local-search-results"></div><div class="ais-Pagination" id="local-search-pagination" style="display:none;"><ul class="ais-Pagination-list"></ul></div><div id="local-search-stats"></div></div><div id="search-mask"></div><script src="/js/search/local-search.js?v=5.5.4"></script></div></div></body></html>
