@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://luotian.cyou/post/Network_info_Theory-Chapter7.html</loc>
+    <loc>https://luotian.cyou/post/Network-info-Theory-Chapter7.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -11,7 +11,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/post/Network_info_Theory-Chapter6.html</loc>
+    <loc>https://luotian.cyou/post/Network-info-Theory-Chapter6.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -20,7 +20,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/post/Network_info_Theory-Chapter5.html</loc>
+    <loc>https://luotian.cyou/post/Network-info-Theory-Chapter5.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -29,7 +29,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/post/Network_info_Theory-Chapter4.html</loc>
+    <loc>https://luotian.cyou/post/Network-info-Theory-Chapter4.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -38,7 +38,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/post/Network_info_Theory-Chapter3.html</loc>
+    <loc>https://luotian.cyou/post/Network-info-Theory-Chapter3.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -47,7 +47,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/post/Network_info_Theory-Chapter2.html</loc>
+    <loc>https://luotian.cyou/post/Network-info-Theory-Chapter2.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -56,7 +56,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/post/Network_info_Theory-Chapter1.html</loc>
+    <loc>https://luotian.cyou/post/Network-info-Theory-Chapter1.html</loc>
     
     <lastmod>2026-06-24</lastmod>
     
@@ -582,6 +582,13 @@
   </url>
   
   <url>
+    <loc>https://luotian.cyou/tags/conda/</loc>
+    <lastmod>2026-06-24</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
     <loc>https://luotian.cyou/tags/OpenCV/</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -596,13 +603,6 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/</loc>
-    <lastmod>2026-06-24</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.2</priority>
-  </url>
-  
-  <url>
     <loc>https://luotian.cyou/tags/%E6%95%B0%E7%BB%84/</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
@@ -610,7 +610,7 @@
   </url>
   
   <url>
-    <loc>https://luotian.cyou/tags/conda/</loc>
+    <loc>https://luotian.cyou/tags/%E5%93%88%E5%B8%8C%E8%A1%A8/</loc>
     <lastmod>2026-06-24</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
