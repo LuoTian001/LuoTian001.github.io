@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-06-26T10:17:04.021Z</updated>
+  <updated>2026-06-26T16:01:21.288Z</updated>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -23,7 +23,7 @@
     <published>2026-06-25T10:00:00.000Z</published>
     <summary>本文是西电研究生课程网络信息论知识清单。第一章为信息论基础（熵与互信息定义与性质、四个核心不等式及证明、典型序列三性质、信道容量公式与可达性框架）；第二章为MAC多址接入信道（四类错误事件可达性证明、时间共享与凸壳、高斯MAC推导）；第三章为BC广播信道（退化BC Gallager逆定理的U_i构造、高斯BC与EPI逆定理、Gelfand-Pinsker与DPC污纸编码）；第四章为相关信源编码（Slepian-Wolf四类错误Binning证明、Wyner-Ziv Compress-Bin方案）；第五章为中继信道（割集上界两割证明、DF后向译码、CF压缩转发）；第六章为干扰信道（IAN/SD/SND策略、强干扰与极强干扰容量、Han-Kobayashi速率分裂七不等式）。</summary>
     <title>西电 - 网络信息论知识清单</title>
-    <updated>2026-06-26T10:17:04.021Z</updated>
+    <updated>2026-06-26T16:01:21.288Z</updated>
   </entry>
   <entry>
     <author>
@@ -159,7 +159,7 @@
     <published>2026-03-16T11:14:03.000Z</published>
     <summary>西电英美概况答案，包含章节练习题和期末考试题，供学习交流使用。</summary>
     <title>西电-英美概况答案</title>
-    <updated>2026-03-16T11:56:27.317Z</updated>
+    <updated>2026-06-26T16:33:18.041Z</updated>
   </entry>
   <entry>
     <author>
