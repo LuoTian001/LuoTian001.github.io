@@ -10,7 +10,7 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-06-25T12:05:30.538Z</updated>
+  <updated>2026-06-26T10:17:04.021Z</updated>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -21,9 +21,9 @@
     <id>https://luotian.cyou/post/Network-info-Theory-all.html</id>
     <link href="https://luotian.cyou/post/Network-info-Theory-all.html"/>
     <published>2026-06-25T10:00:00.000Z</published>
-    <summary>本文是西电研究生课程网络信息论的考前复习手册，按章节系统梳理。第一章为信息论基础（熵与互信息定义与性质、四个核心不等式及证明、典型序列三性质、信道容量公式与可达性框架）；第二章为MAC多址接入信道（四类错误事件可达性证明、时间共享与凸壳、高斯MAC推导）；第三章为BC广播信道（退化BC Gallager逆定理的U_i构造、高斯BC与EPI逆定理、Gelfand-Pinsker与DPC污纸编码）；第四章为相关信源编码（Slepian-Wolf四类错误Binning证明、Wyner-Ziv Compress-Bin方案）；第五章为中继信道（割集上界两割证明、DF后向译码、CF压缩转发）；第六章为干扰信道（IAN/SD/SND策略、强干扰与极强干扰容量、Han-Kobayashi速率分裂七不等式）。附单字母化标准模板与高频考点速查。</summary>
+    <summary>本文是西电研究生课程网络信息论知识清单。第一章为信息论基础（熵与互信息定义与性质、四个核心不等式及证明、典型序列三性质、信道容量公式与可达性框架）；第二章为MAC多址接入信道（四类错误事件可达性证明、时间共享与凸壳、高斯MAC推导）；第三章为BC广播信道（退化BC Gallager逆定理的U_i构造、高斯BC与EPI逆定理、Gelfand-Pinsker与DPC污纸编码）；第四章为相关信源编码（Slepian-Wolf四类错误Binning证明、Wyner-Ziv Compress-Bin方案）；第五章为中继信道（割集上界两割证明、DF后向译码、CF压缩转发）；第六章为干扰信道（IAN/SD/SND策略、强干扰与极强干扰容量、Han-Kobayashi速率分裂七不等式）。</summary>
     <title>西电 - 网络信息论知识清单</title>
-    <updated>2026-06-25T12:05:30.538Z</updated>
+    <updated>2026-06-26T10:17:04.021Z</updated>
   </entry>
   <entry>
     <author>
@@ -35,9 +35,9 @@
     <id>https://luotian.cyou/post/Network-info-Theory-Chapter1.html</id>
     <link href="https://luotian.cyou/post/Network-info-Theory-Chapter1.html"/>
     <published>2026-06-23T18:39:32.000Z</published>
-    <summary>本文是西电研究生课程网络信息论（Network Information Theory）第一章的复习笔记，基于讲义整理。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen/Fano/数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长/变长编码、Shannon/Huffman 码）、信道容量（DMC、BSC/BEC、高斯信道、反馈容量）、MIMO 信道（SVD 分解、注水算法）等。</summary>
-    <title>西电 - 网络信息论 第一章：引言与回顾 — 熵、互信息、典型序列与信道容量</title>
-    <updated>2026-06-24T07:04:47.247Z</updated>
+    <summary>本文是西电研究生课程网络信息论第一章笔记。内容涵盖：课程概述与信息论基础、熵与互信息（含链式法则、Jensen/Fano/数据处理不等式）、典型序列（弱典型、强典型、联合典型与联合 AEP）、信源编码（定长/变长编码、Shannon/Huffman 码）、信道容量（DMC、BSC/BEC、高斯信道、反馈容量）、MIMO 信道（SVD 分解、注水算法）等。</summary>
+    <title>西电 - 网络信息论 第一章：引言与回顾 - 熵、互信息、典型序列与信道容量</title>
+    <updated>2026-06-26T09:53:08.260Z</updated>
   </entry>
   <entry>
     <author>
@@ -49,9 +49,9 @@
     <id>https://luotian.cyou/post/Network-info-Theory-Chapter2.html</id>
     <link href="https://luotian.cyou/post/Network-info-Theory-Chapter2.html"/>
     <published>2026-06-23T18:38:32.000Z</published>
-    <summary>本文是西电研究生课程网络信息论第二章的复习笔记，基于课堂讲义整理。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA/TDMA/X-DMA 对比、速率分裂技术（Rate-Splitting）、5G NOMA 技术综述。</summary>
-    <title>西电 - 网络信息论 第二章：多址接入信道 — MAC 容量区域与可达性证明</title>
-    <updated>2026-06-24T06:07:03.237Z</updated>
+    <summary>本文是西电研究生课程网络信息论第二章笔记。内容涵盖：多用户信道容量区域的速率向量刻画、MAC 数学模型与系统框图、定理 2.2.1（MAC 容量定理）的完整陈述、可达性证明（随机编码+同时译码+四类错误事件分析）、时间共享与凸壳（Q 变量）、逐次干扰消除（SC）译码、高斯 MAC 容量区域与 FDMA/TDMA/X-DMA 对比、速率分裂技术（Rate-Splitting）、5G NOMA 技术综述。</summary>
+    <title>西电 - 网络信息论 第二章：多址接入信道 - MAC 容量区域与可达性证明</title>
+    <updated>2026-06-26T09:54:47.676Z</updated>
   </entry>
   <entry>
     <author>
@@ -63,9 +63,9 @@
     <id>https://luotian.cyou/post/Network-info-Theory-Chapter3.html</id>
     <link href="https://luotian.cyou/post/Network-info-Theory-Chapter3.html"/>
     <published>2026-06-23T18:37:32.000Z</published>
-    <summary>本文是西电研究生课程网络信息论第三章的复习笔记，综合课堂讲义整理。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy/More Capable BC、Marton 1979 编码方案（Binning+叠加编码）与 Mutual Covering Lemma、Gelfand-Pinsker 问题与污纸编码 DPC（Costa 1983）。</summary>
-    <title>西电 - 网络信息论 第三章：广播信道 — 叠加编码、退化 BC 与 Marton 编码</title>
-    <updated>2026-06-24T06:17:01.011Z</updated>
+    <summary>本文是西电研究生课程网络信息论第三章笔记。内容涵盖：BC 模型与码定义（容量区域一般未知）、简单界与 BS-BC 实例、叠加编码内界（Cover 1972）与 Packing Lemma、退化 BC 容量定理及其 Gallager 1974 逆定理与 Nair 2013 支撑超平面证明、高斯 BC 容量区域与 EPI 逆定理、Less Noisy/More Capable BC、Marton 1979 编码方案（Binning+叠加编码）与 Mutual Covering Lemma、Gelfand-Pinsker 问题与污纸编码 DPC（Costa 1983）。</summary>
+    <title>西电 - 网络信息论 第三章：广播信道 - 叠加编码、退化 BC 与 Marton 编码</title>
+    <updated>2026-06-26T09:55:50.845Z</updated>
   </entry>
   <entry>
     <author>
@@ -77,9 +77,9 @@
     <id>https://luotian.cyou/post/Network-info-Theory-Chapter4.html</id>
     <link href="https://luotian.cyou/post/Network-info-Theory-Chapter4.html"/>
     <published>2026-06-23T18:36:32.000Z</published>
-    <summary>本文是西电研究生课程网络信息论第四章的复习笔记，基于课堂讲义整理。内容涵盖：点对点无损压缩回顾与随机 Binning 编码、Slepian-Wolf 定理的完整证明（逆定理+可达性+四错误事件）、k 源扩展、有 Helper 的无损压缩（Ahlswede-Korner-Wyner 定理）、率失真函数 R(D) 与 Shannon 1959 定理、Wyner-Ziv 有损编码（Compress-Bin：Covering 编码 + Packing 译码）、Covering Lemma 与 Packing Lemma 的对偶、Wyner-Ziv 与 Gelfand-Pinsker 的对偶性。</summary>
-    <title>西电 - 网络信息论 第四章：相关信源编码 — Slepian-Wolf 与 Wyner-Ziv</title>
-    <updated>2026-06-24T06:18:42.428Z</updated>
+    <summary>本文是西电研究生课程网络信息论第四章笔记。内容涵盖：点对点无损压缩回顾与随机 Binning 编码、Slepian-Wolf 定理的完整证明（逆定理+可达性+四错误事件）、k 源扩展、有 Helper 的无损压缩（Ahlswede-Korner-Wyner 定理）、率失真函数 R(D) 与 Shannon 1959 定理、Wyner-Ziv 有损编码（Compress-Bin：Covering 编码 + Packing 译码）、Covering Lemma 与 Packing Lemma 的对偶、Wyner-Ziv 与 Gelfand-Pinsker 的对偶性。</summary>
+    <title>西电 - 网络信息论 第四章：相关信源编码 - Slepian-Wolf 与 Wyner-Ziv</title>
+    <updated>2026-06-26T09:56:30.757Z</updated>
   </entry>
   <entry>
     <author>
@@ -91,9 +91,9 @@
     <id>https://luotian.cyou/post/Network-info-Theory-Chapter5.html</id>
     <link href="https://luotian.cyou/post/Network-info-Theory-Chapter5.html"/>
     <published>2026-06-23T18:35:32.000Z</published>
-    <summary>本文是西电研究生课程网络信息论第五章的复习笔记，基于课堂讲义整理。内容涵盖：中继信道三节点模型与 DM-RC 定义、割集上界（Cover-El Gamal 1979）的两个割解释、直接传输下界与反向退化 RC、多跳下界与分组 Markov 编码、协作多跳下界与条件码本、译码转发（DF）的容量下界与后向译码（Willems 1985）、DF 的局限与部分 DF、压缩转发（CF）的 Compress-Bin 编码方案、高斯中继信道的半比特逼近。</summary>
-    <title>西电 - 网络信息论 第五章：中继信道 — 译码转发、压缩转发与割集上界</title>
-    <updated>2026-06-24T06:36:58.552Z</updated>
+    <summary>本文是西电研究生课程网络信息论第五章笔记。内容涵盖：中继信道三节点模型与 DM-RC 定义、割集上界（Cover-El Gamal 1979）的两个割解释、直接传输下界与反向退化 RC、多跳下界与分组 Markov 编码、协作多跳下界与条件码本、译码转发（DF）的容量下界与后向译码（Willems 1985）、DF 的局限与部分 DF、压缩转发（CF）的 Compress-Bin 编码方案、高斯中继信道的半比特逼近。</summary>
+    <title>西电 - 网络信息论 第五章：中继信道 - 译码转发、压缩转发与割集上界</title>
+    <updated>2026-06-26T09:54:57.995Z</updated>
   </entry>
   <entry>
     <author>
@@ -105,9 +105,9 @@
     <id>https://luotian.cyou/post/Network-info-Theory-Chapter6.html</id>
     <link href="https://luotian.cyou/post/Network-info-Theory-Chapter6.html"/>
     <published>2026-06-23T18:34:32.000Z</published>
-    <summary>本文是西电研究生课程网络信息论第六章的复习笔记，基于课堂讲义整理。内容涵盖：IC 模型与容量区域未知的现状、简单界与模二和 IC 实例、三种点对点编码策略（IAN/SD/SND）及其错误事件分析、强干扰与极强干扰的容量区域（Costa-El Gamal 1987）、高斯 IC 的 SNR/INR 条件与 Sato 1981 判据、Han-Kobayashi 1981 编码方案（速率分裂+叠加编码+7 不等式定理）、注入式确定性 IC、半比特定理（Etkin-Tse-Wang 2008）。</summary>
-    <title>西电 - 网络信息论 第六章：干扰信道 — Han-Kobayashi 速率分裂与半比特定理</title>
-    <updated>2026-06-24T06:44:08.856Z</updated>
+    <summary>本文是西电研究生课程网络信息论第六章笔记。内容涵盖：IC 模型与容量区域未知的现状、简单界与模二和 IC 实例、三种点对点编码策略（IAN/SD/SND）及其错误事件分析、强干扰与极强干扰的容量区域（Costa-El Gamal 1987）、高斯 IC 的 SNR/INR 条件与 Sato 1981 判据、Han-Kobayashi 1981 编码方案（速率分裂+叠加编码+7 不等式定理）、注入式确定性 IC、半比特定理（Etkin-Tse-Wang 2008）。</summary>
+    <title>西电 - 网络信息论 第六章：干扰信道 - Han-Kobayashi 速率分裂与半比特定理</title>
+    <updated>2026-06-26T09:57:12.413Z</updated>
   </entry>
   <entry>
     <author>
@@ -119,9 +119,9 @@
     <id>https://luotian.cyou/post/Network-info-Theory-Chapter7.html</id>
     <link href="https://luotian.cyou/post/Network-info-Theory-Chapter7.html"/>
     <published>2026-06-23T18:33:32.000Z</published>
-    <summary>本文是西电研究生课程网络信息论第七章的复习笔记，基于课堂讲义整理。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB/MIB/UVOB）的 BA 算法、连续 AWGN 信道的矩阵迭代 BA、AWGN BC 的矩阵迭代。</summary>
-    <title>西电 - 网络信息论 第七章：Blahut-Arimoto 算法 — 容量计算的交替最大化方法</title>
-    <updated>2026-06-24T06:53:18.254Z</updated>
+    <summary>本文是西电研究生课程网络信息论第七章笔记。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB/MIB/UVOB）的 BA 算法、连续 AWGN 信道的矩阵迭代 BA、AWGN BC 的矩阵迭代。</summary>
+    <title>西电 - 网络信息论 第七章：Blahut-Arimoto 算法 - 容量计算的交替最大化方法</title>
+    <updated>2026-06-26T09:58:08.223Z</updated>
   </entry>
   <entry>
     <author>
