@@ -1,5 +1,6 @@
 (function() {
     let globalPasteHandler = null;
+    let isQuotaExhausted = false;
 
     function initOCRTool() {
         const toolRoot = document.getElementById('ocr-tool-root');
@@ -19,8 +20,29 @@
 
         const BASE_URL = 'https://api.luotian.cyou/api/ocrlatex';
 
+        async function fetchStatus() {
+            try {
+                const response = await fetch(`${BASE_URL}/status`);
+                if (response.ok) {
+                    const data = await response.json();
+                    if (callnumValue) callnumValue.textContent = `${data.current}/${data.max}`;
+                    if (data.is_exhausted) {
+                        isQuotaExhausted = true;
+                        showError("今日免费识别额度已耗尽，请明日再试。");
+                        dropzone.style.cursor = 'not-allowed';
+                    }
+                }
+            } catch (e) {
+                console.warn("无法获取调用量状态", e);
+            }
+        }
+
         // 核心逻辑
         async function handleImage(eventOrFile) {
+            if (isQuotaExhausted) {
+                showError("今日免费识别额度已耗尽，请明日再试。");
+                return;
+            }
             let blob;
             if (eventOrFile instanceof Event) {
                 const items = eventOrFile.clipboardData && eventOrFile.clipboardData.items;
@@ -50,6 +72,16 @@
                     body: formData,
                     mode: 'cors'
                 });
+
+                if (response.status === 429) {
+                    isQuotaExhausted = true;
+                    let errorMsg = "请求过于频繁或今日额度已满。";
+                    try {
+                        const errJson = await response.json();
+                        if (errJson.error) errorMsg = errJson.error;
+                    } catch (e) {}
+                    throw new Error(errorMsg);
+                }
 
                 if (!response.ok) throw new Error(`HTTP 错误! 状态码: ${response.status}`);
                 
@@ -161,6 +193,8 @@
             handleImage(e);
         };
         document.addEventListener('paste', globalPasteHandler);
+
+        fetchStatus();
     }
 
     function cleanup() {
