@@ -121,7 +121,7 @@
     <published>2026-06-23T18:33:32.000Z</published>
     <summary>本文是西电研究生课程网络信息论第七章笔记。内容涵盖：容量计算问题与梯度上升法、BA 算法的核心创新（引入 Q(x|y)+交替最大化）、给定 q 求 Q 的闭式解（后验概率）、给定 Q 求 q 的闭式解（Gibbs 分布）、收敛性分析（单调性与遗憾界）、最优性 KKT 条件与停止准则、退化 BC 的 BA 扩展、一般 BC 三类界（SCIB/MIB/UVOB）的 BA 算法、连续 AWGN 信道的矩阵迭代 BA、AWGN BC 的矩阵迭代。</summary>
     <title>西电 - 网络信息论 第七章：Blahut-Arimoto 算法 - 容量计算的交替最大化方法</title>
-    <updated>2026-06-26T09:58:08.223Z</updated>
+    <updated>2026-07-04T13:02:21.743Z</updated>
   </entry>
   <entry>
     <author>
