@@ -1,0 +1,168 @@
+/* 风叶穿行 独立游戏页样式（由 backups/leaves-in-wind/css/background.css 整理而来） */
+html {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(125deg, #2c3e50, #27ae60, #2980b9, #e74c3c, #8e44ad);
+    background-size: 400%;
+    animation: bganimation 15s infinite;
+    cursor: url('/game/leaves-in-wind/arrow.cur'), auto !important;
+}
+
+body {
+    /* 重置 UA 默认 8px 外边距，否则全屏/窗口四周会露出渐变背景缝隙 */
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+/* 自定义光标覆盖所有元素（含链接、按钮、覆盖层），配合 bundle 内 cursor:inherit 补丁穿透 shadow DOM */
+*, *::before, *::after {
+    cursor: inherit !important;
+}
+
+:-webkit-full-screen {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(125deg, #2c3e50, #27ae60, #2980b9, #e74c3c, #8e44ad);
+    background-size: 400%;
+    animation: bganimation 15s infinite;
+}
+:-moz-full-screen {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(125deg, #2c3e50, #27ae60, #2980b9, #e74c3c, #8e44ad);
+    background-size: 400%;
+    animation: bganimation 15s infinite;
+}
+:-ms-full-screen {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(125deg, #2c3e50, #27ae60, #2980b9, #e74c3c, #8e44ad);
+    background-size: 400%;
+    animation: bganimation 15s infinite;
+}
+:fullscreen {
+    margin: 0 auto;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    background-image: linear-gradient(125deg, #2c3e50, #27ae60, #2980b9, #e74c3c, #8e44ad);
+    background-size: 400%;
+    animation: bganimation 15s infinite;
+}
+
+/* 全屏时游戏画面垂直居中（游戏高度 = 宽度 × 3/16 = 18.75vw） */
+:-webkit-full-screen #banner,
+:-moz-full-screen #banner,
+:fullscreen #banner {
+    margin-top: calc((100vh - 18.75vw) / 2);
+}
+
+@keyframes bganimation {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* 游戏容器：宽 100%，高度由游戏按 16:3 自适应设置 */
+#banner {
+    position: relative;
+    width: 100%;
+    margin-top: 8vh;
+}
+
+/* 原版 .banner-game 为 top:25%（banner 高度 = 游戏高度，会产生溢出偏移），改为贴顶 */
+#banner .banner-game {
+    top: 0 !important;
+}
+
+/* 工具栏 */
+.text {
+    color: white;
+    position: fixed;
+    top: 10px;
+    letter-spacing: 6px;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    z-index: 10;
+}
+#fullscreen {
+    right: 5px;
+}
+#goback {
+    left: 10px;
+}
+.text:hover {
+    color: #FAB5B5;
+}
+
+/* 加载层 */
+#liw-loading {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.35);
+    transition: opacity 0.5s;
+}
+#liw-loading p {
+    color: #fff;
+    letter-spacing: 4px;
+    font-size: 15px;
+    margin-top: 10px;
+}
+#liw-loading.liw-hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* 页脚署名 */
+.brief {
+    color: white;
+    position: fixed;
+    bottom: 5%;
+    left: 2%;
+    text-decoration: none;
+    z-index: 10;
+}
+.brief a {
+    color: antiquewhite;
+    text-decoration: none;
+}
+.brief a:hover {
+    color: #FAB5B5;
+}
+
+/* 移动端提示 */
+#liw-mobile-hint {
+    display: none;
+    position: fixed;
+    bottom: 5%;
+    right: 2%;
+    color: #fff;
+    font-size: 13px;
+    opacity: 0.85;
+    z-index: 10;
+}
+@media (max-width: 768px) {
+    #liw-mobile-hint {
+        display: block;
+    }
+}
