@@ -1,29 +1,52 @@
 (function() {
+    if (window.__game1024Booted) return;
+    window.__game1024Booted = true;
+
     function init1024Game() {
         const rootEl = document.getElementById('game-1024-root');
-        if (!rootEl) return;
+        if (!rootEl || rootEl._gameInited) return;
+        rootEl._gameInited = true;
 
         const bgContainer = document.getElementById('grid-background');
         const tileContainer = document.getElementById('tile-container');
         const scoreElement = document.getElementById('current-score');
-        
+        const bestScoreElement = document.getElementById('best-score');
         const modalOverlay = document.getElementById('game-modal');
         const modalTitle = document.getElementById('modal-title');
         const modalDesc = document.getElementById('modal-desc');
         const btnKeepPlaying = document.getElementById('btn-keep-playing');
+        const btnRestart = document.getElementById('btn-restart');
+        const btnTryAgain = document.getElementById('btn-try-again');
         const targetSelector = document.getElementById('target-selector');
         const boardWrapper = document.querySelector('.g-board-wrapper');
 
+        if (!bgContainer || !tileContainer || !scoreElement || !bestScoreElement ||
+            !modalOverlay || !modalTitle || !modalDesc || !btnKeepPlaying ||
+            !btnRestart || !btnTryAgain || !targetSelector || !boardWrapper) return;
+
+        const BEST_KEY = 'luotian-1024-best';
+        const loadBest = () => {
+            try { return parseInt(localStorage.getItem(BEST_KEY), 10) || 0; }
+            catch (e) { return 0; }
+        };
+        const saveBest = (value) => {
+            try { localStorage.setItem(BEST_KEY, String(value)); }
+            catch (e) { /* 隐私模式等场景静默降级 */ }
+        };
+
         let board = Array(4).fill().map(() => Array(4).fill(null));
         let score = 0;
+        let bestScore = loadBest();
         let tileIdCounter = 0;
         let isGameActive = true;
         let hasWon = false;
-        let currentTarget = parseInt(targetSelector.value);
+        let currentTarget = parseInt(targetSelector.value, 10);
 
         const POS_BASE = 2.0;
         const POS_STEP = 24.5;
         const getPos = (idx) => `${POS_BASE + idx * POS_STEP}%`;
+
+        bestScoreElement.textContent = bestScore;
 
         function initGrid() {
             bgContainer.innerHTML = '';
@@ -39,8 +62,8 @@
         }
 
         function renderTiles() {
-            document.querySelectorAll('.tile').forEach(el => {
-                const id = parseInt(el.id.split('-')[1]);
+            tileContainer.querySelectorAll('.tile').forEach(el => {
+                const id = parseInt(el.id.split('-')[1], 10);
                 const exists = board.flat().find(t => t && t.id === id);
                 if (!exists && !el.classList.contains('merging-out')) {
                     el.classList.add('merging-out');
@@ -62,14 +85,14 @@
                             el.style.left = getPos(tile.prevC !== undefined ? tile.prevC : c);
                             el.style.transform = 'scale(0)';
                             tileContainer.appendChild(el);
-                            
+
                             el.getBoundingClientRect();
                             el.style.transform = 'scale(1)';
                         }
 
                         el.style.top = getPos(r);
                         el.style.left = getPos(c);
-                        
+
                         if (tile.isMerged) {
                             setTimeout(() => {
                                 el.className = `tile val-${tile.val}`;
@@ -79,13 +102,18 @@
                             }, 100);
                             tile.isMerged = false;
                         }
-                        
+
                         tile.prevR = r;
                         tile.prevC = c;
                     }
                 }
             }
             scoreElement.textContent = score;
+            if (score > bestScore) {
+                bestScore = score;
+                saveBest(bestScore);
+            }
+            bestScoreElement.textContent = bestScore;
         }
 
         function generateNewNumber() {
@@ -131,18 +159,18 @@
                         line[k].isMerged = true;
                         score += line[k].val;
                         mergedLine.push(line[k]);
-                        
-                        // 修正：精确计算销毁残影的最终归属坐标
-                        let targetEl = document.getElementById(`tile-${line[k+1].id}`);
-                        if(targetEl) {
-                            targetEl.dataset.targetR = (direction === 'UP' || direction === 'DOWN') ? 
+
+                        // 精确计算被合并残影的最终归属坐标，让残影滑向目标位置
+                        let targetEl = document.getElementById(`tile-${line[k + 1].id}`);
+                        if (targetEl) {
+                            targetEl.dataset.targetR = (direction === 'UP' || direction === 'DOWN') ?
                                 (direction === 'UP' ? mergedLine.length - 1 : 4 - mergedLine.length) : i;
-                            targetEl.dataset.targetC = (direction === 'LEFT' || direction === 'RIGHT') ? 
+                            targetEl.dataset.targetC = (direction === 'LEFT' || direction === 'RIGHT') ?
                                 (direction === 'LEFT' ? mergedLine.length - 1 : 4 - mergedLine.length) : i;
                         }
 
-                        if(line[k].val === currentTarget && !hasWon) mergedThisTurn = true;
-                        
+                        if (line[k].val === currentTarget && !hasWon) mergedThisTurn = true;
+
                         k += 2;
                         hasMoved = true;
                     } else {
@@ -157,21 +185,21 @@
                 for (let j = 0; j < 4; j++) {
                     let r = direction === 'UP' || direction === 'DOWN' ? j : i;
                     let c = direction === 'UP' || direction === 'DOWN' ? i : j;
-                    
+
                     if (board[r][c] !== mergedLine[j]) hasMoved = true;
                     board[r][c] = mergedLine[j];
-                    
-                    if(board[r][c]) {
+
+                    if (board[r][c]) {
                         board[r][c].prevR = board[r][c].prevR !== undefined ? board[r][c].prevR : r;
                         board[r][c].prevC = board[r][c].prevC !== undefined ? board[r][c].prevC : c;
                     }
                 }
             }
 
-            document.querySelectorAll('.tile').forEach(el => {
-                if(el.dataset.targetR !== undefined) {
-                    el.style.top = getPos(parseInt(el.dataset.targetR));
-                    el.style.left = getPos(parseInt(el.dataset.targetC));
+            tileContainer.querySelectorAll('.tile').forEach(el => {
+                if (el.dataset.targetR !== undefined) {
+                    el.style.top = getPos(parseInt(el.dataset.targetR, 10));
+                    el.style.left = getPos(parseInt(el.dataset.targetC, 10));
                     delete el.dataset.targetR;
                 }
             });
@@ -187,7 +215,7 @@
             if (mergedThisTurn && !hasWon) {
                 isGameActive = false;
                 hasWon = true;
-                showModal('挑战成功!', `恭喜！您已合成 ${currentTarget} 方块。`, true);
+                showModal('挑战成功！', `恭喜！您已合成 ${currentTarget} 方块。`, true);
                 return;
             }
 
@@ -208,33 +236,35 @@
         function showModal(title, desc, isVictory) {
             modalTitle.textContent = title;
             modalDesc.textContent = desc;
-            modalTitle.style.color = isVictory ? 'var(--g-primary)' : 'var(--g-text-main)';
+            modalTitle.classList.toggle('is-victory', isVictory);
             btnKeepPlaying.style.display = isVictory ? 'inline-block' : 'none';
             modalOverlay.style.display = 'flex';
         }
 
-        document.getElementById('btn-restart').onclick = startGame;
-        document.getElementById('btn-try-again').onclick = startGame;
-        btnKeepPlaying.onclick = () => {
+        btnRestart.addEventListener('click', startGame);
+        btnTryAgain.addEventListener('click', startGame);
+        btnKeepPlaying.addEventListener('click', () => {
             modalOverlay.style.display = 'none';
             isGameActive = true;
-        };
-
-        targetSelector.addEventListener('change', (e) => {
-            currentTarget = parseInt(e.target.value);
+        });
+        targetSelector.addEventListener('change', () => {
+            currentTarget = parseInt(targetSelector.value, 10);
             startGame();
         });
 
+        // 焦点在表单控件上时不劫持按键（如用方向键操作下拉框）
+        const isTypingTarget = (el) => !!(el && (el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA' || el.isContentEditable));
+
         const handleKeydown = (e) => {
-            if (!isGameActive) return;
-            switch(e.key) {
+            if (!isGameActive || isTypingTarget(e.target)) return;
+            switch (e.key) {
                 case 'ArrowUp': executeMove('UP'); break;
                 case 'ArrowDown': executeMove('DOWN'); break;
                 case 'ArrowLeft': executeMove('LEFT'); break;
                 case 'ArrowRight': executeMove('RIGHT'); break;
                 default: return;
             }
-            if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) e.preventDefault();
+            e.preventDefault();
         };
 
         let touchStartX = 0, touchStartY = 0;
@@ -254,24 +284,42 @@
             }
         };
 
-        const destroyGame = () => {
-            document.removeEventListener('keydown', document._game1024Keydown);
-            if (boardWrapper) {
-                boardWrapper.removeEventListener('touchstart', boardWrapper._game1024TouchStart);
-                boardWrapper.removeEventListener('touchend', boardWrapper._game1024TouchEnd);
+        // 桌面端鼠标拖拽滑动（与触摸滑动行为一致）
+        let mouseStartX = 0, mouseStartY = 0, mouseDown = false;
+        const handleMouseDown = (e) => {
+            if (e.button !== 0) return;
+            mouseDown = true;
+            mouseStartX = e.clientX;
+            mouseStartY = e.clientY;
+        };
+        const handleMouseUp = (e) => {
+            if (!mouseDown || e.button !== 0) return;
+            mouseDown = false;
+            if (!isGameActive) return;
+            const dx = e.clientX - mouseStartX;
+            const dy = e.clientY - mouseStartY;
+            if (Math.abs(dx) < 20 && Math.abs(dy) < 20) return; // 视为点击，不触发移动
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 0) executeMove('RIGHT'); else executeMove('LEFT');
+            } else {
+                if (dy > 0) executeMove('DOWN'); else executeMove('UP');
             }
+        };
+
+        document.addEventListener('keydown', handleKeydown);
+        boardWrapper.addEventListener('touchstart', handleTouchStart, { passive: true });
+        boardWrapper.addEventListener('touchend', handleTouchEnd);
+        boardWrapper.addEventListener('mousedown', handleMouseDown);
+        document.addEventListener('mouseup', handleMouseUp);
+
+        const destroyGame = () => {
+            document.removeEventListener('keydown', handleKeydown);
+            boardWrapper.removeEventListener('touchstart', handleTouchStart);
+            boardWrapper.removeEventListener('touchend', handleTouchEnd);
+            boardWrapper.removeEventListener('mousedown', handleMouseDown);
+            document.removeEventListener('mouseup', handleMouseUp);
             document.removeEventListener('pjax:send', destroyGame);
         };
-        
-        if (document._game1024Keydown) destroyGame();
-        
-        document._game1024Keydown = handleKeydown;
-        boardWrapper._game1024TouchStart = handleTouchStart;
-        boardWrapper._game1024TouchEnd = handleTouchEnd;
-        
-        document.addEventListener('keydown', document._game1024Keydown);
-        boardWrapper.addEventListener('touchstart', boardWrapper._game1024TouchStart, {passive: true});
-        boardWrapper.addEventListener('touchend', boardWrapper._game1024TouchEnd);
         document.addEventListener('pjax:send', destroyGame);
 
         function startGame() {
@@ -280,10 +328,10 @@
             tileIdCounter = 0;
             isGameActive = true;
             hasWon = false;
-            
+
             tileContainer.innerHTML = '';
             modalOverlay.style.display = 'none';
-            
+
             initGrid();
             generateNewNumber();
             generateNewNumber();

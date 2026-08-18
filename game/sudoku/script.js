@@ -1,15 +1,43 @@
 (function() {
+    if (window.__sudokuBooted) return;
+    window.__sudokuBooted = true;
+
     function initSudokuGame() {
         const rootEl = document.getElementById('sudoku-root');
-        if (!rootEl) return;
+        if (!rootEl || rootEl._gameInited) return;
+        rootEl._gameInited = true;
 
         const boardEl = document.getElementById('sudoku-board');
         const numpadEl = document.getElementById('numpad');
         const diffSelector = document.getElementById('diff-selector');
         const btnNewGame = document.getElementById('btn-new-game');
-        
         const modalOverlay = document.getElementById('game-modal');
+        const modalDesc = document.getElementById('modal-desc');
         const btnPlayAgain = document.getElementById('btn-play-again');
+
+        if (!boardEl || !numpadEl || !diffSelector || !btnNewGame || !modalOverlay || !modalDesc || !btnPlayAgain) return;
+
+        const SAVE_KEY = 'luotian-sudoku-save';
+        const loadSave = () => {
+            try {
+                const raw = localStorage.getItem(SAVE_KEY);
+                if (!raw) return null;
+                const data = JSON.parse(raw);
+                if (!data || data.v !== 1 || !Array.isArray(data.solution) || !Array.isArray(data.board)) return null;
+                return data;
+            } catch (e) { return null; }
+        };
+        const clearSave = () => { try { localStorage.removeItem(SAVE_KEY); } catch (e) { /* 静默降级 */ } };
+        const persistGame = () => {
+            try {
+                localStorage.setItem(SAVE_KEY, JSON.stringify({
+                    v: 1,
+                    k: parseInt(diffSelector.value, 10),
+                    solution: solutionBoard,
+                    board: gameBoard.map(row => row.map(cell => ({ val: cell.val, isFixed: cell.isFixed })))
+                }));
+            } catch (e) { /* 隐私模式等场景静默降级 */ }
+        };
 
         const N = 9;
         let solutionBoard = [];
@@ -125,16 +153,31 @@
             selectedC = -1;
             modalOverlay.style.display = 'none';
 
-            const k = parseInt(diffSelector.value);
+            const k = parseInt(diffSelector.value, 10);
             const generator = new SudokuGenerator(k);
             const data = generator.fillValues();
-            
+
             solutionBoard = data.solution;
             // 构建带状态的游戏矩阵 (val: 当前值, isFixed: 是否为预设数字)
-            gameBoard = data.puzzle.map(row => 
+            gameBoard = data.puzzle.map(row =>
                 row.map(val => ({ val: val, isFixed: val !== 0 }))
             );
 
+            persistGame(); // 开局即落盘，刷新后仍恢复本局
+            renderBoard();
+        }
+
+        function restoreSavedGame() {
+            const data = loadSave();
+            if (!data) { startNewGame(); return; }
+
+            isGameOver = false;
+            selectedR = -1;
+            selectedC = -1;
+            modalOverlay.style.display = 'none';
+            diffSelector.value = String(data.k);
+            solutionBoard = data.solution;
+            gameBoard = data.board.map(row => row.map(cell => ({ val: cell.val, isFixed: cell.isFixed })));
             renderBoard();
         }
 
@@ -147,10 +190,10 @@
                     cell.className = 's-cell';
                     cell.dataset.r = r;
                     cell.dataset.c = c;
-                    
+
                     if (cellData.val !== 0) cell.textContent = cellData.val;
                     if (cellData.isFixed) cell.classList.add('s-fixed');
-                    
+
                     cell.onclick = () => selectCell(r, c);
                     boardEl.appendChild(cell);
                 }
@@ -160,36 +203,37 @@
 
         function selectCell(r, c) {
             if (isGameOver) return;
+            if (gameBoard[r][c].isFixed) return; // 固定格不可选中
             selectedR = r;
             selectedC = c;
             updateHighlights();
         }
 
         function updateHighlights() {
-            const cells = document.querySelectorAll('.s-cell');
+            const cells = boardEl.querySelectorAll('.s-cell');
             cells.forEach(cell => {
                 cell.className = 's-cell'; // Reset classes
-                const r = parseInt(cell.dataset.r);
-                const c = parseInt(cell.dataset.c);
+                const r = parseInt(cell.dataset.r, 10);
+                const c = parseInt(cell.dataset.c, 10);
                 const cellData = gameBoard[r][c];
 
                 if (cellData.isFixed) cell.classList.add('s-fixed');
 
-                if (selectedR === -1 || selectedC === -1) return;
-
-                const selectedVal = gameBoard[selectedR][selectedC].val;
-                
-                // 冲突校验逻辑
+                // 冲突校验：始终全盘生效，不依赖是否有选中格
                 if (cellData.val !== 0 && !cellData.isFixed) {
                     if (!isValidPlacement(r, c, cellData.val)) {
                         cell.classList.add('s-error');
                     }
                 }
 
+                if (selectedR === -1 || selectedC === -1) return;
+
+                const selectedVal = gameBoard[selectedR][selectedC].val;
+
                 // 高亮逻辑
                 if (r === selectedR && c === selectedC) {
                     cell.classList.add('s-selected');
-                } else if (r === selectedR || c === selectedC || 
+                } else if (r === selectedR || c === selectedC ||
                           (Math.floor(r/3) === Math.floor(selectedR/3) && Math.floor(c/3) === Math.floor(selectedC/3))) {
                     cell.classList.add('s-related');
                 } else if (cellData.val !== 0 && cellData.val === selectedVal) {
@@ -222,12 +266,13 @@
             if (target.isFixed) return;
 
             target.val = num; // num=0 means clear
-            
+
             // 局部增量渲染以提高性能
-            const cell = document.querySelector(`.s-cell[data-r="${selectedR}"][data-c="${selectedC}"]`);
-            cell.textContent = num === 0 ? '' : num;
-            
+            const cell = boardEl.querySelector(`.s-cell[data-r="${selectedR}"][data-c="${selectedC}"]`);
+            if (cell) cell.textContent = num === 0 ? '' : num;
+
             updateHighlights();
+            persistGame();
             checkVictory();
         }
 
@@ -239,6 +284,9 @@
                 }
             }
             isGameOver = true;
+            clearSave(); // 已胜利，清除对局保存
+            const difficultyName = diffSelector.options[diffSelector.selectedIndex].text;
+            modalDesc.textContent = `您已完成「${difficultyName}」难度的数独！`;
             modalOverlay.style.display = 'flex';
         }
 
@@ -250,7 +298,7 @@
                     if (!gameBoard[r][c].isFixed) {
                         gameBoard[r][c].val = 0;
                         // 同步清理 DOM 文本
-                        const cell = document.querySelector(`.s-cell[data-r="${r}"][data-c="${c}"]`);
+                        const cell = boardEl.querySelector(`.s-cell[data-r="${r}"][data-c="${c}"]`);
                         if (cell) cell.textContent = '';
                     }
                 }
@@ -259,24 +307,28 @@
             selectedR = -1;
             selectedC = -1;
             updateHighlights();
+            persistGame();
         }
-
-
 
         // ==========================================
         // 事件绑定与生命周期管控
         // ==========================================
-        btnNewGame.onclick = startNewGame;
-        btnPlayAgain.onclick = startNewGame;
-        diffSelector.onchange = startNewGame;
+        btnNewGame.addEventListener('click', startNewGame);
+        btnPlayAgain.addEventListener('click', startNewGame);
+        diffSelector.addEventListener('change', startNewGame);
+
+        // 焦点在表单控件上时不劫持按键（如用数字键操作下拉框）
+        const isTypingTarget = (el) => !!(el && (el.tagName === 'INPUT' || el.tagName === 'SELECT' || el.tagName === 'TEXTAREA' || el.isContentEditable));
 
         // 键盘事件
         const handleKeydown = (e) => {
-            if (isGameOver) return;
+            if (isGameOver || isTypingTarget(e.target)) return;
             const key = e.key;
             if (/^[1-9]$/.test(key)) {
-                inputNumber(parseInt(key));
+                e.preventDefault();
+                inputNumber(parseInt(key, 10));
             } else if (key === 'Backspace' || key === 'Delete') {
+                e.preventDefault();
                 inputNumber(0);
             } else if (key.startsWith('Arrow') && selectedR !== -1) {
                 e.preventDefault();
@@ -298,28 +350,21 @@
             } else if (val === 'clear') {
                 inputNumber(0);
             } else {
-                inputNumber(parseInt(val));
+                inputNumber(parseInt(val, 10));
             }
         };
 
+        document.addEventListener('keydown', handleKeydown);
+        numpadEl.addEventListener('click', handleNumpadClick);
+
         const destroyGame = () => {
-            document.removeEventListener('keydown', document._sudokuKeydown);
-            if (numpadEl) numpadEl.removeEventListener('click', numpadEl._sudokuClick);
+            document.removeEventListener('keydown', handleKeydown);
+            numpadEl.removeEventListener('click', handleNumpadClick);
             document.removeEventListener('pjax:send', destroyGame);
         };
-        
-        if (document._sudokuKeydown) destroyGame();
-
-        document._sudokuKeydown = handleKeydown;
-        if (numpadEl) {
-            numpadEl._sudokuClick = handleNumpadClick;
-            numpadEl.addEventListener('click', numpadEl._sudokuClick);
-        }
-        
-        document.addEventListener('keydown', document._sudokuKeydown);
         document.addEventListener('pjax:send', destroyGame);
 
-        startNewGame();
+        restoreSavedGame();
     }
 
     document.addEventListener('DOMContentLoaded', initSudokuGame);
