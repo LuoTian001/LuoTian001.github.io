@@ -207,3 +207,39 @@
 
 .ocr-copy-btn:hover { filter: brightness(1.1); }
 .ocr-copy-btn.copied { background: var(--ocr-success); }
+
+/* === 8. 维护提示 (服务恢复后可连同 index.md 中的对应段落一并删除) === */
+.ocr-maintenance-notice {
+    margin-bottom: 20px;
+    padding: 16px 18px;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 152, 0, 0.35);
+    border-left: 4px solid #ff9800;
+    background: rgba(255, 152, 0, 0.08);
+    color: #8a5300;
+    font-size: 0.92rem;
+    line-height: 1.8;
+}
+
+.ocr-maintenance-title {
+    font-weight: bold;
+    font-size: 1.02rem;
+    color: #e65100;
+    margin-bottom: 8px;
+}
+
+.ocr-maintenance-text + .ocr-maintenance-text {
+    margin-top: 8px;
+}
+
+/* 深色模式适配 */
+[data-theme="dark"] .ocr-maintenance-notice {
+    background: rgba(255, 152, 0, 0.1);
+    border-color: rgba(255, 152, 0, 0.3);
+    border-left-color: #ffb74d;
+    color: #ffcc80;
+}
+
+[data-theme="dark"] .ocr-maintenance-title {
+    color: #ffb74d;
+}
