@@ -12,7 +12,8 @@
         const resultCard = document.getElementById('ocr-result-card');
         const latexOutput = document.getElementById('ocr-latex-output');
         const latexRaw = document.getElementById('ocr-latex-raw');
-        const confidenceValue = document.getElementById('ocr-confidence-value');
+        const engineValue = document.getElementById('ocr-engine-value');
+        const elapsedValue = document.getElementById('ocr-elapsed-value');
         const callnumValue = document.getElementById('ocr-callnum-value');
         const loadingEl = document.getElementById('ocr-loading');
         const errorEl = document.getElementById('ocr-error-message');
@@ -73,18 +74,18 @@
                     mode: 'cors'
                 });
 
-                if (response.status === 429) {
-                    isQuotaExhausted = true;
-                    let errorMsg = "请求过于频繁或今日额度已满。";
-                    try {
-                        const errJson = await response.json();
-                        if (errJson.error) errorMsg = errJson.error;
-                    } catch (e) {}
+                if (!response.ok) {
+                    let errorMsg = `HTTP 错误! 状态码: ${response.status}`;
+                    let errJson = null;
+                    try { errJson = await response.json(); } catch (e) {}
+                    if (errJson && errJson.error) errorMsg = errJson.error;
+                    // 仅全局每日额度耗尽时才锁定界面；IP 限流等可稍后重试
+                    if (response.status === 429 && errorMsg.indexOf('今日') !== -1) {
+                        isQuotaExhausted = true;
+                    }
                     throw new Error(errorMsg);
                 }
 
-                if (!response.ok) throw new Error(`HTTP 错误! 状态码: ${response.status}`);
-                
                 const jsonResponse = await response.json();
                 const { result, error } = jsonResponse;
 
@@ -100,7 +101,7 @@
             }
         }
 
-        function showResult({ latex, conf, call_num }) {
+        function showResult({ latex, engine, elapsed, call_num, cached }) {
             try {
                 if (typeof katex !== 'undefined') {
                     katex.render(latex, latexOutput, {
@@ -113,14 +114,19 @@
 
                 const cleanedLatex = latex.replace(/\\\\/g, '\\');
                 latexRaw.textContent = '$' + cleanedLatex + '$';
-                latexRaw.dataset.raw = '$' + cleanedLatex + '$'; 
+                latexRaw.dataset.raw = '$' + cleanedLatex + '$';
             } catch (e) {
                 latexOutput.textContent = latex;
             }
 
-            if(confidenceValue) confidenceValue.textContent = (conf * 100).toFixed(1) + '%';
-            if(callnumValue) callnumValue.textContent = call_num;
-            
+            if (engineValue) {
+                engineValue.textContent = engine ? (cached ? engine + '（缓存）' : engine) : '--';
+            }
+            if (elapsedValue) {
+                elapsedValue.textContent = (elapsed === null || elapsed === undefined) ? '--' : elapsed + 's';
+            }
+            if (callnumValue) callnumValue.textContent = call_num;
+
             resultCard.style.display = 'block';
         }
 
@@ -141,7 +147,7 @@
 
         // 事件绑定
         dropzone.onclick = () => fileInput.click();
-        
+
         fileInput.onchange = (e) => {
             if (e.target.files[0]) handleImage(e.target.files[0]);
         };
@@ -160,7 +166,7 @@
                 alert('复制失败，请手动复制');
             });
         };
-        
+
         latexRaw.ondblclick = copyBtn.onclick;
 
         ['dragenter', 'dragover'].forEach(eventName => {
@@ -207,6 +213,6 @@
     document.addEventListener('DOMContentLoaded', initOCRTool);
     document.addEventListener('pjax:complete', initOCRTool);
     document.addEventListener('pjax:send', cleanup);
-    
+
     initOCRTool();
 })();
