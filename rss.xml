@@ -10,7 +10,24 @@
   <rights>All rights reserved 2026, Luo Tian</rights>
   <subtitle>欢迎来到洛天的小窝！这里是Luo Tian。希望你能在这里找到有趣的内容！</subtitle>
   <title>洛天的小窝</title>
-  <updated>2026-06-26T16:01:21.288Z</updated>
+  <updated>2026-11-01T05:39:08.921Z</updated>
+  <entry>
+    <author>
+      <name>Luo Tian</name>
+    </author>
+    <category term="环境配置" scheme="https://luotian.cyou/categories/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <category term="MATLAB" scheme="https://luotian.cyou/tags/MATLAB/"/>
+    <category term="Ubuntu" scheme="https://luotian.cyou/tags/Ubuntu/"/>
+    <category term="Linux" scheme="https://luotian.cyou/tags/Linux/"/>
+    <category term="环境配置" scheme="https://luotian.cyou/tags/%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"/>
+    <category term="GPU" scheme="https://luotian.cyou/tags/GPU/"/>
+    <id>https://luotian.cyou/post/MATLAB-R2026b-Linux.html</id>
+    <link href="https://luotian.cyou/post/MATLAB-R2026b-Linux.html"/>
+    <published>2026-11-01T05:10:00.000Z</published>
+    <summary>本文记录了在 Ubuntu 24.04 LTS + NVIDIA RTX 50 系（Blackwell）显卡环境下安装 MATLAB R2026b 的全过程，涵盖版本选型、安装步骤、安装后验收、工具箱增装、桌面集成以及常见问题排查，并单独介绍可选的 GPU 计算环境配置，可作为同配置机器的通用安装手册。</summary>
+    <title>Ubuntu 24.04 安装 MATLAB R2026b 全流程手册 — RTX 50 系显卡适配与排错</title>
+    <updated>2026-11-01T05:39:08.921Z</updated>
+  </entry>
   <entry>
     <author>
       <name>Luo Tian</name>
@@ -264,17 +281,5 @@
     <summary>西电雨课堂工程伦理答案，包含章节练习题和期末考试题，供学习交流使用。</summary>
     <title>西电雨课堂-工程伦理答案</title>
     <updated>2026-02-27T14:12:29.508Z</updated>
-  </entry>
-  <entry>
-    <author>
-      <name>Luo Tian</name>
-    </author>
-    <category term="课程答案" scheme="https://luotian.cyou/categories/%E8%AF%BE%E7%A8%8B%E7%AD%94%E6%A1%88/"/>
-    <id>https://luotian.cyou/post/Aca-Commu-Eng.html</id>
-    <link href="https://luotian.cyou/post/Aca-Commu-Eng.html"/>
-    <published>2025-10-31T17:54:29.000Z</published>
-    <summary>西电雨课堂学术交流英语答案，包含章节练习题和期末考试题，供学习交流使用。</summary>
-    <title>西电雨课堂-学术交流英语答案</title>
-    <updated>2026-02-27T14:11:47.850Z</updated>
   </entry>
 </feed>
